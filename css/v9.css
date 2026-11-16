@@ -1,0 +1,426 @@
+/* ============================================================
+   비투비티 홈 시안 v9 · v9.css (2026-11-14)
+   v8 스타일 뒤에 불러온다. v8 + 시안 A(상품 카드) + 시안 B(전체 메뉴) + 시안 F(헤더·메가메뉴·바텀 헤더·상품 섹션)를 섞은 판.
+   순서: 0 토큰 · 1 위 띠(현재/F 전환) · 2 헤더(F) · 3 메가메뉴(F) · 4 전체 메뉴(B) · 5 모바일 서랍 · 6 상품 카드(A)
+        · 7 파트너 브랜드 배너 · 8 바텀 헤더 · 9 상품 섹션 · 10 프로세스 · 11 검수용 위 띠 전환 버튼 · 12 보정 · 13 히어로 카피(WORK WEAR)
+   ============================================================ */
+
+/* ---------- 0. 토큰 ---------- */
+:root{
+  --band-h:40px; --hd-h:72px; --site-head-h:calc(var(--band-h) + var(--hd-h));
+  --bh-h:52px; --bh-top:var(--site-head-h);
+  --v9-ink:#000; --v9-text:#363636; --v9-sub:#6B6B70; --v9-line:#DEDEE2;
+}
+html[data-band="f"]{--band-h:36px}
+html.is-head-off{--bh-top:0px}
+@media (max-width:768px){
+  :root{--hd-h:60px; --bh-h:48px}
+  html[data-band="f"]{--band-h:40px}
+}
+
+/* ---------- 1. 위 띠: 현재(v8) 판은 그대로. data-band="f" 이면 시안 F 모양(검정 띠, / 구분, 화살표 오른쪽) ---------- */
+html[data-band="f"] .band{height:var(--band-h);background:#000;font-size:13px;font-weight:400;letter-spacing:-.005em}
+html[data-band="f"] .band__seg{font-weight:400}
+html[data-band="f"] .band__sep{width:auto;height:auto;margin:0 20px;background:none}
+html[data-band="f"] .band__sep::before{content:"/";color:rgba(255,255,255,.45)}
+html[data-band="f"] .band__link{border-bottom:0;text-decoration:underline;text-underline-offset:3px;font-weight:600}
+html[data-band="f"] .band__nav{left:auto;top:0;width:32px;height:100%;border-radius:0;background:none;color:rgba(255,255,255,.75);transform:none}
+html[data-band="f"] .band__nav:hover{background:none;color:#fff}
+html[data-band="f"] .band__nav--prev{right:calc(var(--gut) + 22px)}
+html[data-band="f"] .band__nav--next{right:calc(var(--gut) - 10px)}
+html[data-band="f"] .band__nav .ic{width:16px;height:16px;stroke-width:1.6}
+@media (max-width:768px){
+  html[data-band="f"] .band{font-size:12.5px}
+  html[data-band="f"] .band__sep{margin:0 10px}
+}
+
+/* ---------- 2. 헤더: 시안 F (흰 바탕, 검은 밑줄, 굵은 메뉴, 검은 알약 견적문의). 회사소개·로그인·회원가입·시안확인 글자는 없앰 ---------- */
+.v9h .hd{background:#fff;color:var(--v9-ink);box-shadow:none;border-bottom:1px solid var(--v9-ink)}
+.v9h .hd__inner{flex-wrap:nowrap;height:calc(var(--hd-h) - 1px);padding-inline:var(--gut)}
+.v9h .hd__inner > .hd__all{width:44px;height:44px;margin:0 10px 0 -13px}
+.v9h .burger{width:18px;height:13px}
+.v9h .burger > span{height:1.6px}
+.v9h [aria-expanded="true"] > .burger > span:nth-child(1){transform:translateY(5.7px) rotate(45deg)}
+.v9h [aria-expanded="true"] > .burger > span:nth-child(3){transform:translateY(-5.7px) rotate(-45deg)}
+.v9h .hd__inner > .hd__logo{height:auto;margin-left:0}
+.v9h .hd__logo img{height:40px}
+.v9h .hd__nav{order:0;flex:0 1 auto;align-self:stretch;justify-content:flex-start;gap:4px;max-width:none;height:auto;margin:0 0 0 44px;background:none}
+.v9h .bz__link{padding:0 14px;color:var(--v9-ink);font-size:16px;font-weight:700;letter-spacing:-.01em;line-height:1}
+.v9h .bz__link > span::after{display:none}
+.v9h .bz__link::after{content:"";position:absolute;left:14px;right:14px;bottom:-1px;height:2px;background:var(--v9-ink);transform:scaleX(0);transition:transform .2s}
+.v9h .bz.is-open > .bz__link,.v9h .bz__link:hover{color:var(--v9-ink)}
+.v9h .bz.is-open > .bz__link::after,.v9h .bz__link:hover::after,.v9h .bz__link:focus-visible::after{transform:none}
+.v9h .hd__right{display:flex;align-items:center;gap:20px;height:auto;margin-left:auto;padding-left:20px}
+.hq{display:inline-flex;align-items:center;height:36px;padding:0 16px;border-radius:999px;background:var(--v9-ink);color:#fff;font-size:14px;font-weight:600;letter-spacing:-.01em;white-space:nowrap;transition:background-color .15s}
+.hq:hover{background:#262626}
+.hq:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.v9h .hd__icons{gap:0;margin-right:-10px}
+.v9h .hd__icon{width:44px;height:44px;color:var(--v9-ink)}
+.v9h .hd__icon::after{display:none}
+.v9h .hd__icon .ic{width:24px;height:24px}
+.v9h .hd__icon:hover,.v9h .hd__icon[aria-expanded="true"]{color:var(--v9-ink);opacity:.62}
+.v9h .hd__icon .badge{right:2px;top:3px;background:#0B32C2}
+@media (max-width:1280px){ .v9h .hd__nav{margin-left:28px} .v9h .bz__link{padding:0 11px} .v9h .bz__link::after{left:11px;right:11px} .v9h .hd__right{gap:16px} }
+/* 보정(2026-11-15): 769~1100 폭에서도 메뉴 4개를 숨기지 않는다(전에는 햄버거만 남았다). 글자와 간격만 단계별로 줄인다 */
+@media (max-width:1100px){
+  .v9h .hd__logo img{height:34px}
+  .v9h .hd__nav{gap:0;margin-left:18px}
+  .v9h .bz__link{padding:0 9px;font-size:15px}
+  .v9h .bz__link::after{left:9px;right:9px}
+  .v9h .hd__right{gap:10px;padding-left:12px}
+}
+@media (max-width:900px){
+  .v9h .hd__inner > .hd__all{margin-right:2px}
+  .v9h .hd__logo img{height:30px}
+  .v9h .hd__nav{margin-left:8px}
+  .v9h .bz__link{padding:0 7px;font-size:14.5px;letter-spacing:-.02em}
+  .v9h .bz__link::after{left:7px;right:7px}
+  .v9h .hd__right{gap:4px;padding-left:6px}
+  .hq{height:34px;padding:0 12px;font-size:13px}
+  .v9h .hd__icons{margin-right:-8px}
+  .v9h .hd__icon{width:40px;height:40px}
+}
+
+/* 검색 층: F 모양(가운데 좁은 칸, 밑줄 입력) */
+.v9h .hd-search{box-shadow:none;border-bottom:1px solid var(--v9-ink)}
+.v9h .hd-search__inner{min-height:0;padding:28px var(--gut) 32px}
+.v9h .hd-search__form{width:min(720px,100%);height:54px;padding:0;border:0;border-bottom:2px solid var(--v9-ink);border-radius:0}
+.v9h .hd-search__form:focus-within{box-shadow:none;border-bottom-color:var(--accent)}
+.v9h .hd-sx{width:min(720px,100%);margin-top:20px}
+.v9h .hd-sx__title{min-height:0;margin:0 0 6px;padding:0;border:0;font-size:14px;font-weight:700;line-height:1.5}
+.v9h .hd-sx__empty{font-size:14px}
+
+/* 모바일 헤더: v8 그대로. 아래 선만 F처럼 검게 */
+@media (max-width:768px){ .v9h .mh__inner{box-shadow:inset 0 -1px 0 var(--v9-ink)} }
+
+/* ---------- 3. 메가메뉴: 시안 F. 왼쪽 빈자리에 사진, 협력브랜드는 작은 로고 칸 ---------- */
+.v9h .bz__drop{border-top:0;border-bottom:1px solid var(--v9-ink);box-shadow:none;color:var(--v9-text)}
+.fm{display:grid;grid-template-columns:200px minmax(0,1fr);gap:8px 40px;align-items:start;margin-inline:var(--gut);padding:28px 0 36px}
+.fm__side{display:flex;flex-direction:column;align-items:flex-start;gap:8px;min-width:0}
+.fm__title{font-size:22px;font-weight:700;letter-spacing:-.02em;line-height:1.3;color:var(--v9-ink)}
+.fm__all{font-size:14px;font-weight:600;color:var(--v9-text);text-decoration:underline;text-underline-offset:3px}
+.fm__all:hover{color:var(--v9-ink)}
+.fm__img{display:block;width:100%;margin-top:14px;aspect-ratio:4/5;overflow:hidden;background:#F2F2F2}
+.fm__img img{display:block;width:100%;height:100%;object-fit:cover;transform:scale(1.04);transition:transform 1.2s var(--ease)}
+.bz.is-open .fm__img img{transform:none}
+.fm__cols--5{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:28px 24px}
+.fm__h{display:block;margin-bottom:10px;font-size:15px;font-weight:700;color:var(--v9-ink)}
+.fm__col li a,.fm__list a{display:flex;align-items:baseline;gap:6px;padding:4px 0;font-size:14px;line-height:22px;color:var(--v9-text)}
+.fm__col li a:hover,.fm__list a:hover,.fm__h:hover{text-decoration:underline;text-underline-offset:3px}
+.fm__list{display:grid;grid-template-columns:repeat(4,minmax(0,220px));gap:4px 24px}
+.fm__n{font-size:12px;color:var(--v9-sub);font-variant-numeric:tabular-nums}
+.fm__brands{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.fm__brand{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;height:92px;padding:12px 10px;border:1px solid var(--v9-line);background:#fff;transition:border-color .15s}
+.fm__brand:hover{border-color:var(--v9-ink)}
+.fm__logo{display:grid;place-items:center;height:28px}
+.fm__logo img{display:block;width:auto;height:auto;max-width:88px;max-height:28px;object-fit:contain}
+.fm__bn{display:flex;align-items:baseline;gap:6px;font-size:13px;font-weight:600;line-height:18px;color:var(--v9-text);white-space:nowrap}
+@media (max-width:1280px){ .fm{grid-template-columns:168px minmax(0,1fr);gap:8px 28px} .fm__cols--5{gap:24px 16px} .fm__brands{grid-template-columns:repeat(4,minmax(0,1fr))} }
+/* 769~1100: 메가메뉴 왼쪽 사진을 빼고 제목 줄을 위로 올려 목록 칸을 넓게 쓴다 */
+@media (max-width:1100px){
+  .fm{grid-template-columns:minmax(0,1fr);gap:18px;padding:22px 0 28px}
+  .fm__side{flex-direction:row;align-items:baseline;gap:14px}
+  .fm__img{display:none}
+  .fm__title{font-size:19px}
+  .fm__cols--5{gap:20px 14px}
+  .fm__list{grid-template-columns:repeat(4,minmax(0,1fr));gap:4px 16px}
+}
+
+/* ---------- 4. 전체 메뉴(햄버거): 시안 B. 7칸 + 아래 서비스·빠른 메뉴 줄. 햄버거 → X 움직임은 v8 그대로 ---------- */
+.v9h .acp{height:auto;max-height:calc(100vh - var(--site-head-h) - 24px);max-height:calc(100dvh - var(--site-head-h) - 24px);padding-top:0;border-bottom:1px solid var(--v9-ink);box-shadow:none;color:var(--v9-ink)}
+.am{margin-inline:var(--gut);padding:32px 0 40px}
+.am__grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:28px 20px}
+.am__h{display:inline-block;margin-bottom:8px;font-size:15px;font-weight:600;line-height:22px;color:var(--v9-ink)}
+.am__col li a{display:inline-block;padding:3px 0;font-size:14px;line-height:22px;color:var(--v9-text)}
+.am a:hover{text-decoration:underline;text-underline-offset:3px}
+.am__foot{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:32px;padding-top:24px;border-top:1px solid var(--v9-line)}
+.am__t{margin-bottom:8px;font-size:13px;line-height:20px;color:rgba(0,0,0,.54)}
+.am__row{display:flex;flex-wrap:wrap;gap:4px 20px;font-size:14px;line-height:24px;color:var(--v9-ink)}
+.acp-dim{position:absolute;left:0;right:0;top:100%;z-index:28;height:100vh;background:rgba(0,0,0,.36)}
+@media (max-width:1100px){ .am__grid{grid-template-columns:repeat(4,minmax(0,1fr))} .am__foot{grid-template-columns:1fr} }
+
+/* ---------- 5. 모바일 서랍: v8 그대로, 화면 가득 ---------- */
+@media (max-width:768px){
+  .drawer{width:100%}
+  .drawer-dim{display:none !important}
+}
+
+/* ---------- 6. 상품 카드: 시안 A의 MD 추천 카드로 통일(랭킹·겨울 시즌 포함). 둥근 사진 칸 16px, 둥근 버튼, 알약 색상 점 ---------- */
+.v9 .pc__media{border-radius:16px;background:#EDEDEF}
+.v9 .pc__media img{transform:scale(1.04);transition:opacity .35s var(--ease),transform .9s var(--ease)}
+.v9 .pc__media img.is-on,.v9 .pc:hover .pc__media img.is-on{transform:none}
+.v9 .pc__bars{left:12px;right:12px;top:12px;gap:4px}
+.v9 .pc__bars i{height:3px;border-radius:2px;background:rgba(27,27,31,.16)}
+.v9 .pc__bars i.is-on{background:#1B1B1F}
+.v9 .act,.v9 .act--like{border-radius:50%;box-shadow:0 4px 14px rgba(20,24,40,.14)}
+.v9 .pc__sw{padding:7px 9px;border-radius:999px;background:rgba(255,255,255,.95)} /* 뒤 흐림(backdrop-filter)은 뺐다: 카드마다 하나씩이라 줄이 넘어갈 때 무겁다 */
+.v9 .pc__sw .dot{width:16px;height:16px;border-radius:50%}
+.v9 .pc__sw button.dot::after{left:-4px;right:-4px;top:-4px;bottom:-4px;height:auto;border:1.5px solid #1B1B1F;border-radius:50%;background:none;opacity:0;transform:scale(.7);transition:opacity .25s,transform .3s var(--ease)}
+.v9 .pc__sw button.dot.is-on::after{opacity:1;transform:none}
+.v9 .pc__swmore{margin-left:1px;font-family:inherit;font-size:11.5px;font-weight:600;color:#5C5A61}
+.v9 .pc__cat{margin-top:16px;font-size:12px;font-weight:700;line-height:18px;color:#9A979E}
+.v9 .pc--worn .pc__cat{color:var(--accent-text)}
+.v9 .pc__name{margin-top:4px;font-size:17px;font-weight:800;letter-spacing:-.02em;line-height:24px}
+.v9 .pc__meta{color:#5C5A61}
+.v9 .pc__price{font-size:17px;font-weight:800}
+.v9 .pc__code{display:none} /* 시안 A 카드에는 품번 줄이 없다(빠른 보기에는 나온다) */
+.v9 .pc__quote i{border-radius:50%}
+/* 순위 번호: 둥근 사진 칸에 맞춰 둥근 표식으로 */
+.v9 .pc__rank{left:12px;top:12px;width:32px;height:32px;border-radius:50%;background:rgba(27,27,31,.86);font-size:17px}
+.v9 .pc:nth-child(-n+3) .pc__rank{background:var(--accent)}
+.v9 .pc:hover .pc__bars,.v9 .pc:focus-within .pc__bars{left:54px}
+.v9 .rk .pc__name{font-size:16px;line-height:23px}
+.v9 .rk .pc__price{font-size:16.5px}
+@media (max-width:768px){
+  .v9 .pc__cat{margin-top:12px}
+  .v9 .pc__name,.v9 .rk .pc__name{font-size:15px;line-height:22px}
+  .v9 .pc__price,.v9 .rk .pc__price{font-size:15.5px}
+  .v9 .pc__sw{padding:6px 8px}
+  .v9 .pc__sw .dot{width:13px;height:13px}
+  .v9 .pc__rank{left:8px;top:8px;width:28px;height:28px;font-size:15px}
+  .v9 .pc__media{border-radius:14px}
+}
+
+/* ---------- 7. 파트너 브랜드: 움직이는 배너. 현장 사진(전 On Site)을 브랜드별 장면으로. 사진 위 흰 사각형 ↔ 착용 상품 칸을 한 번 꺾이는 흰 선으로 잇는다 ---------- */
+.pb{padding-top:var(--sec)}
+.pb__frame{position:relative;height:clamp(480px,56.25vw,calc(100svh - 56px));overflow:hidden;background:var(--dark);color:#fff;isolation:isolate}
+.pb__slides{position:absolute;inset:0}
+.pbs{position:absolute;inset:0;visibility:hidden;opacity:0;transition:opacity .9s var(--ease-io),visibility 0s .9s}
+.pbs.is-on{z-index:2;visibility:visible;opacity:1;transition:opacity .9s var(--ease-io)}
+.pbs__media{position:absolute;inset:0;overflow:hidden}
+.pbs__media picture,.pbs__media img{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover}
+.pbs__media img{transform:scale(1.08);transition:transform 1.6s var(--ease)}
+.pbs.is-on .pbs__media img{transform:none}
+.pbs__shade{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(0deg,rgba(8,9,12,.55) 0%,transparent 30%),linear-gradient(90deg,rgba(8,9,12,.7) 0%,rgba(8,9,12,.3) 34%,transparent 58%)}
+.pbs--r .pbs__shade{background:linear-gradient(0deg,rgba(8,9,12,.55) 0%,transparent 30%),linear-gradient(270deg,rgba(8,9,12,.74) 0%,rgba(8,9,12,.34) 34%,transparent 58%)}
+/* 글 */
+.pbs__copy{position:absolute;left:var(--gut);top:0;bottom:0;z-index:4;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;width:min(480px,36vw);pointer-events:none}
+.pbs--r .pbs__copy{left:auto;right:var(--gut)}
+.pbs__copy > *{pointer-events:auto;opacity:0;transform:translateY(22px);transition:opacity .7s var(--ease),transform .9s var(--ease)}
+.pb.is-open .pbs.is-on .pbs__copy > *{opacity:1;transform:none}
+.pb.is-open .pbs.is-on .pbs__copy > :nth-child(1){transition-delay:.25s}
+.pb.is-open .pbs.is-on .pbs__copy > :nth-child(2){transition-delay:.33s}
+.pb.is-open .pbs.is-on .pbs__copy > :nth-child(3){transition-delay:.41s}
+.v5 .pbs__t{margin-top:12px;font-size:clamp(30px,3.8vw,62px);font-weight:800;letter-spacing:-.05em;line-height:1.1;color:#fff}
+.pbs__copy .bt{height:54px;margin-top:26px;font-size:15px}
+.pbs__copy .bt>i{width:54px}
+/* 사진 위 흰 사각형 */
+.pbs__pin{z-index:5;opacity:0;transform:scale(.4);transition:opacity .4s,transform .6s var(--ease)}
+.pb.is-open .pbs.is-on .pbs__pin{opacity:1;transform:none;transition-delay:.75s}
+.pbs__pin .spot__dot{width:13px;height:13px;box-shadow:0 0 0 1px rgba(14,14,16,.45),0 4px 14px rgba(0,0,0,.45)}
+.pbs__pin:hover .spot__dot,.pbs__pin:focus-visible .spot__dot,.pbs__pin.is-on .spot__dot{transform:rotate(45deg) scale(1.15);background:var(--accent)}
+/* 꺾이는 선 */
+.pbs__lines{position:absolute;inset:0;z-index:3;width:100%;height:100%;overflow:visible;pointer-events:none}
+.pbs__lines polyline{fill:none;stroke-linejoin:miter;stroke-linecap:square;stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 0s}
+.pbs__lines .pbl--u{stroke:rgba(8,9,12,.34);stroke-width:3.5}
+.pbs__lines .pbl--w{stroke:#fff;stroke-width:1.25}
+.pb.is-open .pbs.is-on .pbs__lines polyline{stroke-dashoffset:0;transition:stroke-dashoffset .8s var(--ease-io) .95s}
+.pbs__lines g{transition:opacity .3s}
+.pbs__lines g.is-off{opacity:0}
+.pbs__lines g.is-dim{opacity:.38}
+/* 착용 상품 칸 */
+.pbs__stage{position:absolute;inset:0}
+.pbs__tags{position:absolute;right:var(--gut);top:0;bottom:0;z-index:5;display:flex;flex-direction:column;justify-content:center;gap:12px;width:min(300px,26vw);pointer-events:none}
+.pbs__tags > *{pointer-events:auto}
+.pbs--r .pbs__tags{right:auto;left:var(--gut)}
+.pbs__tags--top{justify-content:flex-start;padding-top:clamp(44px,7vw,104px)}
+.pbs__tags--bot{justify-content:flex-end;padding-bottom:clamp(88px,9vw,150px)}
+.pbt{display:grid;grid-template-columns:72px minmax(0,1fr);gap:0 14px;align-items:center;padding:10px;border-radius:16px;background:rgba(255,255,255,.97);color:var(--ink);box-shadow:0 22px 46px -18px rgba(0,0,0,.6);opacity:0;transform:translateY(16px);transition:opacity .5s var(--ease),transform .7s var(--ease),box-shadow .25s}
+.pb.is-open .pbs.is-on .pbt{opacity:1;transform:none;transition-delay:1.35s,1.35s,0s}
+.pb.is-open .pbs.is-on .pbt:nth-child(2){transition-delay:1.45s,1.45s,0s}
+.pb.is-open .pbs.is-on .pbt:nth-child(3){transition-delay:1.55s,1.55s,0s}
+.pbt.is-hot{box-shadow:0 0 0 2px var(--accent),0 22px 46px -18px rgba(0,0,0,.6)}
+.pbt__img{display:block;width:72px;height:72px;border-radius:10px;overflow:hidden;background:#EDEDEF}
+.pbt__img img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 40%}
+.pbt__k{font-size:12px;font-weight:700;line-height:18px;color:var(--accent-text)}
+.pbt__n{display:block;margin-top:1px;font-size:16px;font-weight:800;letter-spacing:-.025em;line-height:23px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pbt__n:hover{text-decoration:underline;text-underline-offset:3px}
+.pbt__acts{display:flex;gap:6px;margin-top:6px}
+.pbt__q,.pbt__c{height:30px;padding:0 12px;border-radius:999px;font-size:12.5px;font-weight:700;line-height:1;white-space:nowrap;transition:background-color .25s,color .25s,box-shadow .25s}
+.pbt__q{background:var(--ink);color:#fff}
+.pbt__q:hover{background:var(--accent)}
+.pbt__c{box-shadow:inset 0 0 0 1px var(--line-2);color:var(--ink)}
+.pbt__c:hover{background:var(--ink);box-shadow:none;color:#fff}
+/* 아래 조작 줄: 번호 · 진행 막대 · 이전/다음 · 멈춤 */
+.pb__ui{position:absolute;left:var(--gut);right:var(--gut);bottom:clamp(20px,2.6vw,36px);z-index:6;display:flex;align-items:center;gap:18px;color:#fff;pointer-events:none}
+.pb__ui > *{pointer-events:auto}
+.pb__count{font-family:var(--f-en);font-size:17px;font-weight:600;letter-spacing:.06em;line-height:1;white-space:nowrap}
+.pb__count b{font-weight:700}
+.pb__count span{opacity:.6}
+.pb__count span:first-of-type{margin:0 6px}
+.pb__bars{display:flex;gap:6px}
+.pb__bar{position:relative;width:44px;height:28px}
+.pb__bar::before,.pb__bar i{content:"";position:absolute;left:0;right:0;top:13px;height:2px;background:rgba(255,255,255,.34)}
+.pb__bar i{right:auto;width:100%;background:#fff;transform:scaleX(0);transform-origin:left}
+.pb__btns{display:flex;margin-left:auto}
+.pb__btn{display:grid;place-items:center;width:44px;height:44px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.5);color:#fff;transition:background-color .25s,color .25s}
+.pb__btn + .pb__btn{margin-left:-1px}
+.pb__btn svg{width:18px;height:18px}
+.pb__btn:hover{background:#fff;color:var(--ink)}
+.pb__btn .ic-play{display:none}
+.pb__btn[aria-pressed="true"] .ic-play{display:block}
+.pb__btn[aria-pressed="true"] .ic-pause{display:none}
+.pb__note{position:absolute;right:var(--gut);top:14px;z-index:4;font-size:11.5px;line-height:16px;color:rgba(255,255,255,.8);text-shadow:0 1px 3px rgba(0,0,0,.6)}
+@media (max-width:1100px){
+  .pbs__tags{width:260px}
+  .pbt{grid-template-columns:60px minmax(0,1fr);gap:0 12px}
+  .pbt__img{width:60px;height:60px}
+  .pbt__n{font-size:15px;line-height:22px}
+}
+@media (max-width:768px){
+  /* 폰(2026-11-15 보정): 사진이 화면 한 장을 가득 채운다(맨 아래 상담 줄 60px만 뺀다). 사진 아래에 있던 글(브랜드 라벨 · 제목 · 상품 보기)은 없앴다.
+     사진 위에는 사각형 · 선 · 착용 상품 칸 하나 + 맨 아래 조작 줄(번호 · 진행 막대 · 멈춤)만 둔다. 옆으로 밀면 다음 장면 */
+  .pb{padding-top:48px}
+  .pb__frame{height:calc(100vh - 60px);height:calc(100svh - 60px - env(safe-area-inset-bottom));min-height:420px}
+  .pbs__copy,.pbs--r .pbs__copy{display:none}
+  .pbs__shade,.pbs--r .pbs__shade{background:linear-gradient(0deg,rgba(8,9,12,.72) 0%,rgba(8,9,12,.22) 24%,transparent 42%),linear-gradient(180deg,rgba(8,9,12,.3) 0%,transparent 14%)}
+  /* 착용 상품 칸은 한 번에 하나(고른 사각형의 것)만. 자리는 js가 잡는다(--tag-b): 보통은 조작 줄 바로 위, 사각형이 그 자리에 있으면 사각형 위로 올린다 */
+  .pbs__tags,.pbs--r .pbs__tags{left:12px;right:12px;top:auto;bottom:var(--tag-b,60px);width:auto;padding:0;justify-content:flex-end}
+  .pbt{grid-template-columns:56px minmax(0,1fr);gap:0 12px;padding:8px;border-radius:14px}
+  .pbt:not(.is-act){display:none}
+  .pbt__img{width:56px;height:56px;border-radius:9px}
+  .pbt__b{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:0 8px}
+  .pbt__k{grid-column:1;font-size:11.5px;line-height:16px}
+  .pbt__n{grid-column:1;font-size:15px;line-height:22px}
+  .pbt__acts{grid-column:2;grid-row:1 / span 2;margin-top:0}
+  .pbt__q,.pbt__c{height:32px;padding:0 11px;font-size:12.5px}
+  /* 조작 줄: 번호 + 진행 막대(남는 폭을 다 씀) + 멈춤. 이전/다음 단추는 숨긴다(옆으로 밀어 넘긴다) */
+  .pb__ui{left:16px;right:8px;bottom:8px;gap:12px}
+  .pb__count{font-size:15px}
+  .pb__bars{flex:1 1 auto;gap:4px}
+  .pb__bar{flex:1 1 0;width:auto;height:44px}
+  .pb__bar::before,.pb__bar i{top:21px}
+  .pb__btns{margin-left:0}
+  #pbPrev,#pbNext{display:none}
+  .pb__btn{width:44px;height:44px;box-shadow:none}
+  .pb__note{top:12px;right:12px;font-size:11px}
+}
+@media (prefers-reduced-motion:reduce){
+  .pbs,.pbs.is-on,.pbs__media img,.pbs__copy > *,.pbs__pin,.pbt,.pbs__lines polyline{transition:none !important}
+}
+
+/* ---------- 8. 바텀 헤더: 섹션에 도착하면 그 섹션의 선택지가 헤더 바로 아래에 붙는다. 섹션을 벗어나면 다음 섹션의 것으로 바뀐다.
+   PC = 시안 F 분류 바(밑줄 글자 탭). 폰 = 떠 있는 알약 줄(noeul.shop 카테고리 페이지 tagRow) + 1개/2개 보기 ---------- */
+.bh{position:sticky;top:var(--bh-top);z-index:40;margin-top:clamp(18px,2vw,28px);background:#fff;border-bottom:1px solid var(--v9-line);transition:top .2s ease-out,box-shadow .25s}
+.bh.is-stuck{box-shadow:0 10px 24px -18px rgba(14,14,16,.4)}
+.bh__in{display:flex;align-items:stretch;height:var(--bh-h);margin-inline:var(--gut)}
+.bh__scroll{flex:1 1 auto;min-width:0;overflow-x:auto;scrollbar-width:none}
+.bh__scroll::-webkit-scrollbar{display:none}
+.bh__list{display:flex;gap:16px;width:max-content;height:100%;margin-left:-10px}
+.bh__tab{position:relative;display:flex;align-items:center;justify-content:center;min-width:44px;height:100%;padding:0 10px;font-size:15px;font-weight:600;letter-spacing:-.01em;color:var(--v9-sub);white-space:nowrap;transition:color .2s}
+.bh__tab:hover{color:var(--v9-ink)}
+.bh__tab[aria-selected="true"]{color:var(--v9-ink)}
+.bh__tab::after{content:"";position:absolute;left:10px;right:10px;bottom:-1px;height:2px;background:var(--v9-ink);transform:scaleX(0);transition:transform .3s var(--ease)}
+.bh__tab[aria-selected="true"]::after{transform:none}
+.bh__tab:focus-visible{outline-offset:-3px}
+.bh__tab small{margin-left:6px;font-size:12px;font-weight:500;color:var(--v9-sub)}
+.bh__view{display:none}
+@media (max-width:768px){
+  .bh{top:calc(var(--bh-top) + 8px);margin-top:16px;padding:0 12px;background:none;border-bottom:0;pointer-events:none}
+  .bh.is-stuck{box-shadow:none}
+  .bh__in{width:max-content;max-width:100%;height:var(--bh-h);margin-inline:auto;padding:4px;border-radius:999px;background:#fff;box-shadow:0 0 0 1px rgba(14,14,16,.08),0 10px 28px -10px rgba(14,14,16,.32);pointer-events:auto}
+  .bh__scroll{border-radius:999px}
+  .bh__list{gap:2px;margin-left:0}
+  .bh__tab{min-width:0;padding:0 15px;border-radius:999px;font-size:14px;font-weight:500;color:#8B8B90;transition:background-color .2s,color .2s}
+  .bh__tab::after{display:none}
+  .bh__tab[aria-selected="true"]{background:var(--v9-ink);color:#fff;font-weight:700}
+  .bh__tab small{display:none}
+  .bh__view{flex:none;display:flex;align-items:center;gap:2px;margin-left:4px;padding-left:6px;border-left:1px solid var(--v9-line)}
+  .bh__vb{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;color:#B4B4B9;transition:color .2s,background-color .2s}
+  .bh__vb svg{width:18px;height:18px}
+  .bh__vb[aria-pressed="true"]{color:var(--v9-ink);background:#F1F1F3}
+}
+
+/* ---------- 9. 상품 섹션(겨울 아우터 · 협력브랜드 · 후드·맨투맨): 시안 F의 구성 + 시안 A 카드 ---------- */
+.psec{padding-top:var(--sec)}
+.psec__body{padding-top:clamp(24px,2.6vw,36px)}
+.pgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:48px 20px}
+.pgrid--feat{grid-auto-flow:row dense}
+.pgrid--feat .pc--feat{grid-column:1 / span 2;grid-row:1 / span 2;display:flex;flex-direction:column}
+.pgrid--feat .pc--feat .pc__media{flex:1 1 auto;min-height:0;aspect-ratio:auto;background:#F2F2F2} /* 사진 바탕색과 같게: 사진이 칸보다 납작해도 위아래 띠가 안 보인다 */
+.pgrid--feat .pc--feat .pc__media img{object-fit:contain}
+.v9 .pgrid--feat .pc--feat .pc__name{font-size:20px;line-height:28px}
+.psec__more{display:flex;justify-content:center;margin-top:48px}
+.pbtn{display:inline-flex;align-items:center;justify-content:center;height:48px;padding:0 28px;border:1px solid var(--v9-ink);border-radius:999px;background:#fff;font-size:14px;font-weight:600;color:var(--v9-ink);white-space:nowrap;transition:background-color .15s,color .15s}
+.pbtn:hover{background:var(--v9-ink);color:#fff}
+/* 협력브랜드: 고른 브랜드 정보 한 줄 */
+.bi{display:flex;align-items:center;gap:14px 24px;flex-wrap:wrap;margin-bottom:clamp(20px,2.2vw,28px);padding-bottom:clamp(16px,1.8vw,22px);border-bottom:1px solid var(--line)}
+.bi__logo{display:grid;place-items:center;flex:none;width:132px;height:56px;padding:8px 14px;border:1px solid var(--v9-line);background:#fff}
+.bi__logo img{display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain}
+.bi__name{display:flex;align-items:baseline;gap:8px;font-size:20px;font-weight:800;letter-spacing:-.02em;line-height:28px}
+.bi__name span{font-size:15px;font-weight:600;color:var(--body)}
+.bi__cnt{font-size:14.5px;line-height:22px;color:var(--body)}
+.bi__cnt b{font-family:var(--f-en);font-size:20px;font-weight:700;letter-spacing:.01em;color:var(--ink)}
+.bi .lnk{margin-left:auto}
+.psec--tint{margin-top:var(--sec);padding-block:var(--sec);background:#F5F5F6}
+.psec--tint .bh{background:#F5F5F6}
+.psec--tint .bi__logo{border-color:transparent}
+@media (max-width:1024px){ .pgrid{grid-template-columns:repeat(3,minmax(0,1fr))} .pgrid--feat{grid-template-columns:repeat(4,minmax(0,1fr))} }
+@media (max-width:768px){
+  .psec__body{padding-top:18px}
+  .pgrid,.pgrid--feat{grid-template-columns:repeat(2,minmax(0,1fr));gap:32px 12px}
+  .pgrid--feat .pc--feat{grid-column:1 / -1;grid-row:auto;display:block}
+  .pgrid--feat .pc--feat .pc__media{aspect-ratio:1/1}
+  .v9 .pgrid--feat .pc--feat .pc__name{font-size:17px;line-height:24px}
+  html[data-cols="1"] .pgrid{grid-template-columns:minmax(0,1fr);gap:36px}
+  html[data-cols="1"] .v9 .pgrid .pc__name{font-size:17px;line-height:24px}
+  html[data-cols="1"] .v9 .pgrid .pc__price{font-size:17px}
+  .psec__more{margin-top:32px}
+  .pbtn{width:100%}
+  .psec--tint .bh{background:none}
+  .bi{gap:10px 14px;margin-bottom:18px;padding-bottom:14px}
+  .bi__logo{width:96px;height:44px;padding:6px 10px}
+  .bi__name{font-size:17px;line-height:24px}
+  .bi__name span{font-size:13.5px}
+  .bi__cnt{font-size:13px}
+  .bi__cnt b{font-size:17px}
+  .bi .lnk{display:none}
+}
+
+/* ---------- 10. 프로세스: 가격·납기·구매 편의 세 줄을 없앤 뒤 아래 여백 정리 ---------- */
+.process-v8__support{margin-bottom:0}
+
+/* ---------- 11. 검수용: 위 띠 현재/F 전환 버튼(왼쪽 아래). 시안 확인이 끝나면 지운다 ---------- */
+/* 보정(2026-11-15): 위 띠가 아직 정해지지 않아 상자는 남기되, 내용을 덮지 않게 접어 둔다.
+   평소에는 화면 왼쪽 끝의 작은 손잡이("위 띠")만 보이고, 누르면 현재/F안 단추가 옆으로 나온다(잠시 뒤 다시 접힌다) */
+.rvw{position:fixed;left:0;top:38%;z-index:170;display:flex;align-items:center;gap:6px;color:#fff;font-size:12px;font-weight:600;line-height:1}
+.rvw__t{display:grid;place-items:center;width:18px;height:52px;border-radius:0 8px 8px 0;background:rgba(20,21,24,.72);color:#fff;font-size:11px;font-weight:600;letter-spacing:.04em;writing-mode:vertical-rl;-webkit-tap-highlight-color:transparent;transition:background-color .2s}
+.rvw__t:hover,.rvw.is-open .rvw__t{background:rgba(20,21,24,.94)}
+.rvw__seg{display:flex;gap:2px;padding:3px;border-radius:999px;background:rgba(20,21,24,.94);box-shadow:0 10px 26px -10px rgba(0,0,0,.5)}
+.rvw__seg[hidden]{display:none}
+.rvw__b{height:30px;padding:0 13px;border-radius:999px;background:transparent;color:rgba(255,255,255,.72);font-size:12.5px;font-weight:600;-webkit-tap-highlight-color:transparent;transition:background-color .2s,color .2s}
+.rvw__b[aria-pressed="true"]{background:#fff;color:#141518}
+.rvw__t:focus-visible,.rvw__b:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+html.is-acp-open .rvw,html.is-locked .rvw{display:none}
+
+/* ---------- 12. 보정(2026-11-15) ---------- */
+/* 줄 넘김(랭킹 · 겨울 시즌): 넘기는 동안은 scroll-snap을 끈다. 넘김은 js의 railTo가 카드의 translate만 움직인다 */
+.md__rail.is-slide,.md__rail.is-reveal{scroll-snap-type:none !important}
+@media (max-width:768px){
+  /* 숫자 줄(2017 · 9 · 2,800+): 세로로 쌓지 않고 세 칸으로 나란히. 오른쪽 견적문의 글자는 뺀다(바로 위 히어로 단추와 맨 아래 상담 줄에 있다) */
+  .v9 .fx__in{display:block;padding:18px 0 17px}
+  .v9 .fx__in > .lnk{display:none}
+  .v9 .fx__list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0}
+  .v9 .fx__list li{flex-direction:column;align-items:center;gap:7px;padding:0 4px;font-size:12px;line-height:17px;text-align:center}
+  .v9 .fx__list li + li{border-left:1px solid var(--line)}
+  .v9 .fx__list b{min-width:0;font-size:22px}
+  .v9 .fx__list small{display:block;font-size:10.5px;line-height:15px}
+  /* 겨울 시즌: 배너와 상품 사이를 넓히고(20 → 36px), 상품 아래 순서 표시 줄은 바짝 붙인다(26 → 12px) */
+  .v5 .ss .md__rail{margin-top:36px}
+  .v9 .ss__ctl{margin-top:12px}
+  /* 맨 아래 상담 줄: 견적문의를 오른쪽 끝으로(마크업 순서도 채팅 · 전화 · 견적문의) */
+  .mbar__item + .mbar__quote{border-left:0}
+}
+
+/* ---------- 13. 히어로 카피(2026-11-15): WORK = 채운 글자, WEAR = 속이 빈 선 글자 ---------- */
+/* 위 작은 줄(페이지 제목 h1): 비투비티 기업 단체복 및 작업복 */
+.v9 .hv__en{font-size:clamp(15px,1.25vw,19px);font-weight:700;letter-spacing:-.01em;line-height:1.4;text-wrap:initial}
+/* 큰 글자: 한 줄. 좁아서 넘치면 WEAR가 아래 줄로 내려간다. --fh = 글자 상자 높이(뒤집기 축) */
+.v9 .hv__t--ww{--fh:.86em;--ol:max(1.75px,.018em);display:flex;flex-wrap:wrap;column-gap:.2em;margin-top:.1em;font-family:var(--f-en);font-size:clamp(84px,11.4vw,188px);font-weight:800;letter-spacing:0;line-height:var(--fh);text-transform:uppercase}
+.v9 .hv__t--ww .f3l{display:block;flex:none}
+.v9 .hv__t--ww .f3l--ol{color:transparent;-webkit-text-stroke:var(--ol) #fff;paint-order:stroke fill}
+.v9 .hv__t--ww + .bn__d{margin-top:clamp(14px,1.4vw,24px)}
+@media (max-width:768px){
+  .v9 .hv__en{font-size:14.5px}
+  .v9 .hv__t--ww{margin-top:.12em;font-size:clamp(56px,18.8vw,132px)}
+}

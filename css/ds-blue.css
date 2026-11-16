@@ -1,0 +1,264 @@
+/* ds-blue.css: Editorial Persuasion DS Blue 표준판 v1 (2026-11-05) 2장 tokens + 3장 base + 4장 components 원본 그대로. 수정 금지 레이어. 덮어쓰기는 site.css */
+
+/* ===== 2. tokens ===== */
+/* ============================================================
+   Editorial Persuasion DS — tokens · Blue
+   ============================================================ */
+:root{
+  /* color · neutral */
+  --ds-ink:#1B1B1F;            /* 제목 · 강조 */
+  --ds-ink-strong:#111111;
+  --ds-body:#5C5A61;           /* 본문 회색 */
+  --ds-muted:#9A979E;          /* 주석 · 메타 (본문 사용 금지) */
+  --ds-bg:#FAFAFA;             /* 페이지 배경 */
+  --ds-surface:#FFFFFF;        /* 카드 · 패널 */
+  --ds-surface-soft:#F7F5F3;   /* soft 섹션 */
+  --ds-surface-ivory:#F5F5F0;
+  --ds-dark:#1A1A1A;           /* dark 면 */
+  --ds-dark-deep:#0A0A0A;      /* hero · final */
+  --ds-dark-body:#B7B7B7;      /* dark 위 본문 */
+  --ds-line:rgba(0,0,0,.09);
+  --ds-line-strong:rgba(0,0,0,.15);
+
+  /* color · accent (Blue) */
+  --ds-accent:#3182F6;         /* 면 · CTA 배경 · 아이콘 stroke · dark 위 라벨 */
+  --ds-accent-text:#1B64DA;    /* 밝은 배경 위 라벨 · 번호 텍스트 */
+  --ds-on-accent:#FFFFFF;      /* accent 면 위 글자 */
+  --ds-accent-soft:#E8F3FF;    /* soft tint */
+  --ds-marker:#BDD7FC;         /* 하이라이트 마커 (accent 32% on white) */
+
+  /* font */
+  --ds-font:Pretendard,"Pretendard Variable",-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+
+  /* home / landing type scale  (weight size/line family + tracking) */
+  --t-hero:800 72px/79.2px var(--ds-font);          --t-hero-ls:-2.88px;
+  --t-section:800 46px/53.36px var(--ds-font);      --t-section-ls:-1.61px;
+  --t-final:800 50px/57.5px var(--ds-font);         --t-final-ls:-1.75px;
+  --t-statement:800 42px/51.24px var(--ds-font);    --t-statement-ls:-1.34px;
+  --t-step:800 40px/47.2px var(--ds-font);          --t-step-ls:-1.2px;
+  --t-quote:700 24px/37.2px var(--ds-font);         --t-quote-ls:-0.48px;
+  --t-pull:700 20px/31px var(--ds-font);            --t-pull-ls:-0.4px;
+  --t-lead:300 18.5px/34.2px var(--ds-font);        --t-lead-ls:-0.16px;
+  --t-body-home:400 17px/28.9px var(--ds-font);
+  --t-card:400 14.5px/24px var(--ds-font);
+  --t-label:700 11px/18.7px var(--ds-font);         --t-label-ls:2.2px;
+
+  /* article / column type scale */
+  --t-article-h1:800 32px/43.2px var(--ds-font);    --t-article-h1-ls:-0.96px;
+  --t-chapter:700 22px/30.8px var(--ds-font);
+  --t-article-body:400 16px/30.4px var(--ds-font);
+  --t-article-sub:400 15px/24px var(--ds-font);
+
+  /* spacing */
+  --s-section:172px;           /* home desktop */
+  --s-section-xl:210px;        /* story / intro */
+  --s-section-compact:136px;   /* statement 등 짧은 섹션 */
+  --s-section-mobile:92px;
+  --s-chapter:80px;            /* article chapter top */
+  --s-paragraph:32px;
+  --s-header-gap:48px;         /* 섹션 헤더 → 본문 */
+
+  /* layout */
+  --w-readable:640px;          /* home 본문 중심축 */
+  --w-article:672px;           /* 칼럼 본문 */
+  --w-shell:720px;             /* home wrap (+padding) */
+  --w-hero-intro:820px;        /* hero 텍스트 블록 */
+  --w-lead:432px;              /* 리드 문단 */
+  --w-wide:1120px;             /* 비교 · 카드 레일 */
+  --pad-wrap:40px;
+
+  /* radius */
+  --r-sm:8px; --r-btn:12px; --r-card:14px; --r-panel:18px; --r-pill:100px;
+
+  /* elevation */
+  --e-cta:0 12px 44px -12px color-mix(in srgb,var(--ds-accent) 50%,transparent);
+  --e-card:0 1px 2px rgba(0,0,0,.04),0 8px 28px -12px rgba(0,0,0,.10);
+
+  /* motion */
+  --m-reveal:.7s cubic-bezier(.2,.7,.2,1);
+  --m-reveal-short:.45s cubic-bezier(.2,.7,.2,1);
+  --m-reveal-y:30px;
+}
+
+@media (max-width:720px){
+  :root{
+    --t-hero:800 40px/48px var(--ds-font);       --t-hero-ls:-1.6px;
+    --t-section:800 30px/38px var(--ds-font);    --t-section-ls:-1px;
+    --t-final:800 32px/40px var(--ds-font);
+    --t-statement:800 28px/36px var(--ds-font);
+    --t-step:800 28px/36px var(--ds-font);
+    --t-lead:300 17px/30px var(--ds-font);
+    --t-article-h1:800 26px/36px var(--ds-font);
+    --s-section:var(--s-section-mobile);
+    --s-section-xl:104px;
+    --pad-wrap:22px;
+  }
+}
+
+/* ===== 3. base ===== */
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:var(--ds-font);background:var(--ds-bg);color:var(--ds-ink);-webkit-font-smoothing:antialiased;word-break:keep-all}
+a{color:inherit}
+b,strong{color:var(--ds-ink);font-weight:700}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--ds-accent);outline-offset:3px}
+img{max-width:100%;display:block}
+
+/* ===== 4. components ===== */
+/* ---------- layout primitives ---------- */
+.c-wrap{max-width:var(--w-shell);margin:0 auto;padding:0 var(--pad-wrap)}
+.c-wrap.wide{max-width:calc(var(--w-wide) + var(--pad-wrap)*2)}
+.c-section{padding:var(--s-section) 0}
+.c-section.soft{background:var(--ds-surface-soft)}
+.c-section.compact{padding:var(--s-section-compact) 0}
+.c-section.xl{padding:var(--s-section-xl) 0}
+.c-header{max-width:var(--w-readable);margin:0 auto;text-align:center}
+.c-header.left{text-align:left;margin:0}
+.c-overline{font:var(--t-label);letter-spacing:var(--t-label-ls);color:var(--ds-accent-text);text-transform:uppercase}
+.c-h2{font:var(--t-section);letter-spacing:var(--t-section-ls);margin-top:14px;text-wrap:balance}
+.c-lead{font:var(--t-lead);letter-spacing:var(--t-lead-ls);color:var(--ds-body);margin:22px auto 0;max-width:var(--w-lead)}
+.c-header.left .c-lead{margin-left:0}
+.c-mark{background:linear-gradient(transparent 58%,var(--ds-marker) 58%);-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.c-accent{color:var(--ds-accent-text)}
+
+/* dark 면 위에서는 밝은 accent 그대로 (accent-text는 밝은 배경 전용) */
+.on-dark .c-overline,.on-dark .c-accent{color:var(--ds-accent)}
+
+/* ---------- hero ---------- */
+.c-hero{background:var(--ds-dark-deep);color:#fff;padding:var(--s-section) 0;min-height:620px;display:flex;align-items:center}
+.c-hero .c-wrap{max-width:var(--w-hero-intro);width:100%}
+.c-hero h1{font:var(--t-hero);letter-spacing:var(--t-hero-ls);text-wrap:balance;margin-top:18px}
+.c-hero p{font:var(--t-lead);color:var(--ds-dark-body);margin-top:26px;max-width:var(--w-lead)}
+.c-hero p b{color:#fff}
+.c-hero .c-actions{margin-top:40px}
+
+/* ---------- buttons ---------- */
+.c-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.c-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:56px;border-radius:var(--r-btn);text-decoration:none;transition:transform var(--m-reveal-short),box-shadow var(--m-reveal-short),background .2s}
+.c-btn-primary{background:var(--ds-accent);color:var(--ds-on-accent);font:800 16px/27px var(--ds-font);letter-spacing:-.16px;padding:15px 30px;box-shadow:var(--e-cta);border:0}
+.c-btn-primary:hover{transform:translateY(-2px)}
+.c-btn-secondary{background:transparent;color:var(--ds-ink);font:700 15px/25px var(--ds-font);padding:15px 24px;border:1px solid var(--ds-line-strong)}
+.c-btn-secondary:hover{border-color:var(--ds-ink)}
+.on-dark .c-btn-secondary{color:#fff;border-color:rgba(255,255,255,.25)}
+.on-dark .c-btn-secondary:hover{border-color:#fff}
+.c-btn-dark{background:var(--ds-dark);color:#fff;font:700 14px/26px var(--ds-font);padding:15px 28px;border:0;border-radius:var(--r-card)}
+.c-btn-text{font:700 15px/24px var(--ds-font);color:var(--ds-ink);text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:2px}
+
+/* ---------- method rail (세로 단계) ---------- */
+.c-rail{max-width:var(--w-readable);margin:var(--s-header-gap) auto 0}
+.c-step{padding:72px 0;text-align:center;border-top:1px solid var(--ds-line)}
+.c-step:first-child{border-top:0}
+.c-step svg{width:66px;height:66px;margin:0 auto 24px;display:block;stroke:var(--ds-accent);fill:none;stroke-width:1.6}
+/* 아이콘 그리기 모션은 아래 reveal 블록에서 처리 (path마다 pathLength="100") */
+.c-step .c-overline{display:block}
+.c-step h3{font:var(--t-step);letter-spacing:var(--t-step-ls);margin-top:14px}
+.c-step p{font:var(--t-lead);font-weight:400;color:var(--ds-body);margin:22px auto 0;max-width:420px}
+
+/* ---------- statement ---------- */
+.c-statement{font:var(--t-statement);letter-spacing:var(--t-statement-ls);text-align:center;max-width:var(--w-readable);margin:0 auto;text-wrap:balance}
+.c-statement .dim{color:#C9C6CC}
+
+/* ---------- program cards ---------- */
+.c-cards{display:grid;gap:14px;max-width:var(--w-readable);margin:var(--s-header-gap) auto 0}
+.c-card{display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center;padding:32px;border-radius:var(--r-panel);border:1px solid var(--ds-line);background:var(--ds-surface);text-decoration:none;transition:border-color .2s,transform var(--m-reveal-short)}
+.c-card:hover{border-color:var(--ds-line-strong);transform:translateY(-2px)}
+.c-card.featured{border-color:color-mix(in srgb,var(--ds-accent) 55%,transparent);background:linear-gradient(135deg,color-mix(in srgb,var(--ds-accent) 7%,#fff),#fff 60%)}
+.c-card h3{font-size:22px;line-height:30px;font-weight:800;letter-spacing:-.6px;margin-top:6px}
+.c-card p{font:var(--t-card);color:var(--ds-body);margin-top:8px}
+.c-card .go{width:44px;height:44px;border-radius:50%;border:1px solid var(--ds-line-strong);display:grid;place-items:center;font-size:18px}
+
+/* ---------- kit card rail (가로 스크롤) ---------- */
+.c-kit-rail{display:flex;gap:16px;overflow-x:auto;padding:4px var(--pad-wrap) 18px;scroll-snap-type:x mandatory;margin-top:var(--s-header-gap)}
+.c-kit{flex:0 0 220px;scroll-snap-align:start;border:1px solid var(--ds-line);border-radius:var(--r-card);background:var(--ds-surface);overflow:hidden;text-decoration:none}
+.c-kit .thumb{height:240px;background:var(--ds-surface-soft);display:flex;align-items:flex-end;padding:16px;font:800 30px/34px var(--ds-font);letter-spacing:-1.2px;color:var(--ds-ink);background-size:cover;background-position:center}
+.c-kit .thumb.is-dark{background-color:var(--ds-dark);color:#fff}
+.c-kit .thumb.is-tint{background-color:var(--ds-accent-soft)}
+.c-kit .thumb.is-accent{background-color:var(--ds-dark);color:var(--ds-accent)}
+.c-kit .body{padding:16px}
+.c-kit .meta{font-size:12px;color:var(--ds-muted);font-weight:700}
+.c-kit h4{font-size:15px;line-height:22px;font-weight:800;margin-top:6px;letter-spacing:-.3px}
+
+/* ---------- quote proof ---------- */
+.c-proof{max-width:var(--w-readable);margin:var(--s-header-gap) auto 0;display:grid;gap:14px}
+.c-proof figure{padding:32px 34px;border-radius:var(--r-panel);background:var(--ds-surface);border:1px solid var(--ds-line)}
+.c-proof blockquote{font:var(--t-quote);letter-spacing:var(--t-quote-ls)}
+.c-proof figcaption{font-size:13px;color:var(--ds-muted);margin-top:14px}
+
+/* ---------- fit (적합도 2단) ---------- */
+.c-fit{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:var(--w-readable);margin:var(--s-header-gap) auto 0}
+.c-fit>div{padding:28px;border-radius:var(--r-panel);border:1px solid var(--ds-line);background:var(--ds-surface)}
+.c-fit>div.yes{border-color:color-mix(in srgb,var(--ds-accent) 45%,transparent)}
+.c-fit ul{list-style:none}
+.c-fit h4{font-size:15px;font-weight:800;margin-bottom:14px}
+.c-fit li{font:var(--t-card);color:var(--ds-body);padding:9px 0 9px 26px;position:relative;border-top:1px solid var(--ds-line)}
+.c-fit li::before{content:"✓";position:absolute;left:0;top:9px;font-weight:800;color:var(--ds-accent-text)}
+.c-fit .no li::before{content:"—";color:var(--ds-muted)}
+
+/* ---------- faq ---------- */
+.c-faq{max-width:var(--w-readable);margin:var(--s-header-gap) auto 0;border-top:1px solid var(--ds-ink)}
+.c-faq details{border-bottom:1px solid var(--ds-line)}
+.c-faq summary{list-style:none;display:flex;justify-content:space-between;gap:20px;padding:24px 0;font-size:18px;line-height:28px;font-weight:700;letter-spacing:-.3px;cursor:pointer}
+.c-faq summary::-webkit-details-marker{display:none}
+.c-faq summary::after{content:"+";font-weight:400;font-size:24px;color:var(--ds-muted);transition:transform .3s}
+.c-faq details[open] summary::after{transform:rotate(45deg)}
+.c-faq details p{font:var(--t-body-home);color:var(--ds-body);padding:0 40px 26px 0}
+
+/* ---------- final cta ---------- */
+.c-final{background:var(--ds-dark-deep);color:#fff;padding:var(--s-section) 0;text-align:center}
+.c-final .confidence{font-size:15px;color:var(--ds-dark-body)}
+.c-final h2{font:var(--t-final);letter-spacing:var(--t-final-ls);margin-top:18px;text-wrap:balance}
+.c-final .c-actions{justify-content:center;margin-top:40px}
+
+/* ---------- article shell ---------- */
+.a-hero{background:#141414;color:#fff;padding:96px 0 88px}
+.a-hero .c-wrap{max-width:calc(var(--w-article) + var(--pad-wrap)*2)}
+.a-back{font-size:13px;color:#8d8d93;text-decoration:none}
+.a-series{display:block;font:var(--t-label);letter-spacing:var(--t-label-ls);color:var(--ds-accent);margin-top:28px}
+.a-hero h1{font:var(--t-article-h1);letter-spacing:var(--t-article-h1-ls);margin-top:12px;max-width:640px;text-wrap:balance}
+.a-hero p{font:var(--t-article-sub);color:rgba(255,255,255,.75);margin-top:16px;max-width:420px}
+.a-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:24px}
+.a-tags span{font-size:12px;font-weight:700;padding:5px 11px;border-radius:var(--r-pill);border:1px solid rgba(255,255,255,.18);color:#cfcfd3}
+.a-body{max-width:var(--w-article);margin:0 auto;padding:72px var(--pad-wrap) 96px;box-sizing:content-box}
+.a-index{padding:20px 22px;border-radius:var(--r-btn);background:var(--ds-surface-soft);font-size:14px;line-height:24px;color:var(--ds-body)}
+.a-index strong{display:block;font-size:12px;letter-spacing:1.6px;color:var(--ds-muted);margin-bottom:6px}
+.a-chapter{padding-top:var(--s-chapter)}
+.a-chapter .c-overline{display:block}
+.a-chapter h2{font:var(--t-chapter);margin-top:8px;letter-spacing:-.4px}
+.a-body p{font:var(--t-article-body);color:var(--ds-body);margin-top:var(--s-paragraph)}
+.a-chapter h2+p{margin-top:20px}
+.a-body .a-solo{font:var(--t-pull);letter-spacing:var(--t-pull-ls);color:var(--ds-ink);padding:8px 0}
+.a-logic{margin-top:var(--s-paragraph);padding:30px 26px;border-radius:var(--r-card);border:1px solid var(--ds-line);background:var(--ds-surface);display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:12px}
+.a-logic span{padding:10px 16px;border-radius:var(--r-btn);background:var(--ds-surface-soft);font-size:15px;font-weight:700}
+.a-logic i{font-style:normal;font-size:20px;color:var(--ds-muted);font-weight:300}
+.a-logic span.res{background:var(--ds-ink);color:#fff}
+.a-fh{margin-top:var(--s-paragraph);display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--ds-line);border-radius:var(--r-card);overflow:hidden;background:var(--ds-surface)}
+.a-fh>div{padding:22px}
+.a-fh>div+div{border-left:1px solid var(--ds-line);background:var(--ds-surface-soft)}
+.a-fh h5{font-size:12px;letter-spacing:1.6px;color:var(--ds-muted);font-weight:700}
+.a-body .a-fh p{margin-top:8px;font-size:15px;line-height:26px}
+.a-cta{margin-top:64px;display:grid;gap:10px}
+.a-cta a{display:block;text-decoration:none}
+.a-next{padding:14px 18px;border-radius:var(--r-btn);border:1px solid var(--ds-line);font:400 16px/30px var(--ds-font)}
+.a-next small,.a-more small{display:block;font-size:12px;color:var(--ds-muted);line-height:18px}
+.a-more{padding:18px 22px;border-radius:var(--r-card);background:rgba(0,0,0,.024);font:700 16px/30px var(--ds-font)}
+.a-cta .c-btn-dark{display:flex;width:100%}
+
+/* ---------- reveal (CSS only · JS 불필요) ----------
+   지원 브라우저: 스크롤로 화면에 들어올 때 opacity + translateY 30px 등장
+   미지원 브라우저: 모션 없이 처음부터 보임 (내용이 숨는 일 없음) */
+@supports (animation-timeline:view()){
+  @media (prefers-reduced-motion:no-preference){
+    .rv{animation:ds-reveal linear both;animation-timeline:view();animation-range:entry 0% entry 60%}
+    .c-step svg .draw{stroke-dasharray:100;animation:ds-draw linear both;animation-timeline:view();animation-range:entry 30% cover 40%}
+  }
+}
+@keyframes ds-reveal{from{opacity:0;transform:translateY(var(--m-reveal-y))}to{opacity:1;transform:none}}
+@keyframes ds-draw{from{stroke-dashoffset:100}to{stroke-dashoffset:0}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* ---------- responsive ---------- */
+@media (max-width:900px){
+  .c-fit,.a-fh{grid-template-columns:1fr}
+  .a-fh>div+div{border-left:0;border-top:1px solid var(--ds-line)}
+}
