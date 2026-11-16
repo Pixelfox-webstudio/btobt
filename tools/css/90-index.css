@@ -1,0 +1,13 @@
+/* ============================================================
+   90. 검수용 목록(pages.html)
+   ============================================================ */
+.pl__g+.pl__g{margin-top:56px}
+.pl__list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 40px;margin-top:16px;border-top:1px solid #000}
+.pl__p{padding:16px 0;border-bottom:1px solid var(--ln)}
+.pl__h{display:flex;align-items:baseline;gap:10px}
+.pl__n{font-size:16px;font-weight:700;letter-spacing:-.02em;color:#000}
+.pl__n:hover{text-decoration:underline !important;text-underline-offset:3px}
+.pl__f{font-family:var(--f-mono);font-size:12px;color:var(--fg3)}
+.pl__p .fchips{margin-top:10px}
+.pl__p .fchip--s{height:30px;padding:0 11px;font-size:12.5px;font-weight:500}
+@media (max-width:900px){ .pl__list{grid-template-columns:minmax(0,1fr)} }

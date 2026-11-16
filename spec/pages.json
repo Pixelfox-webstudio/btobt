@@ -1,0 +1,36 @@
+{
+ "about": "tools/build.py 가 tools/pages/*.html 의 페이지 정보에서 만든 목록. 점검 스크립트와 pages.html 이 이 파일을 쓴다.",
+ "pages": [
+  {
+   "file": "unsubscribe.html",
+   "title": "광고 수신거부",
+   "name": "광고 수신거부",
+   "group": 8,
+   "type": "result",
+   "shell": "full",
+   "auth": "guest",
+   "states": [
+    [
+     "default",
+     "이메일 수신거부 확정 요청"
+    ],
+    [
+     "sms",
+     "문자 수신거부 확정 요청"
+    ],
+    [
+     "done",
+     "수신거부 완료"
+    ],
+    [
+     "invalid",
+     "잘못된 링크"
+    ],
+    [
+     "error",
+     "처리 오류"
+    ]
+   ]
+  }
+ ]
+}
