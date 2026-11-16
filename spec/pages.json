@@ -202,6 +202,9 @@
    "type": "result",
    "shell": "full",
    "auth": "guest",
+   "sections": [
+    "광고 수신거부"
+   ],
    "states": [
     [
      "default",
