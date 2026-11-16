@@ -686,7 +686,7 @@ components:
 
 **Do**
 - 헤더·푸터·서랍·하단 바는 `index.html`에서 복사한다. 한 글자도 다시 쓰지 않는다.
-- `<main id="main" class="v4 v5 v6 v7 v8 v9 v10 sub">`처럼 클래스 사슬을 그대로 둔다.
+- `<main id="main" class="v4 v5 v6 v7 v8 v9 v10 subp">`처럼 클래스 사슬을 그대로 둔다.
 - 색·간격은 이미 있는 CSS 변수(`var(--ink)`, `var(--accent)`, `var(--gut)`, `var(--sec)`, `var(--ease)`)로 참조한다.
 - 버튼·탭은 알약, 사진·카드는 16px로 쓴다.
 - 탭·필터는 `.bh` 알약 줄이나 필터칩을 쓴다.
@@ -742,7 +742,7 @@ components:
 <!-- ② index.html의 <header class="site-head v9h" id="siteHead"> ~ </header>,
         <div class="drawer-dim" …></div>, <div class="drawer" id="drawer" …> ~ </div> 를 그대로 복사 -->
 
-<main id="main" class="v4 v5 v6 v7 v8 v9 v10 sub">
+<main id="main" class="v4 v5 v6 v7 v8 v9 v10 subp">
   <section class="sub-head">
     <div class="wrap">
       <nav class="crumb" aria-label="현재 위치"><a href="#" data-href="index.php">홈</a><span aria-hidden="true">/</span><a href="#" data-href="category.php">단체복</a><span aria-hidden="true">/</span><span aria-current="page">라운드 티셔츠</span></nav>
@@ -878,7 +878,7 @@ components:
 하위 페이지를 다 만든 뒤 아래를 하나씩 확인한다.
 1. `<head>`의 CSS 9개가 순서대로 들어 있고, `site-v10.js`만 로드했다(`v10.js`·`bgfx.js` 없음).
 2. 헤더·서랍·푸터·`.mbar`·`.side-cs`가 `index.html`과 글자 하나까지 같다.
-3. `<main id="main" class="v4 v5 v6 v7 v8 v9 v10 sub">`를 썼다.
+3. `<main id="main" class="v4 v5 v6 v7 v8 v9 v10 subp">`를 썼다.
 4. 새 색 hex가 이 문서 표에 있는 값뿐이다. 강조색은 `var(--accent)`로 참조했다.
 5. 버튼·탭·칩은 999px, 사진·카드·팝업은 16px이다.
 6. 섹션 간격은 `var(--sec)`, 좌우 여백은 `.wrap`(`var(--gut)`)으로 잡았다. px로 다시 적지 않았다.
