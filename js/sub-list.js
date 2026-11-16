@@ -214,6 +214,7 @@
       pageNo = 1; drawButtons(); draw(true);
     });
   }
+  var er = $('#lemptyReset'); er && er.addEventListener('click', function () { resetFilters(); pageNo = 1; drawButtons(); draw(true); });
 
   /* ---------- 정렬 · 목록 · 쪽 번호 ---------- */
   var sort = 'rec', pageNo = Math.max(1, parseInt(qs.get('page'), 10) || 1);
@@ -239,7 +240,7 @@
     if (best === null) bestBox.hidden = true;
     else {
       bestBox.hidden = false;
-      var rail = $('.rail', bestBox), none = $('.lbest__empty', bestBox), nav = $('.lbest__nav', bestBox);
+      var rail = $('.lrail', bestBox), none = $('.lbest__empty', bestBox), nav = $('.lbest__nav', bestBox);
       rail.innerHTML = best.map(function (p) { return D.card(p, { slim: true }); }).join('');
       rail.hidden = !best.length; none.hidden = !!best.length; if (nav) nav.hidden = best.length <= 6;
       $$('.arw', bestBox).forEach(function (b) { b.addEventListener('click', function () { rail.scrollBy({ left: Number(b.getAttribute('data-dir')) * rail.clientWidth * .8, behavior: 'smooth' }); }); });

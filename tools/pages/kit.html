@@ -1,0 +1,130 @@
+<!--{"title": "공용 부품 견본", "desc": "하위 페이지가 함께 쓰는 부품 견본", "name": "공용 부품 견본(작업자용)", "group": 0, "type": "kit", "shell": "bare", "auth": "member",
+ "states": [["default", "기본"], ["state=err", "입력 오류 표시"], ["state=pop", "팝업 열림"], ["state=side", "옆 패널 열림"]]}-->
+<!-- 이 파일은 작업자가 마크업을 베껴 쓰는 견본이다. 여기 있는 부품은 tools/css/00-base.css · 10-form.css 에 있고, 페이지 조각에서 그대로 쓴다. -->
+<section class="sub-head">
+  <div class="wrap">
+    <nav class="crumb" aria-label="현재 위치"><a href="pages.html">검수 목록</a><span aria-hidden="true">/</span><span aria-current="page">공용 부품 견본</span></nav>
+    <h1 class="sub-head__t">공용 부품 견본 <small>작업자용</small></h1>
+    <p class="sub-head__d">하위 페이지가 함께 쓰는 부품입니다. 페이지 조각에서는 이 마크업을 그대로 씁니다.</p>
+  </div>
+</section>
+<div class="wrap sub-body">
+  <!-- 밑줄 탭(.stab): 페이지 안 메뉴. a 는 aria-current="page", button 은 role="tab" aria-selected -->
+  <nav class="stab" aria-label="견본 메뉴"><a href="#" aria-current="page">자주 묻는 질문</a><a href="#">주문방법</a><a href="#">1:1 문의 <span class="nb">2</span></a><a href="#">공지사항</a></nav>
+
+  <!-- 버튼 -->
+  <section class="blk-s">
+    <div class="st-row"><h2 class="st">버튼 <small>한 화면에 강조(파랑) 버튼은 하나</small></h2><a class="lnk" href="#">전체 보기 <i aria-hidden="true">→</i></a></div>
+    <div class="acts blk-s">
+      <a class="bt bt--ink" href="#"><span>장바구니 담기</span><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></a>
+      <a class="bt bt--acc" href="#"><span>견적 요청하기</span><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></a>
+      <button type="button" class="bt bt--line bt--noi"><span>상세 보기</span></button>
+      <button type="button" class="bt bt--ink is-busy" aria-busy="true"><span>접수하는 중</span><i></i></button>
+      <button type="button" class="bt bt--ink" disabled><span>사용할 수 없음</span><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></button>
+    </div>
+    <div class="acts" style="margin-top:12px">
+      <button type="button" class="sb sb--ink">확인</button><button type="button" class="sb sb--line">전체 보기</button><button type="button" class="sb sb--gray">취소</button><button type="button" class="sb sb--soft">닫기</button>
+      <button type="button" class="sb sb--ink sb--m">조회</button><button type="button" class="sb sb--gray sb--s">중복확인</button><button type="button" class="sb sb--gray sb--s"><i class="i i-download i--16" aria-hidden="true"></i>내려받기</button>
+      <button type="button" class="sb sb--ink sb--l">큰 버튼</button><button type="button" class="sb sb--ink is-busy" aria-busy="true">처리 중</button><a class="pbtn" href="#">패딩 전체 보기</a><a class="tl" href="#">글자 링크</a>
+    </div>
+  </section>
+
+  <!-- 표시 · 안내 -->
+  <section class="blk">
+    <h2 class="st">표시 · 안내</h2>
+    <div class="acts blk-s"><span class="stag">접수완료</span><span class="stag stag--ink">시안 완료</span><span class="stag stag--acc">견적 완료</span><span class="stag stag--line">결제전</span><span class="stag stag--red">취소</span><span class="stag stag--l stag--acc">큰 칩</span><span class="nb">3</span><span class="nd" aria-label="새 소식"></span></div>
+    <div class="fgrid blk-s">
+      <div class="note"><p class="note__t"><i class="i i-info i--18" aria-hidden="true"></i>안내 상자(.note)</p><ul><li>인쇄가 없는 상품은 <b>3~4일</b>, 인쇄 상품은 4~7일이 걸립니다.</li><li>주말과 공휴일은 제외합니다.</li></ul></div>
+      <div class="fstack">
+        <p class="msg"><i class="i i-info" aria-hidden="true"></i><span>한 줄 안내(.msg)입니다.</span></p>
+        <p class="msg msg--err" role="alert"><i class="i i-alert" aria-hidden="true"></i><span>처리하지 못했습니다. 잠시 후 다시 시도해 주세요.</span></p>
+        <p class="msg msg--ok"><i class="i i-check" aria-hidden="true"></i><span>저장했습니다.</span></p>
+      </div>
+    </div>
+    <div class="empty"><span class="empty__ic"><i class="i i-box" aria-hidden="true"></i></span><p class="empty__t">주문 내역이 없습니다.</p><p class="empty__d">빈 상태(.empty)에는 다음에 할 일을 버튼으로 둡니다.</p><div class="acts"><a class="sb sb--ink" href="#">상품 보러 가기</a></div></div>
+  </section>
+
+  <!-- 단계 · 정보 줄 · 표 · 쪽 번호 · 펼침 -->
+  <section class="blk">
+    <h2 class="st">단계 · 정보 줄 · 표 · 펼침</h2>
+    <ol class="stp blk-s" aria-label="가입 단계"><li class="is-done"><b>1</b><a href="#"><span>회원 유형</span></a></li><li class="is-on" aria-current="step"><b>2</b><span>가입 방법</span></li><li><b>3</b><span>정보 입력</span></li></ol>
+    <div class="fgrid blk-s">
+      <dl class="dl"><div><dt>요청번호</dt><dd class="num" data-sample>R-20261112-0031</dd></div><div><dt>요청 유형</dt><dd>시안 요청</dd></div><div><dt>총 수량</dt><dd><b class="num">70</b>벌</dd></div></dl>
+      <div class="cbox"><h3 class="st st--s">상자(.cbox)</h3><dl class="dl dl--sm" style="margin-top:8px"><div><dt>색상</dt><dd>블랙</dd></div><div><dt>포장</dt><dd>개별 폴리백</dd></div></dl></div>
+    </div>
+    <div class="tbl-scroll blk-s"><table class="tbl tbl--stack"><thead><tr><th>날짜</th><th>내용</th><th class="r">적립·사용</th><th class="r">잔여</th></tr></thead><tbody data-sample>
+      <tr><td data-th="날짜" class="num">2026-11-12</td><td data-th="내용">구매확정 적립 <span class="num">O-20261101-0004</span></td><td data-th="적립·사용" class="num r">+2,950</td><td data-th="잔여" class="num r">12,450</td></tr>
+      <tr><td data-th="날짜" class="num">2026-11-03</td><td data-th="내용">주문 결제 사용</td><td data-th="적립·사용" class="num r">−5,000</td><td data-th="잔여" class="num r">9,500</td></tr></tbody></table></div>
+    <nav class="pager" aria-label="쪽 번호"><button type="button" aria-label="처음 쪽" aria-disabled="true"><i class="i i-first" aria-hidden="true"></i></button><button type="button" aria-label="이전 묶음" aria-disabled="true"><i class="i i-chev-l" aria-hidden="true"></i></button><button type="button" aria-current="page">1</button><button type="button">2</button><button type="button">3</button><button type="button" aria-label="다음 묶음"><i class="i i-chev-r" aria-hidden="true"></i></button><button type="button" aria-label="마지막 쪽"><i class="i i-last" aria-hidden="true"></i></button></nav>
+    <div class="qlist blk-s"><details open><summary><span class="qlist__q">인쇄 비용은 얼마인가요?</span></summary><div class="qlist__a"><p>인쇄 방법과 수량에 따라 달라 견적서로 안내합니다.</p></div></details><details><summary><span class="qlist__q">후불결제는 누가 쓸 수 있나요?</span></summary><div class="qlist__a"><p>관공서·공공기관·학교에서 쓸 수 있습니다.</p></div></details></div>
+  </section>
+
+  <!-- 양식 -->
+  <section class="blk">
+    <h2 class="st">양식</h2>
+    <form class="blk-s" data-check="입력한 내용을 확인해 주세요." data-done="저장했습니다." novalidate>
+      <fieldset class="fset">
+        <legend class="fset__t">개인정보 <small><em>*</em> 필수 항목</small></legend>
+        <div class="fgrid">
+          <div class="fld" data-need="checked" data-need-msg="아이디 중복확인을 해 주세요." data-err-st="err" data-err="이미 사용 중인 아이디입니다.">
+            <label class="fld__l" for="kId">아이디 <em>*</em></label>
+            <div class="inrow"><input class="inp" id="kId" name="id" required data-fmt="id" maxlength="20" placeholder="영문 소문자·숫자 4~20자" autocomplete="username"><button type="button" class="sb sb--gray">중복확인</button></div>
+            <p class="fld__msg fld__msg--ok">사용할 수 있는 아이디입니다.</p>
+          </div>
+          <div class="fld">
+            <label class="fld__l" for="kPw">비밀번호 <em>*</em></label>
+            <div class="pw"><input class="inp" id="kPw" type="password" required data-rule="pw" maxlength="72" autocomplete="new-password"><button type="button" class="pw__eye" aria-label="비밀번호 보기" aria-pressed="false"><i class="i i-eye" aria-hidden="true"></i></button></div>
+            <p class="fld__help fld__help--swap">영문·숫자·특수문자를 모두 넣어 8~72자</p>
+          </div>
+          <div class="fld" data-err-st="err" data-err="휴대전화 번호 형식을 확인해 주세요. (010-0000-0000)"><label class="fld__l" for="kTel">휴대전화 <em>*</em></label><input class="inp" id="kTel" type="tel" required data-fmt="phone" data-rule="mobile" value="010-1234-5678" inputmode="numeric" data-sample></div>
+          <div class="fld"><label class="fld__l" for="kNo">사업자등록번호 <small>수정할 수 없습니다</small></label><input class="inp num" id="kNo" value="123-45-67890" readonly data-sample></div>
+          <div class="fld full"><span class="fld__l">주소 <em>*</em></span>
+            <div class="addr"><div class="inrow"><input class="inp num" aria-label="우편번호" placeholder="우편번호" readonly required><button type="button" class="sb sb--gray">주소 검색</button></div><input class="inp" aria-label="주소" placeholder="주소" readonly><input class="inp" aria-label="상세주소" placeholder="상세주소를 입력해 주세요" required maxlength="100"></div></div>
+          <div class="fld"><label class="fld__l" for="kSel">배송방법</label><select class="sel" id="kSel"><option>기본배송/택배</option><option>퀵서비스(서울·경기)</option></select></div>
+          <div class="fld"><label class="fld__l" for="kDate">희망배송일 <small>선택</small></label><input class="inp" id="kDate" type="date"></div>
+          <div class="fld full"><label class="fld__l" for="kTxt">요청사항 <small>선택</small><span class="r"><span id="kTxtN">0</span> / 2,000</span></label><textarea class="txa" id="kTxt" maxlength="2000" data-count="kTxtN" placeholder="원단·디자인·납품 조건처럼 알려 주실 내용을 적어 주세요."></textarea></div>
+        </div>
+      </fieldset>
+      <fieldset class="fset">
+        <legend class="fset__t">선택</legend>
+        <div class="fgrid">
+          <div class="fld"><span class="fld__l">성별 <em>*</em></span><div class="choice" role="radiogroup"><label class="rdo"><input type="radio" name="kG" checked><i></i>남성</label><label class="rdo"><input type="radio" name="kG"><i></i>여성</label><label class="rdo"><input type="radio" name="kG"><i></i>선택 안 함</label></div></div>
+          <div class="fld"><span class="fld__l">광고성 정보 수신 <small>선택</small></span><div class="choice"><label class="chk"><input type="checkbox"><i></i>이메일</label><label class="chk"><input type="checkbox" checked><i></i>문자</label></div></div>
+          <div class="fld"><span class="fld__l">인쇄 여부 <small>알약 선택(.seg)</small></span><div class="seg" role="radiogroup"><label><input type="radio" name="kP" checked><span>인쇄 없음</span></label><label><input type="radio" name="kP"><span>인쇄 있음</span></label></div></div>
+          <div class="fld"><span class="fld__l">수량(.qty)</span><span class="qty"><button type="button" data-q="-1" aria-label="수량 줄이기">−</button><input type="number" value="10" min="0" inputmode="numeric" aria-label="수량"><button type="button" data-q="1" aria-label="수량 늘리기">+</button></span></div>
+          <div class="fld full"><span class="fld__l">결제수단 <small>카드형 선택(.opts > .opt)</small></span><div class="opts opts--3" role="radiogroup"><label class="opt"><input type="radio" name="kPay" checked><span class="opt__b">신용·체크카드</span></label><label class="opt"><input type="radio" name="kPay"><span class="opt__b">무통장입금<small>세금계산서 발행 가능</small></span></label><label class="opt"><input type="radio" name="kPay"><span class="opt__b">후불결제 요청<small>관공서·공공기관·학교</small></span></label></div></div>
+          <div class="fld full"><span class="fld__l">회원 유형 <small>큰 카드형(.opt--l)</small></span><div class="opts opts--2 opts--stack" role="radiogroup"><label class="opt opt--l"><input type="radio" name="kT" checked><span class="opt__b"><b>기업 회원</b><small>기업·관공서·단체 고객</small></span><span class="opt__chk" aria-hidden="true"></span></label><label class="opt opt--l"><input type="radio" name="kT"><span class="opt__b"><b>일반 회원</b><small>개인 고객</small></span><span class="opt__chk" aria-hidden="true"></span></label></div></div>
+          <div class="fld full"><span class="fld__l">인쇄 파일 <small>선택</small></span>
+            <label class="upl" data-upl='{"max":10,"mb":10,"total":100,"accept":"jpg,jpeg,png,gif,webp,pdf,ai,psd,eps,zip"}' data-files='[["로고_시안.ai",2400000],["가슴_인쇄_위치.png",480000]]'><span class="upl__ic"><i class="i i-upload" aria-hidden="true"></i></span><span class="upl__tx">파일을 끌어다 놓거나 눌러서 고르세요 <span class="upl__cnt"></span><small>이미지·PDF·AI·PSD·EPS·ZIP · 최대 10개 · 파일당 10MB · 합계 100MB</small></span><input type="file" multiple></label>
+            <ul class="files"></ul><p class="fld__msg fld__msg--err" role="alert"></p></div>
+          <div class="fld"><span class="fld__l">자동등록방지 <em>*</em></span><div class="cap"><span class="cap__img" role="img" aria-label="자동등록방지 숫자 그림" data-sample>482915</span><input class="inp num" inputmode="numeric" maxlength="6" data-fmt="digits" data-rule="cap" required aria-label="자동등록방지 숫자 6자리" placeholder="숫자 6자리"><button type="button" class="cap__re" aria-label="새 숫자 받기"><i class="i i-refresh" aria-hidden="true"></i></button></div></div>
+          <div class="fld full"><div class="agree"><label class="chk"><input type="checkbox" required data-msg="취소/환불 정책에 동의해 주세요."><i></i><span>취소/환불 정책에 동의합니다 <b>(필수)</b></span><a class="agree__more" href="#" data-pop="kitPop">자세히 보기</a></label></div></div>
+        </div>
+      </fieldset>
+      <div class="form-acts"><button type="button" class="sb sb--gray sb--l">취소</button><button type="submit" class="bt bt--ink"><span>저장</span><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></button></div>
+    </form>
+  </section>
+
+  <!-- 팝업 · 옆 패널 · 알림 · 확인 -->
+  <section class="blk">
+    <h2 class="st">팝업 · 옆 패널 · 알림</h2>
+    <div class="acts blk-s"><button type="button" class="sb sb--line" data-pop="kitPop">팝업 열기</button><button type="button" class="sb sb--line" data-pop="kitSide">옆 패널 열기</button><button type="button" class="sb sb--line" data-toast="장바구니에 담았습니다.">알림</button><button type="button" class="sb sb--line" data-toast="처리하지 못했습니다." data-toast-err>오류 알림</button><button type="button" class="sb sb--line" data-confirm="배송지를 삭제할까요?" data-confirm-desc="삭제한 배송지는 되돌릴 수 없습니다." data-confirm-ok="삭제" data-done="배송지를 삭제했습니다.">확인 창</button><button type="button" class="sb sb--line" data-copy="101-2000-0000-00" data-copy-ok="계좌번호를 복사했습니다.">복사</button></div>
+  </section>
+</div>
+<!--@after-->
+<div class="pop" id="kitPop" role="dialog" aria-modal="true" aria-labelledby="kitPopT" hidden data-open-st="pop">
+  <div class="pop__dim" data-pop-close></div>
+  <div class="pop__box pop__box--m">
+    <div class="pop__head"><h2 class="pop__t" id="kitPopT">취소/환불 정책</h2><button type="button" class="pop__x" data-pop-close aria-label="닫기"><i class="i i-x" aria-hidden="true"></i></button></div>
+    <div class="pop__body"><p>팝업(.pop) 본문입니다. 폰에서는 .pop__box--l · --xl 이 화면을 가득 채웁니다.</p></div>
+    <div class="pop__foot"><button type="button" class="sb sb--gray" data-pop-close>닫기</button><button type="button" class="sb sb--ink" data-pop-close>확인</button></div>
+  </div>
+</div>
+<div class="side" id="kitSide" role="dialog" aria-modal="true" aria-labelledby="kitSideT" hidden data-open-st="side">
+  <div class="side__dim" data-pop-close></div>
+  <div class="side__panel">
+    <div class="side__head"><h2 class="pop__t" id="kitSideT">상품 정보</h2><button type="button" class="pop__x" data-pop-close aria-label="닫기"><i class="i i-x" aria-hidden="true"></i></button></div>
+    <div class="side__body"><dl class="dl"><div><dt>인쇄 방법</dt><dd>자수 인쇄</dd></div><div><dt>인쇄 부위</dt><dd>왼쪽 가슴, 등</dd></div></dl></div>
+    <div class="side__foot"><button type="button" class="sb sb--ink" data-pop-close>확인</button></div>
+  </div>
+</div>

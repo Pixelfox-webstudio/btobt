@@ -1,0 +1,31 @@
+<!--{"title": "협력 브랜드", "desc": "비투비티 협력 브랜드 상품 목록. 브랜드와 형태로 상품을 고릅니다.", "name": "협력브랜드 상품 목록", "group": 1, "order": 2, "type": "list", "sections": ["협력브랜드 상품 목록"], "scripts": ["js/catalog.js", "js/brands.js", "js/rank.js", "js/extra.js", "js/sub-data.js", "js/sub-list.js"], "states": [["default", "전체 브랜드"], ["cat=K2 케이투", "브랜드 하나(형태 목록)"], ["cat=K2 케이투&state=form", "형태 고름"], ["cat=T-BUC 티뷰크&state=nobest", "베스트 없음"], ["cat=SSEDA 쎄다&state=empty", "상품 없음"]]}-->
+<section class="lhead">
+  <div class="wrap">
+    <nav class="crumb" aria-label="현재 위치" data-el="L122"><a href="#" data-href="index.php">홈</a><span aria-hidden="true">/</span><a href="#" data-href="category.php">단체복 전체</a><span aria-hidden="true">/</span><a href="#" data-href="brand.php" aria-current="page">협력 브랜드</a></nav>
+    <h1 class="sub-head__t" id="ltitle" data-el="L123">협력 브랜드</h1>
+    <p class="sub-head__d">비투비티와 함께하는 아홉 브랜드의 작업복과 안전용품입니다. 브랜드 상품은 수량을 알려 주시면 견적으로 안내합니다.</p>
+  </div>
+</section>
+<section class="lsec" aria-label="상품 목록">
+  <div class="bh bh--logo" id="lbh" data-bh aria-label="브랜드" data-el="L124 L133 L138"><div class="bh__in"><div class="bh__scroll"><div class="bh__list" role="tablist"></div></div></div></div>
+  <div class="wrap lsec__body">
+      <div class="fgs" id="lforms" hidden data-el="L125 L134 L139"></div>
+      <div class="lbest" id="lbest" hidden data-el="L126">
+        <div class="lbest__h"><h2 class="st">베스트 상품</h2><div class="lbest__nav"><button type="button" class="arw" data-dir="-1" aria-label="이전 상품"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button><button type="button" class="arw" data-dir="1" aria-label="다음 상품"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div></div>
+        <div class="lrail" data-lenis-prevent-touch></div>
+        <p class="lbest__empty" hidden data-el="L147">베스트로 지정한 상품이 아직 없습니다.</p>
+      </div>
+      <div class="lbar" id="lbar">
+        <p class="lbar__cnt" data-el="L127">상품 <b class="num" id="lcount">0</b>개</p>
+        <div class="sort" role="group" aria-label="정렬" data-el="L135 L140"><button type="button" data-sort="rec" aria-pressed="true">추천순</button><button type="button" data-sort="new" aria-pressed="false">신상품순</button><button type="button" data-sort="sell" aria-pressed="false">판매량순</button></div>
+      </div>
+      <div class="pgrid lgrid" id="lgrid" aria-live="polite" data-el="L128 L129 L142 L143"></div>
+      <div class="empty" id="lempty" hidden data-el="L148">
+        <span class="empty__ic"><i class="i i-search" aria-hidden="true"></i></span>
+        <p class="empty__t">조건에 맞는 상품이 없습니다.</p>
+        <p class="empty__d">찾는 브랜드 상품이 없으면 견적문의로 알려 주세요. 담당자가 확인해 안내합니다.</p>
+        <div class="acts"><a class="sb sb--ink" href="#" data-href="quote-intro.php" data-el="L144">견적문의</a></div>
+      </div>
+      <nav class="pager" id="lpager" aria-label="쪽 번호" data-el="L130 L141"></nav>
+  </div>
+</section>

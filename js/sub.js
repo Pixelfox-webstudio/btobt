@@ -4,7 +4,7 @@
    헤더 동작은 홈의 site-v10.js 가 그대로 맡는다. 이 파일은 헤더 마크업을 고치지 않고 실행 중에만 덧붙인다. */
 (function () {
   'use strict';
-  var root = document.documentElement, body = document.body;
+  var root = document.documentElement, body = document.body, host = document.getElementById('main') || document.body;   // 덧붙이는 부품은 <main class="subp"> 안에 넣는다(공용 스타일 범위)
   function $(s, c) { return (c || document).querySelector(s); }
   function $$(s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); }
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (m) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[m]; }); }
@@ -141,7 +141,7 @@
       '</div>' +
       '<div class="ck__acts"><button type="button" class="sb sb--gray" data-ck="deny">거부</button><button type="button" class="sb sb--line" data-ck="save" hidden>선택 저장</button><button type="button" class="sb sb--ink" data-ck="allow">동의</button></div>' +
       '</section>');
-    body.appendChild(n);
+    host.appendChild(n);
     var more = $('.ck__more', n), opts = $('#ckOpts', n), save = $('[data-ck="save"]', n);
     function open(v) { more.setAttribute('aria-expanded', String(v)); opts.hidden = !v; save.hidden = !v; }
     ['stat', 'ux', 'ad'].forEach(function (k) { $('input[name=' + k + ']', n).checked = !!saved[k]; });
@@ -179,7 +179,7 @@
       '<div class="qp__row"><span>기업 로고를 넣은 맞춤 제작</span><a href="#" data-href="custom-intro.php">맞춤작업복<i class="i i-chev-r i--16" aria-hidden="true"></i></a></div>' +
       '<div class="qp__sns"><a href="#" data-sample aria-label="인스타그램 (새 창)"><i class="i i-insta i--18" aria-hidden="true"></i></a><a href="' + KAKAO + '" target="_blank" rel="noopener" aria-label="카카오톡 채널 (새 창)"><i class="i i-kakao i--18" aria-hidden="true"></i></a><a href="#" data-sample aria-label="네이버 블로그 (새 창)"><i class="i i-nblog i--18" aria-hidden="true"></i></a><a href="#" data-sample aria-label="유튜브 (새 창)"><i class="i i-youtube i--18" aria-hidden="true"></i></a></div>' +
       '</aside>');
-    body.appendChild(qp);
+    host.appendChild(qp);
     function set(v) { qp.hidden = !v; btn.setAttribute('aria-expanded', String(v)); btn.setAttribute('aria-label', v ? '상담 메뉴 닫기' : '상담 메뉴 열기'); }
     btn.addEventListener('click', function () { set(qp.hidden); });
     $('.qp__x', qp).addEventListener('click', function () { set(false); btn.focus(); });
@@ -227,7 +227,7 @@
   var toastEl, toastT;
   function toast(msg, o) {
     o = o || {};
-    if (!toastEl) { toastEl = el('<div class="sub-toast" role="status" aria-live="polite"><span></span><button type="button" hidden></button></div>'); body.appendChild(toastEl); }
+    if (!toastEl) { toastEl = el('<div class="sub-toast" role="status" aria-live="polite"><span></span><button type="button" hidden></button></div>'); host.appendChild(toastEl); }
     var b = $('button', toastEl);
     $('span', toastEl).textContent = msg;
     toastEl.classList.toggle('sub-toast--err', !!o.error);
@@ -241,13 +241,19 @@
     if (t) toast(t.getAttribute('data-toast'), { error: t.hasAttribute('data-toast-err') });
   });
 
+  /* 따로 열리는 창 닫기 */
+  document.addEventListener('click', function (e) {
+    if (!(e.target.closest && e.target.closest('[data-win-close]'))) return;
+    e.preventDefault(); window.close();
+    setTimeout(function () { if (history.length > 1) history.back(); else location.href = 'mypage.html'; }, 120);   // 창으로 열린 것이 아니면 이전 화면으로
+  });
   /* 확인 창(네/아니요) */
   function confirmBox(o) {
     var p = el('<div class="pop pop--c" role="alertdialog" aria-modal="true" aria-labelledby="cfT" hidden><div class="pop__dim" data-pop-close></div><div class="pop__box"><div class="pop__body">' +
       '<span class="smark smark--' + (o.tone || 'gray') + '"><i class="i i-' + (o.icon || 'info') + '" aria-hidden="true"></i></span>' +
       '<h2 class="pop__t" id="cfT">' + esc(o.title) + '</h2>' + (o.desc ? '<p class="pop__d">' + esc(o.desc) + '</p>' : '') + '</div>' +
       '<div class="pop__foot">' + (o.cancel === false ? '' : '<button type="button" class="sb sb--gray" data-pop-close>' + esc(o.cancel || '취소') + '</button>') + '<button type="button" class="sb sb--ink" data-ok>' + esc(o.ok || '확인') + '</button></div></div></div>');
-    body.appendChild(p);
+    host.appendChild(p);
     $('[data-ok]', p).addEventListener('click', function () { closePop(p); o.onOk && o.onOk(); });
     p.addEventListener('pop:close', function () { setTimeout(function () { p.remove(); }, 320); });
     openPop(p);

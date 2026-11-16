@@ -1,0 +1,50 @@
+<!--{"title": "단체복", "desc": "비투비티 단체복·작업복 상품 목록. 세부 분류·필터·정렬로 상품을 고릅니다.", "name": "단체복·작업복 상품 목록", "group": 1, "order": 1, "type": "list", "sections": ["단체복·작업복 상품 목록"], "scripts": ["js/catalog.js", "js/brands.js", "js/rank.js", "js/extra.js", "js/sub-data.js", "js/sub-list.js"], "states": [["default", "단체복 전체"], ["cat=라운드 티셔츠", "분류 하나(세부 분류·사진 여러 장)"], ["cat=작업복", "작업복(계절 순·베스트)"], ["cat=자켓&state=filter-open", "필터 묶음 열림"], ["cat=자켓&state=filter-all", "필터 모음 열림"], ["cat=자켓&state=filtered", "필터 적용"], ["state=empty", "조건에 맞는 상품 없음"], ["cat=작업복&state=nobest", "작업복 베스트 없음"], ["state=guest", "비로그인"], ["state=ck", "공통: 방문 기록 동의"], ["state=ck-set", "공통: 방문 기록 항목별 설정"], ["state=recent", "공통: 최근 검색어 있음"], ["state=nopop", "공통: 인기 검색어 없음"], ["state=noev", "공통: 이벤트 없음(대표 분류)"], ["state=qp", "공통: 상담 메뉴"], ["state=qp+offhours", "공통: 상담 시간 외"], ["state=like-done", "공통: 관심상품 담음"], ["state=like-guest", "공통: 관심상품 비로그인"], ["state=like-fail", "공통: 관심상품 실패"], ["state=like-none", "공통: 관심상품 상품 없음"]]}-->
+<nav class="wrap crumb lcrumb" aria-label="현재 위치"><a href="#" data-href="index.php">홈</a><span aria-hidden="true">/</span><span class="crumb__g" id="lcrumbUp" hidden><a href="#" data-href="category.php">단체복</a><span aria-hidden="true">/</span></span><span aria-current="page" id="lcrumbNow">단체복</span></nav>
+<section class="lhero" id="lhero" aria-label="분류 소개">
+  <div class="lhero__frame" data-el="L87">
+    <div class="lhero__slides"></div>
+    <div class="lhero__copy">
+      <h1 class="lhero__t" data-el="L83"><span class="tt__pre">기업·단체를 위한</span> <span class="tt__key">단체복</span></h1>
+      <p class="lhero__d">티셔츠부터 패딩까지, 단체로 맞추기 좋은 상품을 모았습니다.</p>
+      <a class="bt bt--wh" href="#" data-href="quote-intro.php" data-el="L89 L112"><span>견적 문의하기</span><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></a>
+    </div>
+    <div class="lhero__ui" hidden data-el="L88"><span class="lhero__cnt num" aria-live="polite"></span><span class="lhero__prog" aria-hidden="true"><i></i></span><button type="button" class="lhero__nav" data-dir="-1" aria-label="이전 사진"><i class="i i-chev-l i--18" aria-hidden="true"></i></button><button type="button" class="lhero__nav" data-dir="1" aria-label="다음 사진"><i class="i i-chev-r i--18" aria-hidden="true"></i></button></div>
+    <p class="lhero__note">연출 이미지입니다.</p>
+  </div>
+</section>
+<section class="lsec" aria-label="상품 목록">
+  <div class="bh" id="lbh" data-bh aria-label="세부 분류" data-el="L84 L85 L86 L103"><div class="bh__in"><div class="bh__scroll"><div class="bh__list" role="tablist"></div></div></div></div>
+  <div class="wrap lsec__body">
+      <div class="lbest" id="lbest" hidden data-el="L90">
+        <div class="lbest__h"><h2 class="st">베스트 상품</h2><div class="lbest__nav"><button type="button" class="arw" data-dir="-1" aria-label="이전 상품"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button><button type="button" class="arw" data-dir="1" aria-label="다음 상품"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div></div>
+        <div class="lrail" data-lenis-prevent-touch></div>
+        <p class="lbest__empty" hidden data-el="L115">베스트로 지정한 상품이 아직 없습니다.</p>
+      </div>
+      <div class="lbar" id="lbar">
+        <p class="lbar__cnt" data-el="L91">상품 <b class="num" id="lcount">0</b>개</p>
+        <div class="lbar__f" id="lfilters" data-el="L92 L99 L106"></div>
+        <div class="sort" role="group" aria-label="정렬" data-el="L98 L104"><button type="button" data-sort="rec" aria-pressed="true">추천순</button><button type="button" data-sort="new" aria-pressed="false">신상품순</button><button type="button" data-sort="sell" aria-pressed="false">판매량순</button></div>
+        <div class="fpop" id="fpop" role="dialog" aria-label="필터 선택" hidden data-el="L100"></div>
+      </div>
+      <div class="lapp" id="lapp" role="group" aria-label="적용한 필터" hidden></div>
+      <div class="pgrid lgrid" id="lgrid" aria-live="polite" data-el="L93 L94 L110 L111"></div>
+      <div class="empty" id="lempty" hidden data-el="L116">
+        <span class="empty__ic"><i class="i i-search" aria-hidden="true"></i></span>
+        <p class="empty__t">조건에 맞는 상품이 없습니다.</p>
+        <p class="empty__d" data-if-filter>고른 필터를 줄이거나 초기화해 보세요.</p>
+        <p class="empty__d" data-if-nofilter>찾는 상품이 없으면 견적문의로 알려 주세요. 담당자가 확인해 안내합니다.</p>
+        <div class="acts"><button type="button" class="sb sb--line" id="lemptyReset" data-if-filter>필터 초기화</button><a class="sb sb--ink" href="#" data-href="quote-intro.php">견적문의</a></div>
+      </div>
+      <nav class="pager" id="lpager" aria-label="쪽 번호" data-el="L95 L109"></nav>
+  </div>
+</section>
+<!--@after-->
+<div class="side" id="fpanel" role="dialog" aria-modal="true" aria-labelledby="fpanelT" hidden data-el="L105">
+  <div class="side__dim" data-pop-close></div>
+  <div class="side__panel">
+    <div class="side__head"><h2 class="pop__t" id="fpanelT">필터</h2><button type="button" class="pop__x" data-pop-close aria-label="필터 닫기"><i class="i i-x" aria-hidden="true"></i></button></div>
+    <div class="ftabs" id="ftabs" role="tablist" aria-label="필터 종류"></div>
+    <div class="side__body" id="fbody"></div>
+    <div class="side__foot"><button type="button" class="sb sb--gray" id="freset" data-el="L107">전체 초기화</button><button type="button" class="sb sb--ink" id="fdone" data-el="L108">상품 보기</button></div>
+  </div>
+</div>

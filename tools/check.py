@@ -9,6 +9,10 @@
         / <main> 클래스 사슬이 다름 / 홈 전용 스크립트(v10.js·bgfx.js)나 data-rv 사용
       --fast 는 Chromium 1440·390 만 돈다(작업 중 빠른 확인용). 결과: review/check-pages.json
 
+  python3 tools/check.py els 페이지이름 [...]
+      그 페이지들만 요소 점검(spec/coverage.json 은 건드리지 않는다). 페이지 조각 머리의 "sections" 에 적은 요소 목록 절의 항목이
+      data-el 이나 spec/coverage-map*.json 으로 다 덮였는지 본다. 페이지를 만드는 동안 쓰는 용도.
+
   python3 tools/check.py coverage
       요소 점검. 모든 페이지 × 상태를 한 번씩 열어 data-el="L줄번호 ..." 속성을 모으고, spec/coverage-map.json(직접 적은 선택자)과 합쳐
       spec/coverage.json 을 채운 뒤 검사한다. 아래면 실패:
@@ -51,7 +55,11 @@ def state_url(p, st):
 
 
 def slug(key):
-    return re.sub(r'[^a-z0-9]+', '-', key.lower()).strip('-') or 'default'
+    base = re.sub(r'[^a-z0-9]+', '-', key.lower()).strip('-') or 'default'
+    if re.search(r'[^\x00-\x7f]', key):      # 한글이 섞인 키는 이름이 겹치지 않게 짧은 꼬리를 붙인다
+        import hashlib
+        base += '-' + hashlib.md5(key.encode('utf-8')).hexdigest()[:4]
+    return base
 
 
 # ---------- 정적 검사(소스) ----------
@@ -85,6 +93,7 @@ JS_PREP = '''async () => {
   document.querySelectorAll('img[loading=lazy]').forEach(i => { i.loading = 'eager'; });
   const imgs = [...document.images].filter(i => i.getAttribute('src'));
   await Promise.all(imgs.map(i => i.complete ? 0 : new Promise(r => { i.addEventListener('load', r); i.addEventListener('error', r); setTimeout(r, 4000); })));
+  await Promise.all(imgs.map(i => (i.decode && i.naturalWidth) ? i.decode().catch(() => 0) : 0));
   if (document.fonts && document.fonts.ready) await document.fonts.ready;
 }'''
 JS_CHECK = '''() => {
@@ -149,6 +158,39 @@ def run_view(args):
     return out
 
 
+class Slot:
+    """여러 작업자가 동시에 점검을 돌려도 브라우저가 한꺼번에 뜨지 않게, 동시에 3개까지만 돌린다."""
+    def __enter__(self):
+        import fcntl, tempfile
+        d = pathlib.Path(tempfile.gettempdir())
+        while True:
+            for i in range(3):
+                f = open(d / ('b2bt-check-%d.lock' % i), 'w')
+                try:
+                    fcntl.flock(f, fcntl.LOCK_EX | fcntl.LOCK_NB)
+                    self.f = f
+                    return self
+                except OSError:
+                    f.close()
+            time.sleep(1.5)
+
+    def __exit__(self, *a):
+        self.f.close()
+
+
+def load_map():
+    """직접 적은 선택자 표: spec/coverage-map.json + spec/coverage-map/*.json"""
+    out = {}
+    files = [ROOT / 'spec' / 'coverage-map.json'] + sorted((ROOT / 'spec' / 'coverage-map').glob('*.json'))
+    for f in files:
+        if f.exists():
+            try:
+                out.update({k: v for k, v in json.loads(f.read_text(encoding='utf-8')).items() if not k.startswith('_')})
+            except Exception as e:  # noqa
+                print('  ! %s 를 읽지 못함: %s' % (f.name, e))
+    return out
+
+
 def cmd_pages(argv):
     shots = '--no-shots' not in argv
     views = FAST if '--fast' in argv else VIEWS
@@ -159,7 +201,7 @@ def cmd_pages(argv):
     for p in plist:
         for e in static_checks(p):
             fails.append({'file': p['file'], 'state': '-', 'view': 'source', 'errors': [e]})
-    with ProcessPoolExecutor(max_workers=len(views)) as ex:
+    with Slot(), ProcessPoolExecutor(max_workers=len(views)) as ex:
         results = list(ex.map(run_view, [(e, w, h, plist, shots) for e, w, h in views]))
     recs = [r for rs in results for r in rs]
     fails += [r for r in recs if r['errors']]
@@ -193,9 +235,7 @@ def cmd_coverage(argv):
     import coverage_init
     spec_ids = [it['id'] for it in coverage_init.parse()]
     missing_items = [i for i in spec_ids if i not in items]
-    cmap_path = ROOT / 'spec' / 'coverage-map.json'
-    cmap = json.loads(cmap_path.read_text(encoding='utf-8')) if cmap_path.exists() else {}
-    manual = {k: v for k, v in cmap.items() if not k.startswith('_')}
+    manual = load_map()
     plist = pages()
     by_file = {p['file']: p for p in plist}
     seen = {}     # id → (file, state)
@@ -271,8 +311,73 @@ def cmd_coverage(argv):
     return 1 if problems else 0
 
 
+def cmd_els(argv):
+    """페이지 몇 개만 요소 점검(coverage.json 은 건드리지 않는다). 그 페이지 조각의 sections 에 적힌 절의 항목이 다 있는지 본다."""
+    from playwright.sync_api import sync_playwright
+    sys.path.insert(0, str(ROOT / 'tools'))
+    import coverage_init
+    only = set(a for a in argv if not a.startswith('--'))
+    plist = pages(only)
+    if not plist:
+        print('페이지를 찾지 못함:', only); return 2
+    secs = set(x for p in plist for x in p.get('sections', []))
+    spec = [it for it in coverage_init.parse() if it['page'] in secs]
+    unknown_secs = secs - set(it['page'] for it in coverage_init.parse())
+    manual = load_map()
+    files = set(p['file'] for p in plist)
+    want = {}
+    for i, m in manual.items():
+        if m.get('status') != 'na' and m.get('file') in files:
+            want.setdefault((m['file'], m.get('state', 'default')), set()).add(m['selector'])
+    seen, sel_ok = set(), {}
+    with Slot(), sync_playwright() as pw:
+        br = pw.chromium.launch()
+        pg = br.new_context(viewport={'width': 1440, 'height': 900}, reduced_motion='reduce', locale='ko-KR').new_page()
+        for p in plist:
+            for st in p['states']:
+                try:
+                    pg.goto(state_url(p, st), wait_until='load', timeout=30000)
+                    pg.wait_for_timeout(250)
+                    r = pg.evaluate(JS_EL, sorted(want.get((p['file'], st[0]), [])))
+                except Exception as e:  # noqa
+                    print('열기 실패', p['file'], st[0], str(e)[:120]); continue
+                seen |= set(r['ids'])
+                for q, ok in r['found'].items():
+                    sel_ok[(p['file'], st[0], q)] = ok
+        br.close()
+    missing, bad = [], []
+    for it in spec:
+        m = manual.get(it['id'])
+        if m and m.get('status') == 'na':
+            if not m.get('note'):
+                bad.append('%s: 해당 없음(na)인데 이유가 없음' % it['id'])
+            continue
+        if m and m.get('file') in files:
+            if not sel_ok.get((m['file'], m.get('state', 'default'), m['selector'])):
+                bad.append('%s: 선택자 %s 가 %s [%s] 에 없음' % (it['id'], m['selector'], m['file'], m.get('state', 'default')))
+            continue
+        if m:      # 다른 파일(공통 요소 등)에 적혀 있음
+            continue
+        if it['id'] not in seen:
+            missing.append(it)
+    all_ids = set(it['id'] for it in coverage_init.parse())
+    stray = sorted(seen - all_ids)
+    print('요소 점검(%s): 절 %d개 · 항목 %d · 빠짐 %d · 선택자 문제 %d' % (', '.join(sorted(files)), len(secs), len(spec), len(missing), len(bad)))
+    for x in sorted(unknown_secs):
+        print('  ✗ sections 에 적은 절 이름이 요소 목록에 없음:', x)
+    for it in missing:
+        print('  ✗ %s [%s] %s' % (it['id'], it['page'], it['text'][:90]))
+    for b in bad:
+        print('  ✗', b)
+    for x in stray:
+        print('  ✗ data-el 의 %s 는 요소 목록에 없는 줄 번호' % x)
+    return 1 if (missing or bad or stray or unknown_secs) else 0
+
+
 if __name__ == '__main__':
     cmd = sys.argv[1] if len(sys.argv) > 1 else ''
+    if cmd == 'els':
+        sys.exit(cmd_els(sys.argv[2:]))
     if cmd == 'pages':
         sys.exit(cmd_pages(sys.argv[2:]))
     if cmd == 'coverage':

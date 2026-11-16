@@ -1,0 +1,37 @@
+<!--{"title": "검색", "desc": "비투비티 상품 검색 결과", "name": "검색 결과", "group": 1, "order": 3, "type": "list", "sections": ["검색 결과"], "scripts": ["js/catalog.js", "js/brands.js", "js/rank.js", "js/extra.js", "js/sub-data.js", "js/sub-list.js"], "states": [["default", "검색어 없음(전체 상품)"], ["q=패딩", "검색 결과"], ["q=패딩&state=filter-open", "필터 묶음 열림"], ["q=패딩&state=filter-all", "필터 모음 열림"], ["q=패딩&state=filtered", "필터 적용(적용한 필터 목록)"], ["q=없는상품", "검색 결과 없음"]]}-->
+<section class="lhead" data-el="L180">
+  <div class="wrap">
+    <nav class="crumb" aria-label="현재 위치" data-el="L154"><a href="#" data-href="index.php">홈</a><span aria-hidden="true">/</span><span aria-current="page">검색</span></nav>
+    <h1 class="sub-head__t" id="ltitle" data-el="L155">전체 상품</h1>
+  </div>
+</section>
+<section class="lsec" aria-label="검색 결과 목록">
+  <div class="wrap lsec__body">
+      <div class="lbar" id="lbar">
+        <p class="lbar__cnt" data-el="L156">상품 <b class="num" id="lcount">0</b>개</p>
+        <div class="lbar__f" id="lfilters" data-el="L158 L166"></div>
+        <div class="sort" role="group" aria-label="정렬" data-el="L165 L175"><button type="button" data-sort="rec" aria-pressed="true">추천순</button><button type="button" data-sort="new" aria-pressed="false">신상품순</button><button type="button" data-sort="sell" aria-pressed="false">판매량순</button></div>
+        <div class="fpop" id="fpop" role="dialog" aria-label="필터 선택" hidden data-el="L167 L171"></div>
+      </div>
+      <div class="lapp" id="lapp" role="group" aria-label="적용한 필터" hidden data-el="L157 L173 L174"></div>
+      <div class="pgrid lgrid" id="lgrid" aria-live="polite" data-el="L159 L160 L177 L178"></div>
+      <div class="empty" id="lempty" hidden data-el="L183">
+        <span class="empty__ic"><i class="i i-search" aria-hidden="true"></i></span>
+        <p class="empty__t">검색 결과가 없습니다.</p>
+        <p class="empty__d" data-if-filter>고른 필터를 줄이거나 초기화해 보세요.</p>
+        <p class="empty__d" data-el="L184">띄어 쓴 낱말을 모두 포함하는 상품을 찾습니다. 상품 이름, 상품 코드, 분류 이름으로 검색할 수 있고 띄어쓰기와 대소문자는 구분하지 않습니다.</p>
+        <div class="acts"><button type="button" class="sb sb--line" id="lemptyReset" data-if-filter>필터 초기화</button><a class="sb sb--ink" href="#" data-href="quote-intro.php" data-el="L179">찾는 상품 견적문의</a></div>
+      </div>
+      <nav class="pager" id="lpager" aria-label="쪽 번호" data-el="L161 L176"></nav>
+  </div>
+</section>
+<!--@after-->
+<div class="side" id="fpanel" role="dialog" aria-modal="true" aria-labelledby="fpanelT" hidden data-el="L168 L172">
+  <div class="side__dim" data-pop-close></div>
+  <div class="side__panel">
+    <div class="side__head"><h2 class="pop__t" id="fpanelT">필터</h2><button type="button" class="pop__x" data-pop-close aria-label="필터 닫기"><i class="i i-x" aria-hidden="true"></i></button></div>
+    <div class="ftabs" id="ftabs" role="tablist" aria-label="필터 종류"></div>
+    <div class="side__body" id="fbody"></div>
+    <div class="side__foot"><button type="button" class="sb sb--gray" id="freset" data-el="L172">전체 초기화</button><button type="button" class="sb sb--ink" id="fdone" data-el="L172">상품 보기</button></div>
+  </div>
+</div>

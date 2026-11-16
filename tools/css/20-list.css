@@ -73,22 +73,22 @@
 .lbest__nav{display:flex;gap:6px}
 .subp .lbest__nav .arw{width:40px;height:40px}
 .subp .lbest__nav .arw+.arw{margin-left:0}
-.rail{display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-.rail::-webkit-scrollbar{display:none}
-.rail>.pc{flex:0 0 calc((100% - 100px) / 6);scroll-snap-align:start}
-.subp .rail .pc__name{font-size:15px;line-height:22px}
-.subp .rail .pc__price{font-size:15.5px}
-.subp .rail .pc__meta{font-size:13px;line-height:19px}
-.subp .rail .pc__ms{min-height:0}
-.subp .rail .pc__ms .pc__meta+.pc__meta{display:none}
+.lrail{display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.lrail::-webkit-scrollbar{display:none}
+.lrail>.pc{flex:0 0 calc((100% - 100px) / 6);scroll-snap-align:start}
+.subp .lrail .pc__name{font-size:15px;line-height:22px}
+.subp .lrail .pc__price{font-size:15.5px}
+.subp .lrail .pc__meta{font-size:13px;line-height:19px}
+.subp .lrail .pc__ms{min-height:0}
+.subp .lrail .pc__ms .pc__meta+.pc__meta{display:none}
 .lbest__empty{padding:28px 0;border-top:1px solid var(--ln);border-bottom:1px solid var(--ln);font-size:14px;color:var(--fg3);text-align:center}
-@media (max-width:1024px){ .rail>.pc{flex-basis:calc((100% - 60px) / 4)} }
+@media (max-width:1024px){ .lrail>.pc{flex-basis:calc((100% - 60px) / 4)} }
 @media (max-width:768px){
   .lbest{margin-bottom:36px}
   .lbest__h{margin-bottom:14px}
   .lbest__nav{display:none}
-  .rail{gap:12px;margin-inline:calc(var(--gut) * -1);padding-inline:var(--gut);scroll-padding-inline:var(--gut)}
-  .rail>.pc{flex-basis:40%}
+  .lrail{gap:12px;margin-inline:calc(var(--gut) * -1);padding-inline:var(--gut);scroll-padding-inline:var(--gut)}
+  .lrail>.pc{flex-basis:40%}
 }
 
 /* 도구 줄: 상품 수 · 필터 버튼 · 정렬 */
@@ -103,7 +103,7 @@
 .fbtn[aria-expanded="true"] .i-chev-d{transform:rotate(180deg)}
 .subp .fbtn.is-set{border-color:#1B1B1F;color:#000}
 .fbtn b{font-weight:700;color:var(--accent-text);font-variant-numeric:tabular-nums}
-.subp .fbtn--all{display:none;padding:0 14px 0 12px}
+.subp .fbtn--all{padding:0 14px 0 12px}
 .fbtn--all .i{font-size:18px;color:inherit}
 .sort{display:flex;flex:none;align-items:center;gap:14px;margin-left:auto}
 .sort button{position:relative;font-size:14px;font-weight:500;line-height:22px;color:#8B8B90;transition:color .15s}
@@ -149,7 +149,6 @@
   .sort button{font-size:13.5px}
   .lbar__f{order:3;flex:1 0 100%;margin-inline:calc(var(--gut) * -1);padding-inline:var(--gut);overflow-x:auto;scrollbar-width:none}
   .lbar__f::-webkit-scrollbar{display:none}
-  .subp .fbtn--all{display:inline-flex}
   .fpop{display:none !important}
   .lgrid{margin-top:20px}
   .ftabs{padding:0 20px}
@@ -163,3 +162,7 @@
 .subp .pc__price--q{font-size:15px;font-weight:700;color:var(--fg2)}
 .subp a.act{text-decoration:none}
 @media (max-width:768px){ .subp .pc__price--q{font-size:14px} }
+
+/* 협력브랜드 알약 줄의 글자 탭(전체보기) */
+.bh--logo .bh__tab--text{padding:0 18px;font-size:14px;font-weight:600}
+.subp .bh--logo .bh__tab--text[aria-selected="true"]{color:#000;font-weight:700}

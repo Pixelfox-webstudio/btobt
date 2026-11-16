@@ -4,7 +4,9 @@
 .fgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 20px}
 .fgrid>.full{grid-column:1 / -1}
 .fstack{display:grid;gap:20px}
-.fset{padding-top:28px;border-top:1px solid #000}
+.fset{min-width:0;margin:0;padding:28px 0 0;border:0;border-top:1px solid #000}
+.fset>legend{float:left;width:100%;padding:0}
+.fset>legend+*{clear:both}
 .fset+.fset{margin-top:48px}
 .fset__t{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:24px;font-size:18px;font-weight:700;letter-spacing:-.02em;line-height:26px;color:#000}
 .fset__t small{font-size:13px;font-weight:400;color:var(--fg3)}
@@ -124,9 +126,10 @@
 .thumbs button{position:absolute;right:4px;top:4px;display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:rgba(14,14,16,.72);color:#fff}
 .thumbs em{position:absolute;left:4px;bottom:4px;padding:0 6px;border-radius:999px;background:#000;color:#fff;font-size:10.5px;font-style:normal;font-weight:700;line-height:18px}
 /* 수량(홈 .qty 를 그대로, 넓은 변형만) */
-.subp .qty button{background:#fff}
+.subp .qty{justify-self:start;align-self:start;width:max-content;max-width:100%}
+.subp .qty button{flex:none;background:#fff}
 .subp .qty button:hover{background:var(--ink);color:#fff}
-.subp .qty input{width:46px;height:40px;border:0;border-left:1px solid var(--line-2);border-right:1px solid var(--line-2);border-radius:0;background:#fff;text-align:center;font:500 14px/1 var(--f-mono);color:var(--ink);-moz-appearance:textfield;appearance:textfield}
+.subp .qty input{flex:none;width:46px;padding:0;height:40px;border:0;border-left:1px solid var(--line-2);border-right:1px solid var(--line-2);border-radius:0;background:#fff;text-align:center;font:500 14px/1 var(--f-mono);color:var(--ink);-moz-appearance:textfield;appearance:textfield}
 .subp .qty input::-webkit-outer-spin-button,.subp .qty input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
 .subp .qty input:focus{outline:2px solid var(--accent);outline-offset:-2px}
 .qty--s{height:34px !important}

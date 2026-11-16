@@ -1,0 +1,12 @@
+{
+ "L164": {
+  "file": "search.html",
+  "state": "q=패딩",
+  "selector": ".hd-search__input",
+  "note": "헤더의 공통 상품 검색 칸에 지금 검색어가 들어 있다(js/sub.js)"
+ },
+ "L185": {
+  "file": "search.html",
+  "selector": "meta[name='robots'][content*='noindex']"
+ }
+}
