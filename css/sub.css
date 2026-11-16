@@ -207,13 +207,13 @@ body[data-nocs] .mbar,body[data-nocs] .side-cs,html.is-typing .mbar{display:none
 .subp .qlist summary::-webkit-details-marker{display:none}
 .subp .qlist summary::after{content:"";flex:none;width:20px;height:20px;margin-top:2px;background:#8B8B90;-webkit-mask:var(--i-chev) center/contain no-repeat;mask:var(--i-chev) center/contain no-repeat;transition:transform .3s var(--ease)}
 .subp .qlist details[open] summary::after{transform:rotate(180deg)}
-.subp .faq__a{padding:0 40px 24px 0;font-size:15px;line-height:1.75;color:var(--fg2)}
-.subp .faq__a p+p{margin-top:8px}
-.subp .faq__q{display:flex;gap:10px;min-width:0}
-.subp .faq__q::before{content:"Q";flex:none;font-family:var(--f-en);font-size:18px;font-weight:700;line-height:24px;color:var(--accent-text)}
+.subp .qlist__a{padding:0 40px 24px 0;font-size:15px;line-height:1.75;color:var(--fg2)}
+.subp .qlist__a p+p{margin-top:8px}
+.subp .qlist__q{display:flex;gap:10px;min-width:0}
+.subp .qlist__q::before{content:"Q";flex:none;font-family:var(--f-en);font-size:18px;font-weight:700;line-height:24px;color:var(--accent-text)}
 @media (max-width:768px){
   .subp .qlist summary{padding:16px 0;font-size:15px;line-height:23px}
-  .subp .faq__a{padding:0 0 20px;font-size:14.5px}
+  .subp .qlist__a{padding:0 0 20px;font-size:14.5px}
 }
 
 /* ---------- 8. 팝업 · 옆 패널 · 알림 ---------- */
