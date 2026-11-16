@@ -5,6 +5,7 @@
   /usr/bin/python3 _capture2.py scan-old        # _capture.py 의 SCANNED 를 PC 로만 다시 열어 본다(버린 이유 확인용)
   /usr/bin/python3 _capture2.py scan-new        # NEW 후보를 PC·모바일로 찍는다
   /usr/bin/python3 _capture2.py <이름> [...]    # 이름을 골라 PC·모바일로 찍는다
+  /usr/bin/python3 _capture2.py kept2           # 이 스크립트로 추가해 남긴 화면(KEPT2)을 PC·모바일로 다시 찍는다
   --pc / --m 로 한쪽만.  CAPTURE_OUT=<폴더> 로 저장 폴더를 바꾼다.
 
 지킨 것:
@@ -29,22 +30,27 @@ NEW = {
     'domeggook-join':    ('https://domeggook.com/', {'follow': ['회원가입']}),
     'ownerclan-join':    ('https://www.ownerclan.com/', {'follow': ['회원가입']}),
     'sinsang-join':      ('https://sinsangmarket.kr/', {'follow': ['회원가입']}),
-    'officedepot-join':  ('https://www.officedepot.co.kr/', {'follow': ['회원가입']}),
+    'officedepot-join':  ('https://www.officedepot.co.kr/', {'follow': ['회원가입'], 'm_url': 'https://mobile.officedepot.co.kr/mobileV2/main/mainView.do'}),
     'officenex-join':    ('https://www.officenex.com/', {'follow': ['회원가입']}),
     'eidersafety-join':  ('https://www.eidersafety.com/', {'follow': ['회원가입']}),
     'k2safety-join':     ('https://www.k2safety.co.kr/', {'follow': ['회원가입']}),
     'ikea-biz-signup':   ('https://www.ikea.com/kr/ko/profile/signup/business/', {'wait': 2500}),
-    'kurly-complete':    ('https://www.kurly.com/member/signup/complete', {'wait': 1000}),
+    'kurly-notfound':    ('https://www.kurly.com/member/signup/complete', {'wait': 1000}),   # 없는 주소 → 안내만 있는 한 화면
     '29cm-join':         ('https://www.29cm.co.kr/member/join', {'wait': 1500}),
     # 2차: 짝 채우기·상태 캡처·파일 첨부 화면 찾기
     'kyobo-login':       ('https://mmbr.kyobobook.co.kr/login', {'wait': 2000, 'only': 'pc'}),
     'kyobo-login-b':     ('https://www.kyobobook.co.kr/', {'follow': ['로그인'], 'only': 'pc'}),
     'imarket-join-biz':  ('https://www.imarket.co.kr/member/joinStep1', {'pick': ['사업자'], 'm_url': 'https://www.imarket.co.kr/mobile/member/joinStep1'}),
-    'jobkorea-biz-join': ('https://www.jobkorea.co.kr/Join/GI_Regist', {'m_url': 'https://m.jobkorea.co.kr/Join/GI_Regist'}),
+    'jobkorea-biz-join': ('https://www.jobkorea.co.kr/Join/GI_Regist', {'wait': 4000}),   # m.jobkorea.co.kr/Join/GI_Regist 는 빈 화면이었다
+    'antd-upload':       ('https://ant.design/components/upload', {'wait': 3000}),
     'krds-fileupload':   ('https://www.krds.go.kr/html/site/component/component_summary.html', {'follow': ['파일 업로드']}),
     'linkshops-signup':  ('https://www.linkshops.com/', {'follow': ['회원가입']}),
     'sikbom-join':       ('https://www.sikbom.com/', {'follow': ['회원가입']}),
 }
+# 이 스크립트로 찍어 폴더에 남긴 화면. 파일 이름은 <이름>-pc.jpg / <이름>-m.jpg.
+#   29cm-login 의 모바일은 훑어볼 때 '29cm-join'(같은 화면 auth.29cm.co.kr/login 으로 넘어감)으로 찍은 것을 이름만 바꿨다.
+#   jobkorea-biz-join · officedepot-join · officenex-join 은 모바일 화면을 얻지 못해 남기지 않았다.
+KEPT2 = ['navimro-join', 'imarket-join', 'marpple-login', '29cm-login', 'kurly-notfound', 'krds-fileupload', 'antd-upload']
 TARGETS = dict(c.SCANNED, **c.KEPT)
 TARGETS.update(NEW)
 
@@ -89,7 +95,7 @@ def run(ctx, name, url, opt, suffix):
             for txt in opt.get('follow', []):
                 ok = click_first_visible(pg, txt)
                 if not ok:
-                    href = pg.evaluate("""t => { const a = [...document.querySelectorAll('a[href]')].find(a => a.innerText.trim() === t && !a.getAttribute('href').startsWith('javascript') && a.getAttribute('href') !== '#'); return a ? a.href : null; }""", txt)
+                    href = pg.evaluate("""t => { const a = [...document.querySelectorAll('a[href]')].find(a => (a.innerText || '').trim() === t && !a.getAttribute('href').startsWith('javascript') && a.getAttribute('href') !== '#'); return a ? a.href : null; }""", txt)
                     if href:
                         pg.goto(href, wait_until='domcontentloaded', timeout=45000)
                         ok = 'href'
@@ -127,6 +133,8 @@ def main():
         names, pc_only = list(c.SCANNED), True
     elif names == ['scan-new']:
         names = list(NEW)
+    elif names == ['kept2']:
+        names = list(KEPT2)
     with sync_playwright() as pw:
         b = pw.chromium.launch()
         pc = b.new_context(viewport={'width': 1440, 'height': 900}, locale='ko-KR')

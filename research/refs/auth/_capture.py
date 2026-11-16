@@ -31,8 +31,7 @@ UA_M = ('Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.
 #   pw_probe    True 면 첫 비밀번호 칸에 'a' 한 글자를 넣어 규칙 안내를 띄운다(iframe 포함)
 #   only        'pc' | 'm'
 KEPT = {
-    # 1) 교보문고 — 로그인 / 가입 방법 선택 / 법인회원 사업자번호 인증
-    'kyobo-login':          ('https://mmbr.kyobobook.co.kr/join', {'wait': 1500, 'click_exact': ['로그인'], 'after_wait': 2500}),
+    # 1) 교보문고 — 가입 방법 선택 / 법인회원 사업자번호 인증
     'kyobo-join':           ('https://mmbr.kyobobook.co.kr/join', {'wait': 1500}),
     'kyobo-company':        ('https://mmbr.kyobobook.co.kr/join/company', {'wait': 2500}),
     # 2) 컬리 — 일반 회원 정보 입력(한 화면 양식) / 입력 즉시 안내가 뜬 상태
@@ -53,6 +52,8 @@ KEPT = {
 
 # 훑어보기에서 열어 본 주소(남기지 않은 곳 포함). 기록용이며 기본 실행에서는 찍지 않는다.
 SCANNED = {
+    # 교보문고 로그인: 모바일만 열리고 PC 는 400 Request Blocked 라 짝을 못 맞춰 뺐다(모바일 캡처도 지웠다)
+    'kyobo-login':       ('https://mmbr.kyobobook.co.kr/join', {'wait': 1500, 'click_exact': ['로그인'], 'after_wait': 2500}),
     '29cm-login':        ('https://www.29cm.co.kr/member/login', {}),
     'musinsa-login':     ('https://www.musinsa.com/auth/login', {}),
     'kurly-login':       ('https://www.kurly.com/member/login', {}),
