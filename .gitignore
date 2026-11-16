@@ -1,3 +1,6 @@
 media/
 .DS_Store
 node_modules/
+review/shots/
+__pycache__/
+_tmp-*
