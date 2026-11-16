@@ -1,12 +1,24 @@
 # -*- coding: utf-8 -*-
-"""support-board 레퍼런스 캡처 스크립트.
+"""support-board 레퍼런스 캡처 스크립트 (2026-11-17).
 
 사용:
-  /usr/bin/python3 _capture.py --out <폴더> --set probe            # 후보 훑기(임시 폴더로)
-  /usr/bin/python3 _capture.py --out <폴더> --only kurly-faq,...    # 이름으로 고르기
+  /usr/bin/python3 _capture.py --out <폴더> --set keep            # 남긴 곳: PC(1440) + 모바일(390)
+  /usr/bin/python3 _capture.py --out <폴더> --set keep --m-only   # 모바일만
+  /usr/bin/python3 _capture.py --out <임시 폴더> --set probe --pc-only   # 후보 훑기(probe, probe2 … probe5)
+  /usr/bin/python3 _capture.py --links 이름=주소 … --kw 낱말,낱말   # 첫 화면 링크에서 주소 찾기(캡처 없음)
 
-- 한 주소는 PC(1440) 한 번, 모바일(390) 한 번만 연다. 눌러야 보이는 상태는 같은 방문 안에서 누르고 한 장 더 찍는다.
-- 로그인·제출은 하지 않는다. 팝업은 닫기만 누른다.
+규칙:
+- 로그인·제출은 하지 않는다. 누르는 것은 목록 행 펼치기, 필터 열기, 카드 한 장 열기뿐이다.
+- PC 는 문서 전체를 clip 으로 찍는다(shot). 모바일은 뷰포트 높이를 문서 높이만큼 늘려 찍는다(shot_tall).
+  이렇게 하면 고정된 하단 탭·떠 있는 버튼이 본문 중간을 가리지 않고 그림 맨 아래에 놓인다.
+- 모바일 그림은 device_scale_factor 2 라서 폭 780px 이다. fix_mobile 이 폭 780 이하·세로 9000 이하로 맞춘다.
+- 캡처와 함께 _tmp-<이름>.txt(본문 글자), _tmp-<이름>-links.txt(링크)를 같은 폴더에 남긴다. 확인 뒤 지운다.
+
+이 폴더에 남긴 그림과의 관계:
+- 캡처는 임시 폴더로 찍어 눈으로 확인한 뒤 이 폴더로 옮겼다.
+- socar-guide-pc.jpg 는 probe4 실행(질문을 펼치지 않은 상태)에서 찍은 것이다. 같은 주소를 세 번 열지 않으려고 다시 찍지 않았다.
+- 오프린트미 모바일은 앱 설치 띠의 X 를 눌러 닫고 찍었다. 채널톡 모바일은 상담 말풍선(#ch-plugin)을 캡처 동안만 숨겼다.
+- 컬리·오프린트미·채널톡 PC 맨 위 홍보 띠는 닫지 않고 그대로 찍었다.
 """
 import argparse, json, os, sys, time
 from playwright.sync_api import sync_playwright

@@ -1,0 +1,165 @@
+/* ============================================================
+   20. 상품 목록형 (category · brand · search)
+   순서: 경로 → 분류 소개(대표 사진) → 세부 분류 알약 줄(.bh, 홈 그대로) → 도구 줄 → 고른 필터 → 격자(.pgrid, 홈 그대로) → 쪽 번호
+   ============================================================ */
+.lcrumb{padding-top:24px}
+/* 분류 소개: 대표 사진 위에 머리글 + 분류 이름(페이지 제목) + 설명 + 견적 문의하기 */
+.lhero{padding-top:16px}
+.lhero__frame{position:relative;height:clamp(240px,21vw,300px);margin-inline:var(--gut);border-radius:16px;overflow:hidden;background:var(--dark);color:#fff;isolation:isolate}
+.lhero__slide{position:absolute;inset:0;opacity:0;visibility:hidden;transition:opacity .6s var(--ease-io),visibility 0s .6s}
+.lhero__slide.is-on{opacity:1;visibility:visible;transition:opacity .6s var(--ease-io)}
+.lhero__slide img{display:block;width:100%;height:100%;object-fit:cover;object-position:var(--pos,50% 30%)}
+.lhero__frame::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(90deg,rgba(8,9,12,.74) 0%,rgba(8,9,12,.36) 38%,transparent 66%)}
+.lhero__copy{position:absolute;left:clamp(28px,4.4vw,64px);top:0;bottom:0;z-index:2;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;width:min(520px,62%)}
+.subp .lhero__t{font-size:clamp(28px,2.9vw,40px);font-weight:600;letter-spacing:-.02em;line-height:1.22;color:#fff}
+.lhero__t .tt__pre,.lhero__t .tt__key{display:block;font-size:inherit;letter-spacing:inherit;line-height:inherit;color:inherit}
+.lhero__t .tt__pre{font-weight:400}
+.lhero__t .tt__key{font-weight:700}
+.lhero__d{margin-top:10px;font-size:15px;line-height:1.65;opacity:.92}
+.subp .lhero .bt{height:48px;margin-top:20px;font-size:14.5px}
+.subp .lhero .bt>i{width:48px}
+.lhero__ui{position:absolute;right:20px;bottom:16px;z-index:3;display:flex;align-items:center;gap:10px;color:#fff}
+.lhero__ui[hidden]{display:none}
+.lhero__cnt{font-family:var(--f-en);font-size:15px;font-weight:600;letter-spacing:.06em;line-height:1}
+.lhero__cnt span{opacity:.6}
+.lhero__prog{width:96px;height:2px;background:rgba(255,255,255,.34)}
+.lhero__prog i{display:block;height:100%;background:#fff;transform-origin:left;transition:transform .5s var(--ease)}
+.lhero__nav{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(255,255,255,.5);color:#fff;transition:background-color .25s,color .25s}
+.lhero__nav:hover{background:#fff;color:var(--ink)}
+.lhero__nav+.lhero__nav{margin-left:-4px}
+.subp .lhero__nav:focus-visible{outline-color:#fff}
+.lhero__note{position:absolute;right:20px;top:14px;z-index:3;font-size:11.5px;line-height:16px;color:rgba(255,255,255,.8);text-shadow:0 1px 3px rgba(0,0,0,.6)}
+@media (max-width:768px){
+  .lcrumb{padding-top:16px}
+  .lhero{padding-top:12px}
+  .lhero__frame{height:auto;aspect-ratio:3/2;margin-inline:0;border-radius:0}
+  .lhero__frame::after{background:linear-gradient(0deg,rgba(8,9,12,.78) 0%,rgba(8,9,12,.3) 48%,transparent 74%)}
+  .lhero__copy{left:var(--gut);right:var(--gut);width:auto;justify-content:flex-end;padding-bottom:20px}
+  .subp .lhero__t{font-size:26px}
+  .lhero__d{margin-top:6px;font-size:14px}
+  .subp .lhero .bt{height:44px;margin-top:14px}
+  .subp .lhero .bt>i{width:44px}
+  .lhero__ui{right:12px;bottom:auto;top:12px}
+  .lhero__prog{display:none}
+  .lhero__note{right:auto;left:var(--gut);top:14px}
+}
+@media (prefers-reduced-motion:reduce){ .lhero__slide,.lhero__prog i{transition:none} }
+
+/* 목록 구역: 알약 줄이 이 구역 안에서 헤더 아래에 붙는다 */
+.lsec{position:relative}
+.subp .lsec>.bh{margin-top:24px}
+.lsec__body{padding-top:28px}
+.lhead{padding-top:48px}   /* 대표 사진이 없는 목록(협력브랜드·검색)의 머리 */
+@media (max-width:768px){
+  .subp .lsec>.bh{margin-top:16px}
+  .lsec__body{padding-top:20px}
+  .lhead{padding-top:32px}
+}
+
+/* 형태 고르기(협력브랜드): 묶음마다 한 줄 */
+.fgs{display:grid;gap:10px;margin-bottom:28px;padding:20px 24px;border-radius:16px;background:var(--tint)}
+.fg{display:grid;grid-template-columns:104px minmax(0,1fr);gap:12px;align-items:start}
+.fg__l{padding-top:8px;font-size:13px;font-weight:600;line-height:20px;color:var(--fg3)}
+.fgs .fchip{height:36px;padding:0 13px;font-size:13.5px}
+@media (max-width:768px){
+  .fgs{gap:14px;margin-bottom:20px;padding:16px}
+  .fg{grid-template-columns:minmax(0,1fr);gap:6px}
+  .fg__l{padding-top:0}
+}
+
+/* 베스트 줄 */
+.lbest{margin-bottom:48px}
+.lbest__h{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:20px}
+.lbest__nav{display:flex;gap:6px}
+.subp .lbest__nav .arw{width:40px;height:40px}
+.subp .lbest__nav .arw+.arw{margin-left:0}
+.rail{display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.rail::-webkit-scrollbar{display:none}
+.rail>.pc{flex:0 0 calc((100% - 100px) / 6);scroll-snap-align:start}
+.subp .rail .pc__name{font-size:15px;line-height:22px}
+.subp .rail .pc__price{font-size:15.5px}
+.subp .rail .pc__meta{font-size:13px;line-height:19px}
+.subp .rail .pc__ms{min-height:0}
+.subp .rail .pc__ms .pc__meta+.pc__meta{display:none}
+.lbest__empty{padding:28px 0;border-top:1px solid var(--ln);border-bottom:1px solid var(--ln);font-size:14px;color:var(--fg3);text-align:center}
+@media (max-width:1024px){ .rail>.pc{flex-basis:calc((100% - 60px) / 4)} }
+@media (max-width:768px){
+  .lbest{margin-bottom:36px}
+  .lbest__h{margin-bottom:14px}
+  .lbest__nav{display:none}
+  .rail{gap:12px;margin-inline:calc(var(--gut) * -1);padding-inline:var(--gut);scroll-padding-inline:var(--gut)}
+  .rail>.pc{flex-basis:40%}
+}
+
+/* 도구 줄: 상품 수 · 필터 버튼 · 정렬 */
+.lbar{position:relative;display:flex;align-items:center;flex-wrap:wrap;gap:12px 20px;padding-bottom:16px;border-bottom:1px solid #000}
+.lbar__cnt{flex:none;font-size:14px;line-height:22px;color:var(--fg3)}
+.lbar__cnt b{font-weight:700;color:#000}
+.lbar__f{display:flex;flex:1 1 auto;align-items:center;gap:6px;min-width:0}
+.fbtn{display:inline-flex;align-items:center;gap:4px;flex:none;height:36px;padding:0 10px 0 14px;border:1px solid #DDDDE1;border-radius:999px;background:#fff;font-size:13.5px;font-weight:600;letter-spacing:-.01em;color:#55545A;white-space:nowrap;transition:border-color .15s,color .15s,background-color .15s}
+.subp .fbtn{border:1px solid #DDDDE1;background:#fff;padding:0 10px 0 14px}
+.fbtn .i{font-size:16px;color:#8B8B90;transition:transform .2s}
+.subp .fbtn:hover,.subp .fbtn[aria-expanded="true"]{border-color:#1B1B1F;color:#1B1B1F}
+.fbtn[aria-expanded="true"] .i-chev-d{transform:rotate(180deg)}
+.subp .fbtn.is-set{border-color:#1B1B1F;color:#000}
+.fbtn b{font-weight:700;color:var(--accent-text);font-variant-numeric:tabular-nums}
+.subp .fbtn--all{display:none;padding:0 14px 0 12px}
+.fbtn--all .i{font-size:18px;color:inherit}
+.sort{display:flex;flex:none;align-items:center;gap:14px;margin-left:auto}
+.sort button{position:relative;font-size:14px;font-weight:500;line-height:22px;color:#8B8B90;transition:color .15s}
+.sort button+button::before{content:"";position:absolute;left:-7px;top:6px;width:1px;height:10px;background:#DDDDE1}
+.sort button:hover{color:#000}
+.sort button[aria-pressed="true"]{color:#000;font-weight:700}
+/* 고른 필터 */
+.lapp{display:flex;align-items:center;flex-wrap:wrap;gap:6px;padding:14px 0 0}
+.lapp[hidden]{display:none}
+.subp .lapp .fchip{height:32px;padding:0 8px 0 12px;font-size:13px;font-weight:500;border-color:#DDDDE1;background:var(--tint);color:#0E0E10}
+.lapp .fchip:hover{border-color:#1B1B1F}
+.lapp__clear{margin-left:8px;font-size:13px;font-weight:600;color:var(--fg3);text-decoration:underline;text-underline-offset:3px}
+.lapp__clear:hover{color:#000}
+.lgrid{margin-top:28px}
+/* 필터 선택지(작은 상자 · 필터 모음 공용) */
+.fpop{position:absolute;left:0;top:calc(100% - 8px);z-index:45;width:400px;max-width:100%;padding:20px;border-radius:16px;background:#fff;box-shadow:0 0 0 1px #DCDCDF,0 18px 44px rgba(14,14,16,.2)}
+.fpop[hidden]{display:none}
+.fpop__t{margin-bottom:12px;font-size:14px;font-weight:700;line-height:22px;color:#000}
+.fopts{display:flex;flex-wrap:wrap;gap:6px}
+.fopt{position:relative;cursor:pointer}
+.fopt input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
+.fopt span{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 13px;border:1px solid #DDDDE1;border-radius:999px;background:#fff;font-size:13.5px;font-weight:500;color:#363636;white-space:nowrap;transition:border-color .15s,background-color .15s,color .15s}
+.fopt:hover span{border-color:#1B1B1F}
+.fopt input:checked+span{border-color:#1B1B1F;background:#1B1B1F;color:#fff;font-weight:600}
+.fopt input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px}
+.fopt em{flex:none;width:14px;height:14px;border-radius:50%;background:var(--c);box-shadow:inset 0 0 0 1px rgba(14,14,16,.16)}
+.fopt input:checked+span em{box-shadow:inset 0 0 0 1px rgba(255,255,255,.5)}
+.fpop__foot{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:18px;padding-top:14px;border-top:1px solid var(--ln)}
+.fpop__reset{font-size:13.5px;font-weight:600;color:var(--fg3);text-decoration:underline;text-underline-offset:3px}
+.fpop__reset:hover{color:#000}
+/* 필터 모음(옆 패널): 종류 탭 + 한 번에 한 종류 */
+.ftabs{display:flex;flex:none;gap:20px;padding:0 28px;border-bottom:1px solid var(--ln);overflow-x:auto;scrollbar-width:none}
+.ftabs::-webkit-scrollbar{display:none}
+.ftabs button{position:relative;flex:none;height:48px;font-size:15px;font-weight:600;color:#8B8B90;white-space:nowrap}
+.ftabs button[aria-selected="true"]{color:#000;font-weight:700}
+.ftabs button[aria-selected="true"]::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:#000}
+.ftabs b{margin-left:3px;font-weight:700;color:var(--accent-text);font-variant-numeric:tabular-nums}
+.fpanel__reset{display:inline-flex;align-items:center;gap:4px;margin-top:20px;font-size:13.5px;font-weight:600;color:var(--fg3);text-decoration:underline;text-underline-offset:3px}
+@media (max-width:768px){
+  .lbar{gap:10px 12px;padding-bottom:12px}
+  .lbar__cnt{order:1}
+  .sort{order:2;gap:12px}
+  .sort button{font-size:13.5px}
+  .lbar__f{order:3;flex:1 0 100%;margin-inline:calc(var(--gut) * -1);padding-inline:var(--gut);overflow-x:auto;scrollbar-width:none}
+  .lbar__f::-webkit-scrollbar{display:none}
+  .subp .fbtn--all{display:inline-flex}
+  .fpop{display:none !important}
+  .lgrid{margin-top:20px}
+  .ftabs{padding:0 20px}
+}
+/* 카드: 올리면 다른 사진(사진이 두 장일 때) · 견적문의 표시 */
+@media (hover:hover){
+  .subp .pc--two:hover .pc__media img.is-on{opacity:0}
+  .subp .pc--two:hover .pc__media img.alt{opacity:1;transform:none}
+}
+.subp .pc__media img.alt{opacity:0}
+.subp .pc__price--q{font-size:15px;font-weight:700;color:var(--fg2)}
+.subp a.act{text-decoration:none}
+@media (max-width:768px){ .subp .pc__price--q{font-size:14px} }

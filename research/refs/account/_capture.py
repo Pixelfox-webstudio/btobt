@@ -32,6 +32,11 @@ JOBS = {
     #  steps: [('click', selector), ('wait', ms), ('eval', js), ('scroll_to', selector)]
     'shopify-ux': dict(url='https://shopify.dev/docs/apps/build/customer-accounts/ux',
                        site='shopify', screen='account-ux-guide', max_h=9000),
+    'shopify-ux-img': dict(url='https://shopify.dev/docs/apps/build/customer-accounts/ux', site='shopify', screen='ux-img',
+                           max_h=9500, elements_only=True, hide_fixed=True, dpr=2, elements_auto=('main img', 300)),
+    'shadcn-orders-doc': dict(url='https://www.shadcn.io/blocks/account-orders', site='shadcn', screen='account-orders-doc', max_h=3000,
+                              dump_iframes=True, dump_links='/blocks/account'),
+    'musinsa-my': dict(url='https://www.musinsa.com/mypage', site='musinsa', screen='my', max_h=4200, dump_links='musinsa.com'),
     'flowbite-account': dict(url='https://flowbite.com/blocks/e-commerce/account-overview/',
                              site='flowbite', screen='account-overview', max_h=7000),
     'flowbite-orders': dict(url='https://flowbite.com/blocks/e-commerce/orders-overview/',
@@ -149,7 +154,7 @@ def capture(ctx, job, suffix, steps_key):
         info['title'] = pg.title()
         info['height'] = pg.evaluate('document.documentElement.scrollHeight')
         if job.get('dump_iframes'):
-            info['iframes'] = pg.evaluate('Array.from(document.querySelectorAll("iframe")).map(f => f.src).filter(Boolean).slice(0, 40)')
+            info['iframes'] = pg.evaluate('Array.from(document.querySelectorAll("iframe")).map(f => f.src).filter(s => s && !/google|doubleclick|carbon/.test(s)).slice(0, 20)')
         if job.get('dump_links'):
             info['links'] = pg.evaluate('(p) => Array.from(document.querySelectorAll("a")).map(a => a.href).filter(h => h.includes(p)).slice(0, 80)', job['dump_links'])
         if job.get('hide_fixed'):
@@ -189,6 +194,27 @@ def capture(ctx, job, suffix, steps_key):
                 info.setdefault('sections', []).append([os.path.basename(spath), size, box['sec']])
             except Exception as e:
                 info.setdefault('sections', []).append([name, 'ERR ' + str(e)[:120]])
+        # elements_auto: (selector, 최소 폭) — 맞는 요소를 순서대로 모두 찍는다(<site>-<screen>-<번호>)
+        if job.get('elements_auto'):
+            sel, min_w = job['elements_auto']
+            locs = pg.locator(sel)
+            k = 0
+            for i in range(locs.count()):
+                loc = locs.nth(i)
+                try:
+                    bb = loc.bounding_box()
+                    if not bb or bb['width'] < min_w or bb['height'] < 80:
+                        continue
+                    k += 1
+                    epath = os.path.join(OUT, '%s-%s-%02d-%s.jpg' % (job['site'], job['screen'], k, suffix))
+                    loc.scroll_into_view_if_needed(timeout=5000)
+                    pg.wait_for_timeout(500)
+                    loc.screenshot(path=epath, type='jpeg', quality=78, timeout=20000)
+                    size = fit_mobile(epath) if suffix == 'm' else Image.open(epath).size
+                    alt = (loc.get_attribute('alt') or '')[:60]
+                    info.setdefault('elements', []).append([os.path.basename(epath), size, alt])
+                except Exception as e:
+                    info.setdefault('elements', []).append([i, 'ERR ' + str(e)[:100]])
         # elements: [(selector, nth, screen 이름)] — 그 요소만 따로 찍는다(문서 속 미리보기·삽화)
         for sel, nth, name in job.get('elements', []):
             epath = os.path.join(OUT, '%s-%s-%s.jpg' % (job['site'], name, suffix))
@@ -216,6 +242,7 @@ def main():
     with sync_playwright() as pw:
         b = pw.chromium.launch()
         pc = b.new_context(viewport={'width': 1440, 'height': 900}, locale='ko-KR')
+        pc2 = b.new_context(viewport={'width': 1440, 'height': 900}, locale='ko-KR', device_scale_factor=2)
         mo = b.new_context(viewport={'width': 390, 'height': 844}, locale='ko-KR', is_mobile=True,
                            has_touch=True, device_scale_factor=2, user_agent=MOBILE_UA)
         for n in names:
@@ -223,7 +250,9 @@ def main():
             only = job.get('only')
             print('==', n, job['url'])
             if only in (None, 'pc'):
-                print(' pc', json.dumps(capture(pc, job, 'pc', 'steps_pc'), ensure_ascii=False))
+                # dpr=2: 문서 속 작은 삽화(실제 화면 그림)의 글자를 읽으려고 PC 를 2배율로 찍는다
+                ctx = pc2 if job.get('dpr') == 2 else pc
+                print(' pc', json.dumps(capture(ctx, job, 'pc', 'steps_pc'), ensure_ascii=False))
             if only in (None, 'm'):
                 print(' m ', json.dumps(capture(mo, job, 'm', 'steps_m'), ensure_ascii=False))
         b.close()

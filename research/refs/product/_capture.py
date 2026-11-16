@@ -511,6 +511,69 @@ def ascolour_flow(pg):
     print('GRID_TEXT_TAIL:', pg.evaluate("(() => { const t=document.querySelector('.bulk-popup') ; const m=document.querySelector('.mobile-grid-toggle'); const box = (t && t.getBoundingClientRect().width>0) ? t : (m ? m.closest('form') || m.parentElement.parentElement : null); return box ? box.innerText.replace(/\\s+/g,' ').slice(-500) : 'none'; })()"))
 
 
+def kill_google_onetap(pg):
+    """Google 원탭 로그인 띠를 닫는다(로그인하지 않는다)."""
+    n = pg.evaluate("""() => { let n=0; document.querySelectorAll('#credential_picker_container, #credential_picker_iframe, iframe[src*="accounts.google.com/gsi"]').forEach(e => { e.remove(); n++; }); return n; }""")
+    print('ONETAP_REMOVED', n)
+
+
+def vistaprint_flow(pg):
+    """Vistaprint: 뒷면 인쇄 Yes → 인쇄 위치 → 사이즈별 수량 입력 → 가격 변화를 캡처한다."""
+    wide = pg.viewport_size['width'] > 1000
+    sfx = 'pc' if wide else 'm'
+    kill_google_onetap(pg)
+
+    def price_text():
+        return pg.evaluate("""() => { const m = document.body.innerText.match(/\\$[0-9.,]+[^\\n]{0,40}(each|total)[^\\n]{0,60}/gi); return m ? m.slice(0, 6).join(' | ') : 'none'; }""")
+
+    print('PRICE_BEFORE:', price_text())
+    for label in ('Yes', 'Left Chest'):
+        try:
+            loc = pg.get_by_text(label, exact=True).first
+            loc.scroll_into_view_if_needed(timeout=3000)
+            loc.click(timeout=3000)
+            pg.wait_for_timeout(1800)
+            print('CLICKED', label)
+        except Exception as e:
+            print('CLICK_FAIL', label, str(e)[:120])
+    kill_google_onetap(pg)
+    filled = 0
+    for ph, v in (('S', '5'), ('M', '10'), ('L', '12'), ('XL', '8')):
+        try:
+            loc = pg.locator('input[placeholder="%s"]' % ph).first
+            if not loc.count():
+                loc = pg.get_by_label(ph, exact=True).first
+            loc.scroll_into_view_if_needed(timeout=3000)
+            loc.fill(v, timeout=3000)
+            pg.wait_for_timeout(400)
+            filled += 1
+        except Exception as e:
+            print('FILL_FAIL', ph, str(e)[:120])
+    pg.keyboard.press('Tab')
+    pg.wait_for_timeout(3500)
+    print('FILLED', filled, 'PRICE_AFTER:', price_text())
+    print('SIZE_BLOCK:', pg.evaluate("""() => { const el=[...document.querySelectorAll('*')].find(e => /^Size and quantity/.test((e.textContent||'').trim()) && e.children.length<3); if(!el) return 'none'; let b=el; for(let i=0;i<4&&b.parentElement;i++) b=b.parentElement; return b.innerText.replace(/\\s+/g,' ').slice(0,500); }"""))
+    kill_google_onetap(pg)
+    # 구매 영역 전체(옵션 선택이 끝난 상태)
+    y = pg.evaluate("""() => { const el=[...document.querySelectorAll('h1')][0]; return el ? Math.max(0, Math.round(el.getBoundingClientRect().top + window.scrollY - (window.innerWidth>1000 ? 60 : 700))) : 0; }""")
+    pg.evaluate('window.scrollTo(0, 0)')
+    pg.wait_for_timeout(600)
+    shot(pg, os.path.join(OUT, 'vistaprint-configured-%s.jpg' % sfx), 1500 if wide else 3000, y if wide else 0)
+    # 수량 입력 칸이 보이는 화면
+    try:
+        pg.locator('input[placeholder="S"]').first.scroll_into_view_if_needed(timeout=3000)
+        pg.evaluate('window.scrollBy(0, %d)' % (-380 if wide else -300))
+    except Exception:
+        pass
+    pg.wait_for_timeout(700)
+    shot_view(pg, os.path.join(OUT, 'vistaprint-qty-%s.jpg' % sfx))
+    # 구매 영역을 지나 아래로 내려갔을 때 따라오는 것이 있는지
+    pg.evaluate('window.scrollTo(0, %d)' % (2600 if wide else 4200))
+    pg.wait_for_timeout(1500)
+    kill_google_onetap(pg)
+    shot_view(pg, os.path.join(OUT, 'vistaprint-scrolled-%s.jpg' % sfx))
+
+
 JOBS = {}
 
 
@@ -660,6 +723,13 @@ job('applekr2', site='applekr', screen='buy', base=False,
     ])
 job('musinsa2', site='musinsa', screen='detail',
     url='https://www.musinsa.com/products/7230884')
+
+job('vistaprint', site='vistaprint', screen='detail',
+    url='https://www.vistaprint.com/clothing-bags/t-shirts/gildan-r-budget-unisex-t-shirt')
+
+job('vistaprint2', site='vistaprint', screen='detail', base=False,
+    url='https://www.vistaprint.com/clothing-bags/t-shirts/gildan-r-budget-unisex-t-shirt',
+    steps=[('py', vistaprint_flow)])
 
 
 def main():
