@@ -1,0 +1,117 @@
+{
+ "rounds": [
+  {
+   "key": "draft",
+   "date": "2026-11-17",
+   "pages": [
+    "draft-preview",
+    "inquiry-draft"
+   ],
+   "scores": {
+    "elements": 940,
+    "states": 860,
+    "design": 830,
+    "consistency": 870,
+    "layout": 850
+   },
+   "checkPagesFailed": 0,
+   "elsMissing": 0,
+   "findings": [
+    {
+     "item": "design",
+     "page": "draft-preview",
+     "state": "approved-draft, revised, approved",
+     "problem": "파랑을 정해진 용도 밖에 썼다. approved-draft 상태의 '시안 승인' 상태 칩이 옅은 파랑 바탕에 파란 글자이고, 완료 화면(revised·approved·approved-draft) 위쪽의 체크 아이콘 원과 '바로 결제할까요?' 팝업 아이콘도 옅은 파랑 원에 파란 아이콘이다. DESIGN.md Overview는 파랑을 랭킹·왕관·모바일 견적문의·장바구니 견적 버튼·숫자 강조·포커스 링에만 쓰라고 하고, accent-soft는 왕관 원 바탕에만 쓴다.",
+     "fix": "상태 칩은 '접수 대기'와 같은 회색 칩(#F5F5F6 바탕, fg3 글자)이나 검정 테두리 칩으로 바꾼다. 완료·팝업 아이콘 원은 nodraft·notfound 상태처럼 #F5F5F6 바탕에 검정 아이콘으로 맞춘다.",
+     "evidence": "review/sheets/draft-preview-pc-3.png 왼쪽 칸(state=approved-draft)의 상태 행 칩과 위쪽 체크 원, draft-preview-pc-2.png 가운데 칸(state=revised) 위쪽 체크 원, 오른쪽 칸(state=approved) 팝업 위쪽 아이콘, draft-preview-m-2.png 첫째 열"
+    },
+    {
+     "item": "states",
+     "page": "draft-preview",
+     "state": "(없음)",
+     "problem": "요소 목록 L909 '수정 요청 보내기(확인 후)'와 L911 '시안 승인(확인 후)'의 확인창을 상태로 볼 수 없다. approved 상태에는 승인한 뒤의 결제 묻기 팝업만 있고, 보내기·승인 전에 묻는 확인창이 없다.",
+     "fix": "spec/pages.json에 state=confirm-approve(예: '시안과 견적을 승인할까요?' + 취소/승인)와 state=confirm-revise('수정 요청을 보낼까요? 주문이 접수 대기로 돌아갑니다.' + 취소/보내기)를 넣는다. 지금 쓰는 '바로 결제할까요?' 팝업 상자(모서리 16, 딤)를 그대로 다시 쓴다.",
+     "evidence": "spec/pages.json의 draft-preview states 13개 가운데 확인창 상태가 없음. review/sheets/draft-preview-pc-2.png 오른쪽 칸(state=approved)에는 승인한 뒤의 팝업만 있음"
+    },
+    {
+     "item": "states",
+     "page": "inquiry-draft",
+     "state": "(없음)",
+     "problem": "요소 목록 L939 '로그인 회원 본인 문의만'을 비로그인 상태로 볼 수 없다. 안내 상자의 한 줄과 invalid 문구로만 대신했다. 같은 묶음인 draft-preview에는 state=guest가 있어 두 페이지가 서로 어긋난다.",
+     "fix": "inquiry-draft에도 state=guest를 넣는다. draft-preview의 guest처럼 자물쇠 아이콘, '로그인이 필요합니다', 로그인 버튼을 담은 카드로 만든다.",
+     "evidence": "review/sheets/draft-preview-pc-5.png(draft-preview의 guest 상태)와 inquiry-draft-pc-1.png·pc-2.png 비교(inquiry에는 default/custom/empty/invalid만 있음)"
+    },
+    {
+     "item": "layout",
+     "page": "inquiry-draft",
+     "state": "default, custom",
+     "problem": "폰에서는 문의 정보 표와 세 줄 안내 상자가 먼저 나온다. 그래서 이 화면의 주 내용인 시안 사진은 첫 화면 아래쪽에서 고정 '닫기' 바에 가려 윗부분만 보인다. PC에서는 사진이 주 칸(왼쪽)인데 폰에서는 순서가 뒤집힌다.",
+     "fix": "폰 폭(<=767px)에서 .dv-info에 order를 주어 시안 이미지 카드를 문의 정보 위로 올린다. 아니면 회색 안내 상자를 사진 카드 아래로 옮긴다.",
+     "evidence": "review/sheets/inquiry-draft-m-1.png default·custom 열의 y≈550~640(사진 위쪽이 닫기 바 뒤로 잘림), inquiry-draft-etc.png w390 칸"
+    },
+    {
+     "item": "layout",
+     "page": "draft-preview, inquiry-draft",
+     "state": "notfound, invalid, guest",
+     "problem": "PC 1440에서 안내 상태 카드(높이 약 260px)가 화면 위쪽에만 있고, 아래 3분의 2 가까이가 빈 회색으로 남는다. 글자 두세 줄과 버튼 하나뿐이라 빈약하다.",
+     "fix": "안내 카드를 감싸는 칸에 min-height:calc(100vh - 헤더 높이 - 위아래 여백)과 세로 가운데 정렬을 준다. 아니면 nodraft처럼 요청번호·문의번호 정보 행을 넣어 내용을 채운다.",
+     "evidence": "review/sheets/draft-preview-pc-4.png 가운데(notfound)·오른쪽(invalid) 칸, draft-preview-pc-5.png(guest), inquiry-draft-pc-2.png(invalid)"
+    }
+   ],
+   "notes": "화면 점검: 페이지 2 · 상태 17 · 렌더링 102회 · 실패 0. 요소 점검: 절 2개 · 항목 31 · 빠짐 0 · 선택자 문제 0. shell=bare(팝업형 머리줄)는 spec 지정 사항. 사진 번호 배지는 수정 요청 문구에서 가리키는 기능 번호라 장식용 단계 번호로 보지 않음. 이번에 쓴 도구 호출은 18회로, 정한 15회를 넘었다(시트 장수가 많았고 셸 구분자 오류로 한 번을 다시 돌림). 홈 캡처는 따로 열어 보지 않았다.",
+   "round": 1
+  }
+ ],
+ "key": "draft",
+ "scores": {
+  "elements": 940,
+  "states": 860,
+  "design": 830,
+  "consistency": 870,
+  "layout": 850
+ },
+ "findings": [
+  {
+   "item": "design",
+   "page": "draft-preview",
+   "state": "approved-draft, revised, approved",
+   "problem": "파랑을 정해진 용도 밖에 썼다. approved-draft 상태의 '시안 승인' 상태 칩이 옅은 파랑 바탕에 파란 글자이고, 완료 화면(revised·approved·approved-draft) 위쪽의 체크 아이콘 원과 '바로 결제할까요?' 팝업 아이콘도 옅은 파랑 원에 파란 아이콘이다. DESIGN.md Overview는 파랑을 랭킹·왕관·모바일 견적문의·장바구니 견적 버튼·숫자 강조·포커스 링에만 쓰라고 하고, accent-soft는 왕관 원 바탕에만 쓴다.",
+   "fix": "상태 칩은 '접수 대기'와 같은 회색 칩(#F5F5F6 바탕, fg3 글자)이나 검정 테두리 칩으로 바꾼다. 완료·팝업 아이콘 원은 nodraft·notfound 상태처럼 #F5F5F6 바탕에 검정 아이콘으로 맞춘다.",
+   "evidence": "review/sheets/draft-preview-pc-3.png 왼쪽 칸(state=approved-draft)의 상태 행 칩과 위쪽 체크 원, draft-preview-pc-2.png 가운데 칸(state=revised) 위쪽 체크 원, 오른쪽 칸(state=approved) 팝업 위쪽 아이콘, draft-preview-m-2.png 첫째 열"
+  },
+  {
+   "item": "states",
+   "page": "draft-preview",
+   "state": "(없음)",
+   "problem": "요소 목록 L909 '수정 요청 보내기(확인 후)'와 L911 '시안 승인(확인 후)'의 확인창을 상태로 볼 수 없다. approved 상태에는 승인한 뒤의 결제 묻기 팝업만 있고, 보내기·승인 전에 묻는 확인창이 없다.",
+   "fix": "spec/pages.json에 state=confirm-approve(예: '시안과 견적을 승인할까요?' + 취소/승인)와 state=confirm-revise('수정 요청을 보낼까요? 주문이 접수 대기로 돌아갑니다.' + 취소/보내기)를 넣는다. 지금 쓰는 '바로 결제할까요?' 팝업 상자(모서리 16, 딤)를 그대로 다시 쓴다.",
+   "evidence": "spec/pages.json의 draft-preview states 13개 가운데 확인창 상태가 없음. review/sheets/draft-preview-pc-2.png 오른쪽 칸(state=approved)에는 승인한 뒤의 팝업만 있음"
+  },
+  {
+   "item": "states",
+   "page": "inquiry-draft",
+   "state": "(없음)",
+   "problem": "요소 목록 L939 '로그인 회원 본인 문의만'을 비로그인 상태로 볼 수 없다. 안내 상자의 한 줄과 invalid 문구로만 대신했다. 같은 묶음인 draft-preview에는 state=guest가 있어 두 페이지가 서로 어긋난다.",
+   "fix": "inquiry-draft에도 state=guest를 넣는다. draft-preview의 guest처럼 자물쇠 아이콘, '로그인이 필요합니다', 로그인 버튼을 담은 카드로 만든다.",
+   "evidence": "review/sheets/draft-preview-pc-5.png(draft-preview의 guest 상태)와 inquiry-draft-pc-1.png·pc-2.png 비교(inquiry에는 default/custom/empty/invalid만 있음)"
+  },
+  {
+   "item": "layout",
+   "page": "inquiry-draft",
+   "state": "default, custom",
+   "problem": "폰에서는 문의 정보 표와 세 줄 안내 상자가 먼저 나온다. 그래서 이 화면의 주 내용인 시안 사진은 첫 화면 아래쪽에서 고정 '닫기' 바에 가려 윗부분만 보인다. PC에서는 사진이 주 칸(왼쪽)인데 폰에서는 순서가 뒤집힌다.",
+   "fix": "폰 폭(<=767px)에서 .dv-info에 order를 주어 시안 이미지 카드를 문의 정보 위로 올린다. 아니면 회색 안내 상자를 사진 카드 아래로 옮긴다.",
+   "evidence": "review/sheets/inquiry-draft-m-1.png default·custom 열의 y≈550~640(사진 위쪽이 닫기 바 뒤로 잘림), inquiry-draft-etc.png w390 칸"
+  },
+  {
+   "item": "layout",
+   "page": "draft-preview, inquiry-draft",
+   "state": "notfound, invalid, guest",
+   "problem": "PC 1440에서 안내 상태 카드(높이 약 260px)가 화면 위쪽에만 있고, 아래 3분의 2 가까이가 빈 회색으로 남는다. 글자 두세 줄과 버튼 하나뿐이라 빈약하다.",
+   "fix": "안내 카드를 감싸는 칸에 min-height:calc(100vh - 헤더 높이 - 위아래 여백)과 세로 가운데 정렬을 준다. 아니면 nodraft처럼 요청번호·문의번호 정보 행을 넣어 내용을 채운다.",
+   "evidence": "review/sheets/draft-preview-pc-4.png 가운데(notfound)·오른쪽(invalid) 칸, draft-preview-pc-5.png(guest), inquiry-draft-pc-2.png(invalid)"
+  }
+ ],
+ "checkPagesFailed": 0,
+ "elsMissing": 0
+}

@@ -1,0 +1,77 @@
+<!--{"title": "견적문의 시안", "desc": "견적문의·맞춤작업복 문의에 담당자가 답변과 함께 보낸 시안을 보는 창", "name": "견적문의 시안 보기", "group": 6, "order": 3, "type": "account", "shell": "bare", "win": true,
+ "sections": ["견적문의 시안 보기"], "scripts": ["js/sub-draft.js"],
+ "states": [["default", "견적문의 시안"], ["state=custom", "맞춤작업복 시안"], ["state=empty", "시안 없음"], ["state=invalid", "잘못된 요청"]]}-->
+<header class="win__bar">
+  <a class="win__logo" href="#" data-href="index.php"><img src="img/b2bt-v2-h56.png" srcset="img/b2bt-v2-h56.png 1x, img/b2bt-v2-h112.png 2x" width="107" height="30" alt="비투비티"></a>
+  <h1 class="win__name" data-el="L930"><span data-st-not="custom">견적문의 시안</span><span data-st="custom">맞춤작업복 시안</span></h1>
+  <div class="win__acts">
+    <button type="button" class="sb sb--gray sb--m" data-win-close data-el="L936">닫기</button>
+  </div>
+</header>
+
+<div class="win__body">
+  <div class="wrap">
+    <div class="dv dv--view" data-st-not="invalid">
+      <!-- 문의 정보 -->
+      <aside class="dv-card dv-info" aria-labelledby="dvInfoT">
+        <h2 class="dv-card__t" id="dvInfoT">문의 정보</h2>
+        <dl class="dl" data-el="L931" data-sample>
+          <div><dt>문의 종류</dt><dd><span data-st-not="custom">견적문의</span><span data-st="custom">맞춤작업복 견적문의</span></dd></div>
+          <div><dt>문의번호</dt><dd class="num"><span data-st-not="custom">Q-20261110-0012</span><span data-st="custom">C-20261109-0004</span></dd></div>
+          <div><dt>상품명</dt><dd id="dvProd">방한 후드 패딩</dd></div>
+          <div><dt>시안</dt><dd class="num" id="dvInfoCnt">2장</dd></div>
+        </dl>
+        <div class="note">
+          <ul>
+            <li data-el="L942">이 화면에서는 시안을 보기만 할 수 있습니다. 승인이나 수정 요청은 받지 않습니다.</li>
+            <li>고칠 내용이 있으면 고객센터 <a class="num" href="tel:050713786094"><b>0507-1378-6094</b></a>(주중 10시~18시)로 알려 주세요.</li>
+            <li data-el="L939">로그인한 회원 본인의 문의만 볼 수 있습니다.</li>
+          </ul>
+        </div>
+      </aside>
+
+      <!-- 시안 이미지 목록 -->
+      <section class="dv-card dv__main" aria-labelledby="dvImgT" data-el="L932">
+        <div class="dv-card__h">
+          <h2 class="dv-card__t" id="dvImgT">시안 이미지 <small><span class="num" id="dvCnt">2</span>장</small></h2>
+          <p class="dv-card__d" data-st-not="empty">이미지를 누르면 크게 볼 수 있습니다.</p>
+        </div>
+        <div class="dv-grps" id="dvGroups" data-st-not="empty" data-el="L935"></div>
+        <div class="empty" data-st="empty" data-el="L941">
+          <span class="empty__ic"><i class="i i-image" aria-hidden="true"></i></span>
+          <p class="empty__t">등록된 시안 이미지가 없습니다.</p>
+          <p class="empty__d">시안 파일이 삭제되었거나 아직 올라오지 않았습니다. 자세한 내용은 고객센터로 문의해 주세요.</p>
+          <div class="acts"><a class="sb sb--line" href="#" data-href="mypage.php?section=inquiries">견적문의 내역 보기</a></div>
+        </div>
+      </section>
+    </div>
+
+    <!-- 잘못된 요청 -->
+    <div class="dv-resw">
+      <section class="dv-card dv-res gate" data-st="invalid" data-el="L940">
+        <span class="smark smark--red"><i class="i i-alert" aria-hidden="true"></i></span>
+        <h2 class="gate__t">잘못된 요청입니다</h2>
+        <p class="gate__d" data-el="L939">문의번호가 없거나 다른 회원의 문의입니다. 로그인한 회원 본인의 문의만 볼 수 있습니다. 마이페이지 견적문의 내역에서 시안확인을 다시 눌러 주세요.</p>
+        <div class="acts"><a class="sb sb--ink" href="#" data-href="mypage.php?section=inquiries">견적문의 내역 보기</a></div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<div class="win__foot">
+  <button type="button" class="sb sb--gray sb--l" data-win-close data-el="L936">닫기</button>
+</div>
+<!--@after-->
+<!-- 시안 크게 보기(원본 이미지 열기) -->
+<div class="pop pop--full dv-view" id="dvView" role="dialog" aria-modal="true" aria-labelledby="dvViewT" hidden data-el="L935">
+  <div class="pop__dim" data-pop-close></div>
+  <div class="pop__box pop__box--xl">
+    <div class="pop__head"><h2 class="pop__t" id="dvViewT"><span id="dvViewName">시안 1</span> <small class="dv-view__n num" id="dvViewN">1 / 2</small></h2><button type="button" class="pop__x" data-pop-close aria-label="크게 보기 닫기"><i class="i i-x" aria-hidden="true"></i></button></div>
+    <div class="dv-view__stage">
+      <img id="dvViewImg" src="img/catalog/460-f.webp" alt="" width="600" height="600" decoding="async">
+      <button type="button" class="arw dv-view__nav" data-dv-dir="-1" aria-label="이전 시안"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+      <button type="button" class="arw dv-view__nav dv-view__nav--r" data-dv-dir="1" aria-label="다음 시안"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+    </div>
+    <div class="pop__foot dv-view__foot"><p class="dv-view__file" id="dvViewFile" data-sample></p><a class="sb sb--line sb--m" id="dvViewOrig" href="img/catalog/460-f.webp" target="_blank" rel="noopener"><i class="i i-external i--16" aria-hidden="true"></i>원본 보기</a></div>
+  </div>
+</div>

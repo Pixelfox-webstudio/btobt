@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ko" data-accent="blue" data-claim="on">
+<head>
+<script>
+(function(){var d=document.documentElement,s=d.dataset,g=null,c=null,ok=/^(grad|dot|grid|ring|off)$/;s.accent='blue';s.cta='solid';s.claim='on';s.pop='both';s.version='10';
+try{var q=new URLSearchParams(location.search).get('bg')||'';if(ok.test(q))localStorage.setItem('b2bt-v10-bg',q);g=localStorage.getItem('b2bt-v10-bg')||'';c=localStorage.getItem('b2bt-v9-cols');}catch(e){}
+s.band='f';s.bg=ok.test(g||'')?g:'grad';s.cols=c==='1'?'1':'2';d.classList.add('js');
+if(!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('v4-motion');setTimeout(function(){if(!window.B2BT_READY)d.classList.remove('v4-motion');},4000);}})();
+</script>
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>시안 확인 | 비투비티</title>
+<meta name="description" content="주문에 올라온 시안을 보고 승인하거나 수정을 요청하는 창">
+<link rel="icon" type="image/png" href="img/b2bt-v2-h56.png">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="css/ds-blue.css?v=20261116">
+<link rel="stylesheet" href="css/site.css?v=20261116">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="css/v4.css?v=20261116">
+<link rel="stylesheet" href="css/v8-base.css?v=20261116">
+<link rel="stylesheet" href="css/v8.css?v=20261116">
+<link rel="stylesheet" href="css/ui-v8.css?v=20261116">
+<link rel="stylesheet" href="css/v9.css?v=20261116">
+<link rel="stylesheet" href="css/v10.css?v=20261116">
+<link rel="stylesheet" href="css/sub.css?v=20261117">
+<script src="js/sub.js?v=20261117" defer></script>
+<script src="js/sub-draft.js?v=20261117" defer></script>
+</head>
+<body data-page="draft-preview" data-shell="bare" data-auth="member" data-win>
+<main id="main" class="v4 v5 v6 v7 v8 v9 v10 subp">
+<header class="win__bar">
+  <a class="win__logo" href="#" data-href="index.php"><img src="img/b2bt-v2-h56.png" srcset="img/b2bt-v2-h56.png 1x, img/b2bt-v2-h112.png 2x" width="107" height="30" alt="비투비티"></a>
+  <h1 class="win__name">시안 확인</h1>
+  <div class="win__acts">
+    <button type="button" class="sb sb--gray sb--m" data-win-close data-el="L910">닫기</button>
+    <a class="sb sb--ink sb--m" href="#" data-href="quote-request-document.php?no=R-20261112-0031" data-st-not="draft-only revised approved-draft nodraft notfound invalid guest" data-el="L908"><i class="i i-doc i--16" aria-hidden="true"></i>견적서 보기</a>
+  </div>
+</header>
+
+<div class="win__body">
+  <div class="wrap">
+
+    <!-- 시안 확인(시안 완료 · 견적 변경 · 승인 불가) -->
+    <div data-st-not="revised approved approved-draft nodraft notfound invalid guest">
+      <div class="dv-head">
+        <span class="stag stag--ink stag--l" data-st-not="locked">시안 완료</span>
+        <span class="stag stag--line stag--l" data-st="locked">견적 완료</span>
+        <dl class="dv-head__dl" data-sample>
+          <div><dt>요청번호</dt><dd class="num">R-20261112-0031</dd></div>
+          <div><dt>요청일</dt><dd class="num">2026-11-12</dd></div>
+          <div><dt>받은 자료</dt><dd id="dvHeadKind">시안 · 견적</dd></div>
+          <div><dt>품목</dt><dd id="dvHeadItems">3개 · 112벌</dd></div>
+        </dl>
+      </div>
+
+      <div class="dv" id="dv">
+        <!-- 견적 요약(시안과 견적을 함께 받은 건만) -->
+        <section class="dv-card dv-sum" aria-labelledby="dvSumT" data-st-not="draft-only" data-el="L897">
+          <div class="dv-sum__h">
+            <h2 class="dv-card__t" id="dvSumT">견적 요약</h2>
+            <a class="lnk" href="#" data-href="quote-request-document.php?no=R-20261112-0031" data-el="L908">견적서 보기 <i aria-hidden="true">→</i></a>
+          </div>
+          <p class="dv-sum__amt" data-el="L898"><span>견적 금액</span><b class="num" id="dvAmt" data-sample>6,641,800원</b></p>
+          <p class="dv-sum__vat">부가세 포함 · 공급가 <span class="num" id="dvSupply" data-sample>6,038,000원</span></p>
+          <ul class="dv-items" id="dvItems" data-el="L899" data-sample></ul>
+        </section>
+
+        <!-- 시안 이미지 -->
+        <section class="dv-card dv__main" aria-labelledby="dvImgT" data-el="L900">
+          <div class="dv-card__h">
+            <h2 class="dv-card__t" id="dvImgT">시안 이미지 <small><span class="num" id="dvCnt">5</span>장</small></h2>
+            <p class="dv-card__d">이미지를 누르면 크게 볼 수 있습니다.</p>
+          </div>
+          <div class="dv-grps" id="dvGroups" data-el="L901 L902"></div>
+        </section>
+
+        <!-- 시안 검토: 승인 · 수정 요청 -->
+        <section class="dv-card dv-act" aria-labelledby="dvActT">
+          <h2 class="dv-card__t" id="dvActT">시안 검토</h2>
+          <div class="msg msg--err dv-act__msg" role="alert" data-st="changed" data-el="L923">
+            <i class="i i-alert" aria-hidden="true"></i>
+            <div><p><b>견적이 바뀌었습니다.</b> 새로 고침한 뒤 바뀐 견적을 다시 확인하고 승인해 주세요.</p><a class="sb sb--ink sb--s dv-act__re" href="draft-preview.html"><i class="i i-refresh i--16" aria-hidden="true"></i>새로 고침</a></div>
+          </div>
+          <p class="dv-act__d" data-st-not="draft-only locked">시안과 견적을 확인한 뒤 승인하거나 수정을 요청해 주세요. 시안을 승인한 뒤에 결제할 수 있습니다.</p>
+          <p class="dv-act__d" data-st="draft-only">시안을 확인한 뒤 승인해 주세요. 승인하면 담당자가 이 시안으로 견적을 준비해 보내 드립니다.</p>
+
+          <button type="button" class="bt bt--acc bt--full dv-act__ok" id="dvApprove" data-st-not="locked" data-el="L911">
+            <span><span data-st-not="draft-only" data-el="L912">시안·견적 승인</span><span data-st="draft-only" data-el="L913">시안 승인</span></span>
+            <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i>
+          </button>
+
+          <!-- 승인할 수 없는 상태(시안 완료가 아닐 때) -->
+          <div class="note dv-act__lock" data-st="locked" data-el="L924">
+            <p class="note__t"><i class="i i-info i--18" aria-hidden="true"></i>이미 승인했거나 지금은 승인할 수 없는 상태입니다.</p>
+            <ul data-sample><li>현재 상태: <b>견적 완료</b> (2026-11-15 승인)</li><li>결제는 마이페이지 주문 내역의 결제진행에서 할 수 있습니다.</li></ul>
+            <a class="lnk dv-act__go" href="#" data-href="mypage.php?section=orders">주문 내역 보기 <i aria-hidden="true">→</i></a>
+          </div>
+
+          <!-- 시안만 받은 건: 화면에서 수정 요청을 받지 않는다 -->
+          <p class="dv-act__help" data-st="draft-only">고칠 곳이 있으면 고객센터 <a class="num" href="tel:050713786094"><b>0507-1378-6094</b></a>(주중 10시~18시)로 알려 주세요.</p>
+
+          <!-- 수정 요청(시안과 견적을 함께 받은 건만) -->
+          <div class="dv-act__rev" data-st-not="draft-only locked">
+            <div class="fld" data-err-st="memo-empty" data-err="수정할 내용을 적어 주세요." data-el="L905">
+              <label class="fld__l" for="dvMemo">수정 요청 내용 <span class="r"><span id="dvMemoN">0</span> / 1,000</span></label>
+              <textarea class="txa" id="dvMemo" maxlength="1000" data-count="dvMemoN" placeholder="고칠 곳을 시안 번호와 함께 적어 주세요.&#10;예) 시안 2: 등판 자수를 지금보다 조금 작게 해 주세요."></textarea>
+              <p class="fld__msg fld__msg--err" role="alert" data-el="L920"></p>
+            </div>
+            <button type="button" class="sb sb--line sb--block sb--l dv-act__send" id="dvRevise" data-el="L909">수정 요청 보내기</button>
+            <p class="dv-act__help">보내면 주문이 접수 대기 상태로 돌아가고, 담당자가 요청 내용을 보고 시안을 다시 올립니다.</p>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- 결과 · 안내 화면 -->
+    <div class="dv-resw">
+      <!-- 수정 요청 보냄 -->
+      <section class="dv-card dv-res gate" data-st="revised" data-el="L921">
+        <span class="smark"><i class="i i-check" aria-hidden="true"></i></span>
+        <h2 class="gate__t">수정 요청을 보냈습니다</h2>
+        <p class="gate__d">담당자가 요청 내용을 확인해 시안을 다시 올립니다. 새 시안이 올라오면 마이페이지 주문 내역에서 다시 확인할 수 있습니다.</p>
+        <div class="gate__box">
+          <dl class="dl" data-sample>
+            <div><dt>요청번호</dt><dd class="num">R-20261112-0031</dd></div>
+            <div><dt>상태</dt><dd><span class="stag">접수 대기</span> <span class="stag stag--line">시안 수정 요청</span></dd></div>
+            <div><dt>보낸 날</dt><dd class="num">2026-11-17</dd></div>
+            <div><dt>보낸 내용</dt><dd class="dv-memo" id="dvSent">시안 2: 등판 자수를 지금보다 조금 작게 해 주세요.
+시안 1: 가슴 로고 실 색을 흰색으로 바꿔 주세요.</dd></div>
+          </dl>
+        </div>
+        <div class="acts"><a class="sb sb--ink" href="#" data-href="mypage.php?section=orders">주문 내역 보기</a></div>
+      </section>
+
+      <!-- 승인 완료: 시안·견적 -->
+      <section class="dv-card dv-res gate" data-st="approved" data-el="L922">
+        <span class="smark"><i class="i i-check" aria-hidden="true"></i></span>
+        <h2 class="gate__t">시안과 견적을 승인했습니다</h2>
+        <p class="gate__d">주문이 견적 완료 상태로 바뀌었습니다. 결제를 진행해 주세요. 결제는 마이페이지 주문 내역에서도 할 수 있습니다.</p>
+        <div class="gate__box">
+          <dl class="dl" data-sample>
+            <div><dt>요청번호</dt><dd class="num">R-20261112-0031</dd></div>
+            <div><dt>상태</dt><dd><span class="stag stag--acc">견적 완료</span></dd></div>
+            <div><dt>견적 금액</dt><dd><b class="num">6,641,800원</b> <small class="dv-res__s">부가세 포함</small></dd></div>
+            <div><dt>승인일</dt><dd class="num">2026-11-17</dd></div>
+          </dl>
+        </div>
+        <div class="acts"><a class="sb sb--ink" href="order.html">결제하기</a></div>
+      </section>
+
+      <!-- 승인 완료: 시안만 -->
+      <section class="dv-card dv-res gate" data-st="approved-draft" data-el="L922">
+        <span class="smark"><i class="i i-check" aria-hidden="true"></i></span>
+        <h2 class="gate__t">시안을 승인했습니다</h2>
+        <p class="gate__d">담당자가 승인한 시안으로 견적을 준비합니다. 견적서가 도착하면 마이페이지 주문 내역에서 확인할 수 있습니다.</p>
+        <div class="gate__box">
+          <dl class="dl" data-sample>
+            <div><dt>요청번호</dt><dd class="num">R-20261112-0031</dd></div>
+            <div><dt>상태</dt><dd><span class="stag stag--acc">시안 승인</span></dd></div>
+            <div><dt>승인일</dt><dd class="num">2026-11-17</dd></div>
+          </dl>
+        </div>
+        <div class="acts"><a class="sb sb--ink" href="#" data-href="mypage.php?section=orders">주문 내역 보기</a></div>
+      </section>
+
+      <!-- 등록된 시안 없음(접수 대기이거나 시안이 없을 때) -->
+      <section class="dv-card dv-res gate" data-st="nodraft" data-el="L919">
+        <span class="smark smark--gray"><i class="i i-image" aria-hidden="true"></i></span>
+        <h2 class="gate__t">등록된 시안이 없습니다</h2>
+        <p class="gate__d">담당자가 시안을 만들고 있습니다. 시안이 올라오면 마이페이지 주문 내역의 시안확인에서 볼 수 있습니다.</p>
+        <div class="gate__box">
+          <dl class="dl" data-sample>
+            <div><dt>요청번호</dt><dd class="num">R-20261112-0031</dd></div>
+            <div><dt>상태</dt><dd><span class="stag">접수 대기</span></dd></div>
+            <div><dt>요청일</dt><dd class="num">2026-11-12</dd></div>
+          </dl>
+        </div>
+        <div class="acts"><a class="sb sb--ink" href="#" data-href="mypage.php?section=orders">주문 내역 보기</a></div>
+      </section>
+
+      <!-- 찾을 수 없음 -->
+      <section class="dv-card dv-res gate" data-st="notfound" data-el="L918">
+        <span class="smark smark--gray"><i class="i i-search" aria-hidden="true"></i></span>
+        <h2 class="gate__t">시안 정보를 찾을 수 없습니다</h2>
+        <p class="gate__d">주문이 취소되었거나 다른 계정의 주문입니다. 시안은 주문한 회원 본인만 볼 수 있습니다.</p>
+        <div class="acts"><a class="sb sb--ink" href="#" data-href="mypage.php?section=orders">주문 내역 보기</a></div>
+      </section>
+
+      <!-- 잘못된 요청 -->
+      <section class="dv-card dv-res gate" data-st="invalid" data-el="L917">
+        <span class="smark smark--red"><i class="i i-alert" aria-hidden="true"></i></span>
+        <h2 class="gate__t">잘못된 요청입니다</h2>
+        <p class="gate__d">주소에 주문 정보가 없거나 바르지 않습니다. 마이페이지 주문 내역에서 시안확인을 다시 눌러 주세요.</p>
+        <div class="acts"><a class="sb sb--ink" href="#" data-href="mypage.php?section=orders">주문 내역 보기</a></div>
+      </section>
+
+      <!-- 비로그인 -->
+      <section class="dv-card dv-res gate" data-st="guest" data-el="L916">
+        <span class="smark smark--gray"><i class="i i-lock" aria-hidden="true"></i></span>
+        <h2 class="gate__t">로그인이 필요합니다</h2>
+        <p class="gate__d">시안은 주문한 회원 본인만 볼 수 있습니다. 로그인한 뒤 마이페이지 주문 내역에서 시안확인을 눌러 주세요.</p>
+        <div class="acts"><a class="sb sb--ink" href="#" data-href="login.php?return=draft-preview.php">로그인</a></div>
+      </section>
+    </div>
+
+  </div>
+</div>
+
+<div class="win__foot">
+  <button type="button" class="sb sb--gray sb--l" data-win-close data-el="L910">닫기</button>
+  <a class="sb sb--ink sb--l" href="#" data-href="quote-request-document.php?no=R-20261112-0031" data-st-not="draft-only revised approved-draft nodraft notfound invalid guest" data-el="L908">견적서 보기</a>
+</div>
+<!-- 시안 크게 보기 -->
+<div class="pop pop--full dv-view" id="dvView" role="dialog" aria-modal="true" aria-labelledby="dvViewT" hidden>
+  <div class="pop__dim" data-pop-close></div>
+  <div class="pop__box pop__box--xl">
+    <div class="pop__head"><h2 class="pop__t" id="dvViewT"><span id="dvViewName">시안 1</span> <small class="dv-view__n num" id="dvViewN">1 / 5</small></h2><button type="button" class="pop__x" data-pop-close aria-label="크게 보기 닫기"><i class="i i-x" aria-hidden="true"></i></button></div>
+    <div class="dv-view__stage">
+      <img id="dvViewImg" src="img/catalog/460-f.webp" alt="" width="600" height="600" decoding="async">
+      <button type="button" class="arw dv-view__nav" data-dv-dir="-1" aria-label="이전 시안"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+      <button type="button" class="arw dv-view__nav dv-view__nav--r" data-dv-dir="1" aria-label="다음 시안"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+    </div>
+    <div class="pop__foot dv-view__foot"><p class="dv-view__file" id="dvViewFile" data-sample></p><a class="sb sb--line sb--m" id="dvViewOrig" href="img/catalog/460-f.webp" target="_blank" rel="noopener"><i class="i i-external i--16" aria-hidden="true"></i>원본 보기</a></div>
+  </div>
+</div>
+<!-- 시안·견적 승인 뒤: 바로 결제할지 묻기 -->
+<div class="pop pop--c" id="dvPay" role="alertdialog" aria-modal="true" aria-labelledby="dvPayT" aria-describedby="dvPayD" hidden data-open-st="approved" data-el="L912">
+  <div class="pop__dim" data-pop-close></div>
+  <div class="pop__box">
+    <div class="pop__body">
+      <span class="smark"><i class="i i-card" aria-hidden="true"></i></span>
+      <h2 class="pop__t" id="dvPayT">바로 결제할까요?</h2>
+      <p class="pop__d" id="dvPayD">시안과 견적을 승인했습니다. 결제 금액은 <b class="num" data-sample>6,641,800원</b>(부가세 포함)입니다.</p>
+    </div>
+    <div class="pop__foot"><button type="button" class="sb sb--gray" data-pop-close>나중에 결제</button><a class="sb sb--ink" href="order.html">결제하기</a></div>
+  </div>
+</div>
+</main>
+</body>
+</html>

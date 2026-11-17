@@ -1,0 +1,142 @@
+/* ============================================================
+   68. 시안 확인(draft-preview) · 견적문의 시안 보기(inquiry-draft)
+   따로 열리는 창(회색 바탕) 안에 흰 카드로 나눈다. 접두어 dv
+   ============================================================ */
+/* 머리 한 줄: 상태 · 요청번호 · 요청일 · 받은 자료 · 품목 */
+.dv-head{display:flex;flex-wrap:wrap;align-items:center;gap:10px 20px;margin-bottom:20px}
+.dv-head__dl{display:flex;flex-wrap:wrap;align-items:center;gap:4px 0;font-size:14px;line-height:22px}
+.dv-head__dl>div{display:flex;align-items:center;gap:6px}
+.dv-head__dl>div+div::before{content:"";width:1px;height:12px;margin:0 14px 0 8px;background:#C8C8CC}
+.dv-head__dl dt{color:var(--fg3)}
+.dv-head__dl dd{font-weight:600;color:var(--ink)}
+
+/* 2단: 왼쪽 시안 · 오른쪽 견적 요약과 검토 */
+.dv{display:grid;grid-template-columns:minmax(0,1fr) 380px;grid-template-rows:auto 1fr;grid-template-areas:"main sum" "main act";gap:20px 24px;align-items:start}
+.dv--nosum{grid-template-rows:auto;grid-template-areas:"main act"}
+.dv__main{grid-area:main}
+.dv-sum{grid-area:sum}
+.dv-act{grid-area:act}
+.dv--view{grid-template-rows:auto;grid-template-areas:"main info"}
+.dv-info{grid-area:info}
+
+/* 흰 카드 */
+.dv-card{min-width:0;padding:28px;border-radius:16px;background:#fff}
+.dv-card__h{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 20px;padding-bottom:18px;border-bottom:1px solid #000}
+.dv-card__t{font-size:20px;font-weight:700;letter-spacing:-.02em;line-height:28px;color:#000}
+.dv-card__t small{margin-left:6px;font-size:15px;font-weight:600;color:var(--fg3)}
+.dv-card__d{font-size:13.5px;line-height:21px;color:var(--fg3)}
+
+/* 품목별 묶음 */
+.dv-grp{padding-top:24px}
+.dv-grp+.dv-grp{margin-top:28px;border-top:1px solid var(--ln)}
+.dv-grp__h{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:16px}
+.dv-grp__t{font-size:17px;font-weight:700;letter-spacing:-.02em;line-height:25px;color:#000}
+.dv-grp__m{margin-top:2px;font-size:13.5px;line-height:21px;color:var(--fg3)}
+.dv-grp__c{flex:none;font-size:13.5px;line-height:21px;color:var(--fg2)}
+.dv-grp__c b{font-weight:700;color:#000}
+.dv-grp--one{padding-top:24px}
+
+/* 시안 칸: 정사각, 잘리지 않게 contain, 왼쪽 위 일련번호 */
+.dv-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 16px}
+.dv-fig{min-width:0}
+.dv-fig__btn{position:relative;display:block;width:100%;aspect-ratio:1/1;border-radius:16px;background:#F2F2F2;overflow:hidden;cursor:zoom-in}
+.dv-fig__btn img{display:block;width:100%;height:100%;object-fit:contain;transition:transform .7s var(--ease)}
+.dv-fig__btn::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 1px #EDEDEF;pointer-events:none}
+.dv-fig__btn:hover img{transform:scale(1.035)}
+.dv-fig__no{position:absolute;left:14px;top:14px;display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:rgba(27,27,31,.86);font-family:var(--f-en);font-size:16px;font-weight:700;line-height:1;color:#fff}
+.dv-fig__zoom{position:absolute;right:14px;bottom:14px;display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:#fff;box-shadow:0 4px 14px rgba(20,24,40,.14);color:var(--ink);transition:background-color .2s,color .2s}
+.dv-fig__btn:hover .dv-fig__zoom{background:var(--ink);color:#fff}
+.dv-fig__btn:focus-visible{outline-offset:3px}
+.dv-fig__cap{display:flex;align-items:baseline;gap:8px;margin-top:10px;font-size:13px;line-height:20px;color:var(--fg3)}
+.dv-fig__cap b{flex:none;font-size:14px;font-weight:700;color:#000}
+.dv-fig__cap span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* 견적 요약 */
+.dv-sum__h{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.dv-sum__h .lnk{font-size:14px}
+.dv-sum__amt{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-top:18px;padding-top:18px;border-top:1px solid #000}
+.dv-sum__amt span{font-size:14px;font-weight:600;color:#000}
+.dv-sum__amt b{font-size:24px;font-weight:800;letter-spacing:-.01em;line-height:32px;color:var(--ink)}
+.dv-sum__vat{margin-top:2px;font-size:13px;line-height:20px;color:var(--fg3);text-align:right}
+.dv-items{margin-top:16px;border-top:1px solid var(--ln)}
+.dv-items li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 16px;padding:12px 0;border-bottom:1px solid var(--ln)}
+.dv-items__n{font-size:14.5px;font-weight:700;letter-spacing:-.01em;line-height:22px;color:#000}
+.dv-items__o{grid-column:1;font-size:13px;line-height:20px;color:var(--fg3)}
+.dv-items__q{grid-column:2;grid-row:1 / span 2;align-self:center;font-size:14.5px;font-weight:600;color:var(--ink)}
+
+/* 시안 검토 */
+.dv-act__d{margin-top:8px;font-size:14px;line-height:22px;color:var(--fg2)}
+.dv-act__msg{margin-top:14px}
+.dv-act__msg p{color:inherit}
+.dv-act__re{margin-top:10px}
+.dv-act__ok{margin-top:20px}
+.dv-act__lock{margin-top:16px}
+.dv-act__go{margin-top:8px}
+.dv-act__rev{margin-top:24px;padding-top:20px;border-top:1px solid var(--ln)}
+.dv-act__send{margin-top:12px}
+.dv-act__help{margin-top:10px;font-size:13px;line-height:20px;color:var(--fg3)}
+.dv-act__help a{color:#000;text-decoration:underline;text-underline-offset:3px}
+.subp .dv-act .txa{min-height:120px}
+
+/* 결과 · 안내 카드 */
+.dv-resw{max-width:560px;margin-inline:auto}
+.dv-resw>.dv-res{margin-top:8px}
+.dv-res.gate{padding:48px 40px 40px}
+.dv-res .gate__box{width:100%}
+.dv-res .acts{margin-top:28px}
+.dv-res__s{font-size:12.5px;color:var(--fg3)}
+.dv-memo{white-space:pre-line}
+
+/* 견적문의 시안 보기: 문의 정보 */
+.dv-info .dl{margin-top:16px}
+.dv-info .dl>div{grid-template-columns:84px minmax(0,1fr)}
+.dv-info .note{margin-top:20px}
+.dv-info .note a,.dv-act__help a{white-space:nowrap}
+
+/* 크게 보기 */
+.dv-view .pop__head{padding-bottom:12px}
+.dv-view__n{margin-left:6px;font-size:14px;font-weight:600;color:var(--fg3)}
+.dv-view__stage{position:relative;flex:1 1 auto;min-height:0;margin:0 28px;border-radius:16px;background:#F2F2F2;overflow:hidden}
+.dv-view__stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.dv-view__nav{position:absolute;left:16px;top:50%;margin-top:-26px;background:#fff;box-shadow:0 4px 14px rgba(20,24,40,.14);color:var(--ink)}
+.dv-view__nav:hover{background:var(--ink);color:#fff}
+.dv-view__nav--r{left:auto;right:16px}
+.dv-view__nav[hidden]{display:none}
+.dv-view__foot{align-items:center;gap:16px}
+.subp .dv-view__foot>*{flex:none}
+.dv-view__file{flex:1 1 auto;min-width:0;font-size:14px;line-height:22px;color:var(--fg2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+@media (max-width:1100px){
+  .dv{grid-template-columns:minmax(0,1fr) 340px}
+}
+@media (max-width:768px){
+  .dv-head{gap:8px 12px;margin-bottom:16px}
+  .dv-head__dl{gap:2px 14px;font-size:13.5px}
+  .dv-head__dl>div+div::before{display:none}
+  .dv,.dv--nosum,.dv--view{display:flex;flex-direction:column;align-items:stretch;gap:12px}
+  .dv-card{padding:20px}
+  .dv-card__t{font-size:18px;line-height:26px}
+  .dv-card__h{padding-bottom:14px}
+  .dv-grp{padding-top:18px}
+  .dv-grp+.dv-grp{margin-top:20px}
+  .dv-grp__h{margin-bottom:12px}
+  .dv-grp__t{font-size:16px;line-height:24px}
+  .dv-grp__m{font-size:13px;line-height:20px}
+  .dv-grid{gap:16px 10px}
+  .dv-fig__btn{border-radius:14px}
+  .dv-fig__no{left:10px;top:10px;width:26px;height:26px;font-size:14px}
+  .dv-fig__zoom{right:8px;bottom:8px;width:36px;height:36px}
+  .dv-fig__zoom .i{font-size:16px}
+  .dv-fig__cap{flex-direction:column;gap:0;margin-top:8px;font-size:12.5px;line-height:18px}
+  .dv-fig__cap b{font-size:13.5px;line-height:20px}
+  .dv-fig__cap span{max-width:100%}
+  .dv-sum__amt{margin-top:14px;padding-top:14px}
+  .dv-sum__amt b{font-size:22px;line-height:30px}
+  .dv-res.gate{padding:36px 20px 28px}
+  .dv-res .acts{width:100%;margin-top:24px}
+  .dv-view__stage{margin:0;border-radius:0}
+  .dv-view__nav{width:44px;height:44px;margin-top:-22px;left:10px}
+  .dv-view__nav--r{left:auto;right:10px}
+  .dv-view__foot{gap:12px}
+}
+@media (prefers-reduced-motion:reduce){ .dv-fig__btn img,.dv-fig__zoom{transition:none} .dv-fig__btn:hover img{transform:none} }
