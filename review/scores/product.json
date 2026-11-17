@@ -1,0 +1,121 @@
+{
+  "rounds": [
+    {
+      "key": "product",
+      "date": "2026-11-17",
+      "scores": {
+        "elements": 950,
+        "states": 920,
+        "design": 830,
+        "consistency": 870,
+        "layout": 780
+      },
+      "checkPagesFailed": 0,
+      "elsMissing": 0,
+      "findings": [
+        {
+          "item": "layout",
+          "page": "product.html",
+          "state": "default (c1024, 769~약 1300px)",
+          "problem": "오른쪽 플로팅 상담 버튼(검은 상담 원·노란 카카오 원·맨 위로)이 구매 영역 오른쪽 끝 글자를 덮는다. '주문 내용 선택 5 / 5 단계 완료'의 '완료', 옵션 줄의 '남녀공용' 끝이 가려지고, 스크롤하면 색상별 소계·× 빼기 버튼도 그 밑을 지나간다. 1440에서도 같은 화면에 노란 카카오 원과 하단 구매 바의 '카카오톡' 노란 알약이 함께 떠 있어 상담 버튼이 겹친다.",
+          "evidence": "review/sheets/product-etc.png c1024 칸 오른쪽, 위에서 약 270~315px(원 세 개가 '5 / 5 단계' 뒤와 '남녀공용' 위에 놓임). review/sheets/product-pc-1.png default 칸 오른쪽 노란 원(y≈345)과 하단 바 '카카오톡'(y≈413)",
+          "fix": "상품 상세에서는 하단 구매 바에 전화·카카오톡이 이미 있으므로 구매 바가 보이는 동안 .side-cs의 상담·카카오 버튼을 숨기고 맨 위로 버튼만 남긴다. 숨기지 않을 거면 max-width:1300px 구간에서 .pd__top 오른쪽 열에 padding-right:64px(52+여백)를 줘서 겹치지 않게 한다."
+        },
+        {
+          "item": "layout",
+          "page": "product.html",
+          "state": "default·fresh 외 PC 전 상태(1101px 이상)",
+          "problem": "PC 사이즈표 수량 칸 오른쪽의 ▲▼ 증감 화살표가 눈으로 보기에 10px 안팎으로 아주 작다. 1366px 가로 태블릿처럼 이 표가 나오는 터치 화면에서는 누르기 어렵고, 1024 이하에서 쓰는 −/+ 버튼(약 44px)과도 모양이 다르다.",
+          "evidence": "review/sheets/product-pc-1.png default·state=fresh·state=print 칸의 '사이즈별 수량' 표 숫자 칸(y≈490~520)",
+          "fix": "DESIGN.md의 수량 조절(.qty: 높이 40, ± 버튼 40×40, 숫자 JetBrains Mono 14)로 바꾸거나 1024에서 쓰는 −/+ 버튼을 PC 표에도 쓴다. 칸이 좁으면 사이즈 열을 두 줄로 나눈다."
+        },
+        {
+          "item": "design",
+          "page": "product.html (css/sub.css)",
+          "state": "state=need, state=fail, 입력 오류 문구",
+          "problem": "오류 색이 토큰에 없는 값이다: #D10019(글자·테두리), #B80016, 분홍 바탕 #FFF0F1(css/sub.css 462~464·894·900·981·986행 등). DESIGN.md colors에는 오류 색이 없다.",
+          "evidence": "review/sheets/product-pc-3.png state=need 칸 위쪽 '필수 항목 5개를 확인해 주세요.' 분홍 띠(y≈288)와 항목별 붉은 안내. review/sheets/product-pc-4.png state=fail 칸 붉은 안내(y≈835)",
+          "fix": "DESIGN.md colors에 오류 색 두 개(예: error #D10019, error-soft #FFF0F1)를 정식으로 올리고 sub.css에서는 변수(--cf-err 등)로만 참조한다. #B80016은 그중 하나로 합친다."
+        },
+        {
+          "item": "design",
+          "page": "product.html",
+          "state": "default, state=fresh, state=restored, 필수 표시",
+          "problem": "파랑이 포인트 범위(숫자 강조·랭킹·포커스) 밖에서도 쓰인다. '✓ 필요한 내용을 모두 골랐습니다.' 완료 문구, 필수 표시 '*', 수량 할인 '없음' 글자가 파랑이고, 되살림 안내는 옅은 파랑 면 띠다. 한 화면에 파란 글자가 6~8군데 흩어져 강조 효과가 약해진다.",
+          "evidence": "review/sheets/product-pc-1.png default 칸 요약 상자 아래 완료 문구(y≈862), state=fresh 칸 '수량 할인 없음'(y≈698), '핏 *'(y≈312). review/sheets/product-pc-5.png state=restored 칸 파란 띠(y≈288)",
+          "fix": "파랑은 할인율·할인 금액 같은 숫자 강조에만 남긴다. 완료 문구와 필수 표시는 primary 또는 text-sub로, '없음'은 text-sub로 바꾼다. 되살림 띠는 surface-tint(#F5F5F6) 바탕에 검정 체크 아이콘으로 바꾼다."
+        },
+        {
+          "item": "consistency",
+          "page": "product.html",
+          "state": "id=3026&brand=k2, id=3026&brand=k2&state=sized",
+          "problem": "협력브랜드 상품은 사진 칸이 가로형(약 3:2)이라 다른 상품(1:1)보다 낮고, PC에서 왼쪽 사진 아래가 크게 빈다. 상품마다 갤러리 크기가 달라 보인다.",
+          "evidence": "review/sheets/product-pc-2.png 가운데·오른쪽 칸 사진(y≈98~268)과 왼쪽 칸(id=504) 사진(y≈98~350) 비교. review/sheets/product-m-1.png k2 두 칸 사진 높이",
+          "fix": "갤러리 틀을 aspect-ratio:1/1로 고정하고 가로 사진은 object-fit:contain에 surface-studio(#F2F2F2) 바탕으로 앉혀 상품마다 같은 크기로 보이게 한다."
+        },
+        {
+          "item": "layout",
+          "page": "product.html",
+          "state": "state=none",
+          "problem": "상품 없음 화면은 아이콘, 제목, 두 줄 설명, 버튼 세 개 다음에 바로 푸터가 온다. 1440 첫 화면에 내용이 300px 정도뿐이라 빈약하다.",
+          "evidence": "review/sheets/product-pc-6.png state=none 칸(제목·버튼 y≈120~215, 바로 아래 y≈303부터 푸터)",
+          "fix": "안내 아래에 앞말+이름 제목(예: '대신 많이 찾는 단체복')을 단 섹션을 하나 붙이고 인기 상품 4개(.pgrid 4열, 폰 2열)를 보여 준다. 섹션 위 여백은 var(--sec)를 쓴다."
+        },
+        {
+          "item": "states",
+          "page": "product.html",
+          "state": "협력브랜드 글로 적는 수량",
+          "problem": "요소 목록 L240의 '글로 적는 경우 벌수와 함께 적으라는 안내'를 볼 수 있는 상태가 없다. k2 상태는 정상 입력(12벌 반영)만 있다.",
+          "evidence": "review/sheets/product-pc-2.png 오른쪽 칸(id=3026&brand=k2) 사이즈별 수량 글 입력, review/sheets/product-pc-1~6 상태 18개 중 해당 오류 화면 없음",
+          "fix": "id=3026&brand=k2&state=need 상태를 추가해 빈 글이나 벌수 없는 글로 주문할 때 입력칸 아래 오류 문구와 상단 '필수 항목' 띠가 나오게 한다."
+        }
+      ]
+    },
+    {
+      "key": "product",
+      "round": 2,
+      "rescored": [
+        "layout"
+      ],
+      "scores": {
+        "elements": 950,
+        "states": 920,
+        "design": 830,
+        "consistency": 870,
+        "layout": 870
+      },
+      "checkPagesFailed": 0,
+      "elsMissing": 0,
+      "previousFixes": [
+        {
+          "item": "layout",
+          "issue": "c1024 플로팅 상담 버튼이 구매 영역 글자를 덮음",
+          "result": "고쳐짐",
+          "evidence": "review/shots/product/default-c1024.jpg, default-c1440.jpg: 상품 상세에서는 검은 상담 원·노란 카카오 원이 빠지고 '맨 위로' 원만 남음. 1024에서 원은 x 950~998, 본문 오른쪽 끝 944라 '남녀공용'·'5 / 5 단계 완료'·색상별 ×를 덮지 않음. 1440 하단 구매 바의 '카카오톡' 노란 알약과 겹치는 노란 원도 없음"
+        },
+        {
+          "item": "layout",
+          "issue": "PC 사이즈표 수량 칸의 작은 ▲▼ 화살표",
+          "result": "고쳐짐",
+          "evidence": "review/sheets/product-pc-1.png, default-c1440.jpg: 1440에서도 1024와 같은 −/+ 증감 버튼(높이 약 44px)으로 바뀜. 숫자 칸 옆 브라우저 화살표 없음"
+        },
+        {
+          "item": "layout",
+          "issue": "state=none 상품 없음 화면이 빈약함",
+          "result": "고쳐짐",
+          "evidence": "review/shots/product/state-none-c1440.jpg, state-none-c390.jpg: 안내와 버튼 아래에 '대신 둘러보기 좋은 추천 단체복' 상품 카드 4개와 '전체 보기'가 붙음. 홈 상품 카드와 같은 모양이고 1440에서 화면 높이 1781px"
+        }
+      ],
+      "findings": [
+        {
+          "item": "layout",
+          "page": "product.html",
+          "state": "default 외 PC 전 상태(1024·1440)",
+          "problem": "오른쪽 '맨 위로' 원 버튼이 본문 오른쪽 끝에서 5~6px밖에 떨어져 있지 않다. 덮지는 않지만 '남녀공용'·'블랙 외 1색' 같은 오른쪽 끝 값에 거의 붙어 보인다(가벼운 문제).",
+          "fix": "버튼의 right 값을 줄이거나(예: 26px→16px) 버튼을 40px로 줄여 본문과 16px 이상 띄운다. 1024~1100 사이에서는 하단 구매 바 위 오른쪽 끝에 붙이는 방법도 있다.",
+          "evidence": "review/shots/product/default-c1024.jpg 오른쪽 y 약 617~667(x 950~998, 본문 끝 944), default-c1440.jpg 오른쪽 y 약 750~800"
+        }
+      ]
+    }
+  ]
+}

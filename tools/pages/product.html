@@ -1,0 +1,281 @@
+<!--{"title": "상품 상세", "desc": "색상·사이즈별 수량과 포장·인쇄를 골라 주문 요청하거나 장바구니에 담는 상품 상세 페이지.", "name": "상품 상세", "group": 2, "order": 1, "type": "product",
+ "sections": ["상품 상세"], "scripts": ["js/catalog.js", "js/brands.js", "js/rank.js", "js/extra.js", "js/sub-data.js", "js/sub-product.js"],
+ "states": [["default", "일반 상품(작성 예시)"], ["state=fresh", "처음 연 화면"], ["state=print", "인쇄 있음(인쇄 상세·첨부)"], ["id=504", "색상 없는 상품"], ["id=3026&brand=k2&state=sized", "협력브랜드 상품(사이즈 등록 견본)"], ["id=3026&brand=k2", "협력브랜드·사이즈 글로 적기"], ["id=3026&brand=k2&state=need", "협력브랜드·글로 적은 수량 오류 안내"],["state=need", "필수 미선택 안내"], ["state=nocolor", "고른 색상 없음 안내"], ["state=upl-err", "첨부 오류"], ["state=cart-done", "장바구니 담음 확인"], ["state=busy", "주문 진행 중"], ["state=fail", "주문 실패"], ["state=guest", "비로그인 안내"], ["state=restored", "로그인 뒤 되살림(파일 일부 빠짐)"], ["state=noprint", "인쇄 불가·포장 없음"], ["state=nomethod", "인쇄방법·인쇄 부분 없음"], ["state=noinfo", "상세 정보 없음(사진 없음)"], ["state=none", "상품 없음"]]}-->
+<nav class="wrap crumb pd-crumb" id="pdCrumb" aria-label="현재 위치" data-el="L191"><a href="#" data-href="index.php">홈</a><span aria-hidden="true">/</span><a href="#" data-href="category.php">단체복</a></nav>
+
+<div class="wrap pd" id="pd">
+  <div class="pd__top">
+    <!-- 사진 -->
+    <div class="pd__galw">
+      <section class="pd-gal" id="pdGal" aria-label="상품 사진" aria-roledescription="carousel" data-el="L192">
+        <div class="pd-gal__main">
+          <div class="pd-gal__track" id="pdTrack" tabindex="0" aria-label="사진을 옆으로 넘겨 봅니다" data-lenis-prevent-touch></div>
+          <div class="pd-gal__empty" id="pdGalEmpty" hidden data-el="L193"><span class="pd-gal__eic"><i class="i i-image i--28" aria-hidden="true"></i></span><p>등록된 상품 사진이 없습니다.</p></div>
+          <button type="button" class="pd-gal__nav" data-gal="-1" aria-label="이전 사진" data-el="L194"><i class="i i-chev-l" aria-hidden="true"></i></button>
+          <button type="button" class="pd-gal__nav pd-gal__nav--r" data-gal="1" aria-label="다음 사진"><i class="i i-chev-r" aria-hidden="true"></i></button>
+          <p class="pd-gal__cnt num" id="pdCnt" aria-live="polite"><b>1</b><span>/</span>1</p>
+        </div>
+        <div class="pd-gal__thumbs" id="pdThumbs" role="group" aria-label="사진 고르기"></div>
+      </section>
+    </div>
+
+    <!-- 구매 -->
+    <div class="pd-buy" id="pdBuy">
+      <header class="pd-hd">
+        <p class="pd-hd__cat" id="pdCat">단체복 · 패딩</p>
+        <div class="pd-hd__row">
+          <h1 class="pd-hd__name" id="pdName" data-el="L195">상품</h1>
+          <button type="button" class="pd-like" id="pdLike" data-like="c463" aria-pressed="false" aria-label="관심상품 담기" data-el="L228"><i class="i i-heart i--22" aria-hidden="true"></i><i class="i i-heart-on i--22" aria-hidden="true"></i></button>
+        </div>
+        <div class="pd-hd__price"><b class="num" id="pdPrice">59,000원~</b><span id="pdPriceSub">1벌 기준</span></div>
+        <p class="pd-hd__disc" id="pdDisc">수량 할인 <b>10벌 이상 5%</b> · <b>30벌 이상 10%</b> · <b>50벌 이상 15%</b></p>
+        <dl class="pd-spec" id="pdSpec" data-el="L196"></dl>
+        <div class="pd-lead" id="pdLead" data-el="L197">
+          <i class="i i-clock i--18" aria-hidden="true"></i>
+          <p><b>제작 기간</b> 인쇄 없음 <span class="num">3~4</span>일 · 인쇄 있음 <span class="num">4~7</span>일 <small>(주말 제외)</small></p>
+          <span class="pd-lead__go"><a class="tl" href="#pd-note" data-go-sec>유의사항</a><a class="tl" href="#pd-ship" data-go-sec>배송/포장안내</a></span>
+        </div>
+      </header>
+
+      <form class="pd-form" id="pdForm" novalidate aria-label="주문 내용 선택">
+        <div class="pd-prog" id="pdProg" data-el="L198">
+          <h2 class="pd-prog__t">주문 내용 선택</h2>
+          <p class="pd-prog__n"><b class="num" id="pdDone">0</b> / <span class="num" id="pdAll">5</span> 단계 완료</p>
+          <span class="pd-prog__bar" aria-hidden="true"><i id="pdProgBar"></i></span>
+        </div>
+        <p class="msg pd-restore" id="pdRestore" hidden data-el="L231"><i class="i i-check" aria-hidden="true"></i><span>로그인 전에 고른 옵션·색상·수량·포장·인쇄 내용을 되살렸습니다.</span></p>
+        <p class="msg msg--err pd-errsum" id="pdErrSum" hidden role="alert"><i class="i i-alert" aria-hidden="true"></i><span></span></p>
+
+        <!-- 옵션 -->
+        <section class="pd-step" data-step="opt" id="pdStOpt" aria-labelledby="pdStOptT" data-el="L210">
+          <div class="pd-step__h"><b class="pd-step__no num" aria-hidden="true">1</b><h3 class="pd-step__t" id="pdStOptT">옵션 <small>옵션마다 하나씩 고릅니다</small></h3><span class="pd-step__v"></span></div>
+          <div class="pd-step__b" id="pdOpts"></div>
+          <p class="pd-err" role="alert" data-el="L238"><i class="i i-alert i--16" aria-hidden="true"></i><span></span></p>
+        </section>
+
+        <!-- 색상 -->
+        <section class="pd-step" data-step="color" id="pdStColor" aria-labelledby="pdStColorT" data-el="L211 L212">
+          <div class="pd-step__h"><b class="pd-step__no num" aria-hidden="true">2</b><h3 class="pd-step__t" id="pdStColorT">색상 <small>여러 색을 함께 고를 수 있습니다</small></h3><span class="pd-step__v"></span></div>
+          <div class="pd-step__b">
+            <div class="fchips pd-colors" id="pdColors" role="group" aria-label="색상"></div>
+            <p class="pd-hint">고른 색을 다시 누르면 수량이 없을 때는 빠지고, 수량이 있으면 그 색의 수량 칸으로 이동합니다. 수량이 있는 색은 줄 끝의 ×로 뺍니다.</p>
+          </div>
+          <p class="pd-err" role="alert"><i class="i i-alert i--16" aria-hidden="true"></i><span></span></p>
+        </section>
+
+        <!-- 사이즈별 수량 -->
+        <section class="pd-step" data-step="qty" id="pdStQty" aria-labelledby="pdStQtyT" data-el="L213">
+          <div class="pd-step__h"><b class="pd-step__no num" aria-hidden="true">3</b><h3 class="pd-step__t" id="pdStQtyT">사이즈별 수량 <small id="pdQtySub">칸에 벌 수를 바로 입력합니다</small></h3><span class="pd-step__v"></span></div>
+          <div class="pd-step__b">
+            <div class="pd-qt" id="pdQt" data-el="L214 L216"></div>
+            <div class="pd-nocolor" id="pdNoColor" hidden data-el="L239"><i class="i i-info i--18" aria-hidden="true"></i><p><b>색상을 먼저 고르세요.</b> 위에서 색상을 고르면 그 색의 사이즈별 수량 칸이 생깁니다.</p></div>
+            <div class="fld pd-txt" id="pdTxt" hidden data-el="L217">
+              <label class="fld__l" for="pdTxtIn">필요한 사이즈와 수량 <span class="r"><span id="pdTxtN" class="num">0</span> / 500</span></label>
+              <textarea class="txa" id="pdTxtIn" maxlength="500" data-count="pdTxtN" data-keep-err aria-describedby="pdTxtErr" placeholder="예) JK-F6101 95 4벌, 100 6벌, 105 2벌"></textarea>
+              <p class="fld__msg fld__msg--err" id="pdTxtErr" role="alert" data-el="L240"></p>
+              <p class="fld__help">등록된 사이즈·색상이 없는 상품입니다. 사이즈와 벌 수를 함께 적어 주세요. 모델이 여러 개면 모델번호마다 줄을 나눠 적습니다.</p>
+              <p class="pd-txt__sum">적은 수량 <b class="num" id="pdTxtSum">0</b>벌 <small>“벌” 앞의 숫자를 더해 총수량에 넣습니다.</small></p>
+            </div>
+          </div>
+          <p class="pd-err" role="alert" data-el="L240"><i class="i i-alert i--16" aria-hidden="true"></i><span></span></p>
+        </section>
+
+        <!-- 포장 -->
+        <section class="pd-step" data-step="pack" id="pdStPack" aria-labelledby="pdStPackT" data-el="L218">
+          <div class="pd-step__h"><b class="pd-step__no num" aria-hidden="true">4</b><h3 class="pd-step__t" id="pdStPackT">포장 방식</h3><span class="pd-step__v"></span></div>
+          <div class="pd-step__b">
+            <div class="opts opts--2" id="pdPacks" role="radiogroup" aria-labelledby="pdStPackT">
+              <label class="opt"><input type="radio" name="pdPack" value="0"><span class="opt__b">기본 포장<small>여러 벌을 함께 담아 보냅니다</small></span></label>
+              <label class="opt"><input type="radio" name="pdPack" value="1"><span class="opt__b">개별 폴리백<small>한 벌씩 비닐로 포장합니다</small></span></label>
+            </div>
+            <div class="pd-none" id="pdPackNone" hidden data-el="L244"><i class="i i-info i--18" aria-hidden="true"></i><p>이 상품은 고를 수 있는 포장 방식이 없습니다. 포장에 요청이 있으면 주문 뒤 담당자에게 알려 주세요.</p></div>
+          </div>
+          <p class="pd-err" role="alert" data-el="L241"><i class="i i-alert i--16" aria-hidden="true"></i><span></span></p>
+        </section>
+
+        <!-- 인쇄 -->
+        <section class="pd-step" data-step="print" id="pdStPrint" aria-labelledby="pdStPrintT" data-el="L219">
+          <div class="pd-step__h"><b class="pd-step__no num" aria-hidden="true">5</b><h3 class="pd-step__t" id="pdStPrintT">인쇄 <small>회사 로고·글자 넣기</small></h3><span class="pd-step__v"></span></div>
+          <div class="pd-step__b">
+            <div class="opts opts--2" id="pdPrints" role="radiogroup" aria-labelledby="pdStPrintT">
+              <label class="opt"><input type="radio" name="pdPrint" value="0"><span class="opt__b">인쇄 없음<small id="pdPr0">제작 3~4일</small></span></label>
+              <label class="opt"><input type="radio" name="pdPrint" value="1"><span class="opt__b">인쇄 있음<small id="pdPr1">제작 4~7일 · 인쇄 비용 별도</small></span></label>
+            </div>
+            <div class="pd-none" id="pdPrintNo" hidden data-el="L245"><i class="i i-info i--18" aria-hidden="true"></i><p>인쇄할 수 없는 상품입니다. 상품 그대로 주문할 수 있습니다.</p></div>
+            <div class="pd-none" id="pdPrintTalk" hidden><i class="i i-chat i--18" aria-hidden="true"></i><p>협력브랜드 상품의 인쇄는 담당자와 상담한 뒤 정합니다. 인쇄할 위치와 내용은 견적문의 뒤 연락드릴 때 함께 정합니다.</p></div>
+
+            <div class="pd-print" id="pdPrint" hidden data-el="L220">
+              <div class="pd-sub" data-sub="method" data-el="L221">
+                <p class="pd-sub__l" id="pdMethodL">인쇄방법 <em>*</em></p>
+                <div class="seg" id="pdMethods" role="radiogroup" aria-labelledby="pdMethodL"></div>
+                <div class="pd-none pd-none--s" id="pdMethodNone" hidden data-el="L246"><i class="i i-info i--16" aria-hidden="true"></i><p>등록된 인쇄방법이 없습니다. 원하는 방법을 인쇄 설명에 적어 주시면 담당자가 확인해 안내합니다.</p></div>
+                <p class="pd-err" role="alert" data-el="L242"><i class="i i-alert i--16" aria-hidden="true"></i><span></span></p>
+              </div>
+              <div class="pd-sub" data-sub="parts" data-el="L223">
+                <p class="pd-sub__l" id="pdPartL">인쇄 부분 <em>*</em> <small>여러 곳을 고를 수 있습니다</small></p>
+                <div class="pd-guide" id="pdGuideBox">
+                  <div class="pd-guide__ph" id="pdGuide" data-el="L222" data-slot="print-guide"></div>
+                  <div class="fchips pd-parts" id="pdParts" role="group" aria-labelledby="pdPartL"></div>
+                </div>
+                <div class="pd-none pd-none--s" id="pdPartNone" hidden data-el="L247"><i class="i i-info i--16" aria-hidden="true"></i><p>등록된 인쇄 부분이 없습니다. 인쇄할 위치를 인쇄 설명에 적어 주세요.</p></div>
+                <p class="pd-err" role="alert" data-el="L243"><i class="i i-alert i--16" aria-hidden="true"></i><span></span></p>
+              </div>
+              <div class="pd-sub" data-el="L224">
+                <label class="pd-sub__l" for="pdDesc">인쇄 설명 <small>선택 · 인쇄 내용·색상·요청사항</small><span class="r"><span id="pdDescN" class="num">0</span> / 1,000</span></label>
+                <textarea class="txa txa--s" id="pdDesc" maxlength="1000" data-count="pdDescN" placeholder="예) 왼쪽 가슴에 회사 로고(흰색 실), 등에 회사 이름을 넣어 주세요."></textarea>
+              </div>
+              <div class="pd-sub fld" id="pdFileFld" data-el="L225">
+                <p class="pd-sub__l">인쇄 파일 <small>선택</small></p>
+                <div id="pdUpl"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </form>
+
+      <!-- 요약 · 주문 -->
+      <section class="pd-sum" id="pdSum" aria-label="주문 요약">
+        <dl class="pd-sum__row">
+          <div data-el="L199"><dt>총수량</dt><dd><b class="num" id="pdTotal">0</b>벌</dd></div>
+          <div id="pdRateBox"><dt>수량 할인</dt><dd class="num" id="pdRate">-</dd></div>
+          <div class="pd-sum__amt" data-el="L200"><dt>총액</dt><dd><s class="num" id="pdOrig" hidden></s><b class="num" id="pdAmt">0원</b></dd></div>
+        </dl>
+        <ol class="pd-tier" id="pdTier" aria-label="수량 할인 구간"></ol>
+        <p class="pd-tier__next" id="pdNext"></p>
+        <p class="msg msg--err pd-sum__msg" id="pdFail" hidden role="alert" data-el="L251"><i class="i i-alert" aria-hidden="true"></i><span><b id="pdFailT">주문을 요청하지 못했습니다.</b> 잠시 후 다시 시도해 주세요. 계속되면 <a class="tl" href="tel:050713786094">0507-1378-6094</a>로 연락해 주세요.</span></p>
+        <p class="msg pd-sum__msg" id="pdBusyMsg" hidden role="status"><i class="i i-clock" aria-hidden="true"></i><span id="pdBusyT">고른 색상마다 장바구니에 담고 주문을 요청하는 중입니다. 화면을 닫지 말고 기다려 주세요.</span></p>
+        <div class="pd-sum__acts">
+          <button type="button" class="bt bt--line bt--full bt--noi" id="pdCart" data-act="cart" data-el="L230"><span>장바구니 담기</span></button>
+          <button type="button" class="bt bt--ink bt--full" id="pdOrder" data-act="order" data-el="L229"><span>주문하기</span><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></button>
+        </div>
+        <p class="pd-sum__left" id="pdLeft"></p>
+        <div class="pd-cs" data-el="L201 L232">
+          <p class="pd-cs__t"><b>대량 주문·맞춤 제작 상담</b><small>주중 10시~18시 (점심 12시~13시 / 주말·공휴일 제외)</small></p>
+          <div class="pd-cs__acts"><a class="sb sb--gray sb--m" href="tel:050713786094"><i class="i i-phone i--18" aria-hidden="true"></i><span class="num">0507-1378-6094</span></a><a class="sb sb--m pd-kakao" href="https://pf.kakao.com/_uxjxmxjn" target="_blank" rel="noopener"><i class="i i-kakao i--18" aria-hidden="true"></i>카카오톡 상담하기<span class="sr-only"> (새 창)</span></a></div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- 상세 정보 -->
+  <div class="pd-detail" id="pdDetail" data-el="L202">
+    <nav class="stab pd-tabs" id="pdTabs" aria-label="상세 정보" data-el="L233"><a href="#pd-info" data-go-sec aria-current="true">상품정보</a><a href="#pd-ship" data-go-sec>배송/포장안내</a><a href="#pd-return" data-go-sec>반품/교환안내</a><a href="#pd-note" data-go-sec>유의사항</a></nav>
+
+    <section class="pd-sec" id="pd-info" aria-labelledby="pdInfoT" data-el="L203">
+      <h2 class="st pd-sec__t" id="pdInfoT">상품정보</h2>
+      <div class="pd-sec__b" id="pdInfo"></div>
+    </section>
+
+    <section class="pd-sec" id="pd-ship" aria-labelledby="pdShipT" data-el="L204">
+      <h2 class="st pd-sec__t" id="pdShipT">배송/포장안내</h2>
+      <div class="pd-sec__b">
+        <div class="pd-ship" id="pdShip" data-slot="ship-guide">
+          <div class="pd-ship__i"><span class="pd-ship__ic"><i class="i i-truck" aria-hidden="true"></i></span><h3>배송 방법</h3><p>기본배송/택배 · 퀵서비스(서울·경기) · 고속버스화물(지방) · 방문수령(픽업 장소 협의) 중 주문서에서 고릅니다.</p></div>
+          <div class="pd-ship__i"><span class="pd-ship__ic"><i class="i i-receipt" aria-hidden="true"></i></span><h3>배송비</h3><p>방문수령 외에는 배송비가 견적서에 포함됩니다.</p></div>
+          <div class="pd-ship__i"><span class="pd-ship__ic"><i class="i i-clock" aria-hidden="true"></i></span><h3>제작 기간</h3><p>인쇄 없는 상품 <b class="num">3~4</b>일, 인쇄 상품 <b class="num">4~7</b>일이 걸립니다(주말 제외). 희망배송일은 참고용입니다.</p></div>
+          <div class="pd-ship__i"><span class="pd-ship__ic"><i class="i i-box" aria-hidden="true"></i></span><h3>포장</h3><p>기본 포장과 개별 폴리백 중 상품 화면에서 고릅니다. 포장 방식은 상품마다 다를 수 있습니다.</p></div>
+        </div>
+        <div class="pd-nil" id="pdShipNone" hidden data-el="L254"><i class="i i-info i--18" aria-hidden="true"></i><p><b>배송/포장안내가 아직 등록되지 않았습니다.</b> 배송 방법과 기간은 <a class="tl" href="tel:050713786094">0507-1378-6094</a>로 문의해 주세요.</p></div>
+      </div>
+    </section>
+
+    <section class="pd-sec" id="pd-return" aria-labelledby="pdReturnT" data-el="L205">
+      <h2 class="st pd-sec__t" id="pdReturnT">반품/교환안내</h2>
+      <div class="pd-sec__b">
+        <div id="pdReturn" data-slot="return-guide">
+          <dl class="dl pd-dl">
+            <div><dt>신청</dt><dd>대표전화 <a class="tl num" href="tel:050713786094">0507-1378-6094</a>(주중 10시~18시) 또는 <a class="tl" href="#" data-href="customer-center.php?tab=qna">1:1 문의</a>로 주문번호와 함께 알려 주세요.</dd></div>
+            <div><dt>단순 변심</dt><dd>주문 제작 상품이라 단순 변심에 의한 교환·환불이 어렵습니다.</dd></div>
+            <div><dt>사이즈</dt><dd>재는 방법에 따라 약 1cm의 오차가 있을 수 있습니다.</dd></div>
+            <div><dt>색상</dt><dd>화면의 사진과 실제 색상이 다를 수 있습니다.</dd></div>
+            <div><dt>자세한 기준</dt><dd><a class="lnk" href="#" data-href="refund-policy.php">취소/환불 정책 보기 <i aria-hidden="true">→</i></a></dd></div>
+          </dl>
+        </div>
+        <div class="pd-nil" id="pdReturnNone" hidden data-el="L255"><i class="i i-info i--18" aria-hidden="true"></i><p><b>반품/교환안내가 아직 등록되지 않았습니다.</b> 교환·환불 기준은 <a class="tl" href="#" data-href="refund-policy.php">취소/환불 정책</a>에서 확인해 주세요.</p></div>
+      </div>
+    </section>
+
+    <section class="pd-sec" id="pd-note" aria-labelledby="pdNoteT" data-el="L206">
+      <h2 class="st pd-sec__t" id="pdNoteT">유의사항</h2>
+      <div class="pd-sec__b pd-notes">
+        <div>
+          <h3 class="pd-h3">제작 소요 기간</h3>
+          <table class="tbl pd-tbl">
+            <thead><tr><th scope="col">구분</th><th scope="col">제작 기간</th></tr></thead>
+            <tbody><tr><td>인쇄 없는 상품</td><td><b class="num">3~4</b>일</td></tr><tr><td>인쇄 상품</td><td><b class="num">4~7</b>일</td></tr></tbody>
+          </table>
+          <p class="pd-small">주말은 제작 기간에서 빠집니다. 희망배송일은 참고용이며, 정해진 날짜까지 받아야 하면 주문 전에 상담해 주세요.</p>
+        </div>
+        <div class="note">
+          <p class="note__t"><i class="i i-info i--18" aria-hidden="true"></i>주문 전 확인해 주세요</p>
+          <ul>
+            <li>결제를 마친 뒤 제작합니다. 공공기관·학교·관공서는 후불결제를 요청할 수 있습니다.</li>
+            <li>인쇄 비용은 상품 금액과 별도이며 시안·견적서로 안내합니다.</li>
+            <li>시즌에 따라 원단·부자재가 바뀔 수 있습니다.</li>
+            <li>사진과 실제 색상이 다를 수 있고, 약 1cm의 사이즈 오차가 있을 수 있습니다.</li>
+            <li>주문 제작 특성상 단순 변심에 의한 교환·환불이 어렵습니다.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- 상품 없음 -->
+<div class="pd-gone" id="pdNone" hidden>
+  <section class="wrap" aria-labelledby="pdNoneT" data-el="L237">
+    <div class="gate">
+      <span class="smark smark--gray"><i class="i i-box" aria-hidden="true"></i></span>
+      <h1 class="gate__t" id="pdNoneT">판매가 끝났거나 없는 상품입니다</h1>
+      <p class="gate__d">상품 주소가 바뀌었거나 판매를 마친 상품입니다. 비슷한 상품은 분류에서 찾거나 견적문의로 알려 주시면 담당자가 찾아 드립니다.</p>
+      <div class="acts"><a class="sb sb--ink sb--l" href="#" data-href="index.php" data-el="L234">쇼핑 계속하기</a><a class="sb sb--line sb--l" href="#" data-href="category.php">단체복 보기</a><a class="sb sb--gray sb--l" href="#" data-href="quote-intro.php">견적문의</a></div>
+    </div>
+  </section>
+  <section class="wrap pd-more" aria-labelledby="pdMoreT">
+    <header class="vh vh--row"><div><h2 class="vh__t" id="pdMoreT"><span class="tt__pre">대신 둘러보기 좋은</span> <span class="tt__key">추천 단체복</span></h2></div><div class="vh__r"><a class="lnk" href="#" data-href="category.php">전체 보기 <i aria-hidden="true">→</i></a></div></header>
+    <div class="pgrid" id="pdMore"></div>
+  </section>
+</div>
+<!--@after-->
+<!-- 따라오는 요약 바 -->
+<div class="pd-bar" id="pdBar" role="region" aria-label="주문 요약" data-el="L207">
+  <div class="pd-bar__in">
+    <div class="pd-bar__p"><img id="pdBarImg" src="img/catalog/463-f.webp" alt="" width="96" height="96" loading="lazy" decoding="async"><div><p class="pd-bar__name" id="pdBarName">상품</p><p class="pd-bar__prog"><span class="pd-prog__bar" aria-hidden="true"><i id="pdBarProgBar"></i></span><span><b class="num" id="pdBarDone">0</b>/<span class="num" id="pdBarAll">5</span> 단계</span></p></div></div>
+    <p class="pd-bar__n"><span>총 <b class="num" id="pdBarTotal">0</b>벌</span><span class="pd-bar__rate" id="pdBarRate"></span><b class="num pd-bar__amt" id="pdBarAmt">0원</b></p>
+    <div class="pd-bar__cs"><a class="sb sb--gray sb--m pd-bar__tel" href="tel:050713786094" aria-label="전화 상담 0507-1378-6094"><i class="i i-phone i--18" aria-hidden="true"></i><span>전화 상담</span></a><a class="sb sb--m pd-kakao pd-bar__kakao" href="https://pf.kakao.com/_uxjxmxjn" target="_blank" rel="noopener" aria-label="카카오톡 상담 (새 창)"><i class="i i-kakao i--18" aria-hidden="true"></i><span>카카오톡</span></a></div>
+    <div class="pd-bar__acts"><button type="button" class="sb sb--line sb--m" data-act="cart">장바구니 담기</button><button type="button" class="sb sb--ink sb--m pd-bar__order" data-act="order" data-busy-st="busy"><span>주문하기</span></button></div>
+  </div>
+</div>
+
+<!-- 인쇄 파일 첨부(상태에 따라 견본 파일을 넣어 붙인다) -->
+<template id="pdUplTpl">
+  <label class="upl" data-upl='{"max":10,"mb":10,"total":100,"accept":"jpg,jpeg,png,gif,webp,pdf,ai,psd,eps,zip"}'><span class="upl__ic"><i class="i i-upload" aria-hidden="true"></i></span><span class="upl__tx">파일을 끌어다 놓거나 눌러서 고르세요 <span class="upl__cnt"></span><small>이미지·PDF·AI·PSD·EPS·ZIP · 최대 10개 · 파일당 10MB · 합계 100MB</small></span><input type="file" multiple accept=".jpg,.jpeg,.png,.gif,.webp,.pdf,.ai,.psd,.eps,.zip" aria-label="인쇄 파일 고르기"></label>
+  <ul class="files"></ul>
+  <p class="fld__msg fld__msg--err" role="alert"></p>
+</template>
+
+<!-- 장바구니 담음 확인 -->
+<div class="pop" id="pdAdded" role="dialog" aria-modal="true" aria-labelledby="pdAddedT" hidden data-open-st="cart-done">
+  <div class="pop__dim" data-pop-close></div>
+  <div class="pop__box pop__box--m">
+    <div class="pop__head"><h2 class="pop__t" id="pdAddedT">장바구니에 담았습니다</h2><button type="button" class="pop__x" data-pop-close aria-label="닫기"><i class="i i-x" aria-hidden="true"></i></button></div>
+    <div class="pop__body">
+      <div class="pd-added" id="pdAddedBody"></div>
+    </div>
+    <div class="pop__foot"><button type="button" class="sb sb--gray sb--l" data-pop-close>쇼핑 계속하기</button><a class="sb sb--ink sb--l" href="cart.html">장바구니로 이동</a></div>
+  </div>
+</div>
+
+<!-- 비로그인 안내 -->
+<div class="pop pop--c" id="pdLogin" role="alertdialog" aria-modal="true" aria-labelledby="pdLoginT" aria-describedby="pdLoginD" hidden data-open-st="guest" data-el="L250">
+  <div class="pop__dim" data-pop-close></div>
+  <div class="pop__box">
+    <button type="button" class="pop__x" data-pop-close aria-label="닫기"><i class="i i-x" aria-hidden="true"></i></button>
+    <div class="pop__body">
+      <span class="smark"><i class="i i-lock" aria-hidden="true"></i></span>
+      <h2 class="pop__t" id="pdLoginT">로그인한 회원만 주문할 수 있습니다</h2>
+      <p class="pop__d" id="pdLoginD">주문하기와 장바구니 담기는 로그인 후 이용할 수 있습니다. 고른 옵션·색상·수량·포장·인쇄 내용과 첨부 파일은 <b>30분</b> 동안 보관했다가 로그인하면 이 화면에 되살립니다.</p>
+    </div>
+    <div class="pop__foot"><button type="button" class="sb sb--gray sb--l" data-pop-close>취소</button><a class="sb sb--ink sb--l" id="pdLoginGo" href="login.html">로그인</a></div>
+  </div>
+</div>
