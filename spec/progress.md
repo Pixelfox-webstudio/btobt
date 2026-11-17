@@ -2,20 +2,24 @@
 
 대화가 길어져 앞 내용이 요약되면 이 파일, `spec/coverage.json`, `git log`를 다시 읽고 이어 간다. 작업 지시는 `spec/subpage-design-prompt.md`.
 
-## 끝난 것
-- 0단계: 홈 시안 네 폭 캡처(`review/home/`), git 저장소 시작(`media/` 제외).
-- 1단계: `spec/plan.md`(페이지 → 유형 → 파일 → 상태), `spec/coverage.json`(요소 1,287줄).
-- 작업 기반: 아래 "만드는 방법" 참고. 시험 삼아 `unsubscribe.html` 완성.
-- 2단계 레퍼런스 조사: 8개 유형 모두 캡처 있음. 기록(`notes.md`)은 list · quote-form · support-board · document 완료, product · cart-checkout · auth · account 는 작성 중(하위 에이전트).
-- 결정 문서: `research/decisions/list.md`.
-- 묶음 1(상품 목록): `tools/css/20-list.css`, `js/sub-data.js`, `js/sub-list.js` 작성. 페이지 조각(category · brand · search)은 아직.
+## 끝난 것 (2026-11-17 11:40 기준)
+- 0~1단계: 홈 캡처(`review/home/`), `spec/plan.md`, `spec/coverage.json`(요소 1,287줄), 작업 기반(빌드·점검·상태·요소 대조 도구).
+- 2단계 레퍼런스: 8개 유형 캡처 + `notes.md` 전부. 결정 문서 13개(`research/decisions/`).
+- 3~4단계 페이지: 작업자 12명이 과제별로 나눠 만들고(워크플로 `b2bt-subpages-build-v2.js`, 1부 run `wf_ef4464df-85b`, 2부 run `wf_ce06df49-ac5`), 독립 검수자가 5항목을 0~1000점으로 매겨 800 미만을 고친다. 점수는 `review/scores/<과제>.json`, 표는 `python3 tools/scores.py` → `review/scores.md`.
+  - 끝나고 커밋: 상품 목록·수신거부(list), 주문 완료·카드 결제 처리(result), 시안확인(draft), 견적서 7종(quotedoc).
+  - 고치는 중: 맞춤작업복·파트너 제휴(custom), 약관(policy), 후기·이벤트·납품사례(content).
+  - 만드는 중(오전 한도로 끊겨 이어서): product, cart, quote, auth, center, mypage. 각자 `spec/agents/<과제>.md`에 진행 메모.
+- 공용 고침(11:30): `js/sub.js` data-pop 클릭 버그, `.stab`을 알약 탭으로, 오류 알림 검정, 누르는 칸 44px, 13.5px 정리. `spec/agent-brief.md` 0절에 알림.
+- 마무리 도구: `tools/guide_shots.py`(주문방법 화면 예시 다시 찍기), `tools/golden.py`(대표 페이지 모음), `tools/scores.py`(점수표), `tools/watch_guard.sh`(공용 파일 감시).
+- DESIGN.md 재작성 초안: 스크래치패드 `design-shell.md`(Page Shell) · `design-sub.md`(Subpage Components) · `design-table.md`(페이지 유형별 조립법).
 
 ## 다음 할 것 (순서대로)
-1. 묶음 1 조각 3개 → 빌드 → 점검 → 캡처 눈으로 보기 → 고치기 → 독립 검수 → 커밋
-2. 유형별 결정 문서(`research/decisions/<유형>.md`)는 그 유형 대표 페이지를 만들기 직전에, 캡처를 직접 본 뒤에 쓴다
-3. 묶음 2(product) → 3(cart · order · nicepay-return · order-complete) → 4(quote-intro · quote · custom-intro) → 5(login · signup 5개) → 6(mypage · draft-preview · inquiry-draft) → 7(customer-center · reviews · review-view · event · event-view · delivery-cases · partnership) → 8(견적서 7종 · terms · refund-policy · privacy · guest-privacy · order-now)
-4. 대표 페이지가 모이면 `review/golden.html`
-5. 5단계: 전체 점검, `DESIGN.md` "Subpage Components"·"페이지 유형별 조립법" 고쳐 쓰기(+ `npx @google/design.md lint DESIGN.md`), `spec/questions.md`, 마지막 보고
+1. 두 빌드 워크플로가 끝나면 과제별 커밋(파일 목록은 스크래치패드 `files_for.py <과제>`)
+2. `python3 tools/build.py` → `python3 tools/check.py pages`(전체) · `python3 tools/check.py coverage` → 실패 0까지 고침, `tools/clash.py` 0
+3. 남은 800 미만 지적 고침 → `python3 tools/guide_shots.py` → `python3 tools/golden.py`
+4. DESIGN.md: Page Shell · Subpage Components · 페이지 유형별 조립법을 초안으로 바꾸고 `npx @google/design.md lint DESIGN.md`
+5. `spec/questions/*.md` → `spec/questions.md` "페이지별", 작업자 보고의 공용 요청(baseNeeds)·홈 반영 요청(homeNeeds) 정리
+6. `python3 tools/scores.py`, 이 파일 갱신, 최종 보고
 
 ## 만드는 방법 (알아 둘 것)
 - **페이지는 조각으로 쓴다.** `tools/pages/<이름>.html` 첫머리에 `<!--{ JSON }-->`(title · desc · name · group · type · shell · nocs · auth · scripts · states), 그 아래 `<main>` 안 내용, `<!--@after-->` 아래 팝업. `python3 tools/build.py`가 `index.html`의 헤더·서랍·푸터·하단 상담 바를 잘라 붙여 `<이름>.html`을 만들고, `css/sub.css`(`tools/css/*.css`를 이름순으로 이어 붙임), `spec/pages.json`, `pages.html`을 같이 만든다. **루트의 html과 `css/sub.css`는 직접 고치지 않는다.**
