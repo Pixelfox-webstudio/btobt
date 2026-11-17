@@ -1,0 +1,21 @@
+<!--{"title": "이벤트", "desc": "비투비티에서 진행하는 이벤트와 상품 모음입니다.", "name": "이벤트 목록", "group": 7, "order": 23, "type": "board",
+ "sections": ["이벤트 목록"], "scripts": ["js/sub-content.js"],
+ "states": [["default", "기본"], ["state=empty", "진행 중인 이벤트 없음"]]}-->
+<section class="sub-head">
+  <div class="wrap">
+    <nav class="crumb" aria-label="현재 위치" data-el="L1831"><a href="#" data-href="index.php">홈</a><span aria-hidden="true">/</span><span aria-current="page">이벤트</span></nav>
+    <h1 class="sub-head__t" data-el="L1832">이벤트</h1>
+    <p class="sub-head__d" data-el="L1833">비투비티의 새 이벤트와 계절별 상품 모음을 알려 드립니다.</p>
+  </div>
+</section>
+<div class="wrap sub-nav"><nav class="stab" aria-label="소식·사례 메뉴" data-el="L1839 L1840 L1841 L1842"><a href="#" data-href="delivery-cases.php">납품사례</a><a href="#" data-href="reviews.php">구매후기</a><a href="#" data-href="event.php" aria-current="page">이벤트</a><a href="#" data-href="partnership.php">파트너십</a></nav></div>
+<div class="wrap sub-body">
+  <div class="ct-bar" data-ct-list><p>이벤트 <b class="num" id="ctEvCount">0</b>건</p><p>최신순</p></div>
+  <ul class="ct-evgrid" id="ctEvList" data-ct-list data-el="L1834 L1835 L1836 L1843"></ul>
+  <div class="empty" id="ctEvEmpty" data-st="empty" data-el="L1846">
+    <span class="empty__ic"><i class="i i-cal" aria-hidden="true"></i></span>
+    <p class="empty__t">진행 중인 이벤트가 없습니다.</p>
+    <p class="empty__d">새 이벤트가 열리면 이곳에서 알려 드립니다.</p>
+    <div class="acts"><a class="sb sb--line" href="#" data-href="reviews.php">구매후기 보기</a><a class="sb sb--ink" href="#" data-href="category.php">상품 보러 가기</a></div>
+  </div>
+</div>

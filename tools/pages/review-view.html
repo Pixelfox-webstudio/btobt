@@ -1,0 +1,28 @@
+<!--{"title": "구매후기 상세", "desc": "고객사 구매후기 한 건의 사진·평가·전체 내용입니다.", "name": "구매후기 상세", "group": 7, "order": 22, "type": "board",
+ "sections": ["구매후기 상세"], "scripts": ["js/reviews.js", "js/sub-content.js"],
+ "states": [["default", "기본(사진 여러 장)"], ["id=maeil", "사진 한 장인 후기"], ["state=notfound", "후기를 찾을 수 없음"]]}-->
+<section class="sub-head">
+  <div class="wrap">
+    <nav class="crumb" aria-label="현재 위치" data-el="L1807"><a href="#" data-href="index.php">홈</a><span aria-hidden="true">/</span><a href="#" data-href="reviews.php">구매후기</a><span aria-hidden="true">/</span><span aria-current="page">후기 상세</span></nav>
+    <h1 class="sub-head__t" data-el="L1808">구매후기</h1>
+  </div>
+</section>
+<div class="wrap sub-nav"><nav class="stab" aria-label="소식·사례 메뉴" data-el="L1817 L1818 L1819 L1820"><a href="#" data-href="delivery-cases.php">납품사례</a><a href="#" data-href="reviews.php" aria-current="page">구매후기</a><a href="#" data-href="event.php">이벤트</a><a href="#" data-href="partnership.php">파트너십</a></nav></div>
+<div class="wrap sub-body">
+  <article class="ct-rd" id="ctRd" aria-labelledby="ctRdCo" data-st-not="notfound">
+    <div class="ct-rd__gal" id="ctRdGal" data-el="L1812 L1821"></div>
+    <div class="ct-rd__info">
+      <div id="ctRdRate" data-el="L1813"></div>
+      <h2 class="ct-rd__co" id="ctRdCo" data-el="L1809"></h2>
+      <dl class="dl ct-rd__dl" id="ctRdDl" data-el="L1810 L1811"></dl>
+      <p class="ct-rd__text" id="ctRdText" data-el="L1814"></p>
+      <div class="acts ct-rd__acts"><a class="sb sb--line sb--l" href="#" data-href="reviews.php" data-el="L1822"><i class="i i-grid2 i--18" aria-hidden="true"></i>목록으로</a></div>
+    </div>
+  </article>
+  <div class="gate" id="ctRdNone" data-st="notfound" data-el="L1825">
+    <span class="smark smark--gray"><i class="i i-info" aria-hidden="true"></i></span>
+    <h2 class="gate__t">후기를 찾을 수 없습니다.</h2>
+    <p class="gate__d">삭제되었거나 공개가 끝난 후기입니다. 구매후기 목록에서 다른 후기를 볼 수 있습니다.</p>
+    <div class="acts"><a class="sb sb--ink sb--l" href="#" data-href="reviews.php" data-el="L1822">구매후기 목록으로</a></div>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+{
+  "_note": "content 작업자(구매후기·이벤트·납품사례). 상태를 열어야 보이는 요소와 JS 가 그리는 조작 요소를 실제 선택자로 확인한다. 나머지는 페이지 조각의 data-el.",
+  "L1796": {"file": "reviews.html", "selector": "#ctRvList .ct-car__dots button[aria-current]"},
+  "L1798": {"file": "reviews.html", "state": "page=2", "selector": "#ctRvPager button[aria-current=\"page\"]"},
+  "L1801": {"file": "reviews.html", "state": "state=empty", "selector": "#ctRvEmpty.st-on"},
+  "L1821": {"file": "review-view.html", "selector": "#ctRdGal .ct-rd__thumbs button[data-go]"},
+  "L1825": {"file": "review-view.html", "state": "state=notfound", "selector": "#ctRdNone.st-on"},
+  "L1846": {"file": "event.html", "state": "state=empty", "selector": "#ctEvEmpty.st-on"},
+  "L1866": {"file": "event-view.html", "state": "state=notfound", "selector": "#ctEdNone.st-on"},
+  "L957": {"file": "delivery-cases.html", "state": "co=taeseo", "selector": "#ctLogos .ct-logo[data-co=\"taeseo\"][aria-pressed=\"true\"]"},
+  "L958": {"file": "delivery-cases.html", "state": "state=zoom", "selector": "#ctLb.is-on"},
+  "L961": {"file": "delivery-cases.html", "state": "state=empty", "selector": "#ctCaseEmpty.st-on"}
+}

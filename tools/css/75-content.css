@@ -1,0 +1,228 @@
+/* ---------- 75. 구매후기 · 이벤트 · 납품사례 (접두어 ct) — reviews · review-view · event · event-view · delivery-cases ----------
+   후기 카드는 홈의 .rv__card · .rv__body · .rv__meta · .rv__co · .rv__item · .rv__text 를 그대로 쓰고, 사진 넘기기(.ct-car)와 평가(.ct-rate)만 더한다. */
+
+/* 목록 머리 줄: 왼쪽 건수 · 오른쪽 정렬 기준(글자) */
+.ct-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:14px;line-height:22px;color:var(--fg3)}
+.ct-bar b{font-weight:700;color:#000}
+
+/* 회색 구역(구매후기 목록): 탭 바로 아래부터 푸터까지 화면 끝까지 깐다. 홈 구매 후기 구역과 같은 바탕 */
+.sub-nav+.sub-body.ct-body{padding-top:0}
+.ct-band{margin-inline:calc(var(--gut) * -1);padding:32px var(--gut) var(--sec);background:var(--tint)}
+#main.subp:has(.ct-band){padding-bottom:0}
+.ct-band .pager button:hover{background:#fff}
+.ct-band .empty__ic{background:#fff}
+
+/* ---------- 사진 넘기기(카드 · 상세 공용) ---------- */
+.ct-car{position:relative}
+.ct-car__track{display:flex;height:100%;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.ct-car__track::-webkit-scrollbar{display:none}
+.ct-car__slide{position:relative;display:block;flex:0 0 100%;min-width:0;height:100%;margin:0;scroll-snap-align:start;scroll-snap-stop:always}
+.ct-car__slide img{display:block;width:100%;height:100%}
+.ct-car__nav{position:absolute;top:50%;z-index:2;display:grid;place-items:center;width:44px;height:44px;margin-top:-22px;border-radius:50%;background:rgba(255,255,255,.92);color:var(--ink);box-shadow:0 4px 14px rgba(20,24,40,.14);transition:opacity .2s,background-color .2s}
+.ct-car__nav:hover{background:#fff}
+.ct-car__nav--p{left:12px}
+.ct-car__nav--n{right:12px}
+.ct-car__nav:disabled{opacity:.28;pointer-events:none}
+.ct-car__cnt{position:absolute;right:10px;top:10px;z-index:2;height:24px;padding:0 9px;border-radius:999px;background:rgba(27,27,31,.86);font-family:var(--f-en);font-size:13px;font-weight:600;line-height:24px;letter-spacing:.04em;color:#fff;pointer-events:none}
+.ct-car__cnt b{font-weight:700}
+.ct-car__dots{position:absolute;left:12px;right:12px;bottom:4px;z-index:2;display:flex;gap:4px}
+.ct-car__dots button{display:flex;flex:1;align-items:center;min-width:0;height:24px}
+.ct-car__dots i{display:block;width:100%;height:3px;border-radius:999px;background:rgba(255,255,255,.45);transition:background-color .25s}
+.ct-car__dots button:hover i{background:rgba(255,255,255,.75)}
+.ct-car__dots [aria-current] i{background:#fff}
+.ct-car .ct-car__dots button:focus-visible,.ct-car .ct-car__nav:focus-visible{outline-color:#fff;outline-offset:0}
+.ct-car.is-one .ct-car__nav,.ct-car.is-one .ct-car__cnt{display:none}
+
+/* ---------- 평가(별 다섯 개 + 숫자). 소수는 채운 별의 폭으로 나타낸다 ---------- */
+.ct-rate{display:inline-flex;align-items:center;gap:6px}
+.ct-star{position:relative;display:inline-flex;flex:none;color:var(--ln)}
+.ct-star__bg,.ct-star__on{display:flex;gap:2px}
+.ct-star__on{position:absolute;left:0;top:0;bottom:0;overflow:hidden;color:#1B1B1F}
+.ct-star svg{flex:none;width:15px;height:15px}
+.ct-rate__n{font-size:14px;font-weight:700;line-height:20px;color:#000}
+.ct-rate__n small{margin-left:2px;font-size:13px;font-weight:500;color:var(--fg3)}
+
+/* ---------- 구매후기 목록: 카드 격자 ---------- */
+.ct-rvgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:20px}
+.ct-rv__media{aspect-ratio:3/2;overflow:hidden;background:#EDEDEF}
+.ct-rv__media .ct-car__slide img{object-fit:cover;transition:transform .6s var(--ease)}
+.ct-rv__media::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(0deg,rgba(8,9,12,.42) 0%,transparent 28%);pointer-events:none}
+.ct-rv__media.is-one::after{display:none}
+.ct-rv .ct-car__nav{opacity:0}
+.ct-rv .ct-car:hover .ct-car__nav,.ct-rv .ct-car:focus-within .ct-car__nav{opacity:1}
+.ct-rv .ct-car:hover .ct-car__nav:disabled,.ct-rv .ct-car:focus-within .ct-car__nav:disabled{opacity:0}
+.ct-rv__body{color:inherit}
+.ct-rv__body:hover .rv__co{text-decoration:underline;text-underline-offset:3px}
+.subp .ct-rv__body:focus-visible{outline-offset:-3px;border-radius:0 0 16px 16px}
+.ct-rv__top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 8px;min-height:24px;margin-bottom:10px}
+.ct-rv__text{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden}
+
+/* ---------- 구매후기 상세: 사진 7 : 글 5 ---------- */
+.ct-rd{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:56px;align-items:start}
+.ct-rd__stage{position:relative;aspect-ratio:1/1;border-radius:16px;overflow:hidden;background:var(--tint)}
+.ct-rd__stage .ct-car__slide img{position:absolute;inset:0;object-fit:contain}
+.ct-rd__stage .ct-car__nav--p{left:16px}
+.ct-rd__stage .ct-car__nav--n{right:16px}
+.ct-rd__stage .ct-car__cnt{top:auto;right:auto;left:50%;bottom:16px;transform:translateX(-50%)}
+.subp .ct-rd__stage:focus-visible{outline-offset:3px}
+.ct-rd__thumbs{display:flex;gap:8px;margin-top:12px;padding:2px;overflow-x:auto;scrollbar-width:none}
+.ct-rd__thumbs::-webkit-scrollbar{display:none}
+.ct-rd__thumbs button{position:relative;flex:none;width:76px;height:76px;border-radius:10px;overflow:hidden;background:#EDEDEF}
+.ct-rd__thumbs img{display:block;width:100%;height:100%;object-fit:cover;opacity:.6;transition:opacity .2s}
+.ct-rd__thumbs button:hover img,.ct-rd__thumbs [aria-current] img{opacity:1}
+.ct-rd__thumbs button::after{content:"";position:absolute;inset:0;border-radius:10px;box-shadow:inset 0 0 0 2px #000;opacity:0;transition:opacity .2s}
+.ct-rd__thumbs [aria-current]::after{opacity:1}
+.ct-rd__info{position:sticky;top:calc(var(--site-head-h, 108px) + 24px);padding-top:4px}
+.ct-rd__info .ct-star svg{width:18px;height:18px}
+.ct-rd__info .ct-rate__n{font-size:17px;line-height:24px}
+.ct-rd__co{margin-top:12px;font-size:26px;font-weight:700;letter-spacing:-.025em;line-height:1.35;color:#000}
+.ct-rd__dl{margin-top:20px}
+.ct-rd__text{margin-top:24px;font-size:15px;line-height:1.75;letter-spacing:-.01em;color:#2A2A2E;white-space:pre-line}
+.ct-rd__text--none{color:var(--fg3);white-space:normal}
+.ct-rd__text--none .rv__tag{margin:0 6px 0 0;vertical-align:1px}
+.ct-rd__acts{margin-top:32px}
+
+/* ---------- 이벤트 목록 · 상세 ---------- */
+.ct-evgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:44px 20px;margin-top:20px}
+.ct-ev{display:block;color:inherit}
+.ct-ev__img{position:relative;aspect-ratio:16/9;border-radius:16px;overflow:hidden;background:#0B0B0D}
+.ct-ev__img img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease)}
+.ct-ev:hover .ct-ev__img img{transform:scale(1.035)}
+.ct-ev__t{margin-top:16px;overflow:hidden;font-size:17px;font-weight:700;letter-spacing:-.02em;line-height:24px;color:#000;white-space:nowrap;text-overflow:ellipsis}
+.ct-ev:hover .ct-ev__t{text-decoration:underline;text-underline-offset:4px}
+.ct-note{position:absolute;right:16px;top:12px;z-index:1;font-size:11.5px;line-height:16px;color:rgba(255,255,255,.8);text-shadow:0 1px 3px rgba(0,0,0,.6);pointer-events:none}
+.ct-ed__head{padding:28px 0 24px;border-top:1px solid #000;border-bottom:1px solid var(--ln)}
+.ct-ed__t{font-size:24px;font-weight:700;letter-spacing:-.025em;line-height:1.4;color:#000}
+.ct-ed__date{margin-top:8px;font-size:14px;line-height:22px;color:var(--fg3)}
+.ct-ed__date b{margin-right:8px;font-weight:500}
+.ct-ed__body{padding-top:32px}
+.ct-ed__img{position:relative;max-width:760px;margin-inline:auto;border-radius:16px;overflow:hidden;background:#0B0B0D}
+.ct-ed__img img{display:block;width:100%;height:auto}
+.ct-ed__acts{display:flex;justify-content:center;margin-top:40px;padding-top:32px;border-top:1px solid var(--ln)}
+
+/* ---------- 납품사례: 업체 로고 벽 → 고른 업체 사례 ---------- */
+.ct-hint{font-size:14px;line-height:22px;color:var(--fg3)}
+.ct-logos{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:8px;margin-top:16px}
+.ct-logo{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;width:100%;height:88px;padding:8px 10px;border-radius:12px;background:#fff;box-shadow:inset 0 0 0 1px var(--ln);text-align:center;transition:box-shadow .2s}
+button.ct-logo:hover{box-shadow:inset 0 0 0 1px #000}
+.ct-logo[aria-pressed="true"]{box-shadow:inset 0 0 0 2px #000}
+.ct-logo__mark{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;font-size:15px;font-weight:700;letter-spacing:-.02em;line-height:20px;color:#000;word-break:keep-all}
+.ct-logo__n{font-size:12px;font-weight:500;line-height:16px;color:var(--fg3)}
+.ct-logo--off .ct-logo__mark{color:#8B8B90}
+.ct-case{margin-top:var(--blk);padding-top:32px;border-top:1px solid #000}
+.ct-case__head{display:flex;align-items:flex-start;gap:24px}
+.ct-case__logo{display:grid;flex:none;place-items:center;width:160px;height:96px;padding:12px;border-radius:12px;box-shadow:inset 0 0 0 1px var(--ln);text-align:center}
+.ct-case__logo span{font-size:17px;font-weight:700;letter-spacing:-.02em;line-height:22px;color:#000;word-break:keep-all}
+.ct-case__info{min-width:0;padding-top:4px}
+.ct-case__t{font-size:24px;font-weight:700;letter-spacing:-.025em;line-height:1.35;color:#000}
+.ct-case__dl{display:flex;flex-wrap:wrap;gap:4px 20px;margin-top:8px;font-size:14px;line-height:22px}
+.ct-case__dl>div{display:flex;gap:8px}
+.ct-case__dl dt{color:var(--fg3)}
+.ct-case__dl dd{font-weight:500;color:var(--ink)}
+.ct-case__d{margin-top:12px;max-width:640px;font-size:15px;line-height:1.75;color:var(--fg2)}
+.ct-photos{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:28px}
+.ct-ph{position:relative;display:block;width:100%;aspect-ratio:1/1;border-radius:16px;overflow:hidden;background:#EDEDEF;cursor:zoom-in}
+.ct-ph img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
+.ct-ph:hover img{transform:scale(1.045)}
+.ct-ph__zoom{position:absolute;right:12px;bottom:12px;display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.92);color:var(--ink);opacity:0;transition:opacity .2s}
+.ct-ph:hover .ct-ph__zoom,.ct-ph:focus-visible .ct-ph__zoom{opacity:1}
+
+/* 사진 크게 보기(어두운 바탕, 잘리지 않게) */
+.ct-lb .pop__dim{background:rgba(6,7,10,.86)}
+.ct-lb__box{position:relative;display:flex;flex-direction:column;align-items:center;gap:16px;width:min(1100px,100%);opacity:0;transform:translateY(18px) scale(.98);transition:opacity .4s var(--ease),transform .5s var(--ease)}
+.ct-lb.is-on .ct-lb__box{opacity:1;transform:none}
+.ct-lb__fig{position:relative;display:grid;place-items:center;width:100%;height:min(76vh,760px);margin:0}
+.ct-lb__img{display:block;width:auto;height:auto;max-width:calc(100% - 120px);max-height:min(76vh,760px);border-radius:14px;background:#000;box-shadow:0 40px 90px -30px rgba(0,0,0,.8)}
+.ct-lb__nav{position:absolute;top:50%;z-index:2;display:grid;place-items:center;width:44px;height:44px;margin-top:-22px;border-radius:50%;background:rgba(255,255,255,.92);color:var(--ink);transition:background-color .2s,opacity .2s}
+.ct-lb__nav:hover{background:#fff}
+.ct-lb__nav--p{left:0}
+.ct-lb__nav--n{right:0}
+.ct-lb__nav:disabled{opacity:.28;pointer-events:none}
+.ct-lb__bar{display:flex;align-items:center;gap:14px;font-size:14px;line-height:22px;color:rgba(255,255,255,.86)}
+.ct-lb__cap{font-weight:600;color:#fff}
+.ct-lb__cnt{font-family:var(--f-en);font-size:15px;font-weight:600;letter-spacing:.04em}
+.ct-lb__cnt b{color:#fff}
+.ct-lb__x{position:fixed;right:24px;top:24px;z-index:3;display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.92);color:var(--ink);transition:background-color .2s,transform .3s var(--ease)}
+.ct-lb__x:hover{background:#fff;transform:rotate(90deg)}
+.ct-lb :focus-visible{outline-color:#fff}
+
+@media (max-width:1024px){
+  .ct-rvgrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .ct-logos{grid-template-columns:repeat(6,minmax(0,1fr))}
+  .ct-rd{gap:36px}
+}
+@media (max-width:768px){
+  .ct-band{padding-top:24px}
+  .ct-rvgrid{gap:12px;margin-top:16px}
+  .ct-rv__media{aspect-ratio:1/1}
+  .ct-rv .ct-car__nav{display:none}
+  .ct-car__cnt{right:8px;top:8px;height:22px;padding:0 7px;font-size:12px;line-height:22px}
+  /* 사진 바로 보기 막대: 보이는 막대는 3px 그대로, 누르는 칸은 높이 44px */
+  .ct-car__dots{left:8px;right:8px;bottom:0;gap:3px}
+  .ct-car__dots button{height:44px;align-items:flex-end;padding-bottom:13px}
+  /* 폰 2열 카드: 평가 줄 → 업종 줄을 늘 두 줄(20 + 6 + 24)로 고정해 옆 카드와 회사명 줄 높이를 맞춘다 */
+  .ct-rv .rv__body{padding:16px 18px 20px}
+  .ct-rv__top{flex-direction:column;flex-wrap:nowrap;align-items:flex-start;justify-content:flex-start;gap:6px;min-height:50px;margin-bottom:8px}
+  .ct-rv .ct-star svg{width:13px;height:13px}
+  .ct-rv .ct-rate{gap:4px}
+  .ct-rv .ct-rate__n{font-size:13px}
+  .ct-rv .rv__meta{flex-direction:column;align-items:flex-start;gap:0}
+  .ct-rv .rv__co,.ct-rv .rv__item{max-width:100%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+  .ct-rv .rv__co{font-size:15.5px;line-height:22px}
+  .ct-rv .rv__item::before{display:none}
+  .ct-rv .rv__tag{margin:4px 0 0}
+  .ct-rv__text{margin-top:8px;font-size:14.5px;line-height:1.75;-webkit-line-clamp:2}
+  .ct-rd{grid-template-columns:minmax(0,1fr);gap:24px}
+  .ct-rd__stage{border-radius:14px}
+  .ct-rd__stage .ct-car__nav--p{left:10px}
+  .ct-rd__stage .ct-car__nav--n{right:10px}
+  .ct-rd__stage .ct-car__cnt{bottom:12px}
+  .ct-rd__thumbs{gap:6px;margin-top:8px}
+  .ct-rd__thumbs button{width:60px;height:60px}
+  .ct-rd__info{position:static;padding-top:0}
+  .ct-rd__co{margin-top:8px;font-size:22px}
+  .ct-rd__text{margin-top:20px;font-size:14.5px}
+  .ct-rd__acts{margin-top:28px}
+  .ct-rd__acts .sb{width:100%}
+  .ct-evgrid{grid-template-columns:minmax(0,1fr);gap:28px;margin-top:16px}
+  .ct-ev__img{border-radius:14px}
+  .ct-ev__t{margin-top:12px;font-size:16px;line-height:23px}
+  .ct-note{right:12px;top:10px;font-size:11px}
+  .ct-ed__head{padding:20px 0 18px}
+  .ct-ed__t{font-size:20px}
+  .ct-ed__body{padding-top:20px}
+  .ct-ed__img{border-radius:14px}
+  .ct-ed__acts{margin-top:28px;padding-top:24px}
+  .ct-ed__acts .sb{width:100%}
+  .ct-logo{height:72px}
+  .ct-logo__mark{font-size:14px;line-height:19px}
+  .ct-case{padding-top:24px}
+  .ct-case__head{gap:14px}
+  .ct-case__logo{width:96px;height:64px;padding:8px}
+  .ct-case__logo span{font-size:13px;line-height:17px}
+  .ct-case__info{padding-top:0}
+  .ct-case__t{font-size:20px}
+  .ct-case__dl{gap:0 14px;margin-top:4px;font-size:13px;line-height:20px}
+  .ct-case__d{margin-top:8px;font-size:14px;line-height:1.7}
+  .ct-photos{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:20px}
+  .ct-ph{border-radius:14px}
+  .ct-ph__zoom{display:none}
+  .ct-lb__fig{height:min(70vh,640px)}
+  .ct-lb__img{max-width:100%;max-height:min(70vh,640px)}
+  .ct-lb__nav--p{left:-4px}
+  .ct-lb__nav--n{right:-4px}
+  .ct-lb__x{right:12px;top:12px}
+  .ct-lb__bar{flex-direction:column;gap:2px;text-align:center}
+}
+/* 납품 업체 줄: 601~768은 1024와 같은 6열 격자, 600 이하에서만 2줄 가로 밀기(칸 130px 고정 = 390 화면에서 2.6칸).
+   칸 폭을 % 나 vw 로 주면 Chromium 이 화면을 다시 그릴 때 줄 폭을 잠깐 줄여 스크롤 위치가 잘린다(고른 칸이 밀려남).
+   붙임은 proximity(가까울 때만), 칸 왼쪽 기준. 고른 칸은 JS가 칸 왼쪽을 줄의 왼쪽 여백(scroll-padding)에 맞춘다 = 붙는 자리와 같다 */
+@media (max-width:600px){
+  .ct-logos{grid-template-columns:none;grid-template-rows:repeat(2,auto);grid-auto-flow:column;grid-auto-columns:130px;gap:8px;margin:14px calc(var(--gut) * -1) 0;padding:2px var(--gut);overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;scroll-padding-inline:var(--gut);scrollbar-width:none}
+  .ct-logos::-webkit-scrollbar{display:none}
+  .ct-logos li{scroll-snap-align:start}
+}
+@media (prefers-reduced-motion:reduce){
+  .ct-car__nav,.ct-car__dots i,.ct-rv__media .ct-car__slide img,.ct-ev__img img,.ct-ph img,.ct-ph__zoom,.ct-lb__box,.ct-lb__x,.ct-rd__thumbs img,.ct-logo{transition:none}
+  .ct-car__track{scroll-behavior:auto}
+}

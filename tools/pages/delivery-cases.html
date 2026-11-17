@@ -1,0 +1,40 @@
+<!--{"title": "납품사례", "desc": "비투비티가 단체복·작업복을 납품한 기업·기관과 납품 사진입니다.", "name": "납품사례", "group": 7, "order": 20, "type": "board",
+ "sections": ["납품사례"], "scripts": ["js/reviews.js", "js/sub-content.js"],
+ "states": [["default", "기본(첫 업체가 골라짐)"], ["co=taeseo", "다른 업체를 고름"], ["co=meister", "설명이 없는 업체"], ["state=zoom", "사진 크게 보기"], ["state=empty", "등록된 납품사례 없음"]]}-->
+<section class="sub-head">
+  <div class="wrap">
+    <nav class="crumb" aria-label="현재 위치" data-el="L948 L955"><a href="#" data-href="index.php">홈</a><span aria-hidden="true">/</span><span aria-current="page">납품사례</span></nav>
+    <h1 class="sub-head__t" data-el="L949">납품사례</h1>
+    <p class="sub-head__d">비투비티가 단체복·작업복을 납품한 기업·기관입니다. 업체를 고르면 납품 사진을 볼 수 있습니다.</p>
+  </div>
+</section>
+<div class="wrap sub-nav"><nav class="stab" aria-label="소식·사례 메뉴" data-el="L950 L956"><a href="#" data-href="delivery-cases.php" aria-current="page">납품사례</a><a href="#" data-href="reviews.php">구매후기</a><a href="#" data-href="event.php">이벤트</a><a href="#" data-href="partnership.php">파트너십</a></nav></div>
+<div class="wrap sub-body">
+  <section aria-labelledby="ctCoT" data-ct-list>
+    <div class="st-row"><h2 class="st" id="ctCoT">납품 업체 <small><span class="num" id="ctCoCount">0</span>곳</small></h2><p class="ct-hint">사례가 있는 업체를 누르면 아래에 납품 사진이 열립니다.</p></div>
+    <ul class="ct-logos" id="ctLogos" aria-label="납품 업체" data-lenis-prevent-touch data-el="L951 L957"></ul>
+  </section>
+  <section class="ct-case" id="ctCase" aria-labelledby="ctCaseT" aria-live="polite" data-ct-list data-el="L952">
+    <div class="ct-case__head" id="ctCaseHead"></div>
+    <ul class="ct-photos" id="ctPhotos" aria-label="납품 사진" data-el="L958"></ul>
+  </section>
+  <div class="empty" id="ctCaseEmpty" data-st="empty" data-el="L961">
+    <span class="empty__ic"><i class="i i-building" aria-hidden="true"></i></span>
+    <p class="empty__t">등록된 납품사례가 없습니다.</p>
+    <p class="empty__d">납품사례가 등록되면 이곳에서 업체별 납품 사진을 볼 수 있습니다.</p>
+    <div class="acts"><a class="sb sb--line" href="#" data-href="reviews.php">구매후기 보기</a><a class="sb sb--ink" href="#" data-href="quote-intro.php">견적문의</a></div>
+  </div>
+</div>
+<!--@after-->
+<div class="pop ct-lb" id="ctLb" role="dialog" aria-modal="true" aria-label="납품 사진 크게 보기" hidden data-el="L958">
+  <div class="pop__dim" data-pop-close></div>
+  <div class="ct-lb__box">
+    <figure class="ct-lb__fig">
+      <img class="ct-lb__img" id="ctLbImg" src="img/reviews/pnu-01.webp" alt="" width="1125" height="1500" decoding="async" draggable="false">
+      <button type="button" class="ct-lb__nav ct-lb__nav--p" id="ctLbPrev" data-lb="-1" aria-label="이전 사진"><i class="i i-chev-l" aria-hidden="true"></i></button>
+      <button type="button" class="ct-lb__nav ct-lb__nav--n" id="ctLbNext" data-lb="1" aria-label="다음 사진"><i class="i i-chev-r" aria-hidden="true"></i></button>
+    </figure>
+    <p class="ct-lb__bar"><span class="ct-lb__cap" id="ctLbCap"></span><span class="ct-lb__cnt num" id="ctLbCnt" aria-live="polite"></span></p>
+  </div>
+  <button type="button" class="ct-lb__x" data-pop-close aria-label="크게 보기 닫기"><i class="i i-x" aria-hidden="true"></i></button>
+</div>

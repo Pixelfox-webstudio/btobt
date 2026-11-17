@@ -1,0 +1,148 @@
+{
+  "rounds": [
+    {
+      "key": "content",
+      "date": "2026-11-17",
+      "pages": [
+        "reviews",
+        "review-view",
+        "event",
+        "event-view",
+        "delivery-cases"
+      ],
+      "checkPagesFailed": 0,
+      "elsMissing": 0,
+      "checkLog": [
+        "화면 점검: 페이지 5 · 상태 16 · 렌더링 96회 · 실패 0",
+        "요소 점검: 절 5개 · 항목 65 · 빠짐 0 · 선택자 문제 0"
+      ],
+      "scores": {
+        "elements": 880,
+        "states": 920,
+        "design": 850,
+        "consistency": 880,
+        "layout": 780
+      },
+      "findings": [
+        {
+          "item": "layout",
+          "page": "delivery-cases",
+          "state": "co=meister (390)",
+          "problem": "폰에서 고른 업체 칸(Team MEISTER)이 업체 줄 오른쪽 끝에서 잘려 'Team MI'까지만 보인다. 왼쪽 끝에도 반쯤 잘린 칸이 남는다. 고른 업체가 화면 안에 보이지 않는다.",
+          "evidence": "review/sheets/delivery-cases-m-1.png 셋째 칸(co=meister) 업체 줄 오른쪽 끝, review/shots/delivery-cases/co-meister-c390.jpg y≈290~420",
+          "fix": "css/sub.css 3334행 .ct-logos 가 scroll-snap-type:x mandatory 이고 li 가 scroll-snap-align:start 라서, js/sub-content.js 215~217행이 가운데로 맞춘 위치를 브라우저가 가까운 시작점으로 다시 붙인다. 고른 li 의 왼쪽을 scroll-padding 에 맞추는 값(li.offsetLeft - 왼쪽 여백)으로 scrollTo 하거나, snap 을 proximity 로 바꾸고 li 를 scroll-snap-align:center 로 바꾼다."
+        },
+        {
+          "item": "layout",
+          "page": "reviews",
+          "state": "default, page=2 (390)",
+          "problem": "폰 2열 후기 카드에서 업종 칩이 있는 카드와 없는 카드가 나란히 놓여 회사명·품목·본문 줄 높이가 옆 카드와 어긋난다.",
+          "evidence": "review/sheets/reviews-m-1.png default 2행(매일유업 / SK), page=2 1행(식봄 / SPACEPRO), review/shots/reviews/default-c390.jpg",
+          "fix": "폰에서는 업종을 품목 줄 뒤에 '단체복 · 식품 제조'처럼 이어 붙이거나, .ct-rv .rv__tag 줄을 업종이 없어도 같은 높이(24px + 위 4px)로 비워 두어 모든 카드의 회사명 줄이 같은 높이에서 시작하게 한다."
+        },
+        {
+          "item": "layout",
+          "page": "review-view, delivery-cases, reviews",
+          "state": "default / state=zoom / default (390)",
+          "problem": "폰 터치 대상이 44px보다 작다: 상세 사진 이전·다음 .ct-rd__stage .ct-car__nav 40×40(sub.css 3313), 크게 보기 이전·다음 .ct-lb__nav 40×40(3352), 목록 카드 사진 바로 보기 .ct-car__dots button 높이 28(3300), 쪽 번호 .pager 36×36(195).",
+          "evidence": "review/sheets/review-view-m-1.png default 사진 좌우 원형 화살표, review/sheets/delivery-cases-m-1.png state=zoom 좌우 화살표, reviews-m-1.png 카드 사진 아래 막대",
+          "fix": "화살표는 44px 원으로 되돌리고(margin-top:-22px), 점 버튼은 보이는 막대는 그대로 두고 버튼 높이를 44px로, 쪽 번호는 min-width·height 44px로 맞춘다."
+        },
+        {
+          "item": "layout",
+          "page": "delivery-cases",
+          "state": "default (768)",
+          "problem": "768에서 업체 칸이 '폭/2.6칸'으로 계산돼 한 칸이 약 270px로 커지고 셋째 칸이 잘린다. 1024에서는 6열로 작게 보이다가 768에서 갑자기 큰 칸 2개 반이 되어 어색하다.",
+          "evidence": "review/sheets/delivery-cases-etc.png c768 '납품 업체' 줄",
+          "fix": "sub.css 3334행 grid-auto-columns 를 600 이하에서만 calc((100% - 16px) / 2.6) 로 두고, 601~768 에서는 calc((100% - 40px) / 5.5) 정도(또는 고정 132px)로 나눈다."
+        },
+        {
+          "item": "design",
+          "page": "delivery-cases, review-view",
+          "state": "default",
+          "problem": "사진 모서리가 12px이다: 폰 납품 사진 .ct-ph{border-radius:12px}(sub.css 3348), 상세 썸네일 .ct-rd__thumbs button 12px(3209, 3212). DESIGN.md 는 사진 16px·폰 사진 14px·작은 썸네일 10px이고 12px은 로고 칸·아바타·입력칸 값이다.",
+          "evidence": "review/sheets/delivery-cases-m-1.png 사진 격자, review/sheets/review-view-pc-1.png 큰 사진 아래 썸네일 줄",
+          "fix": ".ct-ph 폰 값을 14px(rounded.lg)로, 썸네일과 그 ::after 테두리를 10px(rounded.sm) 또는 14px로 바꿔 한 화면의 사진 모서리를 통일한다."
+        },
+        {
+          "item": "design",
+          "page": "delivery-cases, reviews",
+          "state": "default (390)",
+          "problem": "글자 단계에 없는 13.5px을 쓴다: 사례 정보 .ct-case__dl(sub.css 3345), 쪽 번호 .pager 폰(195).",
+          "evidence": "review/sheets/delivery-cases-m-1.png default '납품 품목 방한 점퍼 · 사진 8장' 줄",
+          "fix": "캡션 13px 또는 작은 본문 14px 중 하나로 바꾼다."
+        },
+        {
+          "item": "design",
+          "page": "reviews",
+          "state": "default (390)",
+          "problem": "폰 후기 카드 본문 여백이 14px 14px 16px(sub.css 3301), 본문 줄간격이 1.65(3310)로 DESIGN.md 후기 카드 폰 값(여백 16px 18px 20px, 본문 1.75)과 다르다.",
+          "evidence": "review/sheets/reviews-m-1.png 카드 글 영역",
+          "fix": "여백을 16px 18px 20px, 줄간격 1.75로 맞춘다(2열이라 좁으면 좌우만 16px로 줄이고 그 값을 DESIGN.md 에 적는다)."
+        },
+        {
+          "item": "elements",
+          "page": "reviews",
+          "state": "default, page=2",
+          "problem": "요소 목록의 '업종'이 후기 절반가량에서 보이지 않는다(SK, SETTUP(호주), 아이티에스, Team MEISTER, 레드크랩, GCC studio 카드의 별점 줄 오른쪽에 업종 칩이 없다).",
+          "evidence": "review/sheets/reviews-pc-1.png default 2~4행 카드 별점 줄 오른쪽",
+          "fix": "견본 데이터(data-sample)에 모든 후기의 업종을 채우거나, 업종이 빈 경우의 표시 방법을 정해 같은 자리에 보이게 한다."
+        }
+      ]
+    },
+    {
+      "key": "content",
+      "round": 2,
+      "date": "2026-11-17",
+      "rescored": [
+        "layout"
+      ],
+      "scores": {
+        "elements": 880,
+        "states": 920,
+        "design": 850,
+        "consistency": 880,
+        "layout": 880
+      },
+      "checkPagesFailed": 0,
+      "elsMissing": 0,
+      "checks": {
+        "pages": "페이지 5 · 상태 16 · 렌더링 96회 · 실패 0",
+        "els": "절 5개 · 항목 65 · 빠짐 0 · 선택자 문제 0"
+      },
+      "previousFindingsVerified": [
+        {
+          "n": 1,
+          "status": "fixed",
+          "evidence": "review/sheets/delivery-cases-m-1.png 셋째 칸(co=meister), review/shots/delivery-cases/co-meister-c390.jpg 업체 줄: Team MEISTER 칸이 줄 왼쪽 여백에 맞춰 온전히 보이고 굵은 테두리로 선택 표시됨. 오른쪽 셋째 칸만 넘김 단서로 일부 보임"
+        },
+        {
+          "n": 2,
+          "status": "fixed",
+          "evidence": "review/sheets/reviews-m-1.png default·page=2: 모든 카드에 업종 칩이 있어 별점·칩·회사명·품목·본문 줄이 옆 카드와 같은 높이로 맞음"
+        },
+        {
+          "n": 3,
+          "status": "fixed",
+          "evidence": "css/sub.css 3245 .ct-car__nav 44x44, 3360 .ct-lb__nav 44x44, 3386 모바일 .ct-car__dots button height 44, 187/196 .pager 44px. scratchpad 크롭(reviews default/page-2 c390 하단)에서 쪽 번호 원이 44px로 보임"
+        },
+        {
+          "n": 4,
+          "status": "fixed",
+          "evidence": "review/sheets/delivery-cases-etc.png c768: 업체 칸이 6열 격자로 줄바꿈되어 잘리는 칸이 없고 1024(6열)와 같은 모양"
+        }
+      ],
+      "findings": [
+        {
+          "item": "layout",
+          "page": "delivery-cases",
+          "state": "co=meister (390)",
+          "problem": "(사소함) 고른 칸을 줄 왼쪽 여백에 맞춰 넘긴 뒤, 앞 칸(부산대 열)의 오른쪽 끝 약 8px이 화면 왼쪽 여백 안에 가는 세로 띠로 남는다. 잘린 칸으로 읽히지는 않아 감점은 작다.",
+          "fix": "모바일 .ct-logos 의 scroll-padding-inline 을 var(--gut) 대신 0 으로 두고 첫 칸 앞에만 여백을 주거나, 고른 칸이 첫 열이 아닐 때 앞 칸이 여백에 걸치지 않도록 JS 정렬 위치를 칸 왼쪽 - 8px(간격) 이상으로 잡는다. 지금 상태로 두어도 된다.",
+          "evidence": "review/shots/delivery-cases/co-meister-c390.jpg 업체 줄 왼쪽 끝(y 약 420~570)"
+        }
+      ],
+      "summary": "앞선 layout 지적 4건 모두 캡처로 고쳐진 것을 확인. 새로 생긴 겹침·잘림·넘침·높이 어긋남 없음. layout 780 -> 880."
+    }
+  ]
+}

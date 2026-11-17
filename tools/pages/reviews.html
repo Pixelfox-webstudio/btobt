@@ -1,0 +1,24 @@
+<!--{"title": "구매후기", "desc": "비투비티에서 단체복·작업복을 맞춘 고객사의 후기와 납품 사진입니다.", "name": "구매후기 목록", "group": 7, "order": 21, "type": "board",
+ "sections": ["구매후기 목록"], "scripts": ["js/catalog.js", "js/brands.js", "js/rank.js", "js/extra.js", "js/sub-data.js", "js/reviews.js", "js/sub-content.js"],
+ "states": [["default", "기본(1쪽)"], ["page=2", "2쪽(마지막 쪽)"], ["state=empty", "등록된 후기 없음"]]}-->
+<section class="sub-head">
+  <div class="wrap">
+    <nav class="crumb" aria-label="현재 위치" data-el="L1781"><a href="#" data-href="index.php">홈</a><span aria-hidden="true">/</span><span aria-current="page">구매후기</span></nav>
+    <h1 class="sub-head__t" data-el="L1782">구매후기</h1>
+    <p class="sub-head__d" data-el="L1783">비투비티에서 단체복·작업복을 맞춘 기업·기관이 남긴 후기와 납품 사진입니다.</p>
+  </div>
+</section>
+<div class="wrap sub-nav"><nav class="stab" aria-label="소식·사례 메뉴" data-el="L1792 L1793 L1794 L1795"><a href="#" data-href="delivery-cases.php">납품사례</a><a href="#" data-href="reviews.php" aria-current="page">구매후기</a><a href="#" data-href="event.php">이벤트</a><a href="#" data-href="partnership.php">파트너십</a></nav></div>
+<div class="wrap sub-body ct-body">
+  <section class="ct-band" aria-label="후기 목록">
+    <div class="ct-bar" data-ct-list><p>후기 <b class="num" id="ctRvCount">0</b>건</p><p>최신 등록순</p></div>
+    <div class="ct-rvgrid" id="ctRvList" data-ct-list data-el="L1784 L1785 L1786 L1787 L1788 L1789 L1796 L1797"></div>
+    <nav class="pager" id="ctRvPager" aria-label="쪽 번호" data-ct-list hidden data-el="L1798"></nav>
+    <div class="empty" id="ctRvEmpty" data-st="empty" data-el="L1801">
+      <span class="empty__ic"><i class="i i-chat" aria-hidden="true"></i></span>
+      <p class="empty__t">등록된 후기가 없습니다.</p>
+      <p class="empty__d">고객사가 후기를 남기면 이곳에 사진과 함께 보입니다. 납품한 모습은 납품사례에서 볼 수 있습니다.</p>
+      <div class="acts"><a class="sb sb--line" href="#" data-href="delivery-cases.php">납품사례 보기</a><a class="sb sb--ink" href="#" data-href="quote-intro.php">견적문의</a></div>
+    </div>
+  </section>
+</div>
