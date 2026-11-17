@@ -1,0 +1,193 @@
+<!--{"title": "주문 정보 입력", "desc": "고른 상품의 주문·배송 정보를 입력하고 주문 요청으로 접수합니다.", "name": "주문 정보 입력 후 접수", "group": 8, "order": 95, "type": "cart", "nocs": true,
+ "sections": ["주문 정보 입력 후 접수"], "scripts": ["js/sub-cart.js"],
+ "states": [["default", "기본"], ["state=nobase", "대표주소 없음"], ["state=err", "필수 미입력·동의 미선택"], ["state=zipfail", "주소 검색 실패"], ["state=detail", "자세히 보기 열림"], ["state=busy", "접수 중"], ["state=done", "접수 완료"], ["state=fail", "접수 실패"], ["state=noitem", "접수할 상품 없음"], ["state=guest", "비로그인"]]}-->
+<section class="sub-head sub-head--row co-head">
+  <div class="wrap">
+    <div>
+      <nav class="crumb" aria-label="현재 위치"><a href="#" data-href="index.php">홈</a><span aria-hidden="true">/</span><a href="#" data-href="cart.php">장바구니</a><span aria-hidden="true">/</span><span aria-current="page">주문 정보 입력</span></nav>
+      <h1 class="sub-head__t">주문 정보 입력</h1>
+    </div>
+    <ol class="stp co-stp" aria-label="주문 진행 순서" data-st-not="noitem guest"><li class="is-done"><b>1</b><span>상품 고르기</span></li><li class="is-on" aria-current="step"><b>2</b><span>주문 정보 입력</span></li><li><b>3</b><span>주문 요청 접수</span></li></ol>
+  </div>
+</section>
+<div class="wrap sub-body">
+<form class="co" id="coForm" data-check="입력을 확인해 주세요." novalidate data-st-not="noitem guest">
+  <div class="co__main">
+    <div class="msg msg--err co-errs" id="coErrs" role="alert" tabindex="-1" hidden data-el="L371">
+      <p class="co-errs__t"><i class="i i-alert" aria-hidden="true"></i>입력을 확인해 주세요 <span class="num" id="coErrN"></span></p>
+      <ul id="coErrList"></ul>
+    </div>
+    <div class="co-srv" id="coSrv">
+      <p class="msg msg--err" role="alert" data-st="fail" data-el="L374"><i class="i i-alert" aria-hidden="true"></i><span>주문 요청을 접수하지 못했습니다. 입력한 내용은 그대로 있으니 잠시 후 다시 눌러 주세요. 계속되면 고객센터(<a class="num" href="tel:050713786094">0507-1378-6094</a>)로 연락해 주세요.</span></p>
+    </div>
+
+    <section class="co-sec" aria-labelledby="coItemsT">
+      <div class="co-sec__h"><h2 class="st" id="coItemsT">주문 상품 <small><span class="num">1</span>개 · <span class="num">70</span>벌</small></h2></div>
+      <ul class="co-olist" data-el="L323">
+        <li class="co-oi">
+          <span class="co-oi__ph" data-el="L324"><img src="img/catalog/460-f.webp" alt="" width="600" height="600" decoding="async"></span>
+          <div class="co-oi__b">
+            <p class="co-item__cat">패딩</p>
+            <p class="co-oi__n" data-el="L325">방한 후드 패딩</p>
+            <p class="co-item__o" data-el="L326"><span><em>색상</em><i class="co-sw" style="--c:#111111" aria-hidden="true"></i>블랙</span><span><em>포장</em>개별 폴리백</span><span class="stag stag--acc">인쇄 있음</span></p>
+            <p class="co-oi__sz num" data-el="L327"><span>90 5벌</span><span>95 20벌</span><span>100 30벌</span><span>105 15벌</span></p>
+            <div class="co-oi__acts"><button type="button" class="sb sb--gray sb--m" data-pop="coD-c460" data-el="L361">자세히 보기</button><button type="button" class="sb sb--gray sb--m" data-co-del data-el="L360"><i class="i i-trash i--16" aria-hidden="true"></i>삭제</button></div>
+          </div>
+          <div class="co-oi__r"><p class="co-oi__q" data-el="L328"><b class="num">70</b>벌</p><p class="co-oi__u num">59,000원 × 70벌</p><p class="co-oi__a num" data-el="L329">4,130,000원</p></div>
+        </li>
+      </ul>
+    </section>
+
+    <section class="co-sec" aria-labelledby="coQuoteT" data-el="L340">
+      <div class="co-sec__h"><h2 class="st" id="coQuoteT">견적정보</h2><span class="co-sec__r">선택</span></div>
+      <div class="fld" data-el="L341 L375" data-err-st="err" data-err="견적서_한결산업.exe 파일은 형식이 맞지 않아 저장하지 않았습니다.">
+        <span class="fld__l">견적서 파일 <small>가지고 계신 견적서가 있으면 첨부해 주세요</small><span class="r">1개까지</span></span>
+        <label class="upl" data-upl='{"max":1,"mb":20,"accept":"jpg,jpeg,png,gif,webp,bmp,pdf,doc,docx,ppt,pptx,txt,xls,xlsx,csv,hwp,hwpx,zip,7z"}'><span class="upl__ic"><i class="i i-upload" aria-hidden="true"></i></span><span class="upl__tx">파일을 끌어다 놓거나 눌러서 고르세요 <span class="upl__cnt"></span><small>이미지·PDF·문서·엑셀·한글·압축 파일 · 1개 · 20MB 이하. 조건에 맞지 않는 파일은 저장되지 않습니다.</small></span><input type="file"></label>
+        <ul class="files"></ul><p class="fld__msg fld__msg--err" role="alert"></p>
+      </div>
+    </section>
+
+    <section class="co-sec" aria-labelledby="coBuyerT" data-el="L342">
+      <div class="co-sec__h"><h2 class="st" id="coBuyerT">주문정보</h2><span class="co-sec__r"><em>*</em> 필수 항목 · 회원정보로 미리 채웠습니다</span></div>
+      <div class="fgrid">
+        <div class="fld" data-el="L343" data-err-st="err" data-err="주문하시는 분 이름을 입력해 주세요."><label class="fld__l" for="coBName">주문하시는 분 <em>*</em></label><input class="inp" id="coBName" required maxlength="20" value="김민준" autocomplete="name" data-msg="주문하시는 분 이름을 입력해 주세요." data-sample></div>
+        <div class="fld" data-el="L345"><label class="fld__l" for="coBTel">휴대전화 <em>*</em></label><input class="inp num" id="coBTel" type="tel" required data-fmt="phone" data-rule="mobile" value="010-1234-5678" inputmode="numeric" autocomplete="tel" data-sample><p class="fld__help">주문·시안·배송처럼 중요한 알림을 문자로 보냅니다.</p></div>
+        <div class="fld" data-el="L346"><label class="fld__l" for="coBTel2">연락처 2 <small>선택</small></label><input class="inp num" id="coBTel2" type="tel" data-fmt="phone" data-rule="phone" inputmode="numeric" placeholder="051-000-0000"></div>
+        <div class="fld" data-el="L347"><label class="fld__l" for="coBMail">이메일 <em>*</em></label><input class="inp" id="coBMail" type="email" required data-rule="email" value="mj.kim@example.com" maxlength="100" autocomplete="email" data-sample><p class="fld__help">주문 처리 과정을 메일로 보냅니다.</p></div>
+        <div class="fld full" data-el="L344"><span class="fld__l">주소 <em>*</em></span>
+          <div class="addr"><div class="inrow"><input class="inp num" id="coBZip" aria-label="주문자 우편번호" value="48058" readonly required data-rule="zip" data-sample><button type="button" class="sb sb--gray" data-zip="coB">우편번호 검색</button></div><input class="inp" id="coBAddr" aria-label="주문자 주소" value="부산광역시 해운대구 센텀중앙로 97" readonly required data-sample><input class="inp" id="coBAddr2" aria-label="주문자 상세주소" value="5층" maxlength="100" required data-msg="상세주소를 입력해 주세요." data-sample></div>
+          <p class="msg msg--err" role="alert" id="coZipFail" data-st="zipfail" data-el="L369"><i class="i i-alert" aria-hidden="true"></i><span>우편번호 검색을 불러오지 못했습니다. 잠시 후 다시 눌러 주세요.</span></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="co-sec" aria-labelledby="coShipT" data-el="L348">
+      <div class="co-sec__h"><h2 class="st" id="coShipT">배송정보</h2><span class="co-sec__r"><em>*</em> 필수 항목</span></div>
+      <div class="fstack">
+        <div class="fld" data-el="L349"><span class="fld__l">배송지 지정 방식</span>
+          <div class="seg seg--fill" role="radiogroup" aria-label="배송지 지정 방식">
+            <label><input type="radio" name="coShipBy" value="same" checked><span>주문자와 동일</span></label>
+            <label><input type="radio" name="coShipBy" value="base"><span>대표주소</span></label>
+            <label><input type="radio" name="coShipBy" value="new"><span>새로운 배송지</span></label>
+          </div>
+          <p class="fld__help" id="coShipHelp">주문정보의 이름·주소·휴대전화를 그대로 씁니다.</p>
+          <p class="msg msg--err" role="alert" id="coNoBase" hidden data-el="L368"><i class="i i-alert" aria-hidden="true"></i><span>등록된 대표주소가 없습니다. <a class="tl" href="#" data-href="mypage.php?section=addresses">배송지 관리</a>에서 기본 배송지를 등록해 주세요.</span></p>
+        </div>
+        <div class="fgrid" id="coShipFlds">
+          <div class="fld" data-el="L350" data-err-st="err" data-err="받으시는 분 이름을 입력해 주세요."><label class="fld__l" for="coSName">받으시는 분 <em>*</em></label><input class="inp" id="coSName" required maxlength="20" autocomplete="shipping name" data-msg="받으시는 분 이름을 입력해 주세요."></div>
+          <div class="fld" data-el="L352" data-err-st="err" data-err="받으시는 분 연락처를 입력해 주세요."><label class="fld__l" for="coSTel">연락처 1 <em>*</em></label><input class="inp num" id="coSTel" type="tel" required data-fmt="phone" data-rule="phone" inputmode="numeric" data-msg="받으시는 분 연락처를 입력해 주세요."></div>
+          <div class="fld" data-el="L353"><label class="fld__l" for="coSTel2">연락처 2 <small>선택</small></label><input class="inp num" id="coSTel2" type="tel" data-fmt="phone" data-rule="phone" inputmode="numeric" placeholder="051-000-0000"></div>
+          <div class="fld" data-el="L354"><label class="fld__l" for="coSDate">희망배송일 <small>선택</small></label><span class="co-date"><input class="inp num" id="coSDate" type="date" min="2026-11-18"><span class="co-date__ph" aria-hidden="true">날짜를 고르세요</span></span></div>
+          <div class="note full" data-el="L335"><p class="note__t"><i class="i i-info i--18" aria-hidden="true"></i>희망배송일 확인 사항</p><ul><li>희망배송일은 참고용입니다. 제작 기간은 인쇄 없는 상품 <b>3~4일</b>, 인쇄 상품 <b>4~7일</b>입니다(주말 제외).</li><li>정해진 날짜까지 꼭 받아야 하면 접수 전에 담당자와 납품 일정을 확인해 주세요.</li></ul></div>
+          <div class="fld full" data-el="L351"><span class="fld__l">배송지 <em>*</em></span>
+            <div class="addr"><div class="inrow"><input class="inp num" id="coSZip" aria-label="배송지 우편번호" placeholder="우편번호" readonly required data-rule="zip" data-msg="배송지 주소를 입력해 주세요."><button type="button" class="sb sb--gray" data-zip="coS">우편번호 검색</button></div><input class="inp" id="coSAddr" aria-label="배송지 주소" placeholder="주소" readonly required data-msg="배송지 주소를 입력해 주세요."><input class="inp" id="coSAddr2" aria-label="배송지 상세주소" placeholder="상세주소를 입력해 주세요" maxlength="100" required data-msg="배송지 상세주소를 입력해 주세요."></div>
+          </div>
+          <div class="fld full" data-el="L355"><span class="fld__l">배송방법</span>
+            <div class="opts opts--4 co-ship" role="radiogroup" aria-label="배송방법">
+              <label class="opt"><input type="radio" name="coShipWay" value="parcel" checked><span class="opt__b"><b>기본배송/택배</b><small>전국</small></span></label>
+              <label class="opt"><input type="radio" name="coShipWay" value="quick"><span class="opt__b"><b>퀵서비스</b><small>서울·경기</small></span></label>
+              <label class="opt"><input type="radio" name="coShipWay" value="bus"><span class="opt__b"><b>고속버스화물</b><small>지방</small></span></label>
+              <label class="opt"><input type="radio" name="coShipWay" value="pickup"><span class="opt__b"><b>방문수령</b><small>픽업장소 협의</small></span></label>
+            </div>
+            <p class="fld__help">방문수령 외에는 배송비가 견적서에 포함됩니다.</p>
+          </div>
+          <div class="fld full" data-el="L356"><label class="fld__l" for="coSMsg">배송메세지 <small>선택</small></label><input class="inp" id="coSMsg" maxlength="50" placeholder="예: 경비실에 맡겨 주세요."></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="co-sec" aria-labelledby="coCaseT">
+      <div class="co-sec__h"><h2 class="st" id="coCaseT">납품사례 활용 동의</h2><span class="co-sec__r"><em>*</em> 필수 선택</span></div>
+      <div class="co-agreebox">
+        <div class="co-case" data-el="L336" data-sample>
+          <dl>
+            <div><dt>활용 목적</dt><dd>비투비티 납품사례 소개</dd></div>
+            <div><dt>게시 장소 및 게시 내용</dt><dd>비투비티 납품사례 게시판에 납품한 상품 사진과 업체명·품목을 올립니다.</dd></div>
+            <div><dt>게시물 관리 및 삭제 요청</dt><dd>게시한 뒤에도 고객센터(<span class="num">0507-1378-6094</span>)나 1:1 문의로 내려 달라고 요청할 수 있습니다.</dd></div>
+          </dl>
+        </div>
+        <div class="fld" data-el="L357 L372" data-err-st="err" data-err="납품사례 활용 동의 여부를 선택해 주세요." data-name="납품사례 활용 동의">
+          <div class="choice" role="radiogroup" aria-label="납품사례 활용 동의 여부"><label class="rdo"><input type="radio" name="coCase" value="y" required data-msg="납품사례 활용 동의 여부를 선택해 주세요."><i></i>동의합니다</label><label class="rdo"><input type="radio" name="coCase" value="n"><i></i>동의하지 않습니다</label></div>
+          <p class="fld__help">어느 쪽을 골라도 주문 접수에는 영향이 없습니다.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <aside class="co-side" aria-labelledby="coSumT">
+    <div class="co-sum" data-el="L331">
+      <h2 class="co-sum__t" id="coSumT">주문 요약</h2>
+      <dl class="co-sum__dl">
+        <div data-el="L332"><dt>상품금액</dt><dd>견적문의</dd></div>
+        <div data-el="L333"><dt>배송비</dt><dd>견적서에 포함</dd></div>
+        <div class="co-sum__tot" data-el="L334"><dt>총 결제금액</dt><dd><span class="co-sum__word">상담 후 결정</span></dd></div>
+      </dl>
+      <ul class="co-sum__note">
+        <li>인쇄 상품이 있어 시안 확인을 겸한 주문 요청으로 접수합니다.</li>
+        <li>담당자가 견적서를 보내 드린 뒤 주문서에서 결제합니다.</li>
+      </ul>
+      <div class="co-sum__msg" id="coSumMsg"></div>
+      <button type="submit" class="bt bt--acc bt--full co-go" id="coPayBtn" data-busy-st="busy" data-el="L363"><span>주문 요청 접수</span><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></button>
+    </div>
+  </aside>
+</form>
+<div class="gate co-gate" data-st="noitem" data-el="L367 L370">
+  <span class="smark smark--gray"><i class="i i-bag" aria-hidden="true"></i></span>
+  <p class="gate__t">접수할 상품이 없습니다</p>
+  <p class="gate__d">접수할 상품을 고르지 않았거나, 지정한 상품이 내 장바구니에 없습니다. 장바구니에서 상품을 골라 다시 진행해 주세요.</p>
+  <div class="acts"><a class="sb sb--ink" href="#" data-href="cart.php">장바구니로 이동</a></div>
+</div>
+<div class="gate co-gate" data-st="guest" data-el="L366">
+  <span class="smark smark--gray"><i class="i i-lock" aria-hidden="true"></i></span>
+  <p class="gate__t">로그인이 필요합니다</p>
+  <p class="gate__d">주문 요청은 로그인한 회원만 할 수 있습니다. 로그인하면 이 화면으로 돌아옵니다.</p>
+  <div class="acts"><a class="sb sb--gray" href="#" data-href="signup.php">회원가입</a><a class="sb sb--ink" href="login.html?return=order-now.html">로그인</a></div>
+</div>
+</div>
+<div class="co-dock" id="coDock" data-st-not="noitem guest">
+  <p class="co-dock__t"><span>총 결제금액</span><b class="co-dock__w">상담 후 결정</b></p>
+  <button type="submit" form="coForm" class="sb sb--acc sb--l co-dock__go" id="coDockGo" data-busy-st="busy">주문 요청 접수</button>
+</div>
+<!--@after-->
+<div class="side co-dt" id="coD-c460" role="dialog" aria-modal="true" aria-labelledby="coD-c460T" hidden data-open-st="detail" data-el="L330">
+  <div class="side__dim" data-pop-close></div>
+  <div class="side__panel">
+    <div class="side__head"><h2 class="pop__t" id="coD-c460T">상품 정보</h2><button type="button" class="pop__x" data-pop-close aria-label="상품 정보 닫기"><i class="i i-x" aria-hidden="true"></i></button></div>
+    <div class="side__body">
+      <div class="co-dt__top"><span class="co-dt__ph"><img src="img/catalog/460-f.webp" alt="방한 후드 패딩" width="600" height="600" loading="lazy" decoding="async"></span><div><p class="co-item__cat">패딩</p><p class="co-dt__n">방한 후드 패딩</p><p class="co-dt__p num">59,000원 × 70벌 · <b>4,130,000원</b></p></div></div>
+      <h3 class="co-dt__h">주문 옵션</h3>
+      <dl class="dl">
+        <div><dt>상품 옵션</dt><dd>선택한 옵션 없음</dd></div>
+        <div><dt>색상</dt><dd><i class="co-sw" style="--c:#111111" aria-hidden="true"></i>블랙</dd></div>
+        <div><dt>사이즈</dt><dd class="num">90 · 95 · 100 · 105</dd></div>
+        <div><dt>사이즈별 수량</dt><dd><ul class="co-dt__sz"><li><span>90</span><b class="num">5벌</b></li><li><span>95</span><b class="num">20벌</b></li><li><span>100</span><b class="num">30벌</b></li><li><span>105</span><b class="num">15벌</b></li></ul><p class="co-dt__sum">총 70벌</p></dd></div>
+        <div><dt>포장</dt><dd>개별 폴리백</dd></div>
+        <div><dt>인쇄 여부</dt><dd>인쇄 있음</dd></div>
+      </dl>
+      <h3 class="co-dt__h">인쇄 정보</h3>
+      <dl class="dl">
+        <div><dt>인쇄 방법</dt><dd>자수 인쇄</dd></div>
+        <div><dt>인쇄 부위</dt><dd>왼쪽 가슴, 등</dd></div>
+        <div><dt>인쇄 설명</dt><dd data-sample>왼쪽 가슴에 회사 로고, 등에 회사명 한 줄을 넣어 주세요. 실 색상은 흰색입니다.</dd></div>
+      </dl>
+      <h3 class="co-dt__h">첨부파일 <small>2개</small></h3>
+      <ul class="files co-files" data-el="L362">
+        <li><span class="files__ext">AI</span><span class="files__n">로고_시안.ai</span><span class="files__s">2.4MB</span><button type="button" class="co-files__dl" data-toast="로고_시안.ai 파일을 내려받습니다." aria-label="로고_시안.ai 내려받기"><i class="i i-download" aria-hidden="true"></i></button></li>
+        <li><span class="files__ext">PNG</span><span class="files__n">가슴_인쇄_위치.png</span><span class="files__s">480KB</span><button type="button" class="co-files__dl" data-toast="가슴_인쇄_위치.png 파일을 내려받습니다." aria-label="가슴_인쇄_위치.png 내려받기"><i class="i i-download" aria-hidden="true"></i></button></li>
+      </ul>
+    </div>
+    <div class="side__foot"><button type="button" class="sb sb--ink" data-pop-close>닫기</button></div>
+  </div>
+</div>
+<div class="pop pop--c co-done" id="coDone" role="alertdialog" aria-modal="true" aria-labelledby="coDoneT" hidden data-open-st="done" data-el="L373">
+  <div class="pop__dim"></div>
+  <div class="pop__box">
+    <div class="pop__body">
+      <span class="smark"><i class="i i-check" aria-hidden="true"></i></span>
+      <h2 class="pop__t" id="coDoneT">주문 요청을 접수했습니다</h2>
+      <p class="pop__d">마이페이지 주문내역에서 진행 상태와 시안을 확인할 수 있습니다.</p>
+      <dl class="dl dl--sm"><div><dt>요청번호</dt><dd class="num" data-sample>R-20261112-0031</dd></div><div><dt>요청 유형</dt><dd>시안 확인을 겸한 주문 요청</dd></div></dl>
+    </div>
+    <div class="pop__foot"><a class="sb sb--ink" href="mypage.html?section=orders">마이페이지에서 확인</a></div>
+  </div>
+</div>

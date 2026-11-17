@@ -1,0 +1,4 @@
+{
+ "_about": "cart · order · order-now 의 요소 중 data-el 을 붙일 수 없는 것. 담당: cart 작업자",
+ "L317": {"file": "cart.html", "selector": "body[data-nocs][data-codock]", "note": "상품이 있으면 js/sub-cart.js 가 body 에 data-nocs 를 붙여 하단 상담 바·우측 플로팅을 감춘다(빈 장바구니에서는 붙이지 않는다)"}
+}

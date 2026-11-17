@@ -1,0 +1,135 @@
+{
+  "rounds": [
+    {
+      "key": "cart",
+      "pages": [
+        "cart.html",
+        "order.html",
+        "order-now.html"
+      ],
+      "date": "2026-11-17",
+      "checkPagesFailed": 0,
+      "elsMissing": 0,
+      "checkSummary": {
+        "pages": "화면 점검: 페이지 3 · 상태 43 · 렌더링 258회 · 실패 0",
+        "els": "요소 점검: 절 3개 · 항목 162 · 빠짐 0 · 선택자 문제 0"
+      },
+      "scores": {
+        "elements": 940,
+        "states": 860,
+        "design": 830,
+        "consistency": 870,
+        "layout": 790
+      },
+      "findings": [
+        {
+          "item": "layout",
+          "page": "cart.html, order.html, order-now.html",
+          "state": "default (Chromium 390 실측)",
+          "problem": "터치 대상이 44px보다 작은 조작 요소가 여러 개다. cart: '선택 삭제' 99x36, 상품별 '자세히 보기' 59x20, 상품명 버튼 110x22, '쇼핑 계속하기' 76x24, 체크박스 input 20x20. order: '견적서 보기' 85x32, 취소/환불 동의 '보기' 22x24. order-now: '자세히 보기' 89x36, '삭제' 74x36.",
+          "evidence": "cart-m-1.png default 열(전체 선택 줄 오른쪽 '선택 삭제', 상품 정보 아래 '자세히 보기', 주문 요약 맨 아래 '쇼핑 계속하기'), order-m-1.png default 열 '견적서 보기', order-now-m-1.png default 열 상품 아래 '자세히 보기 / 삭제' 알약",
+          "fix": "css/sub.css 에서 .co-bar__del, .co-item__more, .co-sum__more, .agree__more, .sb--s, 견적정보 머리의 .lnk 에 min-height:44px(또는 ::after 로 히트 영역 44px 확장)을 주고, 체크박스는 label 전체(행 높이 44px 이상)가 눌리게 한다."
+        },
+        {
+          "item": "states",
+          "page": "order.html",
+          "state": "state=noquote, state=saved",
+          "problem": "'결제할 수 없는 견적', '이미 접수된 주문' 상태인데 결제하기 버튼이 기본 상태와 똑같이 파란 활성 버튼으로 남아 있다(조각에 disabled 없음). 상태 화면이 안내 문구만 바뀌고 실제로 할 수 있는 동작은 그대로 보인다.",
+          "evidence": "_order-pc-56.png 윗줄 오른쪽(noquote) 결제 금액 상자의 '6,146,000원 결제하기', 아랫줄 왼쪽(saved) 같은 버튼; order-m-3.png noquote·saved 열 하단 고정 바 '결제하기'",
+          "fix": "두 상태에서는 결제하기 버튼에 disabled 를 주고 비활성 모양(.arw disabled 처럼 투명도 .28 또는 회색 바탕)으로 바꾸거나, saved 는 '주문내역 보기', noquote 는 '담당자에게 문의' 선 버튼으로 바꾼다."
+        },
+        {
+          "item": "design",
+          "page": "order.html, order-now.html",
+          "state": "changed, noquote, saved, check, fail, payfail, savefail (order) / fail (order-now)",
+          "problem": "같은 오류 문장이 한 화면에 두 번 나온다(왼쪽 맨 위 분홍 띠 + 오른쪽 결제 금액 상자 안). cart 의 savefail 은 요약 상자 한 곳에만 나와 세 페이지의 오류 표시 방식도 서로 다르다.",
+          "evidence": "_order-pc-56.png changed·noquote·saved·check·fail 다섯 칸 모두 상단 띠와 결제 금액 상자 안에 같은 문장; _order-pc-78.png payfail·savefail; _order-now-pc-34.png fail; 비교: _cart-pc-34.png savefail(요약 상자에만 표시)",
+          "fix": "오류 문장은 한 곳에만 둔다. PC 는 결제 버튼 바로 위 상자 안 한 곳, 폰은 하단 고정 바 위 또는 상단 한 곳으로 통일하고, 세 페이지가 같은 규칙을 쓰게 한다."
+        },
+        {
+          "item": "design",
+          "page": "cart.html, order.html, order-now.html",
+          "state": "모든 상태(폰)",
+          "problem": "폰에서 진행 단계 표시가 현재 단계만 이름이 있고 나머지는 '2', '3' 숫자 원이나 체크 원만 남아 뜻이 없는 장식용 단계 번호처럼 보인다(사장님이 싫다고 한 항목).",
+          "evidence": "cart-m-1.png default 열 제목 아래 '1 장바구니 — 2 — 3'; order-m-1.png '✓ — ✓ — 3 견적 확인·결제'; order-now-m-1.png '✓ — 2 주문 정보 입력 — 3'",
+          "fix": "폰에서는 숫자 원 줄을 없애고 '1/3 단계 · 장바구니'처럼 글자 한 줄로 바꾸거나, 단계 표시를 폰에서 숨긴다. PC 처럼 모든 단계 이름을 보이게 할 공간이 없으면 숨기는 쪽이 낫다."
+        },
+        {
+          "item": "design",
+          "page": "order.html, order-now.html, cart.html",
+          "state": "default",
+          "problem": "토큰에 없는 글자 크기 12.5px 를 쓴다(.fld__l small, .fld__l .r, .opt__b small, .upl__tx small, .files__s). 글자 단계표에는 13(캡션)과 11.5(사진 주석)만 있다.",
+          "evidence": "_order-pc-12.png default 주문정보의 '연락처 2 선택' 작은 라벨, 견적서 파일 줄 '1.2MB'; _order-now-pc-12.png 견적서 파일 첨부칸 안내 글",
+          "fix": "css/sub.css 의 해당 선택자 font-size 를 13px(caption 토큰)로 바꾼다."
+        },
+        {
+          "item": "design",
+          "page": "order.html, order-now.html",
+          "state": "state=err, state=nobase, state=zipfail 등 오류 상태",
+          "problem": "오류색이 hex 로 직접 박혀 있다(#D10019, #B80016, #FFF0F1 — .fld.is-err, .co-errs, .co-errs a, .pd-hl .upl). 같은 파일에 --cf-err 변수를 만들어 놓고도 쓰지 않으며, 이 색들은 DESIGN.md colors 토큰에도 없다.",
+          "evidence": "_order-pc-34.png 오른쪽 위(err) 분홍 오류 요약 상자와 빨간 입력칸 테두리; _order-now-pc-12.png 오른쪽(err)",
+          "fix": "직접 쓴 hex 를 var(--cf-err) / var(--cf-err-t) / 옅은 면 변수로 바꾸고, 오류색 세 값을 DESIGN.md colors 에 토큰으로 올린다."
+        },
+        {
+          "item": "design",
+          "page": "order.html, order-now.html",
+          "state": "default 외 전체",
+          "problem": "희망배송일 입력칸에 영문 'mm/dd/yyyy'가 그대로 보인다(브라우저 기본 date 입력 표시). 한국어 화면 안의 영문 표기다.",
+          "evidence": "order-m-1.png default 열 '희망배송일' 입력칸; order-now-m-1.png default 열 같은 칸; _order-now-pc-12.png default 배송정보 오른쪽 '희망배송일'",
+          "fix": "value 가 비었을 때 '날짜를 고르세요' 같은 한국어 자리 글자를 덧씌우거나(텍스트 입력 + 달력 버튼), 입력칸 아래 안내 줄에 '예: 2026-11-25' 형식을 적는다."
+        }
+      ]
+    },
+    {
+      "key": "cart",
+      "date": "2026-11-17",
+      "rescored": [
+        "layout"
+      ],
+      "scores": {
+        "elements": 940,
+        "states": 860,
+        "design": 830,
+        "consistency": 870,
+        "layout": 860
+      },
+      "checkPagesFailed": 0,
+      "elsMissing": 0,
+      "prevFixed": "앞선 지적(터치 대상 44px 미만) 확인: Chromium 390 실측으로 cart '선택 삭제' 111x44, '자세히 보기' 67x44, '쇼핑 계속하기' 76x44, 전체 선택 체크박스(라벨 포함) 119x44, order 취소/환불 '보기' 눌림 영역 284x44, '견적서 보기' 44 이상, order-now '자세히 보기' 101x44, '삭제' 84x44 로 모두 고쳐졌다(WebKit 390, Chromium 768 에서도 같음). 남은 것은 아래 작은 항목뿐이다.",
+      "findings": [
+        {
+          "item": "layout",
+          "page": "cart.html, order.html, order-now.html",
+          "state": "전체 상태",
+          "problem": "빵부스러기 경로 링크의 눌림 영역이 44px보다 훨씬 작다. '홈' 11x20(실제 눌림 12x20), order '주문내역'·order-now '장바구니' 45x20. Chromium 390·768, WebKit 390 모두 같다.",
+          "fix": "css/sub.css 의 .subp .crumb a 에 position:relative 와 ::after{content:\"\";position:absolute;inset:-12px -6px} 를 줘서 높이를 44로 맞추고, '홈' 링크에는 min-width:44px(justify-content:flex-start)를 준다. 하위 페이지 공용이라 한 곳만 고치면 된다.",
+          "evidence": "review/sheets/cart-m-1.png default 왼쪽 위 '홈 / 장바구니' 줄, order-m-1.png default '홈 / 주문내역 / 주문서 작성', order-now-m-1.png default '홈 / 장바구니 / 주문 정보 입력'"
+        },
+        {
+          "item": "layout",
+          "page": "order.html, order-now.html",
+          "state": "state=err",
+          "problem": "맨 위 오류 요약 상자의 이동 링크(order 7개, order-now 5개)가 한 줄 높이 16~17px, 줄 간격 약 20px로 붙어 있어 폰에서 원하는 칸을 고르기 어렵다. 예: order '주문하시는 분 이름을 입력해 주세요.' 199x16, order-now '견적서_한결산업.exe 파일은…' 251x38.",
+          "fix": "오류 요약 목록의 a 를 display:flex;align-items:center;min-height:44px 로 바꾸고(목록 gap 0), 두 줄로 넘어가는 항목도 한 링크 안에서 44 이상이 되게 한다.",
+          "evidence": "review/sheets/order-m-2.png state=err 위쪽 분홍 상자, review/sheets/order-now-m-1.png state=err 위쪽 분홍 상자"
+        },
+        {
+          "item": "layout",
+          "page": "cart.html",
+          "state": "default, partial, none, nodel, fail, savefail, busy",
+          "problem": "사이즈별 수량 조절의 −·숫자칸·+ 가 40x40이고 틈 없이 붙어 있다(Chromium 390·768, WebKit 390). DESIGN.md 665줄 .qty 규격(± 40×40)을 그대로 따른 것이라 크게 감점하지 않았지만, 같은 문서 698줄 '터치 대상은 44px 이상'과 어긋난다.",
+          "fix": "폰(≤768)에서만 .subp .qty 높이와 button·input 크기를 44로 키우거나, button 에 ::after{inset:-2px 0} 로 세로 눌림 영역을 44로 늘린다. 규격을 바꾸면 DESIGN.md 665줄에 '폰 44'를 같이 적는다.",
+          "evidence": "review/sheets/cart-m-1.png default 상품별 사이즈 칸(90·95·100·105, M·L·XL)"
+        },
+        {
+          "item": "layout",
+          "page": "cart.html",
+          "state": "default",
+          "problem": "상품명 버튼 '방한 후드 패딩'의 상자는 85x44인데 이웃 요소가 4px를 덮어 실제 눌리는 높이가 40px이다.",
+          "fix": "상품명 버튼에 position:relative;z-index:1 을 주거나, 위 분류 줄·아래 색상/포장 줄의 음수 여백을 없애 버튼 44px 전체가 눌리게 한다.",
+          "evidence": "review/sheets/cart-m-1.png default 첫 상품 카드 상품명 '방한 후드 패딩'"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,286 @@
+/* ============================================================
+   40. 장바구니 · 주문서 작성 · 주문 정보 입력 (cart · order · order-now)
+   틀: PC(1100 이상) 왼쪽 내용 + 오른쪽에 따라오는 요약, 그 아래는 한 열. 폰은 화면 아래 요청·결제 띠(.co-dock)
+   근거: research/decisions/cart-checkout.md
+   ============================================================ */
+
+/* 머리: 제목 + 진행 순서 */
+.co-head .wrap{align-items:flex-end}
+.co-stp{padding-bottom:6px}
+.co-head .sub-head__t small .num{font-weight:600;color:#000}
+
+/* 틀 */
+.co{display:grid;grid-template-columns:minmax(0,1fr);gap:48px}
+.co__main{min-width:0}
+.co-side{min-width:0}
+@media (min-width:1100px){
+  .co{grid-template-columns:minmax(0,1fr) 360px;gap:56px;align-items:start}
+  .co-side{position:sticky;top:calc(var(--bh-top, 108px) + 24px)}
+}
+
+/* 안내 줄 */
+.co-msg{margin-bottom:20px}
+.co-msg__btn{display:inline-flex;flex:none;align-items:center;min-height:44px;margin:-11px 0 -11px auto;padding-left:12px;font-size:14px;font-weight:700;color:inherit;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
+.co-srv .msg{margin-bottom:24px}
+.co .msg .tl{display:inline-block;padding:14px 0;margin:-14px 0}   /* 문장 안 링크도 누르는 높이 44(줄 높이는 그대로) */
+.co-lock{margin-bottom:32px}
+.co-lock .i{color:#000}
+.co-muted{margin-left:8px;font-size:13px;font-weight:400;color:var(--fg3)}
+
+/* 접수·결제 버튼의 결과 문장(저장 실패·서버 거절·미선택)은 한 화면에 한 곳만:
+   769 이상은 요약 상자 안 버튼 바로 위(.co-sum__msg), 폰은 버튼이 화면 아래 띠로 가고 요약 상자가 맨 끝이라 본문 맨 위(.co-srv) */
+@media (min-width:769px){ .co-srv{display:none} }
+
+/* 입력 오류 요약(결제하기를 누르면 왼쪽 맨 위). 색은 공용 .msg--err 를 그대로 쓴다 */
+.co-errs{display:block;margin-bottom:32px;padding:20px 24px}
+.co-errs:focus{outline:0}
+.co-errs:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.co-errs__t{display:flex;align-items:center;gap:6px;font-size:15px;font-weight:700;line-height:22px}
+.co-errs ul{display:grid;gap:4px;margin-top:8px;padding-left:26px}
+.co-errs a{font-size:14px;line-height:22px;color:inherit;text-decoration:underline;text-underline-offset:3px}
+.co-errs a:hover{color:#000}
+
+/* 체크·라디오: 동그라미만이 아니라 줄 전체(44px 이상)가 눌린다. 입력을 줄 전체에 덮는다 */
+.co .chk,.co .rdo{position:relative;min-height:44px;padding-block:10px}
+.co .chk input,.co .rdo input{inset:0;width:100%;height:100%;margin:0}
+.co .choice{row-gap:0}
+
+/* 희망배송일·결제 희망일: 비어 있으면 브라우저 기본 표시(mm/dd/yyyy 등) 대신 한국어 자리 글자 */
+.co-date{position:relative;display:block}
+.co-date__ph{display:none;position:absolute;left:17px;top:50%;transform:translateY(-50%);font-size:15px;line-height:1.5;color:#9A979E;pointer-events:none}
+.co-date .inp{line-height:46px;cursor:pointer}   /* Safari 는 date 칸 글자를 위에 붙여 그려서 줄 높이로 가운데에 둔다 */
+/* 기본 표시를 감출 수 있는 브라우저(Chromium·Safari)에서만 자리 글자를 덧씌운다. 그 밖의 브라우저는 기본 표시 그대로 */
+@supports selector(::-webkit-datetime-edit){
+  .co-date__ph{display:block}
+  .co-date .inp:not(.is-v):not(:focus)::-webkit-datetime-edit{opacity:0}
+  .co-date .inp.is-v+.co-date__ph,.co-date .inp:focus+.co-date__ph{display:none}
+}
+
+/* 임시(공용 10-form 의 12.5px 를 글자 단계 caption 13px 로. 보고서 "공용 부품에 필요한 것"에 적음. 공용이 고쳐지면 지운다) */
+.co .fld__l small,.co .fld__l .r,.co .opt__b small,.co .upl__tx small,.co .files__s,.co-dt .files__s{font-size:13px}
+
+/* ---------- 장바구니 목록 ---------- */
+.co-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:48px;padding-bottom:12px;border-bottom:1px solid #000}
+.co-bar .chk{font-weight:600}
+.co-bar__n{margin-left:2px;font-weight:500;color:var(--fg3)}
+.co-bar__del--off{opacity:.4}
+.co-item{position:relative;display:grid;grid-template-columns:24px 112px minmax(0,1fr);grid-template-rows:auto auto 1fr;gap:0 20px;padding:28px 0;border-bottom:1px solid var(--ln)}
+.co-item__chk{display:grid;place-items:center;width:44px;height:44px;margin:-10px 0 0 -10px;padding:0 !important;grid-row:1;grid-column:1}
+.co-item__chk i{margin-top:0}
+.co-item__ph{display:block;grid-row:1 / span 3;grid-column:2;align-self:start;width:112px;height:112px;border-radius:12px;overflow:hidden;background:#F2F2F2}
+.co-item__ph img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
+.co-item__ph:hover img{transform:scale(1.035)}
+.co-item__b{grid-row:1;grid-column:3;min-width:0;padding-right:52px}
+.co-item__cat{font-size:12px;font-weight:700;line-height:18px;color:#9A979E}
+.co-item__n{margin-top:2px;font-size:17px;font-weight:800;line-height:24px;letter-spacing:-.02em;color:var(--ink)}
+.co-item__n button{display:inline-flex;align-items:center;min-height:44px;margin:-10px 0;text-align:left}   /* 누르는 높이 44, 줄 높이는 그대로 */
+.co-item__n button:hover{text-decoration:underline;text-underline-offset:3px}
+.co-item__o{display:flex;flex-wrap:wrap;align-items:center;gap:4px 14px;margin-top:6px;font-size:14px;line-height:21px;color:#5C5A61}
+.co-item__o em{margin-right:6px;font-style:normal;color:var(--fg3)}
+.co-item__o .stag{margin-left:-2px}
+.co-sw{display:inline-block;width:12px;height:12px;margin-right:6px;border-radius:50%;background:var(--c);box-shadow:inset 0 0 0 1px rgba(14,14,16,.14);vertical-align:-1px}
+.co-item__more{position:relative;display:inline-flex;align-items:center;min-height:44px;margin:-12px 0 -12px 2px;padding:0 4px;font-size:13px;font-weight:600;color:var(--fg3);text-decoration:underline;text-underline-offset:3px}
+.co-item__more:hover{color:#000}
+.co-sz{grid-row:2;grid-column:3;display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.co-sz__c{display:grid;gap:6px;padding:10px 12px 12px;border-radius:12px;background:var(--tint)}
+.co-sz__l{font-size:13px;font-weight:600;line-height:18px;color:#000}
+.co-sz__l small{margin-left:4px;font-size:12px;font-weight:400;color:var(--fg3)}
+.co-item__f{grid-row:3;grid-column:3;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 16px;margin-top:16px}
+.co-item__q{font-size:14px;color:var(--fg2)}
+.co-item__q b{font-weight:700;color:#000}
+.co-item__p{display:flex;align-items:baseline;gap:12px}
+.co-item__u{font-size:13px;color:var(--fg3)}
+.co-item__p b{font-size:17px;font-weight:800;line-height:24px;color:var(--ink)}
+.co-item__x{position:absolute;right:0;top:18px;display:grid;place-items:center;width:44px;height:44px;border-radius:50%;color:#8B8B90;transition:background-color .15s,color .15s}
+.co-item__x:hover{background:#F1F1F3;color:#000}
+.co-item--off .co-item__ph img{opacity:.55}
+.co-empty{border-top:1px solid #000;border-bottom:1px solid var(--ln)}
+.co-gate{padding-top:56px}
+
+/* ---------- 요약(오른쪽) ---------- */
+.co-sum{padding:28px;border:1px solid var(--ln);border-radius:16px;background:#fff}
+.co-sum__t{padding-bottom:14px;border-bottom:1px solid #000;font-size:18px;line-height:26px;color:#000}
+.co-sum__list{padding:10px 0;border-bottom:1px solid var(--ln)}
+.co-sum__list li{display:flex;flex-wrap:wrap;justify-content:space-between;gap:0 12px;padding:7px 0;font-size:14px;line-height:21px;color:var(--fg2)}
+.co-sum__n{width:100%;font-weight:600;color:#000;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.co-sum__a{font-weight:600;color:#000}
+.co-sum__none{padding:14px 0;border-bottom:1px solid var(--ln);font-size:14px;color:var(--fg3)}
+.co-sum__dl{padding:12px 0 0}
+.co-sum__dl>div{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:5px 0;font-size:14px;line-height:22px}
+.co-sum__dl dt{color:var(--fg2)}
+.co-sum__dl dt small{margin-left:4px;font-size:12px;color:var(--fg3)}
+.co-sum__dl dd{font-weight:600;color:#000;text-align:right}
+.co-sum__dl .co-sum__tot{margin-top:8px;padding-top:14px;border-top:1px solid var(--ln)}
+.co-sum__tot dt{font-size:15px;font-weight:700;color:#000}
+.co-sum__tot dd{font-size:15px}
+.co-sum__tot b{font-size:22px;font-weight:800;line-height:30px;color:var(--ink)}
+.co-sum__tot .co-sum__cnt{font-weight:700}
+.co-sum__tot .co-sum__word{font-size:17px;font-weight:800;color:var(--ink)}
+.co-sum__meta{margin-top:4px;font-size:13px;line-height:20px;color:var(--fg3);text-align:right}
+.co-sum__meta b{font-weight:600;color:#000}
+.co-sum__note{display:grid;gap:4px;margin-top:16px;padding:14px 16px;border-radius:12px;background:var(--tint);font-size:13px;line-height:20px;color:var(--fg2)}
+.co-sum__note li{position:relative;padding-left:11px}
+.co-sum__note li::before{content:"";position:absolute;left:0;top:9px;width:3px;height:3px;border-radius:50%;background:#8B8B90}
+.co-sum .msg{margin-top:16px}
+.co-sum__msg:empty{display:none}
+.co-sum__msg .msg-btn{display:none}
+.co-sum .agree{margin-top:20px;padding:4px 6px 4px 16px}
+.co-sum .agree .chk{font-size:14px}
+.co-sum .agree__more{position:relative;z-index:1;display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;margin:-10px 0 -10px auto}
+.co-agree .fld__msg{margin-top:-4px}
+.co-go{margin-top:16px}
+.co-sum__more{display:flex;align-items:center;width:max-content;min-height:44px;margin:4px auto -10px}
+.co-dock{display:none}
+
+/* ---------- 주문서 · 주문 정보 입력: 구역 ---------- */
+.co-sec+.co-sec{margin-top:56px}
+.co-sec__h{display:flex;align-items:baseline;justify-content:space-between;gap:8px 16px;flex-wrap:wrap;padding-bottom:14px;margin-bottom:24px;border-bottom:1px solid #000}
+.co-sec__h .st small .num{font-weight:600;color:#000}
+.co-sec__r{font-size:13px;line-height:20px;color:var(--fg3)}
+.co-sec__r em{font-style:normal;color:var(--accent-text)}
+.co-sec__r b{font-size:15px;font-weight:700;color:#000}
+.co-sec__h .stag .i{margin-right:-1px}
+.co-sec__h .lnk{min-height:44px;margin:-6px 0}
+.co-sec__h .lnk::after{bottom:8px}
+.co-fold>summary{list-style:none;cursor:default}
+.co-fold>summary::-webkit-details-marker{display:none}
+.co-fold__sum{display:none}
+.co-fold>summary .co-fold__ic{display:none}
+
+/* 주문 상품(수정 불가) */
+.co-olist{display:grid}
+.co-oi{display:grid;grid-template-columns:80px minmax(0,1fr) auto;gap:0 20px;align-items:start;padding:18px 0;border-bottom:1px solid var(--ln)}
+.co-oi:first-child{padding-top:0}
+.co-oi__ph{display:block;width:80px;height:80px;border-radius:12px;overflow:hidden;background:#F2F2F2}
+.co-oi__ph img{display:block;width:100%;height:100%;object-fit:cover}
+.co-oi__b{min-width:0}
+.co-oi__n{font-size:16px;font-weight:800;line-height:23px;letter-spacing:-.02em;color:var(--ink)}
+.co-oi__sz{margin-top:6px;font-size:14px;line-height:21px;color:var(--fg2)}
+.co-oi__sz span+span::before{content:"·";margin:0 6px;color:#C8C8CC}
+.co-oi__acts{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.co-oi__r{display:grid;justify-items:end;gap:2px;text-align:right}
+.co-oi__q{font-size:14px;color:var(--fg2)}
+.co-oi__q b{font-weight:700;color:#000}
+.co-oi__u{font-size:13px;color:var(--fg3)}
+.co-oi__a{font-size:16px;font-weight:800;line-height:23px;color:var(--ink)}
+.co-olist__sum{display:flex;justify-content:flex-end;gap:20px;padding-top:16px;font-size:14px;color:var(--fg2)}
+.co-olist__sum b{font-weight:700;color:#000}
+
+/* 견적정보 */
+.co-qdl .files{margin-top:0}
+.co-qamt{font-size:17px;font-weight:800;color:var(--ink)}
+.co-qdl .stag{margin-left:8px;vertical-align:1px}
+.co-files li{padding-right:4px}
+.co-files__dl{display:grid;flex:none;place-items:center;width:44px;height:44px;margin:-6px 0;border-radius:50%;color:#474747}
+.co-files__dl:hover{background:#DEDEE2;color:#000}
+
+/* 선택지 아래 추가 입력 */
+.co-more{margin-top:16px}
+.co-paynote{display:flex;gap:8px;margin-top:14px;font-size:14px;line-height:22px;color:var(--fg2)}
+.co-paynote .i{flex:none;margin-top:1px;color:#8B8B90}
+.co-box{margin-top:16px;padding:22px 24px;border-radius:16px;background:var(--tint)}
+.co-box .inp,.co-box .sel{background-color:#fff}
+.co-box>*+*,.co-box [data-proof="cash"]>*+*{margin-top:20px}
+.co-box+.co-box{margin-top:12px}
+.co-sec>.dl{border-top:0;margin-top:-14px}
+.co-files{grid-template-columns:minmax(0,1fr)}
+.co-box .seg span{background:#fff}
+.co-box .seg input:checked+span{background:#1B1B1F}
+.co-pay .opt__b b{font-weight:700}
+.co-ship .opt__b b{font-weight:700}
+.co-unit{position:relative;flex:1 1 0;min-width:0}
+.co-unit .inp{padding-right:40px}
+.co-unit>span{position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:15px;font-weight:600;color:var(--fg3);pointer-events:none}
+.co-pt .inrow{max-width:420px}
+.co-pt .msg{margin-top:4px}
+.co-lockdl dd{font-weight:500}
+.co-agreebox{display:grid;gap:12px}
+.co-case{display:grid;gap:10px;padding:20px 24px;border-radius:16px;background:var(--tint)}
+.co-case dl{display:grid;gap:10px}
+.co-case dl>div{display:grid;grid-template-columns:150px minmax(0,1fr);gap:16px;font-size:14px;line-height:22px}
+.co-case dt{font-weight:600;color:#000}
+.co-case dd{color:var(--fg2)}
+
+/* ---------- 상품 정보 자세히 보기(옆 패널) ---------- */
+.co-dt__top{display:grid;grid-template-columns:96px minmax(0,1fr);gap:16px;align-items:center;padding-bottom:20px}
+.co-dt__ph{display:block;width:96px;height:96px;border-radius:12px;overflow:hidden;background:#F2F2F2}
+.co-dt__ph img{display:block;width:100%;height:100%;object-fit:cover}
+.co-dt__n{margin-top:2px;font-size:17px;font-weight:800;line-height:24px;letter-spacing:-.02em;color:var(--ink)}
+.co-dt__p{margin-top:4px;font-size:14px;color:var(--fg2)}
+.co-dt__p b{font-weight:800;color:var(--ink)}
+.co-dt__h{margin:28px 0 10px;font-size:15px;font-weight:700;line-height:22px;color:#000}
+.co-dt__h small{margin-left:6px;font-size:13px;font-weight:500;color:var(--fg3)}
+.co-dt__top+.co-dt__h{margin-top:4px}
+.co-dt__sz{display:flex;flex-wrap:wrap;gap:6px}
+.co-dt__sz li{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:999px;background:var(--tint);font-size:13px;line-height:1}
+.co-dt__sz span{color:var(--fg3)}
+.co-dt__sz b{font-weight:700;color:#000}
+.co-dt__sum{margin-top:6px;font-size:13px;color:var(--fg3)}
+
+/* ---------- 팝업: 저장된 배송지 · 정책 · 접수 완료 ---------- */
+.co-addr{display:grid;gap:10px}
+.co-addr li{display:flex;align-items:center;gap:16px;padding:18px 20px;border:1px solid var(--ln);border-radius:16px}
+.co-addr__b{flex:1;min-width:0;font-size:14px;line-height:22px;color:var(--fg2)}
+.co-addr__n{display:flex;align-items:center;gap:8px;margin-bottom:2px;font-size:15px;font-weight:700;color:#000}
+.co-addr__empty{padding:40px 12px 24px}
+.co-pol h3{margin-top:20px;font-size:15px;font-weight:700;line-height:22px;color:#000}
+.co-pol h3:first-child{margin-top:0}
+.co-pol p,.co-pol li{font-size:14px;line-height:1.7;color:var(--fg2)}
+.co-pol ul{display:grid;gap:4px;margin-top:6px}
+.co-pol li{position:relative;padding-left:12px}
+.co-pol li::before{content:"";position:absolute;left:0;top:11px;width:3px;height:3px;border-radius:50%;background:#8B8B90}
+.co-done .dl{margin-top:20px;padding:12px 16px;border-radius:12px;background:var(--tint);text-align:left}
+
+/* ---------- 1099 이하: 한 열(요약은 목록 아래) ---------- */
+@media (max-width:1099px){
+  .co-sum{max-width:none}
+}
+
+/* ---------- 폰 ---------- */
+@media (max-width:768px){
+  .co{gap:32px}
+  .co-head .wrap{align-items:flex-start;flex-direction:column;gap:12px}
+  .co-stp{display:none}   /* 폰은 단계 이름을 다 보여 줄 폭이 없어 번호 원만 남는다. 장식 번호가 되므로 감춘다(요약 안내 문장이 흐름을 알린다) */
+  .co-sum__msg{display:none}   /* 폰의 결과 문장은 본문 맨 위(.co-srv) 한 곳 */
+  .co-item{grid-template-columns:24px 80px minmax(0,1fr);grid-template-rows:auto;gap:0 12px;padding:20px 0}
+  .co-item__ph{grid-row:1;width:80px;height:80px}
+  .co-item__b{padding-right:36px}
+  .co-item__n{font-size:15px;line-height:22px}
+  .co-item__o{gap:2px 12px;font-size:13px;line-height:20px}
+  .co-sz{grid-row:2;grid-column:1 / -1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin-top:14px}
+  .co-sz__c{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 8px;padding:6px 6px 6px 12px}
+  .co-sz__c .qty input{width:40px}
+  .co-item__f{grid-row:3;grid-column:1 / -1;margin-top:12px}
+  .co-item__p b{font-size:15.5px;line-height:22px}
+  .co-item__x{top:12px;right:-10px}
+  .co-sum{padding:22px 20px}
+  .co-go{display:none}
+  .co-sec+.co-sec{margin-top:44px}
+  .co-sec__h{margin-bottom:20px}
+  .co-fold>summary{cursor:pointer}
+  .co-fold>summary .co-fold__ic{display:block;margin-left:auto;color:#8B8B90;transition:transform .3s var(--ease)}
+  .co-fold[open]>summary .co-fold__ic{transform:rotate(180deg)}
+  .co-fold:not([open])>summary{margin-bottom:0}
+  .co-fold:not([open]) .co-fold__sum{display:block;width:100%;font-size:14px;line-height:22px;color:var(--fg2)}
+  .co-oi{grid-template-columns:64px minmax(0,1fr);gap:0 14px}
+  .co-oi__ph{width:64px;height:64px}
+  .co-oi__n{font-size:15px;line-height:22px}
+  .co-oi__r{grid-column:2;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:flex-start;gap:4px 10px;margin-top:8px;text-align:left}
+  .co-oi__a{margin-left:auto;font-size:15.5px}
+  .co-qdl .co-qdl__file{grid-template-columns:minmax(0,1fr);gap:8px}   /* 견적서 파일 줄은 이름을 넓게 보이도록 이름 → 파일 두 줄로 */
+  .co-box{padding:18px 16px}
+  .co-pay{grid-template-columns:minmax(0,1fr)}
+  .co-pay .opt__b{flex-direction:row;align-items:baseline;justify-content:flex-start;flex-wrap:wrap;gap:0 10px}
+  .co-case{padding:18px 16px}
+  .co-case dl>div{grid-template-columns:minmax(0,1fr);gap:2px}
+  .co-addr li{flex-direction:column;align-items:stretch;gap:12px;padding:16px}
+  .co-dock{position:fixed;left:0;right:0;bottom:0;z-index:200;display:flex;align-items:center;gap:14px;padding:10px var(--gut) calc(10px + env(safe-area-inset-bottom));border-top:1px solid var(--ln);background:#fff}
+  .co-dock__t{display:grid;flex:none;font-size:13px;line-height:18px;color:var(--fg3)}
+  .co-dock__t b{font-size:17px;font-weight:800;line-height:24px;color:var(--ink)}
+  .co-dock__t .co-dock__w{font-size:15px}
+  .co-dock__go{flex:1;min-width:0}
+  body[data-nocs][data-codock]{padding-bottom:calc(77px + env(safe-area-inset-bottom))}
+  body[data-codock] .sub-toast{bottom:calc(88px + env(safe-area-inset-bottom))}
+  body[data-codock] .ck{bottom:calc(88px + env(safe-area-inset-bottom))}
+}
+@media (prefers-reduced-motion:reduce){ .co-side,.co-item__ph img,.co-fold__ic{transition:none} }

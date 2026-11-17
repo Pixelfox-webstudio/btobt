@@ -1,0 +1,201 @@
+<!--{"title": "장바구니", "desc": "담은 상품을 골라 한 번에 견적·시안 요청으로 접수합니다.", "name": "장바구니", "group": 3, "order": 1, "type": "cart",
+ "sections": ["장바구니"], "scripts": ["js/sub-cart.js"],
+ "states": [["default", "기본(전부 선택)"], ["state=partial", "일부 선택(인쇄 없는 상품만)"], ["state=detail", "자세히 보기 열림"], ["state=empty", "빈 장바구니"], ["state=none", "주문할 상품 미선택"], ["state=nodel", "삭제할 상품 미선택"], ["state=fail", "장바구니 처리 실패"], ["state=savefail", "주문 요청 저장 실패"], ["state=busy", "접수 중"], ["state=guest", "비로그인"]]}-->
+<section class="sub-head sub-head--row co-head">
+  <div class="wrap">
+    <div>
+      <nav class="crumb" aria-label="현재 위치"><a href="#" data-href="index.php">홈</a><span aria-hidden="true">/</span><span aria-current="page">장바구니</span></nav>
+      <h1 class="sub-head__t">장바구니 <small id="coHeadCnt" data-st-not="empty guest"><span class="num" data-co="n">3</span>개 상품 · 총 <span class="num" data-co="q">112</span>벌</small></h1>
+    </div>
+    <ol class="stp co-stp" aria-label="주문 진행 순서" data-st-not="guest"><li class="is-on" aria-current="step"><b>1</b><span>장바구니</span></li><li><b>2</b><span>견적·시안 요청</span></li><li><b>3</b><span>견적 확인·결제</span></li></ol>
+  </div>
+</section>
+<div class="wrap sub-body">
+  <div class="co" id="coCart" data-st-not="empty guest">
+    <div class="co__main">
+      <p class="msg msg--err co-msg" role="alert" data-st="fail" data-el="L315"><i class="i i-alert" aria-hidden="true"></i><span>장바구니를 바꾸지 못했습니다. 잠시 후 다시 시도해 주세요.</span><button type="button" class="co-msg__btn" data-co-reload>새로고침</button></p>
+      <div class="co-srv">
+        <p class="msg msg--err" role="alert" data-st="none" data-co-msg="none"><i class="i i-alert" aria-hidden="true"></i><span>주문할 상품을 선택해 주세요.</span></p>
+        <p class="msg msg--err" role="alert" data-st="savefail"><i class="i i-alert" aria-hidden="true"></i><span>주문 요청을 저장하지 못했습니다. 잠시 후 다시 눌러 주세요. 계속되면 고객센터(<a class="num" href="tel:050713786094">0507-1378-6094</a>)로 연락해 주세요.</span></p>
+      </div>
+      <div class="co-bar">
+        <label class="chk" data-el="L299"><input type="checkbox" id="coAll" checked><i></i><span>전체 선택<span class="co-bar__n num" id="coAllN">(3/3)</span></span></label>
+        <button type="button" class="sb sb--gray sb--m co-bar__del co-bar__del--off" id="coDelSel" aria-describedby="coDelHint" data-el="L303"><i class="i i-trash i--16" aria-hidden="true"></i>선택 삭제</button>
+        <span class="sr-only" id="coDelHint">상품 선택을 한 번 바꾼 뒤에 쓸 수 있습니다.</span>
+      </div>
+      <h2 class="sr-only">담은 상품</h2>
+      <ul class="co-list" id="coList" data-el="L274">
+        <li class="co-item" data-key="c460" data-price="59000" data-print="1">
+          <label class="co-item__chk chk" data-el="L298"><input type="checkbox" checked aria-label="방한 후드 패딩 선택"><i></i></label>
+          <button type="button" class="co-item__ph" data-pop="coD-c460" aria-label="방한 후드 패딩 상품 정보 자세히 보기" data-el="L275"><img src="img/catalog/460-f.webp" alt="" width="600" height="600" decoding="async"></button>
+          <div class="co-item__b">
+            <p class="co-item__cat">패딩</p>
+            <h3 class="co-item__n"><button type="button" data-pop="coD-c460" data-el="L276 L305">방한 후드 패딩</button></h3>
+            <p class="co-item__o"><span data-el="L277"><em>색상</em><i class="co-sw" style="--c:#111111" aria-hidden="true"></i>블랙</span><span data-el="L279"><em>포장</em>개별 폴리백</span><span class="stag stag--acc" data-el="L278">인쇄 있음</span><button type="button" class="co-item__more" data-pop="coD-c460">자세히 보기</button></p>
+          </div>
+          <div class="co-sz" role="group" aria-label="방한 후드 패딩 사이즈별 수량" data-el="L280 L300">
+            <div class="co-sz__c"><span class="co-sz__l">90</span><span class="qty"><button type="button" data-q="-1" aria-label="90 수량 줄이기">−</button><input type="number" value="5" min="0" max="9999" inputmode="numeric" aria-label="90 수량"><button type="button" data-q="1" aria-label="90 수량 늘리기">+</button></span></div>
+            <div class="co-sz__c"><span class="co-sz__l">95</span><span class="qty"><button type="button" data-q="-1" aria-label="95 수량 줄이기">−</button><input type="number" value="20" min="0" max="9999" inputmode="numeric" aria-label="95 수량"><button type="button" data-q="1" aria-label="95 수량 늘리기">+</button></span></div>
+            <div class="co-sz__c"><span class="co-sz__l">100</span><span class="qty"><button type="button" data-q="-1" aria-label="100 수량 줄이기">−</button><input type="number" value="30" min="0" max="9999" inputmode="numeric" aria-label="100 수량"><button type="button" data-q="1" aria-label="100 수량 늘리기">+</button></span></div>
+            <div class="co-sz__c"><span class="co-sz__l">105</span><span class="qty"><button type="button" data-q="-1" aria-label="105 수량 줄이기">−</button><input type="number" value="15" min="0" max="9999" inputmode="numeric" aria-label="105 수량"><button type="button" data-q="1" aria-label="105 수량 늘리기">+</button></span></div>
+          </div>
+          <div class="co-item__f">
+            <p class="co-item__q" data-el="L281">총 수량 <b class="num" data-co="q">70</b>벌</p>
+            <p class="co-item__p" data-el="L282"><span class="co-item__u num">59,000원 × <span data-co="q">70</span>벌</span><b class="num" data-co="amt">4,130,000원</b></p>
+          </div>
+          <button type="button" class="co-item__x" data-co-del aria-label="방한 후드 패딩 삭제" data-el="L304"><i class="i i-trash" aria-hidden="true"></i></button>
+        </li>
+        <li class="co-item" data-key="c195" data-price="28000" data-print="0">
+          <label class="co-item__chk chk"><input type="checkbox" checked aria-label="웰론 보온 겨울조끼 선택"><i></i></label>
+          <button type="button" class="co-item__ph" data-pop="coD-c195" aria-label="웰론 보온 겨울조끼 상품 정보 자세히 보기"><img src="img/catalog/195-f.webp" alt="" width="600" height="600" decoding="async"></button>
+          <div class="co-item__b">
+            <p class="co-item__cat">조끼</p>
+            <h3 class="co-item__n"><button type="button" data-pop="coD-c195">웰론 보온 겨울조끼</button></h3>
+            <p class="co-item__o"><span><em>색상</em><i class="co-sw" style="--c:#1F3864" aria-hidden="true"></i>네이비</span><span><em>포장</em>기본 포장</span><span class="stag">인쇄 없음</span><button type="button" class="co-item__more" data-pop="coD-c195">자세히 보기</button></p>
+          </div>
+          <div class="co-sz" role="group" aria-label="웰론 보온 겨울조끼 사이즈별 수량">
+            <div class="co-sz__c"><span class="co-sz__l">M</span><span class="qty"><button type="button" data-q="-1" aria-label="M 수량 줄이기">−</button><input type="number" value="10" min="0" max="9999" inputmode="numeric" aria-label="M 수량"><button type="button" data-q="1" aria-label="M 수량 늘리기">+</button></span></div>
+            <div class="co-sz__c"><span class="co-sz__l">L</span><span class="qty"><button type="button" data-q="-1" aria-label="L 수량 줄이기">−</button><input type="number" value="12" min="0" max="9999" inputmode="numeric" aria-label="L 수량"><button type="button" data-q="1" aria-label="L 수량 늘리기">+</button></span></div>
+            <div class="co-sz__c"><span class="co-sz__l">XL</span><span class="qty"><button type="button" data-q="-1" aria-label="XL 수량 줄이기">−</button><input type="number" value="8" min="0" max="9999" inputmode="numeric" aria-label="XL 수량"><button type="button" data-q="1" aria-label="XL 수량 늘리기">+</button></span></div>
+          </div>
+          <div class="co-item__f">
+            <p class="co-item__q">총 수량 <b class="num" data-co="q">30</b>벌</p>
+            <p class="co-item__p"><span class="co-item__u num">28,000원 × <span data-co="q">30</span>벌</span><b class="num" data-co="amt">840,000원</b></p>
+          </div>
+          <button type="button" class="co-item__x" data-co-del aria-label="웰론 보온 겨울조끼 삭제"><i class="i i-trash" aria-hidden="true"></i></button>
+        </li>
+        <li class="co-item" data-key="b3026" data-price="0" data-print="0">
+          <label class="co-item__chk chk"><input type="checkbox" checked aria-label="케이투 JK-F6101 선택"><i></i></label>
+          <button type="button" class="co-item__ph" data-pop="coD-b3026" aria-label="케이투 JK-F6101 상품 정보 자세히 보기"><img src="img/brandp/3026.webp" alt="" width="900" height="600" decoding="async"></button>
+          <div class="co-item__b">
+            <p class="co-item__cat">협력브랜드 · 케이투</p>
+            <h3 class="co-item__n"><button type="button" data-pop="coD-b3026">케이투 JK-F6101</button></h3>
+            <p class="co-item__o"><span><em>색상</em>선택 없음</span><span><em>포장</em>선택 없음</span><span class="stag">인쇄 없음</span><button type="button" class="co-item__more" data-pop="coD-b3026">자세히 보기</button></p>
+          </div>
+          <div class="co-sz" role="group" aria-label="케이투 JK-F6101 수량">
+            <div class="co-sz__c"><span class="co-sz__l">수량<small>등록된 사이즈 없음</small></span><span class="qty"><button type="button" data-q="-1" aria-label="수량 줄이기">−</button><input type="number" value="12" min="0" max="9999" inputmode="numeric" aria-label="수량"><button type="button" data-q="1" aria-label="수량 늘리기">+</button></span></div>
+          </div>
+          <div class="co-item__f">
+            <p class="co-item__q">총 수량 <b class="num" data-co="q">12</b>벌</p>
+            <p class="co-item__p"><span class="co-item__u">단가 없음</span><b data-co="amt">견적문의</b></p>
+          </div>
+          <button type="button" class="co-item__x" data-co-del aria-label="케이투 JK-F6101 삭제"><i class="i i-trash" aria-hidden="true"></i></button>
+        </li>
+      </ul>
+    </div>
+    <aside class="co-side" aria-labelledby="coSumT">
+      <div class="co-sum" data-el="L283">
+        <h2 class="co-sum__t" id="coSumT">주문 요약</h2>
+        <ul class="co-sum__list" id="coSumList" data-el="L284">
+          <li data-k="c460"><span class="co-sum__n">방한 후드 패딩</span><span class="num" data-co="q">70벌</span><span class="co-sum__a num" data-co="amt">4,130,000원</span></li>
+          <li data-k="c195"><span class="co-sum__n">웰론 보온 겨울조끼</span><span class="num" data-co="q">30벌</span><span class="co-sum__a num" data-co="amt">840,000원</span></li>
+          <li data-k="b3026"><span class="co-sum__n">케이투 JK-F6101</span><span class="num" data-co="q">12벌</span><span class="co-sum__a" data-co="amt">견적문의</span></li>
+        </ul>
+        <p class="co-sum__none" id="coSumNone" hidden>선택한 상품이 없습니다.</p>
+        <dl class="co-sum__dl" data-el="L285">
+          <div><dt>선택한 상품</dt><dd><span class="num" id="coSelN">3</span>개</dd></div>
+          <div class="co-sum__tot"><dt>총 수량</dt><dd><b class="num co-sum__cnt" id="coSelQ">112</b>벌</dd></div>
+        </dl>
+        <ul class="co-sum__note">
+          <li id="coKind">인쇄 상품이 있어 시안 확인을 겸한 주문 요청으로 접수합니다.</li>
+          <li>인쇄비·배송비와 견적문의 상품 금액은 견적서에서 안내합니다.</li>
+          <li>결제는 견적을 확인한 뒤 주문서에서 진행합니다.</li>
+        </ul>
+        <div class="co-sum__msg">
+          <p class="msg msg--err" role="alert" id="coNoSel" data-st="none" data-co-msg="none" data-el="L313"><i class="i i-alert" aria-hidden="true"></i><span>주문할 상품을 선택해 주세요.</span></p>
+          <p class="msg msg--err" role="alert" id="coSaveFail" data-st="savefail" data-el="L316"><i class="i i-alert" aria-hidden="true"></i><span>주문 요청을 저장하지 못했습니다. 잠시 후 다시 눌러 주세요. 계속되면 고객센터(<a class="num" href="tel:050713786094">0507-1378-6094</a>)로 연락해 주세요.</span></p>
+        </div>
+        <a class="bt bt--acc bt--full co-go" href="order-complete.html" id="coGo" data-busy-st="busy" data-el="L307"><span>3개 상품 견적·시안 요청</span><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></a>
+        <a class="co-sum__more tl" href="#" data-href="index.php" data-el="L308">쇼핑 계속하기</a>
+      </div>
+    </aside>
+  </div>
+  <div class="co-empty" id="coEmpty" data-st="empty">
+    <div class="empty" data-el="L312">
+      <span class="empty__ic"><i class="i i-bag" aria-hidden="true"></i></span>
+      <p class="empty__t">장바구니에 담은 상품이 없습니다.</p>
+      <p class="empty__d">상품 상세에서 색상과 사이즈별 수량을 정해 담으면 여러 상품을 한 번에 견적·시안 요청으로 보낼 수 있습니다.</p>
+      <div class="acts"><a class="sb sb--ink" href="#" data-href="index.php">쇼핑 계속하기</a></div>
+    </div>
+  </div>
+  <div class="gate co-gate" data-st="guest" data-el="L311">
+    <span class="smark smark--gray"><i class="i i-lock" aria-hidden="true"></i></span>
+    <p class="gate__t">로그인이 필요합니다</p>
+    <p class="gate__d">장바구니는 로그인한 회원만 이용할 수 있습니다. 로그인하면 장바구니로 돌아옵니다.</p>
+    <div class="acts"><a class="sb sb--gray" href="#" data-href="signup.php">회원가입</a><a class="sb sb--ink" href="login.html?return=cart.html">로그인</a></div>
+  </div>
+  <i hidden data-toast-st="nodel" data-toast="삭제할 상품을 선택해 주세요." data-toast-err data-el="L314"></i>
+</div>
+<div class="co-dock" id="coDock" data-st-not="empty guest">
+  <p class="co-dock__t"><span>선택 <span class="num" id="coDockN">3</span>개</span><b><span class="num" id="coDockQ">112</span>벌</b></p>
+  <a class="sb sb--acc sb--l co-dock__go" href="order-complete.html" id="coDockGo" data-busy-st="busy">견적·시안 요청</a>
+</div>
+<!--@after-->
+<div class="side co-dt" id="coD-c460" role="dialog" aria-modal="true" aria-labelledby="coD-c460T" hidden data-open-st="detail" data-el="L286">
+  <div class="side__dim" data-pop-close></div>
+  <div class="side__panel">
+    <div class="side__head"><h2 class="pop__t" id="coD-c460T">상품 정보</h2><button type="button" class="pop__x" data-pop-close aria-label="상품 정보 닫기"><i class="i i-x" aria-hidden="true"></i></button></div>
+    <div class="side__body">
+      <div class="co-dt__top" data-el="L287"><span class="co-dt__ph"><img src="img/catalog/460-f.webp" alt="방한 후드 패딩" width="600" height="600" loading="lazy" decoding="async"></span><div><p class="co-item__cat">패딩</p><p class="co-dt__n">방한 후드 패딩</p><p class="co-dt__p num">59,000원 × 70벌 · <b>4,130,000원</b></p></div></div>
+      <h3 class="co-dt__h">주문 옵션</h3>
+      <dl class="dl">
+        <div data-el="L288"><dt>상품 옵션</dt><dd>선택한 옵션 없음</dd></div>
+        <div data-el="L289"><dt>색상</dt><dd><i class="co-sw" style="--c:#111111" aria-hidden="true"></i>블랙</dd></div>
+        <div data-el="L290"><dt>사이즈</dt><dd class="num">90 · 95 · 100 · 105</dd></div>
+        <div data-el="L291"><dt>사이즈별 수량</dt><dd><ul class="co-dt__sz"><li><span>90</span><b class="num">5벌</b></li><li><span>95</span><b class="num">20벌</b></li><li><span>100</span><b class="num">30벌</b></li><li><span>105</span><b class="num">15벌</b></li></ul><p class="co-dt__sum">총 70벌</p></dd></div>
+        <div data-el="L292"><dt>포장</dt><dd>개별 폴리백</dd></div>
+        <div data-el="L293"><dt>인쇄 여부</dt><dd>인쇄 있음</dd></div>
+      </dl>
+      <h3 class="co-dt__h">인쇄 정보</h3>
+      <dl class="dl" data-el="L294">
+        <div><dt>인쇄 방법</dt><dd>자수 인쇄</dd></div>
+        <div><dt>인쇄 부위</dt><dd>왼쪽 가슴, 등</dd></div>
+        <div><dt>인쇄 설명</dt><dd data-sample>왼쪽 가슴에 회사 로고, 등에 회사명 한 줄을 넣어 주세요. 실 색상은 흰색입니다.</dd></div>
+      </dl>
+      <h3 class="co-dt__h">첨부파일 <small>2개</small></h3>
+      <ul class="files co-files" data-el="L306">
+        <li><span class="files__ext">AI</span><span class="files__n">로고_시안.ai</span><span class="files__s">2.4MB</span><button type="button" class="co-files__dl" data-toast="로고_시안.ai 파일을 내려받습니다." aria-label="로고_시안.ai 내려받기"><i class="i i-download" aria-hidden="true"></i></button></li>
+        <li><span class="files__ext">PNG</span><span class="files__n">가슴_인쇄_위치.png</span><span class="files__s">480KB</span><button type="button" class="co-files__dl" data-toast="가슴_인쇄_위치.png 파일을 내려받습니다." aria-label="가슴_인쇄_위치.png 내려받기"><i class="i i-download" aria-hidden="true"></i></button></li>
+      </ul>
+    </div>
+    <div class="side__foot"><button type="button" class="sb sb--ink" data-pop-close>닫기</button></div>
+  </div>
+</div>
+<div class="side co-dt" id="coD-c195" role="dialog" aria-modal="true" aria-labelledby="coD-c195T" hidden>
+  <div class="side__dim" data-pop-close></div>
+  <div class="side__panel">
+    <div class="side__head"><h2 class="pop__t" id="coD-c195T">상품 정보</h2><button type="button" class="pop__x" data-pop-close aria-label="상품 정보 닫기"><i class="i i-x" aria-hidden="true"></i></button></div>
+    <div class="side__body">
+      <div class="co-dt__top"><span class="co-dt__ph"><img src="img/catalog/195-f.webp" alt="웰론 보온 겨울조끼" width="600" height="600" loading="lazy" decoding="async"></span><div><p class="co-item__cat">조끼</p><p class="co-dt__n">웰론 보온 겨울조끼</p><p class="co-dt__p num">28,000원 × 30벌 · <b>840,000원</b></p></div></div>
+      <h3 class="co-dt__h">주문 옵션</h3>
+      <dl class="dl">
+        <div><dt>상품 옵션</dt><dd>선택한 옵션 없음</dd></div>
+        <div><dt>색상</dt><dd><i class="co-sw" style="--c:#1F3864" aria-hidden="true"></i>네이비</dd></div>
+        <div><dt>사이즈</dt><dd>M · L · XL</dd></div>
+        <div><dt>사이즈별 수량</dt><dd><ul class="co-dt__sz"><li><span>M</span><b class="num">10벌</b></li><li><span>L</span><b class="num">12벌</b></li><li><span>XL</span><b class="num">8벌</b></li></ul><p class="co-dt__sum">총 30벌</p></dd></div>
+        <div><dt>포장</dt><dd>기본 포장</dd></div>
+        <div><dt>인쇄 여부</dt><dd>인쇄 없음</dd></div>
+      </dl>
+    </div>
+    <div class="side__foot"><button type="button" class="sb sb--ink" data-pop-close>닫기</button></div>
+  </div>
+</div>
+<div class="side co-dt" id="coD-b3026" role="dialog" aria-modal="true" aria-labelledby="coD-b3026T" hidden>
+  <div class="side__dim" data-pop-close></div>
+  <div class="side__panel">
+    <div class="side__head"><h2 class="pop__t" id="coD-b3026T">상품 정보</h2><button type="button" class="pop__x" data-pop-close aria-label="상품 정보 닫기"><i class="i i-x" aria-hidden="true"></i></button></div>
+    <div class="side__body">
+      <div class="co-dt__top"><span class="co-dt__ph"><img src="img/brandp/3026.webp" alt="케이투 JK-F6101" width="900" height="600" loading="lazy" decoding="async"></span><div><p class="co-item__cat">협력브랜드 · 케이투</p><p class="co-dt__n">케이투 JK-F6101</p><p class="co-dt__p">12벌 · <b>견적문의</b></p></div></div>
+      <h3 class="co-dt__h">주문 옵션</h3>
+      <dl class="dl">
+        <div><dt>상품 옵션</dt><dd>선택한 옵션 없음</dd></div>
+        <div><dt>색상</dt><dd>선택 없음(등록된 색상 없음)</dd></div>
+        <div><dt>사이즈</dt><dd>등록된 사이즈 없음</dd></div>
+        <div><dt>사이즈별 수량</dt><dd><ul class="co-dt__sz"><li><span>수량</span><b class="num">12벌</b></li></ul></dd></div>
+        <div><dt>포장</dt><dd>선택 없음(협력브랜드 상품)</dd></div>
+        <div><dt>인쇄 여부</dt><dd>인쇄 없음</dd></div>
+      </dl>
+    </div>
+    <div class="side__foot"><button type="button" class="sb sb--ink" data-pop-close>닫기</button></div>
+  </div>
+</div>
