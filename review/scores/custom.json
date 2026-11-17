@@ -1,0 +1,212 @@
+{
+  "rounds": [
+    {
+      "key": "custom",
+      "pages": [
+        "custom-intro",
+        "partnership"
+      ],
+      "at": "2026-11-17T06:44:58",
+      "scores": {
+        "elements": 950,
+        "states": 880,
+        "design": 720,
+        "consistency": 790,
+        "layout": 820
+      },
+      "checkPagesFailed": 0,
+      "elsMissing": 0,
+      "findings": [
+        {
+          "item": "design",
+          "page": "partnership",
+          "state": "전체(default·done·err·rate·fail)",
+          "problem": "함께 묶인 메뉴(납품사례/구매후기/이벤트/파트너십)가 밑줄 글자 탭(.stab: border-bottom 1px, gap 32px)이다. DESIGN.md 433·582줄(모서리 규칙은 알약 또는 16px 두 가지), 691~692줄(버튼·탭은 알약, 탭·필터는 .bh 알약 줄이나 필터칩)을 어긴다. 홈의 탭(상품 랭킹·겨울 아우터의 검정 알약 선택)과도 모양이 달라 한 사이트로 안 보인다.",
+          "evidence": "partnership-pc-1.png 각 칸 제목 '파트너 제휴' 아래 메뉴 줄(y≈150), partnership-m-1.png y≈195~215, review/home/home-1440.jpg 상품 랭킹 탭",
+          "fix": "DESIGN.md '알약 탭 줄' 마크업(.bh > .bh__in > .bh__list, 각 항목 .bh__tab, 현재 페이지는 검정 알약+흰 글자 700)으로 바꾸고, 페이지 이동 링크이므로 a.bh__tab + aria-current=\"page\"로 쓴다. 또는 .chip 필터칩 줄로 바꾼다."
+        },
+        {
+          "item": "design",
+          "page": "custom-intro",
+          "state": "default·busy·err 등 전체",
+          "problem": "모서리 12px·10px가 쓰였다. 샘플 선택 카드(.opt__b 12px), 첨부 파일 줄(.files li 12px), 파일 표식(.files__ext·.files__th 10px), 입력칸(.inp/.sel/.txa 12px). DESIGN.md 433·582줄은 조작 요소는 알약, 사진·카드·상자는 16px 두 가지만 허용한다.",
+          "evidence": "custom-intro-pc-1.png busy 칸 '제공 가능/제공 불가' 카드와 '한결산업_로고.png' 파일 줄, css/sub.css 448·521·543~545줄",
+          "fix": "상자류(.opt__b, .files li)는 16px로, 파일 표식은 원(50%)이나 16px로 바꾼다. 입력칸도 두 규칙 중 하나(16px)로 맞추고, 값을 바꾸면 DESIGN.md에도 적는다."
+        },
+        {
+          "item": "design",
+          "page": "custom-intro, partnership",
+          "state": "fail·rate·err",
+          "problem": "오류 토스트가 빨간 바탕이다. DESIGN.md 705줄은 토스트를 #0E0E10으로 정했고(접수 완료 토스트는 검정이라 같은 페이지 안에서도 토스트 색이 둘이다), sub.css에 DESIGN.md 색 표에 없는 #B80016·#FFF0F1 같은 오류용 빨강·분홍이 들어 있다.",
+          "evidence": "custom-intro-pc-2.png fail 칸 '견적문의 작성' 줄 가운데 빨간 토스트(y≈403), partnership-pc-2.png rate·fail 칸 제안내용 칸 왼쪽 아래 빨간 토스트(y≈441), custom-intro-pc-1.png err 칸 분홍 오류 요약 상자",
+          "fix": "토스트는 성공·실패 모두 #0E0E10 바탕 흰 글자로 통일한다. 오류 글자·테두리·옅은 면 색은 DESIGN.md 색 표에 오류 토큰으로 올린 뒤 그 변수로만 참조한다."
+        },
+        {
+          "item": "layout",
+          "page": "partnership",
+          "state": "done·rate·fail",
+          "problem": "같은 내용을 폼 위 안내 상자와 토스트로 두 번 띄운다. 폰에서는 토스트가 안내 상자 글자 위에 겹쳐 안내 문장이 가려지고, PC에서는 토스트가 제안내용 칸 왼쪽 테두리를 덮는다.",
+          "evidence": "partnership-m-1.png done·rate·fail 칸 y≈590~635(토스트가 '제안을 접수했습니다. 담당자가 검토한…', '짧은 시간에 여러 번 보내서…' 위에 겹침), partnership-pc-1.png done 칸 y≈403, partnership-pc-2.png rate·fail 칸 y≈441",
+          "fix": "안내 상자가 뜨는 상태에서는 토스트를 없애고 상자로 스크롤·포커스만 옮긴다(또는 반대로 토스트 하나만 남긴다). 맞춤작업복 페이지도 같은 규칙으로 맞춘다."
+        },
+        {
+          "item": "states",
+          "page": "custom-intro",
+          "state": "err",
+          "problem": "요소 목록 L810의 '파일당 20MB 초과', '합계 100MB 초과' 오류 안내가 어떤 상태 캡처에도 보이지 않는다. err 상태의 오류 요약과 파일 칸에는 '파일은 최대 5개까지 첨부할 수 있습니다.'만 있다.",
+          "evidence": "custom-intro-pc-1.png err 칸 위쪽 오류 요약 상자와 디자인 파일 칸, custom-intro-m-1.png err 칸 y≈790~1060",
+          "fix": "err 상태 파일 목록에 20MB를 넘는 파일 한 줄(빨간 표시+'파일 하나는 20MB까지 첨부할 수 있습니다.')과 합계 초과 안내를 넣거나, spec/pages.json에 파일 용량 오류 상태를 하나 더 만든다."
+        },
+        {
+          "item": "consistency",
+          "page": "custom-intro",
+          "state": "default·busy·guest",
+          "problem": "취소·문의 접수하기 버튼이 페이지 가운데 정렬이라 입력칸 열(오른쪽 열) 정렬선과 어긋난다. 파트너 제휴는 같은 버튼 쌍을 폼 오른쪽 끝에 붙여 두 페이지의 버튼 위치 규칙이 다르다. 처리 중 안내 줄도 입력칸 열 폭보다 짧게 끝난다.",
+          "evidence": "review/shots/custom-intro/default-c1440.jpg 맨 아래 버튼(가운데 x≈720, 입력칸 열은 x≈380~1360), busy-c1440.jpg '문의를 접수하고 있습니다' 줄, partnership-pc-1.png 버튼 줄(폼 오른쪽 끝)",
+          "fix": "두 페이지 모두 버튼 줄을 입력칸 열 기준 한 가지 규칙(예: 열 오른쪽 끝 정렬)으로 맞추고, 처리 중 안내는 입력칸 열 폭 100%로 늘린다."
+        },
+        {
+          "item": "layout",
+          "page": "custom-intro",
+          "state": "default(1024)",
+          "problem": "1024 폭에서 소개 글 열이 좁아 제목이 '기업 로고와 디자인을 / 반영한 맞춤 의류 제작'으로 앞말 중간에서 끊기고, '최대 5개 · 파일당 20MB · 합계 / 100MB'가 단위 중간에서 줄바꿈된다. 오른쪽 떠 있는 상담 버튼이 정보 목록 오른쪽 끝을 덮는다.",
+          "evidence": "custom-intro-etc.png c1024 칸 y≈155~370",
+          "fix": "1024 구간에서 사진 대 글 비율을 줄이거나(예: 5:7), 폰처럼 앞말과 이름을 각각 한 줄로 나눈다. 값은 '파일당 20MB' 같은 덩어리를 nowrap으로 묶고, 떠 있는 버튼 폭만큼 오른쪽 여백을 둔다."
+        },
+        {
+          "item": "design",
+          "page": "custom-intro",
+          "state": "busy·err·done·fail",
+          "problem": "첨부 파일 확장자 표식(PNG/PDF/JPG)에 영문 숫자 글꼴 Barlow(--f-en)를 썼다. DESIGN.md 480줄은 이 글꼴을 순위 번호·배너 번호·빠른 보기 분류에만 쓰게 한다.",
+          "evidence": "custom-intro-pc-1.png busy 칸 파일 줄 왼쪽 'PNG'·'PDF' 표식, css/sub.css 545줄 .files__ext",
+          "fix": ".files__ext 글꼴을 본문 글꼴(var(--ds-font)) 11px/700으로 바꾼다."
+        }
+      ]
+    },
+    {
+      "key": "custom",
+      "round": "rescore-design-consistency",
+      "pages": [
+        "custom-intro",
+        "partnership"
+      ],
+      "scores": {
+        "elements": 950,
+        "states": 880,
+        "design": 860,
+        "consistency": 860,
+        "layout": 820
+      },
+      "checkPagesFailed": 0,
+      "elsMissing": 0,
+      "previousFixed": {
+        "1_partnership_tab": "고침 - .stab이 알약 줄(999px, 선택은 검정 알약, 높이 46/폰 44)로 바뀜. partnership-pc-1/pc-2/etc 전 상태 확인",
+        "2_custom_radius": "고침 - .opt__b·.upl·.agree 16px, 파일 표식 10px 없어짐. 입력칸·파일 줄·파일 표식 12px은 DESIGN.md 577줄 rounded.md(입력칸(파생)·아바타)에 해당해 허용",
+        "3_error_toast": "고침 - .sub-toast--err 배경이 var(--ink)=#0E0E10(실측 rgb 14,14,16). 단 #B80016·#FFF0F1은 입력칸 오류 글자 등에 남음(아래 지적 2)",
+        "4_button_align": "고침 - 두 페이지 모두 .form-acts로 입력칸 열 오른쪽 끝(1440에서 x=1360)에 맞춤. 처리 중 안내 줄도 입력칸 열 전체 폭(380~1360). busy-c1440.jpg 하단",
+        "5_barlow": "고침 - .files__ext 글꼴이 var(--ds-font)(Pretendard)로 바뀜"
+      },
+      "findings": [
+        {
+          "item": "design",
+          "page": "custom-intro",
+          "state": "done",
+          "problem": "접수 완료 팝업 위쪽 체크 표식이 연한 파랑 원 안의 파란 체크다. DESIGN.md 432줄은 파랑을 랭킹 1~3위·왕관·모바일 하단 견적문의·장바구니 견적 버튼·숫자 강조·포커스 링에만 쓰게 한다. 같은 페이지의 expired 팝업은 회색 원+검정 자물쇠라 팝업 표식 색도 둘로 갈린다.",
+          "evidence": "review/sheets/custom-intro-pc-2.png done 칸 팝업 맨 위 원형 체크, review/sheets/custom-intro-m-1.png done 칸 팝업 맨 위",
+          "fix": "완료 표식을 expired 팝업과 같이 #F5F5F6 원 + 검정(#0E0E10) 체크로 바꾼다."
+        },
+        {
+          "item": "design",
+          "page": "custom-intro, partnership",
+          "state": "err, rate, fail",
+          "problem": "입력칸 오류 문구·오류 안내 상자의 빨강 #B80016(과 sub.css .fld.is-err 포커스·.msg--err의 #FFF0F1)이 DESIGN.md 색 표에 없다(DESIGN.md에서 두 값 검색 결과 없음). site.css의 [data-accent=\"red\"] 변수(--ds-accent-text·--ds-accent-soft)에만 있는 값을 sub.css에 hex로 바로 적었다.",
+          "evidence": "review/sheets/custom-intro-pc-1.png err 칸 위쪽 오류 목록 상자와 입력칸 아래 빨간 문구, review/sheets/partnership-pc-2.png rate·fail 칸 '제안 남기기' 아래 빨간 안내 상자, css/sub.css 150·463·464줄",
+          "fix": "오류 색을 DESIGN.md 색 표에 '오류 글자 #B80016 / 오류 바탕 #FFF0F1' 줄로 올리고(CLAUDE.md: 홈 CSS 값과 DESIGN.md를 같이 맞춤), sub.css에서는 hex 대신 그 변수로 참조한다."
+        }
+      ]
+    }
+  ],
+  "latest": {
+    "key": "custom",
+    "pages": [
+      "custom-intro",
+      "partnership"
+    ],
+    "at": "2026-11-17T06:44:58",
+    "scores": {
+      "elements": 950,
+      "states": 880,
+      "design": 720,
+      "consistency": 790,
+      "layout": 820
+    },
+    "checkPagesFailed": 0,
+    "elsMissing": 0,
+    "findings": [
+      {
+        "item": "design",
+        "page": "partnership",
+        "state": "전체(default·done·err·rate·fail)",
+        "problem": "함께 묶인 메뉴(납품사례/구매후기/이벤트/파트너십)가 밑줄 글자 탭(.stab: border-bottom 1px, gap 32px)이다. DESIGN.md 433·582줄(모서리 규칙은 알약 또는 16px 두 가지), 691~692줄(버튼·탭은 알약, 탭·필터는 .bh 알약 줄이나 필터칩)을 어긴다. 홈의 탭(상품 랭킹·겨울 아우터의 검정 알약 선택)과도 모양이 달라 한 사이트로 안 보인다.",
+        "evidence": "partnership-pc-1.png 각 칸 제목 '파트너 제휴' 아래 메뉴 줄(y≈150), partnership-m-1.png y≈195~215, review/home/home-1440.jpg 상품 랭킹 탭",
+        "fix": "DESIGN.md '알약 탭 줄' 마크업(.bh > .bh__in > .bh__list, 각 항목 .bh__tab, 현재 페이지는 검정 알약+흰 글자 700)으로 바꾸고, 페이지 이동 링크이므로 a.bh__tab + aria-current=\"page\"로 쓴다. 또는 .chip 필터칩 줄로 바꾼다."
+      },
+      {
+        "item": "design",
+        "page": "custom-intro",
+        "state": "default·busy·err 등 전체",
+        "problem": "모서리 12px·10px가 쓰였다. 샘플 선택 카드(.opt__b 12px), 첨부 파일 줄(.files li 12px), 파일 표식(.files__ext·.files__th 10px), 입력칸(.inp/.sel/.txa 12px). DESIGN.md 433·582줄은 조작 요소는 알약, 사진·카드·상자는 16px 두 가지만 허용한다.",
+        "evidence": "custom-intro-pc-1.png busy 칸 '제공 가능/제공 불가' 카드와 '한결산업_로고.png' 파일 줄, css/sub.css 448·521·543~545줄",
+        "fix": "상자류(.opt__b, .files li)는 16px로, 파일 표식은 원(50%)이나 16px로 바꾼다. 입력칸도 두 규칙 중 하나(16px)로 맞추고, 값을 바꾸면 DESIGN.md에도 적는다."
+      },
+      {
+        "item": "design",
+        "page": "custom-intro, partnership",
+        "state": "fail·rate·err",
+        "problem": "오류 토스트가 빨간 바탕이다. DESIGN.md 705줄은 토스트를 #0E0E10으로 정했고(접수 완료 토스트는 검정이라 같은 페이지 안에서도 토스트 색이 둘이다), sub.css에 DESIGN.md 색 표에 없는 #B80016·#FFF0F1 같은 오류용 빨강·분홍이 들어 있다.",
+        "evidence": "custom-intro-pc-2.png fail 칸 '견적문의 작성' 줄 가운데 빨간 토스트(y≈403), partnership-pc-2.png rate·fail 칸 제안내용 칸 왼쪽 아래 빨간 토스트(y≈441), custom-intro-pc-1.png err 칸 분홍 오류 요약 상자",
+        "fix": "토스트는 성공·실패 모두 #0E0E10 바탕 흰 글자로 통일한다. 오류 글자·테두리·옅은 면 색은 DESIGN.md 색 표에 오류 토큰으로 올린 뒤 그 변수로만 참조한다."
+      },
+      {
+        "item": "layout",
+        "page": "partnership",
+        "state": "done·rate·fail",
+        "problem": "같은 내용을 폼 위 안내 상자와 토스트로 두 번 띄운다. 폰에서는 토스트가 안내 상자 글자 위에 겹쳐 안내 문장이 가려지고, PC에서는 토스트가 제안내용 칸 왼쪽 테두리를 덮는다.",
+        "evidence": "partnership-m-1.png done·rate·fail 칸 y≈590~635(토스트가 '제안을 접수했습니다. 담당자가 검토한…', '짧은 시간에 여러 번 보내서…' 위에 겹침), partnership-pc-1.png done 칸 y≈403, partnership-pc-2.png rate·fail 칸 y≈441",
+        "fix": "안내 상자가 뜨는 상태에서는 토스트를 없애고 상자로 스크롤·포커스만 옮긴다(또는 반대로 토스트 하나만 남긴다). 맞춤작업복 페이지도 같은 규칙으로 맞춘다."
+      },
+      {
+        "item": "states",
+        "page": "custom-intro",
+        "state": "err",
+        "problem": "요소 목록 L810의 '파일당 20MB 초과', '합계 100MB 초과' 오류 안내가 어떤 상태 캡처에도 보이지 않는다. err 상태의 오류 요약과 파일 칸에는 '파일은 최대 5개까지 첨부할 수 있습니다.'만 있다.",
+        "evidence": "custom-intro-pc-1.png err 칸 위쪽 오류 요약 상자와 디자인 파일 칸, custom-intro-m-1.png err 칸 y≈790~1060",
+        "fix": "err 상태 파일 목록에 20MB를 넘는 파일 한 줄(빨간 표시+'파일 하나는 20MB까지 첨부할 수 있습니다.')과 합계 초과 안내를 넣거나, spec/pages.json에 파일 용량 오류 상태를 하나 더 만든다."
+      },
+      {
+        "item": "consistency",
+        "page": "custom-intro",
+        "state": "default·busy·guest",
+        "problem": "취소·문의 접수하기 버튼이 페이지 가운데 정렬이라 입력칸 열(오른쪽 열) 정렬선과 어긋난다. 파트너 제휴는 같은 버튼 쌍을 폼 오른쪽 끝에 붙여 두 페이지의 버튼 위치 규칙이 다르다. 처리 중 안내 줄도 입력칸 열 폭보다 짧게 끝난다.",
+        "evidence": "review/shots/custom-intro/default-c1440.jpg 맨 아래 버튼(가운데 x≈720, 입력칸 열은 x≈380~1360), busy-c1440.jpg '문의를 접수하고 있습니다' 줄, partnership-pc-1.png 버튼 줄(폼 오른쪽 끝)",
+        "fix": "두 페이지 모두 버튼 줄을 입력칸 열 기준 한 가지 규칙(예: 열 오른쪽 끝 정렬)으로 맞추고, 처리 중 안내는 입력칸 열 폭 100%로 늘린다."
+      },
+      {
+        "item": "layout",
+        "page": "custom-intro",
+        "state": "default(1024)",
+        "problem": "1024 폭에서 소개 글 열이 좁아 제목이 '기업 로고와 디자인을 / 반영한 맞춤 의류 제작'으로 앞말 중간에서 끊기고, '최대 5개 · 파일당 20MB · 합계 / 100MB'가 단위 중간에서 줄바꿈된다. 오른쪽 떠 있는 상담 버튼이 정보 목록 오른쪽 끝을 덮는다.",
+        "evidence": "custom-intro-etc.png c1024 칸 y≈155~370",
+        "fix": "1024 구간에서 사진 대 글 비율을 줄이거나(예: 5:7), 폰처럼 앞말과 이름을 각각 한 줄로 나눈다. 값은 '파일당 20MB' 같은 덩어리를 nowrap으로 묶고, 떠 있는 버튼 폭만큼 오른쪽 여백을 둔다."
+      },
+      {
+        "item": "design",
+        "page": "custom-intro",
+        "state": "busy·err·done·fail",
+        "problem": "첨부 파일 확장자 표식(PNG/PDF/JPG)에 영문 숫자 글꼴 Barlow(--f-en)를 썼다. DESIGN.md 480줄은 이 글꼴을 순위 번호·배너 번호·빠른 보기 분류에만 쓰게 한다.",
+        "evidence": "custom-intro-pc-1.png busy 칸 파일 줄 왼쪽 'PNG'·'PDF' 표식, css/sub.css 545줄 .files__ext",
+        "fix": ".files__ext 글꼴을 본문 글꼴(var(--ds-font)) 11px/700으로 바꾼다."
+      }
+    ]
+  }
+}

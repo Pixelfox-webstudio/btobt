@@ -1,0 +1,67 @@
+<!--{"title": "파트너 제휴", "desc": "비투비티와 함께할 업체가 로그인 없이 제휴 제안을 남기는 페이지입니다.", "name": "파트너 제휴", "group": 7, "order": 9, "type": "form", "auth": "guest", "sections": ["파트너 제휴"], "scripts": ["js/sub-custom.js"],
+ "states": [["default", "기본"], ["done", "접수 완료"], ["err", "미입력·이메일 형식 오류"], ["rate", "너무 잦은 요청"], ["fail", "접수 실패"]]}-->
+<section class="sub-head">
+  <div class="wrap">
+    <nav class="crumb" aria-label="현재 위치" data-el="L967"><a href="#" data-href="index.php" data-el="L982">홈</a><span aria-hidden="true">/</span><span aria-current="page">파트너 제휴</span></nav>
+    <h1 class="sub-head__t" data-el="L968">파트너 제휴</h1>
+  </div>
+</section>
+<!-- 함께 묶인 메뉴: 납품사례 · 구매후기 · 이벤트와 같은 마크업(공용 .stab = 알약 탭 줄, 현재 페이지는 검정 알약 · 흰 글자 700) -->
+<div class="wrap sub-nav"><nav class="stab" aria-label="소식·사례 메뉴" data-el="L969 L983"><a href="#" data-href="delivery-cases.php">납품사례</a><a href="#" data-href="reviews.php">구매후기</a><a href="#" data-href="event.php">이벤트</a><a href="#" data-href="partnership.php" aria-current="page">파트너십</a></nav></div>
+<div class="wrap sub-body">
+  <div class="cf-pt">
+    <section class="cf-pt__intro" aria-labelledby="cfPtT" data-el="L970">
+      <h2 class="cf-ttl" id="cfPtT"><span class="tt__pre">비투비티와 함께할</span> <span class="tt__key">파트너를 찾습니다</span></h2>
+      <p class="cf-pt__d">상품 공급, 제작, 판매 채널처럼 비투비티와 함께할 수 있는 제안을 남겨 주세요. 담당자가 내용을 검토한 뒤 남겨 주신 연락처나 이메일로 답변드립니다.</p>
+      <div class="note cf-pt__note">
+        <p class="note__t"><i class="i i-info i--18" aria-hidden="true"></i>빠른 답변을 받으려면</p>
+        <ul>
+          <li>제안내용에 회사명, 담당자 이름, 제안하는 상품·서비스를 함께 적어 주세요.</li>
+          <li>회신받을 이메일 주소를 정확히 적어 주세요.</li>
+          <li>급한 내용은 대표전화로 연락해 주세요.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="cf-pt__info" aria-labelledby="cfPtInfoT">
+      <h2 class="st st--s" id="cfPtInfoT">연락처</h2>
+      <dl class="dl cf-pt__dl">
+        <div data-el="L971"><dt>주소</dt><dd>부산광역시 해운대구 반여로 96</dd></div>
+        <div data-el="L972"><dt>대표전화</dt><dd><a class="cf-pt__a num" href="tel:050713786094">0507-1378-6094</a><small>주중 10시~18시 (점심 12시~13시 / 주말·공휴일 제외)</small></dd></div>
+        <div data-el="L973"><dt>팩스</dt><dd class="num" data-sample>0505-000-0000</dd></div>
+        <div data-el="L974"><dt>이메일</dt><dd><a class="cf-pt__a" href="mailto:noeul@noeul.co">noeul@noeul.co</a></dd></div>
+      </dl>
+    </section>
+
+    <section class="cf-pt__form" aria-labelledby="cfPtFormT">
+      <div class="cf-pt__fh"><h2 class="st" id="cfPtFormT">제안 남기기</h2><p class="cf-req"><em>*</em> 필수 항목</p></div>
+      <!-- 결과 안내는 양식 위 상자 하나로만 알린다(토스트를 함께 띄우지 않는다). 제출 뒤에는 이 상자로 스크롤하고 포커스를 옮긴다(js/sub-custom.js) -->
+      <form class="cf-pt__body" id="ptForm" novalidate>
+        <p class="msg msg--ok" data-st="done" role="status" tabindex="-1" data-pt-msg="done" data-el="L988 L985"><i class="i i-check" aria-hidden="true"></i><span><b>제안을 접수했습니다.</b> 담당자가 검토한 뒤 남겨 주신 연락처나 이메일로 답변드립니다.</span></p>
+        <p class="msg msg--err" data-st="err" role="alert" tabindex="-1" data-pt-msg="err" data-el="L989"><i class="i i-alert" aria-hidden="true"></i><span>연락처·이메일·제안내용을 모두 입력해 주세요. 이메일은 회신받을 주소 형식으로 적어 주세요.</span></p>
+        <p class="msg msg--err" data-st="rate" role="alert" tabindex="-1" data-pt-msg="rate" data-el="L991"><i class="i i-alert" aria-hidden="true"></i><span>짧은 시간에 여러 번 보내셔서 접수를 잠시 막았습니다. 잠시 후 다시 보내 주세요.</span></p>
+        <p class="msg msg--err" data-st="fail" role="alert" tabindex="-1" data-pt-msg="fail" data-el="L992"><i class="i i-alert" aria-hidden="true"></i><span>제안을 접수하지 못했습니다. 입력한 내용은 그대로 있으니 잠시 후 다시 보내 주세요.</span></p>
+        <div class="fgrid">
+          <div class="fld" data-err-st="err" data-err="연락처를 입력해 주세요." data-el="L977">
+            <label class="fld__l" for="ptTel">연락처 <em>*</em></label>
+            <input class="inp num" id="ptTel" name="tel" type="tel" required maxlength="20" inputmode="numeric" data-fmt="digits" data-msg="연락처를 입력해 주세요." placeholder="숫자만 입력해 주세요" autocomplete="tel" aria-describedby="ptTelH">
+            <p class="fld__help fld__help--swap" id="ptTelH">하이픈(-) 없이 숫자만 20자까지 입력합니다.</p>
+          </div>
+          <div class="fld" data-err-st="err" data-err="이메일 주소 형식을 확인해 주세요." data-el="L978 L990">
+            <label class="fld__l" for="ptMail">이메일 <em>*</em></label>
+            <input class="inp" id="ptMail" name="email" type="email" required maxlength="100" data-rule="email" data-msg="이메일을 입력해 주세요." placeholder="회신받을 이메일 주소" autocomplete="email" aria-describedby="ptMailH">
+            <p class="fld__help fld__help--swap" id="ptMailH">답변은 이 주소로 보내 드립니다.</p>
+          </div>
+          <div class="fld full" data-err-st="err" data-err="제안내용을 입력해 주세요." data-el="L979">
+            <label class="fld__l" for="ptMemo">제안내용 <em>*</em><span class="r"><span id="ptMemoN">0</span> / 4,000</span></label>
+            <textarea class="txa cf-pt__txa" id="ptMemo" name="memo" required maxlength="4000" data-count="ptMemoN" data-msg="제안내용을 입력해 주세요." placeholder="회사 소개, 제안하는 상품·서비스, 원하는 협력 방식을 적어 주세요."></textarea>
+          </div>
+        </div>
+        <div class="form-acts cf-pt__acts">
+          <button type="button" class="sb sb--gray sb--l" data-cf-back data-el="L984">취소</button>
+          <button type="submit" class="bt bt--ink" data-el="L985"><span>제안하기</span><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></button>
+        </div>
+      </form>
+    </section>
+  </div>
+</div>

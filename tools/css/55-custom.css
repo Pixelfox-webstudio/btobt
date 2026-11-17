@@ -1,0 +1,195 @@
+/* ============================================================
+   55. 맞춤작업복 견적문의(custom-intro) · 파트너 제휴(partnership) — 접두어 cf
+   ============================================================ */
+/* 소개 제목: 앞말(가늘게) + 이름(굵게). 폰에서는 홈 규칙(.tt__pre/.tt__key)대로 두 줄 */
+.cf-ttl{font-size:26px;font-weight:600;letter-spacing:-.02em;line-height:1.35;color:#000}
+@media (max-width:768px){ .cf-ttl{font-size:20px;line-height:1.4} }
+
+/* ---------- 1. 첫 화면: 사진 7 · 소개 5 ---------- */
+.cf-intro{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:48px;align-items:center}
+.cf-intro__ph{position:relative;margin:0;aspect-ratio:3/2;border-radius:16px;overflow:hidden;background:var(--dark)}
+.cf-intro__ph::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(0deg,rgba(8,9,12,.42) 0%,transparent 28%)}
+.cf-intro__ph img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;object-position:62% 40%}
+.cf-intro__note{position:absolute;right:16px;bottom:12px;z-index:1;font-size:11.5px;line-height:16px;color:rgba(255,255,255,.8);text-shadow:0 1px 3px rgba(0,0,0,.6)}
+.cf-intro__d{margin-top:14px;font-size:15px;line-height:1.75;color:var(--fg2)}
+.cf-intro__dl{margin-top:28px}
+.cf-intro__dl dd b{font-weight:700}
+.cf-intro__dl dd .i{margin:0 2px;color:#8B8B90;vertical-align:-.15em}
+.cf-intro__sub{display:block;margin-top:2px;font-size:13px;font-weight:400;line-height:20px;color:var(--fg3)}
+.cf-nw{white-space:nowrap}   /* "파일당 20MB" 같은 값 덩어리는 한 줄로 */
+/* 1100 이하 PC·태블릿: 사진 5 · 글 7, 사진은 글 높이만큼 채운다. 제목은 앞말 / 이름 두 줄.
+   오른쪽에 떠 있는 상담 버튼(오른쪽 24 + 52) 자리만큼 글 오른쪽을 비운다 */
+@media (min-width:769px) and (max-width:1100px){
+  .cf-intro{grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:32px;align-items:stretch}
+  .cf-intro__ph{aspect-ratio:auto;min-height:280px}
+  .cf-intro .tt__pre,.cf-intro .tt__key{display:block}
+  .cf-intro__tx{padding-right:36px}
+}
+@media (max-width:1023px){
+  .cf-intro{gap:32px}
+  .cf-intro__dl>div{grid-template-columns:96px minmax(0,1fr);gap:12px}
+}
+@media (max-width:768px){
+  .cf-intro{grid-template-columns:minmax(0,1fr);gap:22px}
+  .cf-intro__ph{width:calc(100% + var(--gut) * 2);margin-inline:calc(var(--gut) * -1);border-radius:0}
+  .cf-intro__note{right:12px;bottom:10px;font-size:11px}
+  .cf-intro__d{margin-top:10px;font-size:14px;line-height:1.7}
+  .cf-intro__dl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:16px;margin-top:18px}
+  .cf-intro__dl>div{grid-template-columns:minmax(0,1fr);gap:2px;padding:10px 0;font-size:14px;line-height:21px}
+  .cf-intro__dl dt{font-size:12.5px;line-height:18px}
+  .cf-intro__sub{font-size:12.5px;line-height:18px}
+}
+
+/* ---------- 2. 양식: 묶음 제목은 왼쪽 열(PC), 입력 칸은 오른쪽 ---------- */
+.cf-form__head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding-bottom:16px}
+.cf-req{font-size:13px;line-height:20px;color:var(--fg3)}
+.cf-req em{font-style:normal;color:var(--accent-text)}
+.cf-fs{min-width:0;margin:0;padding:0;border:0;border-top:1px solid #000}
+.cf-set{display:grid;grid-template-columns:260px minmax(0,1fr);gap:20px 40px;padding:32px 0 40px}
+.cf-set+.cf-set{border-top:1px solid var(--ln)}
+.cf-set__t{font-size:18px;font-weight:700;letter-spacing:-.02em;line-height:26px;color:#000}
+.cf-set__d{margin-top:6px;font-size:14px;line-height:22px;color:var(--fg3)}
+.cf-fs .opt__b small{margin-top:2px}
+/* 수량: 칸 안 오른쪽에 단위 */
+.cf-unit{position:relative}
+.subp .cf-unit .inp{padding-right:44px;text-align:right}
+.cf-unit>span{position:absolute;right:16px;top:0;line-height:48px;font-size:15px;color:var(--fg2);pointer-events:none}
+/* 연락처 3칸 · 이메일 아이디 @ 도메인 + 선택 */
+.cf-tel{display:grid;grid-template-columns:minmax(0,1fr) 10px minmax(0,1fr) 10px minmax(0,1fr);align-items:center;gap:0 6px;max-width:480px}
+.cf-tel__sep,.cf-mail__at{font-size:15px;line-height:48px;color:#8B8B90;text-align:center}
+.cf-mail{display:grid;grid-template-columns:minmax(0,1fr) 18px minmax(0,1fr) minmax(0,1fr);align-items:center;gap:8px;max-width:640px}
+.cf-mail__at{margin:0 -4px}
+/* 묶음 칸에서는 틀린 칸만 빨간 테두리(나머지 값은 그대로 둔다) */
+.fld.is-err .has-bad .inp:not(.cf-bad),.fld.is-err .has-bad .sel{border-color:#C8C8CC}
+/* 비회원: 모든 칸 입력 불가 */
+.cf-fs:disabled .upl{border-color:var(--ln);background:var(--tint);cursor:default}
+.cf-fs:disabled .upl__tx{color:#8B8B90}
+.cf-fs:disabled .upl__ic{background:#fff;color:#8B8B90}
+.cf-fs:disabled .agree .chk{color:#6B6B70;cursor:default}
+@media (max-width:1023px){
+  .cf-set{grid-template-columns:minmax(0,1fr);gap:18px;padding:28px 0 32px}
+}
+@media (max-width:768px){
+  .cf-set{gap:16px;padding:24px 0 28px}
+  .cf-set__t{font-size:17px;line-height:24px}
+  .cf-set__d{margin-top:4px;font-size:14px;line-height:21px}
+  .cf-unit>span{font-size:16px}
+  .cf-mail{grid-template-columns:minmax(0,1fr) 16px minmax(0,1fr);gap:8px 6px}
+  .cf-mail .sel{grid-column:1 / -1}
+}
+
+/* 오류색 토큰: DESIGN.md 811줄 "오류색 = data-accent="red" 세트 값"(css/site.css 8줄). 이 조각은 아래 두 변수로만 참조한다.
+   --cf-err 선(#D10019 = red --ds-accent) · --cf-err-t 글자(#B80016 = red --ds-accent-text). 칸 아래 오류 문장은 공용 .fld__msg--err(같은 글자색) 그대로.
+   오류 상자는 옅은 면 없이 흰 바탕 + 오류색 선(견적문의 quote 의 .qt-errs 와 같은 모양) */
+.cf-form,.cf-pt{--cf-err:#D10019;--cf-err-t:#B80016}
+/* [임시 · 공용 부품에 올릴 것] 이 페이지 안에서만: 상자류 모서리 16(알약 · 16 두 가지), 파일 표식은 원 + 본문 글꼴 11/700.
+   입력칸(.inp .sel .txa)은 DESIGN.md Shapes rounded.md "입력칸(파생) 12px" 그대로 둔다 */
+.cf-form .files li,.cf-form .upl,.cf-form .agree{border-radius:16px}
+.cf-form .files__th,.cf-form .files__ext{border-radius:50%}
+.cf-form .files__ext{font-family:var(--ds-font);font-size:11px;font-weight:700;letter-spacing:0}
+.cf-form .msg--err,.cf-pt .msg--err{background:#fff;box-shadow:inset 0 0 0 1px var(--cf-err);color:var(--cf-err-t)}
+.cf-form .msg:focus,.cf-pt .msg:focus{outline:0}
+.cf-form .msg:focus-visible,.cf-pt .msg:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+/* 입력 오류 요약(양식 맨 위): 흰 바탕 + 오류색 선 */
+.cf-sum{margin:8px 0 24px;padding:20px 24px;border:1px solid var(--cf-err);border-radius:16px;background:#fff}
+.cf-sum:focus{outline:0}
+.cf-sum:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.cf-sum__t{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:700;line-height:22px;color:var(--cf-err-t)}
+.cf-sum__list{columns:2;column-gap:24px;margin-top:10px;padding-left:28px}
+.cf-sum__list li{break-inside:avoid;padding:1px 0}
+.cf-sum__list a{font-size:14px;line-height:24px;color:var(--cf-err-t);text-decoration:underline !important;text-underline-offset:3px}
+.cf-sum__list a:hover{color:#000}
+/* 첨부하지 못한 파일(입력 오류 상태): 첨부 목록과 같은 줄 모양 + 오류색 선, 이름 아래 이유 */
+.cf-rej{display:grid;gap:6px;margin-top:2px}
+.cf-rej li{display:flex;align-items:center;gap:10px;min-height:44px;padding:6px 14px 6px 12px;border-radius:16px;background:#fff;box-shadow:inset 0 0 0 1px var(--cf-err)}
+.cf-rej__ic{display:grid;flex:none;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--tint);color:var(--cf-err-t)}
+.cf-rej__tx{display:grid;flex:1;min-width:0}
+.cf-rej__n{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:14px;font-weight:500;line-height:20px;color:var(--ink)}
+.cf-rej__m{font-size:12.5px;line-height:19px;color:var(--cf-err-t)}
+.cf-rej__s{flex:none;font-size:12.5px;color:var(--fg3)}
+@media (max-width:768px){
+  .cf-sum{padding:16px 18px}
+  .cf-sum__list{columns:1}
+  .cf-sum__list a{font-size:14px;line-height:22px}
+}
+
+/* 비회원 안내: 회원 전용 · 로그인 · 회원가입 · 간편 로그인 */
+.cf-gate{display:grid;grid-template-columns:52px minmax(0,1fr) auto;align-items:center;gap:16px 20px;margin:8px 0 24px;padding:24px 28px;border-radius:16px;background:var(--tint)}
+.cf-gate__ic{display:grid;place-items:center;width:52px;height:52px;border-radius:50%;background:#000;color:#fff}
+.cf-gate__t{font-size:17px;font-weight:700;letter-spacing:-.02em;line-height:26px;color:#000}
+.cf-gate__d{margin-top:2px;font-size:14px;line-height:22px;color:var(--fg2)}
+.cf-gate__acts{display:flex;gap:8px}
+.cf-gate__acts .sb{min-width:112px}
+.cf-sns{grid-column:1 / -1;display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding-top:18px;border-top:1px solid var(--ln)}
+.cf-sns__l{margin-right:8px;font-size:14px;font-weight:600;line-height:20px;color:var(--fg3)}
+.cf-sns__b{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 18px 0 8px;border:1px solid #C8C8CC;border-radius:999px;background:#fff;font-size:14px;font-weight:600;line-height:1;color:var(--ink);transition:border-color .15s}
+.cf-sns__b:hover{border-color:#000}
+.cf-sns__m{display:grid;flex:none;place-items:center;width:28px;height:28px;border-radius:50%;color:#000}
+.cf-sns__m svg{width:16px;height:16px}
+.cf-sns__m--kakao{background:#FEE500;color:#191919}
+@media (max-width:768px){
+  .cf-gate{grid-template-columns:44px minmax(0,1fr);gap:14px;padding:20px 18px}
+  .cf-gate__ic{width:44px;height:44px}
+  .cf-gate__ic .i{font-size:22px}
+  .cf-gate__t{font-size:16px;line-height:24px}
+  .cf-gate__d{font-size:14px;line-height:21px}
+  .cf-gate__acts{grid-column:1 / -1}
+  .cf-gate__acts .sb{flex:1;min-width:0}
+  .cf-sns{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;padding-top:14px}
+  .cf-sns__l{grid-column:1 / -1;margin:0 0 2px}
+  .cf-sns__b{justify-content:center;gap:6px;padding:0 8px 0 6px;font-size:13px}
+  .cf-sns__m{width:24px;height:24px}
+  .cf-sns__m svg,.cf-sns__m .i{width:14px;height:14px;font-size:14px}
+}
+
+/* 버튼 줄 · 접수 중 · 서버 오류: 입력칸 열에 맞춘다. 안내는 열 폭 100%, 버튼은 열 오른쪽 끝(파트너 제휴와 같은 규칙) */
+.cf-acts{padding-top:32px;border-top:1px solid var(--ln)}
+.cf-acts__msg{margin:0 0 20px}
+.cf-acts__msg a{font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.cf-acts .form-acts{justify-content:flex-end;margin-top:0}
+@media (min-width:1024px){
+  .cf-acts{display:grid;grid-template-columns:260px minmax(0,1fr);column-gap:40px}
+  .cf-acts>*{grid-column:2}
+}
+@media (max-width:768px){
+  .cf-acts{padding-top:24px}
+  .cf-acts__msg{margin-bottom:16px}
+}
+
+/* 접수 완료 팝업 */
+.cf-done__dl{margin-top:22px;text-align:left}
+.cf-done__dl>div{grid-template-columns:84px minmax(0,1fr);gap:12px;padding:11px 0}
+.cf-done__dl b{font-weight:700;color:#000}
+.cf-pop .pop__d{font-size:14.5px;line-height:1.7;color:var(--fg2)}
+
+/* ---------- 3. 파트너 제휴: 왼쪽 소개·연락처 5 · 오른쪽 양식 7 ---------- */
+/* 함께 묶인 메뉴는 공용 .wrap.sub-nav > .stab(알약 탭 줄) 그대로 쓴다(납품사례 · 구매후기 · 이벤트와 같은 마크업) */
+.cf-pt{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);grid-template-areas:"intro form" "info form";grid-template-rows:auto 1fr;gap:48px 72px;align-items:start}
+.cf-pt__intro{grid-area:intro}
+.cf-pt__info{grid-area:info}
+.cf-pt__form{grid-area:form}
+.cf-pt__d{margin-top:14px;font-size:15px;line-height:1.75;color:var(--fg2)}
+.cf-pt__note{margin-top:24px}
+.cf-pt__info .st{margin-bottom:12px}
+.cf-pt__dl dd small{display:block;margin-top:2px;font-size:13px;font-weight:400;line-height:20px;color:var(--fg3)}
+.cf-pt__a{font-weight:600;text-decoration:underline !important;text-underline-offset:3px}
+.cf-pt__a:hover{color:var(--accent-text)}
+.cf-pt__fh{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding-bottom:16px;border-bottom:1px solid #000}
+.cf-pt__body{padding-top:28px}
+.cf-pt__body>.msg{margin-bottom:24px}
+.cf-pt__body>.msg b{font-weight:700}
+.subp .cf-pt__txa{min-height:260px}
+.cf-pt__acts{justify-content:flex-end;margin-top:32px;padding-top:24px;border-top:1px solid var(--ln)}
+@media (max-width:1023px){
+  .cf-pt{grid-template-columns:minmax(0,1fr);grid-template-areas:"intro" "form" "info";grid-template-rows:auto;gap:44px}
+}
+@media (max-width:768px){
+  .cf-pt{gap:36px}
+  .cf-pt__d{margin-top:10px;font-size:14px;line-height:1.7}
+  .cf-pt__note{margin-top:18px}
+  .cf-pt__body{padding-top:20px}
+  .cf-pt__body>.msg{margin-bottom:18px}
+  .subp .cf-pt__txa{min-height:180px}
+  .cf-pt__acts{margin-top:24px;padding-top:0;border-top:0}
+}
