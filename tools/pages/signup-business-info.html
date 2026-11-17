@@ -1,0 +1,203 @@
+<!--{"title": "기업 회원 정보 입력", "desc": "비투비티 기업 회원가입. 회사 정보와 담당자 정보를 입력하면 관리자 승인 없이 바로 이용할 수 있습니다.", "name": "회원가입 — 기업 회원 정보 입력", "group": 5, "order": 6, "type": "auth", "auth": "guest",
+ "sections": ["회원가입 — 기업 회원 정보 입력"], "scripts": ["js/sub-auth.js"],
+ "states": [["default", "빈 양식"], ["ok", "확인 완료(중복확인·사업자번호·첨부)"], ["err", "입력 오류(빠진 항목)"], ["bad", "확인 실패(연결·무효 번호·용량·숫자 불일치)"], ["capexp", "자동등록방지 그림 만료"], ["caplock", "자동등록방지 시도 초과"], ["dup", "이미 가입·사용 중"], ["social", "간편 가입 중(이름·이메일 미리 채움)"], ["busy", "처리 중"], ["fail", "가입 실패·통신 오류"], ["done", "가입 완료"], ["state=done&return=cart.html", "가입 완료(보던 페이지 있음)"], ["state=done+social+member&return=cart.html", "가입 완료(간편 가입·자동 로그인)"]]}-->
+<section class="sub-head au-head" data-st-not="done">
+  <div class="wrap">
+    <ol class="stp" aria-label="가입 단계" data-el="L1149"><li class="is-done"><a href="#" data-href="signup.php" data-keep><b class="num">1</b><span>회원 유형</span></a></li><li class="is-done"><a href="#" data-href="signup-business.php" data-keep><b class="num">2</b><span>가입 방법</span></a></li><li class="is-on" aria-current="step"><b class="num">3</b><span>정보 입력</span></li></ol>
+    <h1 class="sub-head__t" data-el="L1147">기업 회원 정보 입력</h1>
+    <p class="sub-head__d" data-el="L1182">회사 정보와 담당자 정보를 입력하세요. 가입하면 관리자 승인 없이 바로 이용할 수 있습니다.</p>
+  </div>
+</section>
+
+<form class="wrap au-join" id="auJoin" data-check="입력하지 않았거나 확인이 필요한 항목이 있습니다." novalidate data-st-not="done">
+  <div class="au-join__main" data-el="L1150">
+    <div class="au-join__msgs">
+      <p class="msg" data-st="social" data-el="L1181"><i class="i i-info" aria-hidden="true"></i><span><b data-sns-name>카카오</b> 계정으로 가입하는 중입니다. 이름과 이메일은 <span data-sns-name>카카오</span> 계정에서 가져왔습니다. 가입을 마치면 계정이 연결되고 바로 로그인됩니다.</span></p>
+      <p class="msg msg--err" role="alert" data-st="err"><i class="i i-alert" aria-hidden="true"></i><span>입력하지 않았거나 확인이 필요한 항목이 있습니다. 빨간 줄로 표시한 칸 아래 안내를 확인해 주세요.</span></p>
+      <p class="msg msg--err" role="alert" data-st="dup" data-el="L1192"><i class="i i-alert" aria-hidden="true"></i><span>이미 가입된 이메일과 사업자등록번호라 가입하지 못했습니다. 가입한 적이 있다면 <a class="tl" href="#" data-href="login.php" data-keep>로그인</a>해 주세요.</span></p>
+      <p class="msg msg--err" role="alert" data-st="fail" data-el="L1197"><i class="i i-alert" aria-hidden="true"></i><span>연결이 원활하지 않아 가입을 처리하지 못했습니다. 입력한 내용은 그대로 있습니다. 잠시 뒤에 가입 완료를 다시 눌러 주세요.</span></p>
+      <p class="msg msg--err" role="alert" data-st="capexp"><i class="i i-alert" aria-hidden="true"></i><span>자동등록방지 숫자 그림의 유효 시간이 지나 가입하지 못했습니다. 입력한 내용은 그대로 있습니다. 맨 아래 자동등록방지 칸에 새 그림의 숫자를 입력해 주세요.</span></p>
+      <p class="msg msg--err" role="alert" data-st="caplock"><i class="i i-alert" aria-hidden="true"></i><span>자동등록방지 숫자를 여러 번 틀려 잠시 가입할 수 없습니다. 입력한 내용은 그대로 있습니다. 잠시 뒤에 새 그림이 나오면 숫자를 입력해 주세요.</span></p>
+      <p class="msg" data-ret hidden><i class="i i-info" aria-hidden="true"></i><span>가입을 마치면 보던 페이지(<b data-ret-name>장바구니</b>)로 이어 갑니다.</span></p>
+    </div>
+
+    <fieldset class="fset">
+      <legend class="fset__t">회사정보 <small data-el="L1148"><em>*</em> 필수 항목</small></legend>
+      <div class="fgrid">
+        <div class="fld" data-need="checked" data-need-msg="사업자등록번호 확인을 눌러 주세요." data-ok-st="ok busy fail capexp caplock" data-el="L1163 L1187 L1193">
+          <label class="fld__l" for="bBiz">사업자등록번호 <em>*</em></label>
+          <div class="inrow"><input class="inp num" id="bBiz" name="bizno" required data-msg="사업자등록번호를 입력해 주세요." data-fmt="biz" data-rule="biz" inputmode="numeric" maxlength="12" placeholder="000-00-00000" autocomplete="off"><button type="button" class="sb sb--gray" data-au="biz" data-el="L1176">확인</button></div>
+          <p class="fld__help fld__help--swap">번호 규칙만 확인합니다. 국세청 조회는 하지 않습니다.</p>
+          <p class="fld__msg fld__msg--ok">올바른 사업자등록번호입니다.</p>
+          <p class="fld__msg fld__msg--err" role="alert"></p>
+        </div>
+        <div class="fld" data-el="L1161 L1191">
+          <label class="fld__l" for="bCo">회사명 <em>*</em></label>
+          <input class="inp" id="bCo" name="company" required data-msg="회사명을 입력해 주세요." maxlength="50" autocomplete="organization">
+          <p class="fld__help fld__help--swap">사업자등록증의 상호를 그대로 적어 주세요.</p>
+          <p class="fld__msg fld__msg--err" role="alert"></p>
+        </div>
+        <div class="fld" data-el="L1162 L1191">
+          <label class="fld__l" for="bCeo">대표자명 <em>*</em></label>
+          <input class="inp" id="bCeo" name="ceo" required data-msg="대표자명을 입력해 주세요." maxlength="30">
+          <p class="fld__msg fld__msg--err" role="alert"></p>
+        </div>
+        <div class="fld" data-el="L1167 L1191">
+          <label class="fld__l" for="bMail2">담당자 이메일 <small>(선택)</small></label>
+          <input class="inp" id="bMail2" name="mail2" type="email" data-rule="email" maxlength="100" autocomplete="off" inputmode="email">
+          <p class="fld__help fld__help--swap">회원 이메일과 다른 담당자 이메일이 있으면 적어 주세요.</p>
+          <p class="fld__msg fld__msg--err" role="alert"></p>
+        </div>
+        <div class="fgrid full au-two">
+          <div class="fld" data-el="L1165 L1191">
+            <label class="fld__l" for="bType">업태 <em>*</em></label>
+            <input class="inp" id="bType" name="biztype" required data-msg="업태를 입력해 주세요." maxlength="50">
+            <p class="fld__help fld__help--swap">예: 제조업</p>
+            <p class="fld__msg fld__msg--err" role="alert"></p>
+          </div>
+          <div class="fld" data-el="L1166 L1191">
+            <label class="fld__l" for="bItem">업종 <em>*</em></label>
+            <input class="inp" id="bItem" name="bizitem" required data-msg="업종을 입력해 주세요." maxlength="50">
+            <p class="fld__help fld__help--swap">예: 금속 가공</p>
+            <p class="fld__msg fld__msg--err" role="alert"></p>
+          </div>
+          <p class="fld__help full au-two__d">업태와 업종은 사업자등록증에 적힌 대로 적어 주세요.</p>
+        </div>
+        <div class="fld full" id="auFileFld" data-need="checked" data-need-msg="사업자등록증 파일을 첨부해 주세요." data-el="L1164 L1188 L1190">
+          <span class="fld__l">사업자등록증 <em>*</em></span>
+          <label class="upl au-upl" data-upl='{"max":1,"mb":10,"accept":"jpg,jpeg,png,gif,webp,pdf"}'><span class="upl__ic"><i class="i i-upload" aria-hidden="true"></i></span><span class="upl__tx">파일을 끌어다 놓거나 눌러서 고르세요<small>이미지(JPG·PNG·GIF·WEBP) 또는 PDF · 10MB 이하 · 1개</small></span><span class="sb sb--line sb--m" data-au-upl-b>파일 선택</span><input type="file" name="bizfile" accept=".jpg,.jpeg,.png,.gif,.webp,.pdf,image/jpeg,image/png,image/gif,image/webp,application/pdf" aria-label="사업자등록증 파일 선택"></label>
+          <div class="au-doc" id="auDoc" hidden data-el="L1151"></div>
+          <p class="fld__msg fld__msg--ok" data-el="L1189">사업자등록증을 첨부했습니다.</p>
+          <p class="fld__msg fld__msg--err" role="alert"></p>
+        </div>
+        <div class="fld full" data-el="L1168 L1169 L1170 L1193">
+          <span class="fld__l">회사 주소 <em>*</em></span>
+          <div class="addr">
+            <div class="inrow"><input class="inp num" name="zip" aria-label="우편번호" placeholder="우편번호" readonly required data-msg="주소 검색을 눌러 우편번호와 주소를 넣어 주세요."><button type="button" class="sb sb--gray" data-au="addr" data-el="L1177">주소 검색</button></div>
+            <input class="inp" name="addr" aria-label="주소" placeholder="주소" readonly required data-msg="주소 검색을 눌러 우편번호와 주소를 넣어 주세요.">
+            <input class="inp" name="addr2" aria-label="상세주소" placeholder="상세주소" required data-msg="상세주소를 입력해 주세요." maxlength="100" autocomplete="address-line2">
+          </div>
+          <p class="fld__help fld__help--swap">우편번호와 주소는 주소 검색으로만 넣을 수 있습니다.</p>
+          <p class="fld__msg fld__msg--err" role="alert"></p>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset class="fset">
+      <legend class="fset__t">개인정보 <small>담당자 계정</small></legend>
+      <div class="fgrid">
+        <div class="fld" data-need="checked" data-need-msg="아이디 중복확인을 눌러 주세요." data-ok-st="ok busy fail capexp caplock" data-el="L1154 L1185 L1193">
+          <label class="fld__l" for="bId">아이디 <em>*</em></label>
+          <div class="inrow"><input class="inp" id="bId" name="uid" required data-msg="아이디를 입력해 주세요." data-fmt="id" maxlength="20" autocomplete="username" autocapitalize="off" spellcheck="false"><button type="button" class="sb sb--gray" data-au="id" data-el="L1175">중복확인</button></div>
+          <p class="fld__help fld__help--swap">영문 소문자·숫자 4~20자. 다른 글자는 자동으로 지웁니다. 바꾸면 다시 확인합니다.</p>
+          <p class="fld__msg fld__msg--ok">사용할 수 있는 아이디입니다.</p>
+          <p class="fld__msg fld__msg--err" role="alert"></p>
+        </div>
+        <div class="fld au-nl" data-st-not="social" data-el="L1155 L1186">
+          <label class="fld__l" for="bPw">비밀번호 <em>*</em></label>
+          <div class="pw"><input class="inp" id="bPw" name="pw" type="password" required data-msg="비밀번호를 입력해 주세요." data-rule="pw" maxlength="72" autocomplete="new-password"><button type="button" class="pw__eye" aria-label="비밀번호 보기" aria-pressed="false"><i class="i i-eye" aria-hidden="true"></i></button></div>
+          <ul class="au-rules" aria-label="비밀번호 규칙"><li data-r="en">영문</li><li data-r="num">숫자</li><li data-r="sp">특수문자</li><li data-r="len">8~72자</li></ul>
+          <p class="fld__msg fld__msg--err" role="alert"></p>
+        </div>
+        <div class="fld" data-st-not="social" data-el="L1156">
+          <label class="fld__l" for="bPw2">비밀번호 확인 <em>*</em></label>
+          <div class="pw"><input class="inp" id="bPw2" name="pw2" type="password" required data-msg="비밀번호를 한 번 더 입력해 주세요." data-same="bPw" maxlength="72" autocomplete="new-password"><button type="button" class="pw__eye" aria-label="비밀번호 보기" aria-pressed="false"><i class="i i-eye" aria-hidden="true"></i></button></div>
+          <p class="fld__help fld__help--swap">같은 비밀번호를 한 번 더 입력하세요.</p>
+          <p class="fld__msg fld__msg--ok">비밀번호가 일치합니다.</p>
+          <p class="fld__msg fld__msg--err" role="alert"></p>
+        </div>
+        <p class="note full" data-st="social">간편 가입은 비밀번호 없이 가입합니다. 비밀번호는 가입한 뒤 마이페이지에서 정할 수 있습니다.</p>
+        <div class="fld au-nl" data-el="L1157">
+          <label class="fld__l" for="bName">이름 <em>*</em><span class="stag" data-st="social"><span data-sns-name>카카오</span> 계정</span></label>
+          <input class="inp" id="bName" name="uname" required data-msg="이름을 입력해 주세요." maxlength="20" autocomplete="name">
+          <p class="fld__help fld__help--swap">실명을 입력하세요.</p>
+          <p class="fld__msg fld__msg--err" role="alert"></p>
+        </div>
+        <div class="fld" data-el="L1158">
+          <label class="fld__l" for="bMail">이메일 <em>*</em><span class="stag" data-st="social"><span data-sns-name>카카오</span> 계정</span></label>
+          <input class="inp" id="bMail" name="email" type="email" required data-msg="이메일을 입력해 주세요." data-rule="email" maxlength="100" autocomplete="email" inputmode="email">
+          <p class="fld__msg fld__msg--err" role="alert"></p>
+        </div>
+        <div class="fgrid full au-two">
+          <div class="fld" data-el="L1159">
+            <label class="fld__l" for="bTel">휴대전화 <em>*</em></label>
+            <input class="inp num" id="bTel" name="mobile" type="tel" required data-msg="휴대전화 번호를 입력해 주세요." data-fmt="phone" data-rule="mobile" maxlength="13" inputmode="numeric" placeholder="010-0000-0000" autocomplete="tel">
+            <p class="fld__help fld__help--swap">하이픈 자동 입력</p>
+            <p class="fld__msg fld__msg--err" role="alert"></p>
+          </div>
+          <div class="fld" data-el="L1160">
+            <label class="fld__l" for="bTel2">전화번호 <small>(선택)</small></label>
+            <input class="inp num" id="bTel2" name="tel" type="tel" data-fmt="phone" data-rule="phone" maxlength="13" inputmode="numeric" placeholder="051-000-0000">
+            <p class="fld__help fld__help--swap">하이픈 자동 입력</p>
+            <p class="fld__msg fld__msg--err" role="alert"></p>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset class="fset au-ad" data-el="L1171">
+      <legend class="fset__t">광고성 정보 수신 동의 <small>(선택)</small></legend>
+      <div class="choice"><label class="chk"><input type="checkbox" name="adEmail" value="email"><i></i>이메일로 받기</label><label class="chk"><input type="checkbox" name="adSms" value="sms"><i></i>문자로 받기</label></div>
+      <div class="note" data-el="L1195"><ul><li>고른 방법으로만 광고성 정보를 보내 드립니다. 동의하지 않아도 가입할 수 있습니다.</li><li>주문·견적·배송처럼 거래에 필요한 안내는 동의와 관계없이 보내 드립니다.</li><li>언제든 마이페이지나 광고 메일·문자의 수신거부 링크에서 받지 않도록 바꿀 수 있습니다.</li></ul></div>
+    </fieldset>
+
+    <fieldset class="fset" data-el="L1172">
+      <legend class="fset__t">자동등록방지</legend>
+      <div class="fld au-cap" data-el="L1194">
+        <label class="fld__l" for="bCap">그림의 숫자 6자리 <em>*</em><span class="stag au-cap__new">새 그림</span></label>
+        <div class="cap"><span class="cap__img" role="img" aria-label="자동등록방지 숫자 그림" data-au-cap data-sample>482915</span><input class="inp num" id="bCap" name="cap" inputmode="numeric" maxlength="6" data-fmt="digits" data-rule="cap" required data-msg="자동등록방지 숫자 6자리를 입력해 주세요." autocomplete="off"><button type="button" class="cap__re" data-au="cap" aria-label="숫자 그림 새로 받기" data-el="L1178"><i class="i i-refresh" aria-hidden="true"></i></button></div>
+        <p class="fld__help fld__help--swap">숫자가 잘 보이지 않으면 오른쪽 버튼으로 새 그림을 받으세요.</p>
+        <p class="fld__msg fld__msg--err" role="alert"></p>
+      </div>
+    </fieldset>
+  </div>
+
+  <aside class="au-side" aria-label="가입 전 확인">
+    <div class="au-side__box">
+      <p class="au-side__t">가입 전 확인</p>
+      <ul class="au-ck">
+        <li data-au-ck="req"><i aria-hidden="true"></i><span>필수 항목 입력<em class="sr-only"> 남음</em></span><b class="num">0 / 0</b></li>
+        <li data-au-ck="biz"><i aria-hidden="true"></i><span>사업자등록번호 확인<em class="sr-only"> 남음</em></span></li>
+        <li data-au-ck="file"><i aria-hidden="true"></i><span>사업자등록증 첨부<em class="sr-only"> 남음</em></span></li>
+        <li data-au-ck="addr"><i aria-hidden="true"></i><span>주소 검색<em class="sr-only"> 남음</em></span></li>
+        <li data-au-ck="id"><i aria-hidden="true"></i><span>아이디 중복확인<em class="sr-only"> 남음</em></span></li>
+        <li data-au-ck="cap"><i aria-hidden="true"></i><span>자동등록방지 입력<em class="sr-only"> 남음</em></span></li>
+      </ul>
+      <button type="submit" class="bt bt--ink bt--full" data-busy-st="busy" data-el="L1179 L1196"><span><span data-st-not="busy">가입 완료</span><span data-st="busy">가입하는 중</span></span><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></button>
+      <p class="au-side__d" data-st="busy" role="status">가입을 처리하고 있습니다. 화면을 닫지 마세요.</p>
+      <p class="au-side__d" data-st-not="busy" data-el="L1182">위 항목이 모두 끝나야 가입할 수 있습니다. 가입하면 관리자 승인 없이 바로 이용할 수 있습니다.</p>
+    </div>
+  </aside>
+</form>
+
+<i hidden data-toast-st="fail" data-toast="가입을 처리하지 못했습니다. 잠시 뒤에 다시 시도해 주세요." data-toast-err></i>
+<section class="wrap" data-st="done">
+  <div class="gate au-done">
+    <span class="smark"><i class="i i-check" aria-hidden="true"></i></span>
+    <h1 class="gate__t" data-el="L1198">기업 회원 가입을 마쳤습니다</h1>
+    <p class="gate__d">비투비티에 가입해 주셔서 감사합니다. 가입한 정보는 아래와 같습니다.</p>
+    <div class="gate__box">
+      <dl class="dl" data-sample>
+        <div><dt>회원 유형</dt><dd>기업 회원</dd></div>
+        <div><dt>회사명</dt><dd>한결산업 주식회사</dd></div>
+        <div><dt>사업자등록번호</dt><dd class="num">123-45-67890</dd></div>
+        <div data-st-not="social"><dt>아이디</dt><dd>hangyeol</dd></div>
+        <div data-st="social"><dt>연결한 계정</dt><dd><span data-sns-name>카카오</span> (mj.kim@example.com)</dd></div>
+        <div><dt>가입일</dt><dd class="num">2026-11-17</dd></div>
+      </dl>
+      <p class="note" data-st-not="social">직접 입력으로 가입하면 자동으로 로그인되지 않습니다. 가입한 아이디와 비밀번호로 로그인해 주세요.</p>
+      <p class="note" data-st="social"><span data-sns-name>카카오</span> 계정을 연결하고 로그인했습니다. 다음부터 <span data-sns-name>카카오</span> 버튼으로 로그인할 수 있습니다.</p>
+      <p class="msg" data-ret hidden data-el="L1199"><i class="i i-info" aria-hidden="true"></i><span data-st-not="social">로그인하면 보던 페이지(<b data-ret-name>장바구니</b>)로 이어 갑니다.</span><span data-st="social">곧 보던 페이지(<b data-ret-name>장바구니</b>)로 이동합니다.</span></p>
+    </div>
+    <div class="acts" id="auDoneActs" data-el="L1180"><a class="bt bt--ink bt--full" href="index.html"><span>메인화면으로</span><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></a></div>
+  </div>
+</section>
+<!--@after-->
+<div class="pop au-docpop" id="auDocPop" role="dialog" aria-modal="true" aria-labelledby="auDocPopT" hidden>
+  <div class="pop__dim" data-pop-close></div>
+  <div class="pop__box pop__box--m">
+    <div class="pop__head"><h2 class="pop__t" id="auDocPopT">사업자등록증 미리보기</h2><button type="button" class="pop__x" data-pop-close aria-label="닫기"><i class="i i-x" aria-hidden="true"></i></button></div>
+    <div class="pop__body"><img id="auDocImg" alt="첨부한 사업자등록증" width="1200" height="1600"><p id="auDocName"></p></div>
+    <div class="pop__foot"><button type="button" class="sb sb--ink" data-pop-close>닫기</button></div>
+  </div>
+</div>

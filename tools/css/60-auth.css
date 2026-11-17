@@ -1,0 +1,193 @@
+/* ============================================================
+   60. 로그인·회원가입 — login · signup · signup-general · signup-business · signup-general-info · signup-business-info
+   구조 근거: research/decisions/auth.md  ·  동작: js/sub-auth.js
+   ============================================================ */
+
+/* ---------- 1. 2열 틀(로그인 · 유형 선택 · 가입 방법 선택): 왼쪽 양식 440, 오른쪽 대표 사진 ---------- */
+.au{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:80px;align-items:stretch;padding-top:40px}
+.au__form{display:flex;flex-direction:column;justify-content:center;min-width:0;padding:8px 0}
+.au__in{width:100%;max-width:440px;margin-inline:auto}
+.au__in>.sub-head__t,.au__h .sub-head__t{margin-top:0}
+.au__stp{margin-bottom:20px}
+.au__h{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px}
+.au__msgs>.msg{margin-top:16px}
+.au__body{margin-top:28px}
+.au-go{margin-top:20px}
+.au-sub{font-size:13px;color:var(--fg3)}
+/* 로그인 상태 유지 · 찾기 한 줄 */
+.au-row{display:flex;align-items:center;justify-content:space-between;gap:4px 12px;flex-wrap:wrap;margin-top:12px}
+.au-row .chk{min-height:44px;align-items:center}
+.au-row .chk i{margin-top:0}
+.au-row .tl{display:inline-flex;align-items:center;min-height:44px}
+/* 가운데 글이 있는 구분선 */
+.au-or{display:flex;align-items:center;gap:14px;margin:32px 0 14px;font-size:13px;font-weight:600;line-height:20px;color:var(--fg3);white-space:nowrap}
+.au-or::before,.au-or::after{content:"";flex:1;height:1px;background:var(--ln)}
+/* 간편 로그인·가입 버튼: 흰 바탕 선 알약 + 로고 표식(Google·네이버는 잉크 한 색, 카카오만 토큰 #FEE500) */
+.au-sns{display:grid;gap:8px}
+.au-sns--row{grid-template-columns:repeat(3,minmax(0,1fr))}
+.au-sns__b{position:relative;display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:48px;padding:0 12px;border:1px solid #C8C8CC;border-radius:999px;background:#fff;font-size:14px;font-weight:600;letter-spacing:-.01em;line-height:1;color:var(--ink);white-space:nowrap;transition:border-color .15s,background-color .15s}
+.au-sns__b:hover{border-color:#000;background:var(--tint)}
+.au-sns--stack .au-sns__b{height:52px;padding:0 52px;font-size:15px}
+.au-sns--stack .au-sns__m{position:absolute;left:20px;top:50%;margin-top:-11px}
+.au-sns__m{display:grid;flex:none;place-items:center;width:22px;height:22px;color:var(--ink)}
+.au-sns__m svg{display:block;width:20px;height:20px}
+.au-sns__m--kakao{border-radius:50%;background:#FEE500;color:#191919}
+.au-sns__m--kakao .i{font-size:14px}
+/* 짧은 안내 목록 */
+.au-help{display:grid;gap:4px;margin-top:14px;font-size:13px;line-height:20px;color:var(--fg3)}
+.au-help li{position:relative;padding-left:12px}
+.au-help li::before{content:"";position:absolute;left:0;top:9px;width:3px;height:3px;border-radius:50%;background:#8B8B90}
+.au-note{margin-top:10px;font-size:13px;line-height:20px;color:var(--fg3);text-align:center}
+.au-box{margin-top:24px}
+/* 아래 이동 줄(회원가입 · 로그인 · 유형 변경) */
+.au-foot{display:flex;align-items:center;justify-content:space-between;gap:12px 20px;margin-top:32px;padding-top:24px;border-top:1px solid var(--ln)}
+.au-foot__t{min-width:0;font-size:14px;line-height:22px;color:var(--fg2)}
+.au-foot__t b{display:block;font-weight:700;color:#000}
+.au-foot .sb{flex:none}
+/* 대표 사진 칸 */
+.au-ph{position:relative;min-height:640px;margin:0;border-radius:16px;overflow:hidden;background:#0B0B0D;isolation:isolate}
+.au-ph picture,.au-ph img{position:absolute;inset:0;display:block;width:100%;height:100%}
+.au-ph img{object-fit:cover}
+.au-ph--l img{object-position:42% 50%}
+.au-ph::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(0deg,rgba(8,9,12,.7) 0%,rgba(8,9,12,.3) 34%,transparent 58%);pointer-events:none}
+/* 밝은 사진에서도 오른쪽 위 "연출 이미지입니다."가 읽히게 위쪽만 옅게 어둡게 */
+.au-ph::before{content:"";position:absolute;left:0;right:0;top:0;height:120px;z-index:1;background:linear-gradient(180deg,rgba(8,9,12,.42) 0%,transparent 100%);pointer-events:none}
+.au-ph__copy{position:absolute;left:44px;right:44px;bottom:40px;z-index:2;color:#fff}
+.au-ph__t{font-size:26px;font-weight:600;letter-spacing:-.02em;line-height:1.35;color:#fff;text-wrap:balance}
+.au-ph__t .tt__pre,.au-ph__t .tt__key{display:block;font-size:inherit;letter-spacing:inherit;line-height:inherit;color:inherit}
+.au-ph__t .tt__pre{font-weight:400}
+.au-ph__t .tt__key{font-weight:700}
+.au-ph__d{margin-top:10px;font-size:15px;line-height:1.75;color:rgba(255,255,255,.82)}
+.au-ph__note{position:absolute;right:20px;top:16px;z-index:2;font-size:11.5px;line-height:16px;color:rgba(255,255,255,.8);text-shadow:0 1px 3px rgba(0,0,0,.6)}
+/* 회원 유형 카드: 이름 · 누구인지 · 가입할 때 필요한 것 3줄 */
+.au-type .opt__b{justify-content:flex-start;padding:20px 18px 18px}
+.au-type .opt__chk{right:14px;top:18px}
+.au-type__l{display:grid;gap:4px;margin-top:14px;padding-top:12px;border-top:1px solid var(--ln)}
+.au-type__l>span{position:relative;padding-left:20px;font-size:14px;font-weight:500;line-height:21px;color:var(--fg2)}
+.au-type__l>span::before{content:"";position:absolute;left:0;top:3px;width:14px;height:14px;background:#8B8B90;-webkit-mask:var(--i-check) center/contain no-repeat;mask:var(--i-check) center/contain no-repeat}
+.au-type .opt input:checked+.opt__b .au-type__l>span::before{background:#000}
+.au-mail{margin-top:8px}
+.au-mail .i{margin-right:2px}
+@media (max-width:1024px){
+  .au{gap:48px}
+  .au-ph__copy{left:32px;right:32px;bottom:32px}
+  .au-ph__t{font-size:22px}
+}
+@media (max-width:768px){
+  .au{grid-template-columns:minmax(0,1fr);gap:44px;padding-top:28px}
+  .au__form{padding:0}
+  .au__body{margin-top:24px}
+  .au-or{margin-top:28px}
+  .au-sns--row .au-sns__b{gap:6px;padding:0 6px;font-size:14px}
+  .au-foot{margin-top:28px;padding-top:20px}
+  .au-ph{min-height:0;width:calc(100% + var(--gut) * 2);margin-inline:calc(var(--gut) * -1);aspect-ratio:4 / 3;border-radius:0}
+  .au-ph__copy{left:var(--gut);right:var(--gut);bottom:24px}
+  .au-ph__t{font-size:20px;line-height:1.4}
+  .au-ph__d{margin-top:6px;font-size:14px;line-height:1.7}
+  .au-ph__note{right:var(--gut);top:12px}
+}
+
+/* ---------- 2. 정보 입력(일반 · 기업): 양식 + 오른쪽 "가입 전 확인" ---------- */
+.au-head .stp{margin-bottom:16px}
+.au-join{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:64px;align-items:start;padding-top:36px}
+.au-join__main{min-width:0}
+.au-join__msgs>.msg{margin-bottom:16px}
+.au-join__msgs>.msg:last-child{margin-bottom:28px}
+.au-join .fgrid>.au-nl{grid-column-start:1}
+.au-join .fld__l .stag{margin-left:6px;align-self:center}
+.au-side{position:sticky;top:calc(var(--bh-top, 108px) + 24px);transition:top .2s ease-out}
+.au-side__box{padding:24px;border:1px solid var(--ln);border-radius:16px;background:#fff}
+.au-side__t{font-size:17px;font-weight:700;letter-spacing:-.02em;line-height:24px;color:#000}
+.au-side__d{margin-top:12px;font-size:13px;line-height:20px;color:var(--fg3)}
+.au-ck{margin:14px 0 20px;border-top:1px solid #000}
+.au-ck li{display:flex;align-items:center;gap:10px;min-height:44px;border-bottom:1px solid var(--ln);font-size:14px;line-height:20px;color:var(--fg3)}
+.au-ck li>i{position:relative;flex:none;width:20px;height:20px;border-radius:50%;box-shadow:inset 0 0 0 1.5px #C8C8CC;background:#fff;transition:background-color .15s,box-shadow .15s}
+.au-ck li>i::after{content:"";position:absolute;inset:3px;background:#fff;-webkit-mask:var(--i-check) center/contain no-repeat;mask:var(--i-check) center/contain no-repeat;opacity:0}
+.au-ck li>span{flex:1;min-width:0}
+.au-ck li>b{flex:none;font-size:13px;font-weight:600;color:var(--fg3);font-variant-numeric:tabular-nums}
+.au-ck li.is-done{color:#000;font-weight:600}
+.au-ck li.is-done>i{background:#000;box-shadow:none}
+.au-ck li.is-done>i::after{opacity:1}
+.au-ck li.is-done>b{color:#000}
+/* 비밀번호 규칙: 충족하면 체크. 통과는 선택 상태 규칙대로 검정 바탕 + 흰 글자 */
+.au-rules{display:flex;flex-wrap:wrap;gap:6px}
+.au-rules li{display:inline-flex;align-items:center;gap:4px;height:26px;padding:0 10px 0 8px;border-radius:999px;background:#F1F1F3;font-size:13px;font-weight:600;line-height:1;color:var(--fg3);transition:background-color .15s,color .15s}
+.au-rules li::before{content:"";width:13px;height:13px;background:currentColor;-webkit-mask:var(--i-check) center/contain no-repeat;mask:var(--i-check) center/contain no-repeat;opacity:.4}
+.au-rules li.is-ok{background:#000;color:#fff}
+.au-rules li.is-ok::before{opacity:1}
+/* 사업자등록증 첨부 · 미리보기(상자·사진 16, 폰 사진 14) */
+.au-upl{border-radius:16px}
+.au-upl .upl__tx{font-weight:600}
+.au-upl .sb{pointer-events:none}
+.au-doc{display:flex;align-items:center;gap:14px;margin-top:8px;padding:12px;border-radius:16px;background:var(--tint)}
+.au-doc__th{position:relative;display:block;flex:none;width:64px;height:64px;border-radius:16px;overflow:hidden;background:#EDEDEF}
+.au-doc__th img{display:block;width:100%;height:100%;object-fit:cover}
+.au-doc__th::after{content:"";position:absolute;right:4px;bottom:4px;width:20px;height:20px;border-radius:50%;background:rgba(14,14,16,.72) var(--i-zoom-w) center/12px no-repeat}
+.au-doc__pdf{display:grid;flex:none;place-items:center;width:64px;height:64px;border-radius:16px;background:#fff;box-shadow:inset 0 0 0 1px var(--ln);font-family:var(--ds-font);font-size:14px;font-weight:700;letter-spacing:.02em;color:#474747}
+.au-doc__tx{display:grid;flex:1;gap:2px;min-width:0}
+.au-doc__n{overflow:hidden;font-size:14px;font-weight:600;line-height:20px;color:#000;text-overflow:ellipsis;white-space:nowrap}
+.au-doc__s{font-size:13px;line-height:20px;color:var(--fg3)}
+.au-doc__acts{display:flex;flex:none;gap:6px}
+.au-doc__acts .sb{height:44px}
+.au-docpop img{display:block;width:100%;height:auto;max-height:70vh;border-radius:16px;object-fit:contain;background:var(--tint)}
+.au-docpop .pop__body p{margin-top:10px;font-size:13px;color:var(--fg3)}
+/* 확인 완료 문구: 파랑 대신 잉크 + 앞에 체크 */
+.au-join .fld.is-ok .fld__msg--ok{display:flex;align-items:flex-start;gap:4px;font-weight:500;color:#000}
+.au-join .fld__msg--ok::before{content:"";flex:none;width:14px;height:14px;margin-top:3px;background:#000;-webkit-mask:var(--i-check) center/contain no-repeat;mask:var(--i-check) center/contain no-repeat}
+/* 형식·용량이 맞지 않아도 먼저 첨부한 파일은 남는다: 오류 줄만 보이고 완료 줄은 숨김 */
+.au-join .fld.is-err.is-ok .fld__msg--ok{display:none}
+.au-cap{max-width:440px}
+/* 자동등록방지: 틀리거나 만료되어 그림이 바뀌면 "새 그림" 표시 + 그림 테두리, 시도 초과면 흐리게 */
+.au-cap .au-cap__new{display:none}
+.au-cap--new .au-cap__new{display:inline-flex}
+.au-cap--new .cap__img{box-shadow:inset 0 0 0 1px #000}
+.au-cap--lock .cap__img{opacity:.4}
+.au-cap--lock .inp{background:var(--tint)}
+.au-cap--lock .cap__re{opacity:.36;pointer-events:none}
+.au-ad .note{margin-top:14px}
+/* 가입 완료: 주 동작(.bt--ink)을 위에, 메인화면(.bt--line)을 아래에. 같은 높이 · 가입 정보 상자와 같은 폭 */
+.au-done .gate__box .note{margin-top:16px}
+.au-done .gate__box .msg{margin-top:12px}
+.au-done .acts{flex-direction:column;align-items:stretch;width:min(440px,100%)}
+.au-done .acts>*{flex:none}
+@media (max-width:1100px){
+  .au-join{grid-template-columns:minmax(0,1fr);gap:48px}
+  .au-side{position:static}
+  .au-ck{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:24px}
+}
+@media (max-width:768px){
+  .au-join{gap:36px;padding-top:28px}
+  .au-side__box{padding:20px}
+  .au-ck{grid-template-columns:minmax(0,1fr)}
+  .au-ck li{min-height:40px}
+  .au-doc{flex-wrap:wrap;gap:12px}
+  .au-doc__th,.au-doc__pdf,.au-docpop img{border-radius:14px}
+  .au-doc__acts{width:100%}
+  .au-doc__acts .sb{flex:1}
+  .au-upl{flex-wrap:wrap}
+  .au-upl .sb{width:100%}
+}
+@media (prefers-reduced-motion:reduce){ .au-side,.au-ck li>i,.au-rules li,.au-sns__b{transition:none} }
+:root{--i-zoom-w:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='10.5' cy='10.5' r='6'/%3E%3Cpath d='M15 15l5 5'/%3E%3C/svg%3E")}
+/* 짧은 짝 칸(업태 | 업종, 휴대전화 | 전화번호)은 폰에서도 2칸 */
+.au-two__d{margin-top:-16px}
+@media (max-width:768px){
+  .fgrid.au-two{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 12px}
+  .au-two__d{margin-top:-12px}
+}
+
+/* ---------- 3. 공용 부품 임시 덮어쓰기(이 페이지들 안에서만. 공용 쪽에 반영되면 지운다 — 보고서 "공용 부품에 필요한 것") ---------- */
+/* 단계 표시: 끝난 단계는 번호 원 + 이름 전체가 링크(터치 44px). 번호는 본문 글꼴 700 + .num(Barlow 는 순위·배너 번호 전용) */
+.au__stp b,.au-head .stp b{font-family:var(--ds-font);font-size:13px;font-weight:700}
+.au__stp a,.au-head .stp a{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-width:44px;min-height:44px;margin-block:-11px;border-radius:999px}
+.au__stp a:hover,.au-head .stp a:hover{text-decoration:none}
+.au__stp a:hover span,.au-head .stp a:hover span{text-decoration:underline;text-underline-offset:3px}
+/* 필수 표시 * 는 검정(파랑은 포인트 용도에만), 보조 글자 12.5 → 캡션 13 */
+.au .fld__l em,.au-join .fld__l em,.au-join .fset__t small em{color:#000}
+.au-join .fld__l small{font-size:13px}
+@media (max-width:768px){
+  .au__stp.stp,.au-head .stp{font-size:13px}
+  /* 폰은 끝난 단계 이름을 숨기되 링크 이름·터치 영역은 남긴다(display:none 대신 낭독용 숨김) */
+  .au__stp.stp li:not(.is-on) span,.au-head .stp li:not(.is-on) span{display:block;position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+  .au__stp a,.au-head .stp a{margin-inline:-11px}
+}
