@@ -54,6 +54,12 @@ def state_url(p, st):
     return base + '?state=' + key
 
 
+def skey(k):
+    """상태 키 표기 맞춤: 'recent' 와 'state=recent' 를 같은 상태로 본다."""
+    k = k or 'default'
+    return k if k == 'default' or '=' in k else 'state=' + k
+
+
 def slug(key):
     base = re.sub(r'[^a-z0-9]+', '-', key.lower()).strip('-') or 'default'
     if re.search(r'[^\x00-\x7f]', key):      # 한글이 섞인 키는 이름이 겹치지 않게 짧은 꼬리를 붙인다
@@ -244,7 +250,7 @@ def cmd_coverage(argv):
     for i, m in manual.items():
         if m.get('status') == 'na':
             continue
-        want.setdefault((m['file'], m.get('state', 'default')), set()).add(m['selector'])
+        want.setdefault((m['file'], skey(m.get('state', 'default'))), set()).add(m['selector'])
     with sync_playwright() as pw:
         br = pw.chromium.launch()
         ctx = br.new_context(viewport={'width': 1440, 'height': 900}, reduced_motion='reduce', locale='ko-KR')
@@ -254,13 +260,15 @@ def cmd_coverage(argv):
                 try:
                     pg.goto(state_url(p, st), wait_until='load', timeout=30000)
                     pg.wait_for_timeout(250)
-                    r = pg.evaluate(JS_EL, sorted(want.get((p['file'], st[0]), [])))
+                    r = pg.evaluate(JS_EL, sorted(want.get((p['file'], skey(st[0])), [])))
+                    if r['found'] and not all(r['found'].values()):   # 알림처럼 늦게 뜨는 요소는 한 번 더 기다려 본다
+                        pg.wait_for_timeout(1000); r = pg.evaluate(JS_EL, sorted(want.get((p['file'], skey(st[0])), [])))
                 except Exception as e:  # noqa
                     print('열기 실패', p['file'], st[0], str(e)[:120]); continue
                 for i in r['ids']:
                     seen.setdefault(i, (p['file'], st[0]))
                 for s, ok in r['found'].items():
-                    sel_ok[(p['file'], st[0], s)] = ok
+                    sel_ok[(p['file'], skey(st[0]), s)] = ok
         br.close()
     problems = []
     for i in missing_items:
@@ -276,7 +284,7 @@ def cmd_coverage(argv):
                 problems.append('%s: 해당 없음(na)인데 이유가 없음' % i)
             continue
         if m:
-            key = (m['file'], m.get('state', 'default'), m['selector'])
+            key = (m['file'], skey(m.get('state', 'default')), m['selector'])
             it.update(file=m['file'], state=m.get('state', 'default'), selector=m['selector'], note=m.get('note', ''))
             if m['file'] not in by_file:
                 it['status'] = 'todo'; problems.append('%s: %s 파일이 아직 없음' % (i, m['file']))
@@ -328,7 +336,7 @@ def cmd_els(argv):
     want = {}
     for i, m in manual.items():
         if m.get('status') != 'na' and m.get('file') in files:
-            want.setdefault((m['file'], m.get('state', 'default')), set()).add(m['selector'])
+            want.setdefault((m['file'], skey(m.get('state', 'default'))), set()).add(m['selector'])
     seen, sel_ok = set(), {}
     with Slot(), sync_playwright() as pw:
         br = pw.chromium.launch()
@@ -338,12 +346,14 @@ def cmd_els(argv):
                 try:
                     pg.goto(state_url(p, st), wait_until='load', timeout=30000)
                     pg.wait_for_timeout(250)
-                    r = pg.evaluate(JS_EL, sorted(want.get((p['file'], st[0]), [])))
+                    r = pg.evaluate(JS_EL, sorted(want.get((p['file'], skey(st[0])), [])))
+                    if r['found'] and not all(r['found'].values()):   # 알림처럼 늦게 뜨는 요소는 한 번 더 기다려 본다
+                        pg.wait_for_timeout(1000); r = pg.evaluate(JS_EL, sorted(want.get((p['file'], skey(st[0])), [])))
                 except Exception as e:  # noqa
                     print('열기 실패', p['file'], st[0], str(e)[:120]); continue
                 seen |= set(r['ids'])
                 for q, ok in r['found'].items():
-                    sel_ok[(p['file'], st[0], q)] = ok
+                    sel_ok[(p['file'], skey(st[0]), q)] = ok
         br.close()
     missing, bad = [], []
     for it in spec:
@@ -353,7 +363,7 @@ def cmd_els(argv):
                 bad.append('%s: 해당 없음(na)인데 이유가 없음' % it['id'])
             continue
         if m and m.get('file') in files:
-            if not sel_ok.get((m['file'], m.get('state', 'default'), m['selector'])):
+            if not sel_ok.get((m['file'], skey(m.get('state', 'default')), m['selector'])):
                 bad.append('%s: 선택자 %s 가 %s [%s] 에 없음' % (it['id'], m['selector'], m['file'], m.get('state', 'default')))
             continue
         if m:      # 다른 파일(공통 요소 등)에 적혀 있음
