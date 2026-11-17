@@ -195,6 +195,1867 @@
    ]
   },
   {
+   "file": "product.html",
+   "title": "상품 상세",
+   "name": "상품 상세",
+   "group": 2,
+   "type": "product",
+   "shell": "full",
+   "auth": "member",
+   "sections": [
+    "상품 상세"
+   ],
+   "states": [
+    [
+     "default",
+     "일반 상품(작성 예시)"
+    ],
+    [
+     "state=fresh",
+     "처음 연 화면"
+    ],
+    [
+     "state=print",
+     "인쇄 있음(인쇄 상세·첨부)"
+    ],
+    [
+     "id=504",
+     "색상 없는 상품"
+    ],
+    [
+     "id=3026&brand=k2&state=sized",
+     "협력브랜드 상품(사이즈 등록 견본)"
+    ],
+    [
+     "id=3026&brand=k2",
+     "협력브랜드·사이즈 글로 적기"
+    ],
+    [
+     "id=3026&brand=k2&state=need",
+     "협력브랜드·글로 적은 수량 오류 안내"
+    ],
+    [
+     "state=need",
+     "필수 미선택 안내"
+    ],
+    [
+     "state=nocolor",
+     "고른 색상 없음 안내"
+    ],
+    [
+     "state=upl-err",
+     "첨부 오류"
+    ],
+    [
+     "state=cart-done",
+     "장바구니 담음 확인"
+    ],
+    [
+     "state=busy",
+     "주문 진행 중"
+    ],
+    [
+     "state=fail",
+     "주문 실패"
+    ],
+    [
+     "state=guest",
+     "비로그인 안내"
+    ],
+    [
+     "state=restored",
+     "로그인 뒤 되살림(파일 일부 빠짐)"
+    ],
+    [
+     "state=noprint",
+     "인쇄 불가·포장 없음"
+    ],
+    [
+     "state=nomethod",
+     "인쇄방법·인쇄 부분 없음"
+    ],
+    [
+     "state=noinfo",
+     "상세 정보 없음(사진 없음)"
+    ],
+    [
+     "state=none",
+     "상품 없음"
+    ]
+   ]
+  },
+  {
+   "file": "cart.html",
+   "title": "장바구니",
+   "name": "장바구니",
+   "group": 3,
+   "type": "cart",
+   "shell": "full",
+   "auth": "member",
+   "sections": [
+    "장바구니"
+   ],
+   "states": [
+    [
+     "default",
+     "기본(전부 선택)"
+    ],
+    [
+     "state=partial",
+     "일부 선택(인쇄 없는 상품만)"
+    ],
+    [
+     "state=detail",
+     "자세히 보기 열림"
+    ],
+    [
+     "state=empty",
+     "빈 장바구니"
+    ],
+    [
+     "state=none",
+     "주문할 상품 미선택"
+    ],
+    [
+     "state=nodel",
+     "삭제할 상품 미선택"
+    ],
+    [
+     "state=fail",
+     "장바구니 처리 실패"
+    ],
+    [
+     "state=savefail",
+     "주문 요청 저장 실패"
+    ],
+    [
+     "state=busy",
+     "접수 중"
+    ],
+    [
+     "state=guest",
+     "비로그인"
+    ]
+   ]
+  },
+  {
+   "file": "order.html",
+   "title": "주문서 작성",
+   "name": "주문서 작성(결제)",
+   "group": 3,
+   "type": "cart",
+   "shell": "full",
+   "auth": "member",
+   "sections": [
+    "주문서 작성(결제)"
+   ],
+   "states": [
+    [
+     "default",
+     "신용·체크카드(기본)"
+    ],
+    [
+     "state=bank+tax",
+     "무통장입금 + 세금계산서"
+    ],
+    [
+     "state=bank+cash",
+     "무통장입금 + 현금영수증"
+    ],
+    [
+     "state=later",
+     "후불결제 요청"
+    ],
+    [
+     "state=balance",
+     "잔금 결제(수정 불가)"
+    ],
+    [
+     "state=addr",
+     "저장된 배송지 고르기"
+    ],
+    [
+     "state=addr+noaddr",
+     "저장된 배송지 없음"
+    ],
+    [
+     "state=nobase",
+     "기본배송지 없음"
+    ],
+    [
+     "state=err",
+     "필수·형식 오류"
+    ],
+    [
+     "state=pt",
+     "사용 가능 포인트 초과"
+    ],
+    [
+     "state=policy",
+     "취소/환불 정책 보기"
+    ],
+    [
+     "state=paying",
+     "결제 진행 중"
+    ],
+    [
+     "state=bank+done",
+     "주문 접수 안내(무통장입금)"
+    ],
+    [
+     "state=changed",
+     "견적 금액 변경"
+    ],
+    [
+     "state=noquote",
+     "결제할 수 없는 견적"
+    ],
+    [
+     "state=saved",
+     "이미 저장된 주문"
+    ],
+    [
+     "state=check",
+     "결제·배송방법 확인"
+    ],
+    [
+     "state=fail",
+     "카드 결제창 불러오기 실패"
+    ],
+    [
+     "state=payfail",
+     "카드 결제 진행 실패"
+    ],
+    [
+     "state=savefail",
+     "주문 저장 실패"
+    ],
+    [
+     "state=nofile",
+     "등록된 견적서 파일 없음"
+    ],
+    [
+     "state=invalid",
+     "결제 불가·비정상 접근"
+    ],
+    [
+     "state=guest",
+     "비로그인"
+    ]
+   ]
+  },
+  {
+   "file": "nicepay-return.html",
+   "title": "카드 결제 처리",
+   "name": "카드 결제 처리",
+   "group": 3,
+   "type": "result",
+   "shell": "full",
+   "auth": "member",
+   "sections": [
+    "카드 결제 처리"
+   ],
+   "states": [
+    [
+     "default",
+     "처리 중"
+    ],
+    [
+     "state=confirm-error",
+     "승인 후 주문 확정 오류"
+    ],
+    [
+     "state=session",
+     "결제 세션 확인 불가"
+    ],
+    [
+     "state=cancel",
+     "카드 인증 취소·실패"
+    ],
+    [
+     "state=expired",
+     "결제 요청 만료·불일치"
+    ],
+    [
+     "state=mismatch",
+     "인증정보·주문정보 불일치"
+    ],
+    [
+     "state=tamper",
+     "인증정보 위변조 감지"
+    ],
+    [
+     "state=approve-error",
+     "카드 승인 오류"
+    ]
+   ]
+  },
+  {
+   "file": "order-complete.html",
+   "title": "주문 완료",
+   "name": "주문 완료",
+   "group": 3,
+   "type": "result",
+   "shell": "full",
+   "auth": "member",
+   "sections": [
+    "주문 완료"
+   ],
+   "states": [
+    [
+     "default",
+     "시안 요청 접수"
+    ],
+    [
+     "state=quote",
+     "견적 요청 접수"
+    ],
+    [
+     "state=card",
+     "카드 결제 완료"
+    ],
+    [
+     "state=bank",
+     "무통장입금 주문"
+    ],
+    [
+     "state=later",
+     "후불결제 요청"
+    ],
+    [
+     "state=guest",
+     "비로그인"
+    ],
+    [
+     "state=none",
+     "주문·요청을 찾을 수 없음"
+    ]
+   ]
+  },
+  {
+   "file": "quote-intro.html",
+   "title": "견적문의 안내",
+   "name": "견적문의 안내",
+   "group": 4,
+   "type": "form",
+   "shell": "full",
+   "auth": "member",
+   "sections": [
+    "견적문의 안내"
+   ],
+   "states": [
+    [
+     "default",
+     "회원"
+    ],
+    [
+     "state=guest",
+     "비회원"
+    ]
+   ]
+  },
+  {
+   "file": "quote.html",
+   "title": "견적문의",
+   "name": "견적문의 — 비회원 안내·대화형 입력·한 화면 입력 양식·상품 검색",
+   "group": 4,
+   "type": "form",
+   "shell": "full",
+   "auth": "member",
+   "sections": [
+    "견적문의 — 비회원 안내",
+    "견적문의 — 대화형 입력",
+    "견적문의 — 한 화면 입력 양식",
+    "견적문의 — 상품 검색"
+   ],
+   "states": [
+    [
+     "default",
+     "대화형 진행 중"
+    ],
+    [
+     "state=start",
+     "대화 시작"
+    ],
+    [
+     "state=search",
+     "상품 검색 질문"
+    ],
+    [
+     "state=search-busy",
+     "상품 검색 질문 — 찾는 중"
+    ],
+    [
+     "state=search-none",
+     "상품 검색 질문 — 결과 없음"
+    ],
+    [
+     "state=search-fail",
+     "상품 검색 질문 — 불러오기 실패"
+    ],
+    [
+     "state=search+pick",
+     "상품 검색 질문 — 상품 검색 창 열림"
+    ],
+    [
+     "state=attach",
+     "첨부 질문"
+    ],
+    [
+     "state=attach-err",
+     "첨부 한도 초과(상품당 5개·20MB)"
+    ],
+    [
+     "state=attach-total",
+     "첨부 한도 초과(전체 20개·100MB)"
+    ],
+    [
+     "state=qty-err",
+     "수량 확인 안내"
+    ],
+    [
+     "state=typing",
+     "상대 입력 중 표시"
+    ],
+    [
+     "state=second",
+     "두 번째 상품"
+    ],
+    [
+     "state=contact",
+     "연락받을 정보 확인"
+    ],
+    [
+     "state=last",
+     "마지막 단계"
+    ],
+    [
+     "state=sending",
+     "접수 중"
+    ],
+    [
+     "state=fail",
+     "접수 실패"
+    ],
+    [
+     "state=done",
+     "접수 완료"
+    ],
+    [
+     "state=from",
+     "상품 상세에서 넘어옴(대화형)"
+    ],
+    [
+     "mode=form",
+     "한 화면 양식"
+    ],
+    [
+     "mode=form&state=noitems",
+     "양식 — 상품 없음"
+    ],
+    [
+     "mode=form&state=err",
+     "양식 — 검사 오류(상품·수량·20MB)"
+    ],
+    [
+     "mode=form&state=err-attach",
+     "양식 — 검사 오류(첨부 한도)"
+    ],
+    [
+     "mode=form&state=err-empty",
+     "양식 — 검사 오류(상품 없음·연락처 비어 있음)"
+    ],
+    [
+     "mode=form&state=from",
+     "양식 — 상품 상세에서 넘어옴"
+    ],
+    [
+     "mode=form&state=pick",
+     "상품 검색 열림·추천 상품"
+    ],
+    [
+     "mode=form&state=pick-ac",
+     "상품 검색 — 자동완성"
+    ],
+    [
+     "mode=form&state=pick-result",
+     "상품 검색 — 검색 결과"
+    ],
+    [
+     "mode=form&state=pick-none",
+     "상품 검색 — 결과 없음"
+    ],
+    [
+     "mode=form&state=pick-busy",
+     "상품 검색 — 찾는 중"
+    ],
+    [
+     "mode=form&state=pick-long",
+     "상품 검색 — 검색어 너무 김"
+    ],
+    [
+     "mode=form&state=pick-fail",
+     "상품 검색 — 불러오기 오류"
+    ],
+    [
+     "mode=form&state=pick-empty",
+     "상품 검색 — 등록된 상품 없음"
+    ],
+    [
+     "state=guest",
+     "비회원 안내"
+    ]
+   ]
+  },
+  {
+   "file": "custom-intro.html",
+   "title": "맞춤작업복 견적문의",
+   "name": "맞춤작업복 견적문의",
+   "group": 4,
+   "type": "form",
+   "shell": "full",
+   "auth": "member",
+   "sections": [
+    "맞춤작업복 견적문의"
+   ],
+   "states": [
+    [
+     "default",
+     "회원(회원 정보로 미리 채움)"
+    ],
+    [
+     "err",
+     "입력 오류"
+    ],
+    [
+     "busy",
+     "접수 중"
+    ],
+    [
+     "done",
+     "접수 완료(문의번호)"
+    ],
+    [
+     "fail",
+     "서버 오류"
+    ],
+    [
+     "guest",
+     "비회원(입력 불가)"
+    ],
+    [
+     "expired",
+     "로그인 풀림"
+    ]
+   ]
+  },
+  {
+   "file": "login.html",
+   "title": "로그인",
+   "name": "로그인",
+   "group": 5,
+   "type": "auth",
+   "shell": "full",
+   "auth": "guest",
+   "sections": [
+    "로그인"
+   ],
+   "states": [
+    [
+     "default",
+     "기본"
+    ],
+    [
+     "empty",
+     "미입력"
+    ],
+    [
+     "mismatch",
+     "아이디·비밀번호 불일치"
+    ],
+    [
+     "locked",
+     "시도 초과"
+    ],
+    [
+     "social-fail",
+     "간편 로그인 실패(기타 오류)"
+    ],
+    [
+     "social-cancel",
+     "간편 로그인 취소"
+    ],
+    [
+     "social-setup",
+     "간편 로그인 설정 미완료"
+    ],
+    [
+     "social-verify",
+     "간편 로그인 보안 검증 실패"
+    ],
+    [
+     "blocked",
+     "이용할 수 없는 계정"
+    ],
+    [
+     "neterr",
+     "통신 오류"
+    ],
+    [
+     "busy",
+     "처리 중"
+    ],
+    [
+     "find",
+     "아이디·비밀번호 찾기 안내"
+    ],
+    [
+     "member",
+     "이미 로그인"
+    ],
+    [
+     "return=cart.html",
+     "보던 페이지가 있을 때"
+    ]
+   ]
+  },
+  {
+   "file": "signup.html",
+   "title": "회원가입",
+   "name": "회원가입 — 회원 유형 선택",
+   "group": 5,
+   "type": "auth",
+   "shell": "full",
+   "auth": "guest",
+   "sections": [
+    "회원가입 — 회원 유형 선택"
+   ],
+   "states": [
+    [
+     "default",
+     "기업 회원 고름"
+    ],
+    [
+     "general",
+     "일반 회원 고름"
+    ],
+    [
+     "social=kakao",
+     "처음 간편 로그인(유형 고르기)"
+    ],
+    [
+     "return=cart.html",
+     "보던 페이지가 있을 때"
+    ]
+   ]
+  },
+  {
+   "file": "signup-general.html",
+   "title": "일반 회원 가입 방법",
+   "name": "회원가입 — 일반 회원 가입 방법 선택",
+   "group": 5,
+   "type": "auth",
+   "shell": "full",
+   "auth": "guest",
+   "sections": [
+    "회원가입 — 일반 회원 가입 방법 선택"
+   ],
+   "states": [
+    [
+     "default",
+     "기본"
+    ]
+   ]
+  },
+  {
+   "file": "signup-business.html",
+   "title": "기업 회원 가입 방법",
+   "name": "회원가입 — 기업 회원 가입 방법 선택",
+   "group": 5,
+   "type": "auth",
+   "shell": "full",
+   "auth": "guest",
+   "sections": [
+    "회원가입 — 기업 회원 가입 방법 선택"
+   ],
+   "states": [
+    [
+     "default",
+     "기본"
+    ]
+   ]
+  },
+  {
+   "file": "signup-general-info.html",
+   "title": "일반 회원 정보 입력",
+   "name": "회원가입 — 일반 회원 정보 입력",
+   "group": 5,
+   "type": "auth",
+   "shell": "full",
+   "auth": "guest",
+   "sections": [
+    "회원가입 — 일반 회원 정보 입력"
+   ],
+   "states": [
+    [
+     "default",
+     "빈 양식"
+    ],
+    [
+     "ok",
+     "확인 완료(중복확인·주소)"
+    ],
+    [
+     "err",
+     "입력 오류(빠진 항목)"
+    ],
+    [
+     "bad",
+     "확인 실패(연결·생년월일·숫자 불일치)"
+    ],
+    [
+     "capexp",
+     "자동등록방지 그림 만료"
+    ],
+    [
+     "caplock",
+     "자동등록방지 시도 초과"
+    ],
+    [
+     "dup",
+     "이미 가입·사용 중"
+    ],
+    [
+     "social",
+     "간편 가입 중(이름·이메일 미리 채움)"
+    ],
+    [
+     "busy",
+     "처리 중"
+    ],
+    [
+     "fail",
+     "가입 실패·통신 오류"
+    ],
+    [
+     "done",
+     "가입 완료"
+    ],
+    [
+     "state=done&return=cart.html",
+     "가입 완료(보던 페이지 있음)"
+    ],
+    [
+     "state=done+social+member&return=cart.html",
+     "가입 완료(간편 가입·자동 로그인)"
+    ]
+   ]
+  },
+  {
+   "file": "signup-business-info.html",
+   "title": "기업 회원 정보 입력",
+   "name": "회원가입 — 기업 회원 정보 입력",
+   "group": 5,
+   "type": "auth",
+   "shell": "full",
+   "auth": "guest",
+   "sections": [
+    "회원가입 — 기업 회원 정보 입력"
+   ],
+   "states": [
+    [
+     "default",
+     "빈 양식"
+    ],
+    [
+     "ok",
+     "확인 완료(중복확인·사업자번호·첨부)"
+    ],
+    [
+     "err",
+     "입력 오류(빠진 항목)"
+    ],
+    [
+     "bad",
+     "확인 실패(연결·무효 번호·용량·숫자 불일치)"
+    ],
+    [
+     "capexp",
+     "자동등록방지 그림 만료"
+    ],
+    [
+     "caplock",
+     "자동등록방지 시도 초과"
+    ],
+    [
+     "dup",
+     "이미 가입·사용 중"
+    ],
+    [
+     "social",
+     "간편 가입 중(이름·이메일 미리 채움)"
+    ],
+    [
+     "busy",
+     "처리 중"
+    ],
+    [
+     "fail",
+     "가입 실패·통신 오류"
+    ],
+    [
+     "done",
+     "가입 완료"
+    ],
+    [
+     "state=done&return=cart.html",
+     "가입 완료(보던 페이지 있음)"
+    ],
+    [
+     "state=done+social+member&return=cart.html",
+     "가입 완료(간편 가입·자동 로그인)"
+    ]
+   ]
+  },
+  {
+   "file": "mypage.html",
+   "title": "마이페이지",
+   "name": "마이페이지",
+   "group": 6,
+   "type": "account",
+   "shell": "full",
+   "auth": "member",
+   "sections": [
+    "마이페이지 — 회원 요약",
+    "마이페이지 — 주문 내역",
+    "마이페이지 — 주문 상세",
+    "마이페이지 — 입금 안내",
+    "마이페이지 — 구매후기",
+    "마이페이지 — 견적문의 내역",
+    "마이페이지 — 안전용품 제작 문의",
+    "마이페이지 — 관심상품",
+    "마이페이지 — 포인트 내역",
+    "마이페이지 — 배송지 관리",
+    "마이페이지 — 회원정보 수정",
+    "마이페이지 — 비밀번호 변경",
+    "마이페이지 — 회원 탈퇴",
+    "관심상품 담기·빼기"
+   ],
+   "states": [
+    [
+     "default",
+     "주문 내역"
+    ],
+    [
+     "section=orders&state=shipping",
+     "단계 골라 보기(배송중)"
+    ],
+    [
+     "section=orders&state=empty",
+     "주문 없음"
+    ],
+    [
+     "section=orders&order=O-20261103-0005",
+     "다른 화면에서 지정한 주문"
+    ],
+    [
+     "section=orders&state=detail",
+     "주문 상세"
+    ],
+    [
+     "section=orders&state=deposit",
+     "입금 안내"
+    ],
+    [
+     "section=orders&state=deposit+nobank",
+     "입금 계좌 미등록"
+    ],
+    [
+     "section=orders&state=review",
+     "후기 쓰기"
+    ],
+    [
+     "section=orders&state=review+review-err",
+     "후기 입력 오류"
+    ],
+    [
+     "section=orders&state=review+review-big",
+     "후기 사진 용량 초과"
+    ],
+    [
+     "section=orders&state=review-done",
+     "후기 등록 완료"
+    ],
+    [
+     "section=orders&state=myreview",
+     "내가 쓴 후기"
+    ],
+    [
+     "section=orders&state=payfail",
+     "결제 불가 안내"
+    ],
+    [
+     "section=orders&state=confirmfail",
+     "구매확정 불가 안내"
+    ],
+    [
+     "section=inquiries",
+     "견적문의 내역"
+    ],
+    [
+     "section=inquiries&state=open",
+     "답변 펼침"
+    ],
+    [
+     "section=inquiries&state=empty",
+     "견적문의 없음"
+    ],
+    [
+     "section=safety",
+     "안전용품 제작 문의"
+    ],
+    [
+     "section=safety&state=empty",
+     "안전용품 문의 없음"
+    ],
+    [
+     "section=wishlist",
+     "관심상품"
+    ],
+    [
+     "section=wishlist&state=empty",
+     "관심상품 없음"
+    ],
+    [
+     "section=wishlist&state=like-fail",
+     "관심상품 빼기 실패"
+    ],
+    [
+     "section=wishlist&state=clear-fail",
+     "관심상품 전체 삭제 실패"
+    ],
+    [
+     "section=points",
+     "포인트 내역"
+    ],
+    [
+     "section=points&state=empty",
+     "포인트 내역 없음"
+    ],
+    [
+     "section=addresses",
+     "배송지 관리"
+    ],
+    [
+     "section=addresses&state=add",
+     "배송지 추가"
+    ],
+    [
+     "section=addresses&state=add+addr-err",
+     "배송지 입력 오류"
+    ],
+    [
+     "section=addresses&state=empty",
+     "배송지 없음"
+    ],
+    [
+     "section=addresses&state=addr-full",
+     "배송지 20개 초과"
+    ],
+    [
+     "section=addresses&state=addr-fail",
+     "배송지 처리 실패"
+    ],
+    [
+     "section=profile",
+     "회원정보 수정(기업)"
+    ],
+    [
+     "section=profile&state=general",
+     "회원정보 수정(일반)"
+    ],
+    [
+     "section=profile&state=err",
+     "회원정보 수정 오류"
+    ],
+    [
+     "section=profile&state=saving",
+     "회원정보 저장 중"
+    ],
+    [
+     "section=profile&state=saved",
+     "회원정보 수정 완료"
+    ],
+    [
+     "section=profile&state=save-fail",
+     "회원정보 통신 오류"
+    ],
+    [
+     "section=password",
+     "비밀번호 변경"
+    ],
+    [
+     "section=password&state=err",
+     "비밀번호 입력 오류"
+    ],
+    [
+     "section=password&state=social",
+     "비밀번호 설정(간편 가입)"
+    ],
+    [
+     "section=password&state=pw-done",
+     "비밀번호 변경 완료"
+    ],
+    [
+     "section=withdraw",
+     "회원 탈퇴"
+    ],
+    [
+     "section=withdraw&state=social",
+     "회원 탈퇴(간편 가입)"
+    ],
+    [
+     "section=withdraw&state=err",
+     "탈퇴 비밀번호 불일치"
+    ],
+    [
+     "section=withdraw&state=social+err",
+     "탈퇴 확인 문구 미입력"
+    ],
+    [
+     "section=withdraw&state=wd-fail",
+     "탈퇴 처리 오류"
+    ],
+    [
+     "section=withdraw&state=wd-done+guest",
+     "탈퇴 완료"
+    ],
+    [
+     "state=nosafety",
+     "안전용품 문의가 없는 회원"
+    ],
+    [
+     "state=guest",
+     "비로그인"
+    ],
+    [
+     "state=guest+blocked",
+     "이용 불가 계정"
+    ]
+   ]
+  },
+  {
+   "file": "draft-preview.html",
+   "title": "시안 확인",
+   "name": "시안확인(주문)",
+   "group": 6,
+   "type": "account",
+   "shell": "bare",
+   "auth": "member",
+   "sections": [
+    "시안확인(주문)"
+   ],
+   "states": [
+    [
+     "default",
+     "시안 + 견적 함께(시안 완료)"
+    ],
+    [
+     "state=draft-only",
+     "시안만 받은 건"
+    ],
+    [
+     "state=single",
+     "품목 하나"
+    ],
+    [
+     "state=memo-empty",
+     "수정 내용 미입력"
+    ],
+    [
+     "state=revised",
+     "수정 요청 보냄"
+    ],
+    [
+     "state=approved",
+     "승인 완료(시안·견적 → 바로 결제 묻기)"
+    ],
+    [
+     "state=approved-draft",
+     "승인 완료(시안만)"
+    ],
+    [
+     "state=changed",
+     "견적 변경(새로 고침 안내)"
+    ],
+    [
+     "state=locked",
+     "승인 불가 상태"
+    ],
+    [
+     "state=nodraft",
+     "등록된 시안 없음"
+    ],
+    [
+     "state=notfound",
+     "찾을 수 없음"
+    ],
+    [
+     "state=invalid",
+     "잘못된 요청"
+    ],
+    [
+     "state=guest",
+     "비로그인"
+    ]
+   ]
+  },
+  {
+   "file": "inquiry-draft.html",
+   "title": "견적문의 시안",
+   "name": "견적문의 시안 보기",
+   "group": 6,
+   "type": "account",
+   "shell": "bare",
+   "auth": "member",
+   "sections": [
+    "견적문의 시안 보기"
+   ],
+   "states": [
+    [
+     "default",
+     "견적문의 시안"
+    ],
+    [
+     "state=custom",
+     "맞춤작업복 시안"
+    ],
+    [
+     "state=empty",
+     "시안 없음"
+    ],
+    [
+     "state=invalid",
+     "잘못된 요청"
+    ]
+   ]
+  },
+  {
+   "file": "customer-center.html",
+   "title": "고객센터",
+   "name": "고객센터 8부분(메뉴·자주 묻는 질문·주문방법·1:1 문의·공지사항)",
+   "group": 7,
+   "type": "board",
+   "shell": "full",
+   "auth": "member",
+   "sections": [
+    "고객센터 — 메뉴·상담 연결",
+    "고객센터 — 자주 묻는 질문",
+    "고객센터 — 주문방법",
+    "고객센터 — 1:1 문의 내역(회원)",
+    "고객센터 — 비회원 1:1 문의 확인",
+    "고객센터 — 1:1 문의 작성",
+    "고객센터 — 공지사항 목록",
+    "고객센터 — 공지사항 상세"
+   ],
+   "states": [
+    [
+     "default",
+     "자주 묻는 질문"
+    ],
+    [
+     "tab=faq&state=noresult",
+     "질문 검색 결과 없음"
+    ],
+    [
+     "tab=faq&state=empty",
+     "등록된 질문 없음"
+    ],
+    [
+     "tab=order-guide",
+     "주문방법(인쇄 있는 주문)"
+    ],
+    [
+     "tab=order-guide&type=noprint",
+     "주문방법(인쇄 없는 주문)"
+    ],
+    [
+     "tab=qna",
+     "1:1 문의 내역(회원)"
+    ],
+    [
+     "tab=qna&state=pending",
+     "답변 전 문의 펼침"
+    ],
+    [
+     "tab=qna&state=done",
+     "방금 접수(회원)"
+    ],
+    [
+     "tab=qna&state=empty",
+     "문의 없음(회원)"
+    ],
+    [
+     "tab=qna&state=guest",
+     "비회원 문의 확인"
+    ],
+    [
+     "tab=qna&state=guest+nofill",
+     "비회원 조회: 미입력"
+    ],
+    [
+     "tab=qna&state=guest+nomatch",
+     "비회원 조회: 불일치"
+    ],
+    [
+     "tab=qna&state=guest+locked",
+     "비회원 조회: 시도 초과"
+    ],
+    [
+     "tab=qna&state=guest+found",
+     "비회원 조회 결과"
+    ],
+    [
+     "tab=qna&state=guest+found+pending",
+     "비회원 조회 결과(답변 전)"
+    ],
+    [
+     "tab=qna&state=guest+none",
+     "비회원 조회 결과(문의 없음)"
+    ],
+    [
+     "tab=qna&state=guest+done",
+     "방금 접수(비회원)"
+    ],
+    [
+     "tab=qna&view=write",
+     "문의 작성(회원)"
+    ],
+    [
+     "tab=qna&view=write&state=guest",
+     "문의 작성(비회원)"
+    ],
+    [
+     "tab=qna&view=write&state=err",
+     "작성 오류(회원: 제목·내용)"
+    ],
+    [
+     "tab=qna&view=write&state=guest+blank",
+     "작성 오류(비회원: 미입력)"
+    ],
+    [
+     "tab=qna&view=write&state=guest+invalid",
+     "작성 오류(비회원: 형식·비밀번호)"
+    ],
+    [
+     "tab=qna&view=write&state=guest+capfail",
+     "작성 오류(자동등록방지 불일치)"
+    ],
+    [
+     "tab=qna&view=write&state=busy",
+     "등록 처리 중"
+    ],
+    [
+     "tab=qna&view=write&state=guest+fail",
+     "등록 실패(비회원)"
+    ],
+    [
+     "tab=qna&view=write&state=noinfo",
+     "회원 정보 확인 불가"
+    ],
+    [
+     "tab=qna&view=write&state=badreq",
+     "잘못된 요청"
+    ],
+    [
+     "tab=notice",
+     "공지사항 목록"
+    ],
+    [
+     "tab=notice&page=2",
+     "공지사항 2쪽"
+    ],
+    [
+     "tab=notice&state=noresult",
+     "공지 검색 결과 없음"
+    ],
+    [
+     "tab=notice&state=empty",
+     "등록된 공지 없음"
+    ],
+    [
+     "tab=notice&id=3",
+     "공지사항 상세"
+    ],
+    [
+     "tab=notice&id=999",
+     "없는 공지(목록으로)"
+    ],
+    [
+     "state=guest+expired",
+     "회원 상태 확인 불가(로그아웃)"
+    ]
+   ]
+  },
+  {
+   "file": "partnership.html",
+   "title": "파트너 제휴",
+   "name": "파트너 제휴",
+   "group": 7,
+   "type": "form",
+   "shell": "full",
+   "auth": "guest",
+   "sections": [
+    "파트너 제휴"
+   ],
+   "states": [
+    [
+     "default",
+     "기본"
+    ],
+    [
+     "done",
+     "접수 완료"
+    ],
+    [
+     "err",
+     "미입력·이메일 형식 오류"
+    ],
+    [
+     "rate",
+     "너무 잦은 요청"
+    ],
+    [
+     "fail",
+     "접수 실패"
+    ]
+   ]
+  },
+  {
+   "file": "delivery-cases.html",
+   "title": "납품사례",
+   "name": "납품사례",
+   "group": 7,
+   "type": "board",
+   "shell": "full",
+   "auth": "member",
+   "sections": [
+    "납품사례"
+   ],
+   "states": [
+    [
+     "default",
+     "기본(첫 업체가 골라짐)"
+    ],
+    [
+     "co=taeseo",
+     "다른 업체를 고름"
+    ],
+    [
+     "co=meister",
+     "설명이 없는 업체"
+    ],
+    [
+     "state=zoom",
+     "사진 크게 보기"
+    ],
+    [
+     "state=empty",
+     "등록된 납품사례 없음"
+    ]
+   ]
+  },
+  {
+   "file": "reviews.html",
+   "title": "구매후기",
+   "name": "구매후기 목록",
+   "group": 7,
+   "type": "board",
+   "shell": "full",
+   "auth": "member",
+   "sections": [
+    "구매후기 목록"
+   ],
+   "states": [
+    [
+     "default",
+     "기본(1쪽)"
+    ],
+    [
+     "page=2",
+     "2쪽(마지막 쪽)"
+    ],
+    [
+     "state=empty",
+     "등록된 후기 없음"
+    ]
+   ]
+  },
+  {
+   "file": "review-view.html",
+   "title": "구매후기 상세",
+   "name": "구매후기 상세",
+   "group": 7,
+   "type": "board",
+   "shell": "full",
+   "auth": "member",
+   "sections": [
+    "구매후기 상세"
+   ],
+   "states": [
+    [
+     "default",
+     "기본(사진 여러 장)"
+    ],
+    [
+     "id=maeil",
+     "사진 한 장인 후기"
+    ],
+    [
+     "state=notfound",
+     "후기를 찾을 수 없음"
+    ]
+   ]
+  },
+  {
+   "file": "event.html",
+   "title": "이벤트",
+   "name": "이벤트 목록",
+   "group": 7,
+   "type": "board",
+   "shell": "full",
+   "auth": "member",
+   "sections": [
+    "이벤트 목록"
+   ],
+   "states": [
+    [
+     "default",
+     "기본"
+    ],
+    [
+     "state=empty",
+     "진행 중인 이벤트 없음"
+    ]
+   ]
+  },
+  {
+   "file": "event-view.html",
+   "title": "이벤트 상세",
+   "name": "이벤트 상세",
+   "group": 7,
+   "type": "board",
+   "shell": "full",
+   "auth": "member",
+   "sections": [
+    "이벤트 상세"
+   ],
+   "states": [
+    [
+     "default",
+     "기본(세로 이미지)"
+    ],
+    [
+     "id=2",
+     "가로 이미지 이벤트"
+    ],
+    [
+     "state=notfound",
+     "이벤트를 찾을 수 없음"
+    ]
+   ]
+  },
+  {
+   "file": "terms.html",
+   "title": "이용약관",
+   "name": "이용약관",
+   "group": 8,
+   "type": "doc",
+   "shell": "full",
+   "auth": "member",
+   "sections": [
+    "이용약관"
+   ],
+   "states": [
+    [
+     "default",
+     "기본"
+    ],
+    [
+     "state=empty",
+     "등록된 내용 없음"
+    ]
+   ]
+  },
+  {
+   "file": "privacy.html",
+   "title": "개인정보처리방침",
+   "name": "개인정보처리방침",
+   "group": 8,
+   "type": "doc",
+   "shell": "full",
+   "auth": "member",
+   "sections": [
+    "개인정보처리방침"
+   ],
+   "states": [
+    [
+     "default",
+     "항목별 문서"
+    ],
+    [
+     "state=old",
+     "이전 방침 보기"
+    ],
+    [
+     "state=custom",
+     "운영자가 직접 쓴 글"
+    ],
+    [
+     "state=empty",
+     "내용 없음(직접 쓴 글이 비었을 때)"
+    ],
+    [
+     "state=fail",
+     "불러오기 실패"
+    ],
+    [
+     "state=ck-set",
+     "방문 기록 설정 바꾸기를 누른 뒤"
+    ]
+   ]
+  },
+  {
+   "file": "guest-privacy.html",
+   "title": "비회원 개인정보처리방침",
+   "name": "비회원 개인정보처리방침",
+   "group": 8,
+   "type": "doc",
+   "shell": "full",
+   "auth": "member",
+   "sections": [
+    "비회원 개인정보처리방침"
+   ],
+   "states": [
+    [
+     "default",
+     "기본"
+    ],
+    [
+     "state=old",
+     "이전 방침 보기"
+    ],
+    [
+     "state=custom",
+     "관리자가 직접 쓴 글"
+    ],
+    [
+     "state=empty",
+     "내용 없음(직접 쓴 글이 비었을 때)"
+    ],
+    [
+     "state=fail",
+     "불러오기 실패"
+    ]
+   ]
+  },
+  {
+   "file": "refund-policy.html",
+   "title": "취소/환불 정책",
+   "name": "취소/환불 정책",
+   "group": 8,
+   "type": "doc",
+   "shell": "full",
+   "auth": "member",
+   "sections": [
+    "취소/환불 정책"
+   ],
+   "states": [
+    [
+     "default",
+     "기본"
+    ],
+    [
+     "state=empty",
+     "등록된 내용 없음"
+    ]
+   ]
+  },
+  {
+   "file": "quote-preview.html",
+   "title": "견적서 미리보기",
+   "name": "견적서 미리보기",
+   "group": 8,
+   "type": "doc",
+   "shell": "bare",
+   "auth": "member",
+   "sections": [
+    "견적서 미리보기"
+   ],
+   "states": [
+    [
+     "default",
+     "기본(견적 요청 가능)"
+    ],
+    [
+     "state=readonly",
+     "보기 전용(대화형 입력에서 엶)"
+    ],
+    [
+     "state=loading",
+     "불러오는 중"
+    ],
+    [
+     "state=closed",
+     "견적문의 화면 없음(다시 열기 안내)"
+    ],
+    [
+     "state=busy",
+     "접수 중"
+    ],
+    [
+     "state=fail",
+     "접수 실패"
+    ],
+    [
+     "state=done",
+     "접수 완료"
+    ]
+   ]
+  },
+  {
+   "file": "quote-document.html",
+   "title": "견적서",
+   "name": "견적문의 견적서",
+   "group": 8,
+   "type": "doc",
+   "shell": "bare",
+   "auth": "member",
+   "sections": [
+    "견적문의 견적서"
+   ],
+   "states": [
+    [
+     "default",
+     "기본"
+    ],
+    [
+     "state=mail",
+     "메일 링크로 열림(자동 다운로드)"
+    ],
+    [
+     "state=preparing",
+     "다운로드 준비 중"
+    ],
+    [
+     "state=dlfail",
+     "다운로드 오류"
+    ],
+    [
+     "state=notfound",
+     "찾을 수 없음"
+    ],
+    [
+     "state=invalid",
+     "잘못된 요청"
+    ],
+    [
+     "state=guest",
+     "비로그인(로그인으로 이동)"
+    ]
+   ]
+  },
+  {
+   "file": "quote-request-document.html",
+   "title": "주문 견적서",
+   "name": "주문 견적서",
+   "group": 8,
+   "type": "doc",
+   "shell": "bare",
+   "auth": "member",
+   "sections": [
+    "주문 견적서"
+   ],
+   "states": [
+    [
+     "default",
+     "기본"
+    ],
+    [
+     "state=legacy",
+     "예전 건(색상 · 견적 금액)"
+    ],
+    [
+     "state=mail",
+     "메일 링크로 열림(자동 다운로드)"
+    ],
+    [
+     "state=preparing",
+     "다운로드 준비 중"
+    ],
+    [
+     "state=dlfail",
+     "다운로드 오류"
+    ],
+    [
+     "state=empty",
+     "항목 없음"
+    ],
+    [
+     "state=notfound",
+     "찾을 수 없음"
+    ],
+    [
+     "state=invalid",
+     "잘못된 요청"
+    ],
+    [
+     "state=guest",
+     "비로그인(로그인으로 이동)"
+    ]
+   ]
+  },
+  {
+   "file": "custom-quote-preview.html",
+   "title": "맞춤작업복 견적서 미리보기",
+   "name": "맞춤작업복 견적서 미리보기",
+   "group": 8,
+   "type": "doc",
+   "shell": "bare",
+   "auth": "member",
+   "sections": [
+    "맞춤작업복 견적서 미리보기"
+   ],
+   "states": [
+    [
+     "default",
+     "기본(견적 요청 가능)"
+    ],
+    [
+     "state=readonly",
+     "보기 전용"
+    ],
+    [
+     "state=loading",
+     "불러오는 중"
+    ],
+    [
+     "state=closed",
+     "다시 열기 안내(견적 요청 불가)"
+    ]
+   ]
+  },
+  {
+   "file": "custom-quote-document.html",
+   "title": "맞춤작업복 견적서",
+   "name": "맞춤작업복 견적서",
+   "group": 8,
+   "type": "doc",
+   "shell": "bare",
+   "auth": "member",
+   "sections": [
+    "맞춤작업복 견적서"
+   ],
+   "states": [
+    [
+     "default",
+     "기본"
+    ],
+    [
+     "state=mail",
+     "메일 링크로 열림(자동 다운로드)"
+    ],
+    [
+     "state=preparing",
+     "다운로드 준비 중"
+    ],
+    [
+     "state=dlfail",
+     "다운로드 오류"
+    ],
+    [
+     "state=notfound",
+     "찾을 수 없음"
+    ],
+    [
+     "state=invalid",
+     "잘못된 요청"
+    ],
+    [
+     "state=guest",
+     "비로그인(로그인으로 이동)"
+    ]
+   ]
+  },
+  {
+   "file": "safety-quote-preview.html",
+   "title": "안전용품 견적서 미리보기",
+   "name": "안전용품 견적서 미리보기",
+   "group": 8,
+   "type": "doc",
+   "shell": "bare",
+   "auth": "member",
+   "sections": [
+    "안전용품 견적서 미리보기"
+   ],
+   "states": [
+    [
+     "default",
+     "기본(견적 요청 가능)"
+    ],
+    [
+     "state=loading",
+     "불러오는 중"
+    ],
+    [
+     "state=closed",
+     "다시 열기 안내(견적 요청 불가)"
+    ]
+   ]
+  },
+  {
+   "file": "safety-quote-document.html",
+   "title": "안전용품 견적서",
+   "name": "안전용품 견적서",
+   "group": 8,
+   "type": "doc",
+   "shell": "bare",
+   "auth": "member",
+   "sections": [
+    "안전용품 견적서"
+   ],
+   "states": [
+    [
+     "default",
+     "기본"
+    ],
+    [
+     "state=mail",
+     "메일 링크로 열림(자동 다운로드)"
+    ],
+    [
+     "state=preparing",
+     "다운로드 준비 중"
+    ],
+    [
+     "state=dlfail",
+     "다운로드 오류"
+    ],
+    [
+     "state=notfound",
+     "찾을 수 없음"
+    ],
+    [
+     "state=invalid",
+     "잘못된 요청"
+    ],
+    [
+     "state=guest",
+     "비로그인(로그인으로 이동)"
+    ]
+   ]
+  },
+  {
    "file": "unsubscribe.html",
    "title": "광고 수신거부",
    "name": "광고 수신거부",
@@ -215,6 +2076,10 @@
      "문자 수신거부 확정 요청"
     ],
     [
+     "busy",
+     "처리 중"
+    ],
+    [
      "done",
      "수신거부 완료"
     ],
@@ -225,6 +2090,60 @@
     [
      "error",
      "처리 오류"
+    ]
+   ]
+  },
+  {
+   "file": "order-now.html",
+   "title": "주문 정보 입력",
+   "name": "주문 정보 입력 후 접수",
+   "group": 8,
+   "type": "cart",
+   "shell": "full",
+   "auth": "member",
+   "sections": [
+    "주문 정보 입력 후 접수"
+   ],
+   "states": [
+    [
+     "default",
+     "기본"
+    ],
+    [
+     "state=nobase",
+     "대표주소 없음"
+    ],
+    [
+     "state=err",
+     "필수 미입력·동의 미선택"
+    ],
+    [
+     "state=zipfail",
+     "주소 검색 실패"
+    ],
+    [
+     "state=detail",
+     "자세히 보기 열림"
+    ],
+    [
+     "state=busy",
+     "접수 중"
+    ],
+    [
+     "state=done",
+     "접수 완료"
+    ],
+    [
+     "state=fail",
+     "접수 실패"
+    ],
+    [
+     "state=noitem",
+     "접수할 상품 없음"
+    ],
+    [
+     "state=guest",
+     "비로그인"
     ]
    ]
   }

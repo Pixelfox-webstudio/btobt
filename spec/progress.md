@@ -2,24 +2,19 @@
 
 대화가 길어져 앞 내용이 요약되면 이 파일, `spec/coverage.json`, `git log`를 다시 읽고 이어 간다. 작업 지시는 `spec/subpage-design-prompt.md`.
 
-## 끝난 것 (2026-11-17 11:40 기준)
-- 0~1단계: 홈 캡처(`review/home/`), `spec/plan.md`, `spec/coverage.json`(요소 1,287줄), 작업 기반(빌드·점검·상태·요소 대조 도구).
-- 2단계 레퍼런스: 8개 유형 캡처 + `notes.md` 전부. 결정 문서 13개(`research/decisions/`).
-- 3~4단계 페이지: 작업자 12명이 과제별로 나눠 만들고(워크플로 `b2bt-subpages-build-v2.js`, 1부 run `wf_ef4464df-85b`, 2부 run `wf_ce06df49-ac5`), 독립 검수자가 5항목을 0~1000점으로 매겨 800 미만을 고친다. 점수는 `review/scores/<과제>.json`, 표는 `python3 tools/scores.py` → `review/scores.md`.
-  - 끝나고 커밋: 상품 목록·수신거부(list), 주문 완료·카드 결제 처리(result), 시안확인(draft), 견적서 7종(quotedoc).
-  - 고치는 중: 맞춤작업복·파트너 제휴(custom), 약관(policy), 후기·이벤트·납품사례(content).
-  - 만드는 중(오전 한도로 끊겨 이어서): product, cart, quote, auth, center, mypage. 각자 `spec/agents/<과제>.md`에 진행 메모.
-- 공용 고침(11:30): `js/sub.js` data-pop 클릭 버그, `.stab`을 알약 탭으로, 오류 알림 검정, 누르는 칸 44px, 13.5px 정리. `spec/agent-brief.md` 0절에 알림.
-- 마무리 도구: `tools/guide_shots.py`(주문방법 화면 예시 다시 찍기), `tools/golden.py`(대표 페이지 모음), `tools/scores.py`(점수표), `tools/watch_guard.sh`(공용 파일 감시).
-- DESIGN.md 재작성 초안: 스크래치패드 `design-shell.md`(Page Shell) · `design-sub.md`(Subpage Components) · `design-table.md`(페이지 유형별 조립법).
+## 끝난 것 (2026-11-17 13:30 기준, 작업 지시 1~5단계 모두)
+- 하위 페이지 40개 · 상태 384개(+ 부품 견본 `kit.html`). 전체 목록과 상태 링크는 `pages.html`.
+- 레퍼런스 8개 유형 캡처·기록(`research/refs/`), 구조 결정 문서 13개(`research/decisions/`).
+- 점검: `python3 tools/check.py pages`(Chromium 1440·1024·768·390 + WebKit 1710·390, 2,300여 회 렌더링) 실패 0 · `python3 tools/check.py coverage` 1,287항목 중 완료 1,280 · 해당 없음 7 · 남음 0 · `python3 tools/clash.py` 홈과 겹침 0 · `npx @google/design.md lint DESIGN.md` 오류 0.
+- 독립 검수 13묶음 평균 883점, 800점 미만 0(`review/scores.md`).
+- `DESIGN.md` Page Shell · Subpage Components · 페이지 유형별 조립법 · 점검 항목 · 원본 위치를 실제 결과로 다시 씀.
+- 주문방법 화면 예시(`img/guide/`)를 실제 페이지로 다시 찍음, 대표 페이지 모음 `review/golden.html`.
+- 사장님 확인 항목 `spec/questions.md`(사이트 전체 18개 + 페이지별).
 
-## 다음 할 것 (순서대로)
-1. 두 빌드 워크플로가 끝나면 과제별 커밋(파일 목록은 스크래치패드 `files_for.py <과제>`)
-2. `python3 tools/build.py` → `python3 tools/check.py pages`(전체) · `python3 tools/check.py coverage` → 실패 0까지 고침, `tools/clash.py` 0
-3. 남은 800 미만 지적 고침 → `python3 tools/guide_shots.py` → `python3 tools/golden.py`
-4. DESIGN.md: Page Shell · Subpage Components · 페이지 유형별 조립법을 초안으로 바꾸고 `npx @google/design.md lint DESIGN.md`
-5. `spec/questions/*.md` → `spec/questions.md` "페이지별", 작업자 보고의 공용 요청(baseNeeds)·홈 반영 요청(homeNeeds) 정리
-6. `python3 tools/scores.py`, 이 파일 갱신, 최종 보고
+## 남은 것 (이번 작업 범위 밖)
+- 홈 시안에 넣어야 할 것: `spec/questions.md` 2번·16번(공통 요소, 후기 링크, 후기 자료 값). 작업 지시대로 홈 파일은 고치지 않았다.
+- 실제 자료로 바꿀 것: `data-sample`(견본 값), `data-slot`(사진 자리), 외부 서비스(우편번호·결제·택배 조회).
+- `printing.php`·`guide-logo.php`는 요소 목록이 없어 만들지 않았다.
 
 ## 만드는 방법 (알아 둘 것)
 - **페이지는 조각으로 쓴다.** `tools/pages/<이름>.html` 첫머리에 `<!--{ JSON }-->`(title · desc · name · group · type · shell · nocs · auth · scripts · states), 그 아래 `<main>` 안 내용, `<!--@after-->` 아래 팝업. `python3 tools/build.py`가 `index.html`의 헤더·서랍·푸터·하단 상담 바를 잘라 붙여 `<이름>.html`을 만들고, `css/sub.css`(`tools/css/*.css`를 이름순으로 이어 붙임), `spec/pages.json`, `pages.html`을 같이 만든다. **루트의 html과 `css/sub.css`는 직접 고치지 않는다.**
