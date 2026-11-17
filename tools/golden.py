@@ -91,7 +91,7 @@ figure img{display:block;width:auto;max-height:900px;border-radius:12px;box-shad
 figcaption{margin-top:6px;font-size:12.5px;color:var(--fg3)}
 </style></head><body>
 <header><h1>대표 페이지 캡처 모음</h1>
-<p>유형마다 대표 페이지 하나의 기본 화면을 네 폭으로 찍었습니다(위에서부터 최대 %dpx). 그림을 누르면 크게 열립니다. 상태별 화면은 <a href="../pages.html">검수 목록</a>에서 하나씩 볼 수 있습니다.</p></header>
+<p>유형마다 대표 페이지 하나의 기본 화면을 네 폭으로 찍었습니다(위에서부터 최대 %dpx). 그림을 누르면 크게 열립니다. 화면 아래에 붙는 띠(폰 상담 바, 상품의 따라오는 바, 주문 요약 띠)는 전체 길이로 찍은 그림이라 첫 화면 아래쪽 자리에 찍혀 있습니다. 상태별 화면은 <a href="../pages.html">검수 목록</a>에서 하나씩 볼 수 있습니다.</p></header>
 %s
 </body></html>
 ''' % (MAX_H, '\n'.join(rows))
