@@ -1,0 +1,152 @@
+<!--{"title": "맞춤작업복 견적서", "desc": "비투비티가 보낸 맞춤작업복 견적서입니다. 품목별 사이즈 수량·단가·금액, 공통 요청 사항과 합계를 확인하고 이미지 파일로 내려받습니다.", "name": "맞춤작업복 견적서", "group": 8, "order": 14, "type": "doc", "shell": "bare", "win": true,
+ "sections": ["맞춤작업복 견적서"], "scripts": ["js/sub-quotedoc.js"],
+ "states": [["default", "기본"], ["state=mail", "메일 링크로 열림(자동 다운로드)"], ["state=preparing", "다운로드 준비 중"], ["state=dlfail", "다운로드 오류"], ["state=notfound", "찾을 수 없음"], ["state=invalid", "잘못된 요청"], ["state=guest", "비로그인(로그인으로 이동)"]]}-->
+<header class="win__bar">
+  <a class="win__logo" href="#" data-href="index.php"><img src="img/b2bt-v2-h56.png" srcset="img/b2bt-v2-h56.png 1x, img/b2bt-v2-h112.png 2x" width="107" height="30" alt="비투비티"></a>
+  <h1 class="win__name">맞춤작업복 견적서</h1>
+  <div class="win__acts">
+    <button type="button" class="sb sb--gray sb--m" data-win-close data-el="L844">닫기</button>
+    <button type="button" class="sb sb--ink sb--m" data-qd-dl="견적서_C-20261109-0004.png" data-busy-st="preparing" data-st-not="notfound invalid guest" data-el="L845"><i class="i i-download i--16" aria-hidden="true"></i><span class="qd-bl">견적서 다운로드</span><span class="qd-bb">준비 중</span></button>
+  </div>
+</header>
+<div class="win__body">
+  <div class="wrap">
+    <div class="qd-wrap">
+      <p class="msg msg--ok" data-st="mail" data-el="L845"><i class="i i-download" aria-hidden="true"></i><span>메일 링크로 열어 견적서 이미지를 바로 내려받습니다. 파일이 저장되지 않았다면 <b>견적서 다운로드</b>를 다시 눌러 주세요.</span></p>
+      <p class="qd-flag" id="qdPrep" data-st="preparing" role="status" data-el="L851"><span class="qd-spin" aria-hidden="true"></span><span>견적서 이미지를 만드는 중입니다. 잠시만 기다려 주세요.</span></p>
+      <p class="msg msg--err" id="qdDlFail" data-st="dlfail" role="alert" data-el="L851"><i class="i i-alert" aria-hidden="true"></i><span>견적서를 내려받지 못했습니다. 잠시 후 <b>견적서 다운로드</b>를 다시 눌러 주세요. 계속 안 되면 고객센터(0507-1378-6094)로 연락해 주세요.</span></p>
+      <i hidden data-toast-st="dlfail" data-toast="견적서를 내려받지 못했습니다. 잠시 후 다시 시도해 주세요." data-toast-err></i>
+
+      <article class="qd" aria-labelledby="qdT" data-st-not="notfound invalid guest">
+        <header class="qd__top">
+          <h2 class="qd__t" id="qdT" data-el="L836"><span>견적서</span></h2>
+          <p class="qd__no">맞춤작업복 · 문의번호 <b class="num" data-sample>C-20261109-0004</b></p>
+        </header>
+
+        <div class="qd__head">
+          <section class="qd-to" aria-label="수신" data-el="L837">
+            <p class="qd__k">수신</p>
+            <p class="qd-to__n" data-sample>한결산업 주식회사 <small>귀중</small></p>
+            <dl class="qd-dl" data-sample>
+              <div><dt>담당자</dt><dd>김민준</dd></div>
+              <div><dt>연락처</dt><dd class="num">010-1234-5678</dd></div>
+              <div><dt>견적일자</dt><dd class="num">2026-11-11</dd></div>
+              <div><dt>유효기간</dt><dd><span class="num">2026-11-26</span>까지<small>견적일로부터 15일</small></dd></div>
+            </dl>
+          </section>
+          <div class="qd-amt" data-el="L837">
+            <p class="qd-amt__k">견적금액<small>부가세 포함</small></p>
+            <p class="qd-amt__v num" data-sample>14,300,000원</p>
+          </div>
+          <section class="qd-from" aria-label="공급자" data-el="L838">
+            <div class="qd-from__top"><p class="qd__k">공급자</p><img class="qd-from__logo" src="img/b2bt-v2-h56.png" srcset="img/b2bt-v2-h56.png 1x, img/b2bt-v2-h112.png 2x" width="107" height="30" alt="비투비티"></div>
+            <dl class="qd-dl">
+              <div><dt>상호</dt><dd>주식회사 노을상사</dd></div>
+              <div class="qd-from__ceo"><dt>대표이사</dt><dd>고도혁<span class="qd-seal" data-slot="company-seal" role="img" aria-label="대표 직인">직인</span></dd></div>
+              <div><dt>사업자등록번호</dt><dd class="num">885-87-03544</dd></div>
+              <div><dt>주소</dt><dd>부산광역시 해운대구 반여로 96</dd></div>
+              <div><dt>전화</dt><dd class="num"><a href="tel:050713786094">0507-1378-6094</a></dd></div>
+              <div><dt>사이트</dt><dd data-sample>noeul.shop</dd></div>
+            </dl>
+          </section>
+        </div>
+
+        <section class="qd-sec" aria-labelledby="qdItemsT">
+          <div class="qd-sec__h"><h3 class="qd-sec__t" id="qdItemsT">견적 품목 <small>2건 · 240장</small></h3><p class="qd-sec__u">품목 금액은 부가세 별도입니다.</p></div>
+          <table class="qd-items" data-el="L839">
+            <thead><tr><th class="qd-items__no" scope="col">번호</th><th scope="col">품목 정보</th><th class="qd-items__qty r" scope="col">수량</th><th class="qd-items__unit r" scope="col">단가</th><th class="qd-items__amt r" scope="col">금액</th></tr></thead>
+            <tbody data-sample>
+              <tr>
+                <td class="qd-items__no num">1</td>
+                <td class="qd-items__info">
+                  <p class="qd-it__n">맞춤 동계 작업 점퍼</p>
+                  <dl class="qd-spec">
+                    <div><dt>옵션</dt><dd>네이비·그레이 배색 / 생활 방수 원단</dd></div>
+                    <div><dt>사이즈별 수량</dt><dd class="qd-sz"><span>M<b>20</b></span><span>L<b>40</b></span><span>XL<b>40</b></span><span>2XL<b>20</b></span></dd></div>
+                    <div><dt>인쇄</dt><dd><span class="stag stag--ink">인쇄 있음</span></dd></div>
+                    <div><dt>포장</dt><dd>개별 폴리백</dd></div>
+                  </dl>
+                </td>
+                <td class="qd-items__qty r num" data-th="수량">120장</td>
+                <td class="qd-items__unit r num" data-th="단가">68,000원</td>
+                <td class="qd-items__amt r num" data-th="금액">8,160,000원</td>
+              </tr>
+              <tr>
+                <td class="qd-items__no num">2</td>
+                <td class="qd-items__info">
+                  <p class="qd-it__n">맞춤 동계 작업 바지</p>
+                  <dl class="qd-spec">
+                    <div><dt>옵션</dt><dd>네이비 / 무릎 보강</dd></div>
+                    <div><dt>사이즈별 수량</dt><dd class="qd-sz"><span>M<b>20</b></span><span>L<b>40</b></span><span>XL<b>40</b></span><span>2XL<b>20</b></span></dd></div>
+                  </dl>
+                </td>
+                <td class="qd-items__qty r num" data-th="수량">120장</td>
+                <td class="qd-items__unit r num" data-th="단가">42,000원</td>
+                <td class="qd-items__amt r num" data-th="금액">5,040,000원</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <div class="qd__foot">
+          <section class="qd-more" aria-labelledby="qdMoreT" data-el="L840">
+            <h3 class="qd-more__t" id="qdMoreT">공통 항목</h3>
+            <dl class="qd-dl" data-sample>
+              <div><dt>샘플 제공</dt><dd>가능</dd></div>
+              <div><dt>희망 납기일</dt><dd class="num">2026-12-18</dd></div>
+              <div><dt>기타 요청</dt><dd>가슴 왼쪽에 회사 로고 자수, 등판에 회사명 인쇄를 원합니다. 원단은 생활 방수가 되는 것으로 제안해 주세요.</dd></div>
+              <div><dt>디자인 파일</dt><dd><ul class="qd-files"><li><i class="i i-clip i--14" aria-hidden="true"></i><span>한결산업_로고.ai</span></li><li><i class="i i-clip i--14" aria-hidden="true"></i><span>작업복_디자인_시안.pdf</span></li></ul></dd></div>
+            </dl>
+          </section>
+          <div class="qd-sumbox" data-el="L841">
+            <dl class="qd-sum" data-sample>
+              <div><dt>공급가액</dt><dd class="num">13,200,000원</dd></div>
+              <div><dt>부가세 10%</dt><dd class="num">1,320,000원</dd></div>
+              <div><dt>품목 합계 + 부가세</dt><dd class="num">14,520,000원</dd></div>
+              <div class="qd-sum__total"><dt>총 합계<small>담당자 조정 금액</small></dt><dd class="num">14,300,000원</dd></div>
+            </dl>
+            <p class="qd-sum__note">총 합계는 담당자가 정한 최종 금액입니다(부가세 포함).</p>
+          </div>
+        </div>
+      </article>
+      <p class="qd-view" data-st-not="notfound invalid guest" data-el="L848"><i class="i i-info i--16" aria-hidden="true"></i><span>견적을 보낸 문의만 열람할 수 있습니다. 메일로 받은 링크로 열거나, 로그인한 본인의 문의만 볼 수 있습니다.</span></p>
+
+      <div class="qd qd--gate" data-st="notfound" data-el="L850">
+        <div class="gate">
+          <span class="smark smark--gray"><i class="i i-doc" aria-hidden="true"></i></span>
+          <h2 class="gate__t">견적서를 찾을 수 없습니다</h2>
+          <p class="gate__d">견적이 아직 발송되지 않았거나 지워진 문의입니다. 견적문의 내역에서 진행 상태를 확인해 주세요.</p>
+          <div class="gate__box"><dl class="dl">
+            <div><dt>고객센터</dt><dd><a class="num" href="tel:050713786094"><b>0507-1378-6094</b></a></dd></div>
+            <div><dt>상담 시간</dt><dd>주중 10시~18시 (점심 12시~13시 / 주말·공휴일 제외)</dd></div>
+          </dl></div>
+          <div class="acts"><a class="sb sb--ink" href="#" data-href="mypage.php?section=inquiries">견적문의 내역</a></div>
+        </div>
+      </div>
+      <div class="qd qd--gate" data-st="invalid">
+        <div class="gate">
+          <span class="smark smark--red"><i class="i i-alert" aria-hidden="true"></i></span>
+          <h2 class="gate__t">잘못된 요청입니다</h2>
+          <p class="gate__d">견적서 주소가 올바르지 않습니다. 메일에 있는 링크를 다시 누르거나, 로그인한 뒤 견적문의 내역에서 열어 주세요.</p>
+          <div class="gate__box"><dl class="dl">
+            <div><dt>고객센터</dt><dd><a class="num" href="tel:050713786094"><b>0507-1378-6094</b></a></dd></div>
+            <div><dt>상담 시간</dt><dd>주중 10시~18시 (점심 12시~13시 / 주말·공휴일 제외)</dd></div>
+          </dl></div>
+          <div class="acts"><a class="sb sb--ink" href="#" data-href="mypage.php?section=inquiries">견적문의 내역</a></div>
+        </div>
+      </div>
+      <div class="qd qd--gate" data-st="guest" data-el="L849">
+        <div class="gate">
+          <span class="smark smark--gray"><i class="i i-lock" aria-hidden="true"></i></span>
+          <h2 class="gate__t">로그인이 필요합니다</h2>
+          <p class="gate__d">견적서는 문의한 본인만 볼 수 있습니다. 로그인하면 이 견적서로 돌아옵니다.</p>
+          <div class="acts"><a class="sb sb--ink" href="#" data-href="login.php?return=custom-quote-document.php">로그인</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="win__foot">
+  <button type="button" class="sb sb--gray" data-win-close>닫기</button>
+  <button type="button" class="sb sb--ink qd-main" data-qd-dl="견적서_C-20261109-0004.png" data-busy-st="preparing" data-st-not="notfound invalid guest"><i class="i i-download i--16" aria-hidden="true"></i><span class="qd-bl">견적서 다운로드</span><span class="qd-bb">준비 중</span></button>
+</div>

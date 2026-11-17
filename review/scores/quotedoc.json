@@ -1,0 +1,44 @@
+{
+  "rounds": [
+    {
+      "key": "quotedoc",
+      "date": "2026-11-17",
+      "scores": {
+        "elements": 950,
+        "states": 930,
+        "design": 890,
+        "consistency": 880,
+        "layout": 910
+      },
+      "checkPagesFailed": 0,
+      "elsMissing": 0,
+      "findings": [
+        {
+          "item": "design",
+          "page": "quote-document, quote-request-document, custom-quote-document, safety-quote-document, quote-preview",
+          "state": "dlfail / fail",
+          "problem": "오류 토스트 바탕색 #B80016 이 DESIGN.md 토큰에 없다. DESIGN.md 의 오류색은 #D10019 하나뿐이다.",
+          "evidence": "review/sheets/quote-document-pc-2.png 왼쪽(dlfail) 1번 품목 줄 위의 빨간 토스트, review/sheets/quote-preview-pc-2.png 오른쪽(fail) 같은 위치. 원인은 css/sub.css 258행 .subp .sub-toast--err{background:#B80016}",
+          "fix": "#D10019(오류색)로 바꾸거나, 이 색을 쓸 거라면 DESIGN.md 색 표에 오류 토스트 토큰으로 추가한다."
+        },
+        {
+          "item": "states",
+          "page": "quote-document, quote-request-document, custom-quote-document, safety-quote-document, quote-preview",
+          "state": "dlfail / fail",
+          "problem": "실패 하나에 같은 내용의 안내가 두 번 나온다(위쪽 빨간 안내 띠 + 빨간 토스트).",
+          "evidence": "review/sheets/quote-document-pc-2.png 왼쪽 위 띠 '견적서를 내려받지 못했습니다… 다시 눌러 주세요' + 가운데 토스트 '견적서를 내려받지 못했습니다. 잠시 후 다시 시도해 주세요.', review/sheets/custom-quote-document-m-1.png dlfail 칸, review/sheets/quote-preview-m-1.png fail 칸도 같다.",
+          "fix": "고객센터 번호가 있는 위쪽 안내 띠만 남기고 토스트는 빼거나, 토스트만 남기고 띠를 뺀다. 다섯 페이지 모두 같은 방식으로 맞춘다."
+        },
+        {
+          "item": "consistency",
+          "page": "safety-quote-preview",
+          "state": "closed",
+          "problem": "안내 문구는 '안전용품 제작 문의 화면에서 다시 열어 주세요'인데 버튼은 '안전용품 문의 내역'이다. 같은 상태에서 견적서 미리보기는 '견적문의 화면 열기'라서 버튼 뜻이 서로 다르다.",
+          "evidence": "review/sheets/safety-quote-preview-pc-1.png 오른쪽(closed) 카드 가운데 검은 버튼, review/sheets/safety-quote-preview-m-1.png 오른쪽 칸. 비교: review/sheets/quote-preview-pc-2.png 왼쪽(closed) '견적문의 화면 열기'.",
+          "fix": "버튼을 '안전용품 제작 문의 화면 열기'로 바꾸고 문의 작성 화면으로 연결해 견적서 미리보기와 같은 흐름으로 맞춘다."
+        }
+      ],
+      "notes": "화면 점검: 페이지 7 · 상태 44 · 렌더링 264회 · 실패 0. 요소 점검: 절 7 · 항목 83 · 빠짐 0 · 선택자 문제 0. 상태(불러오는 중, 다시 열어 달라는 안내, 접수 중, 접수 실패, 접수 완료, 보기 전용, 메일 링크, 다운로드 준비 중, 다운로드 오류, 찾을 수 없음, 잘못된 요청, 비로그인, 항목 없음, 예전 건)는 모두 볼 수 있다. 그림자·이모지·영문 라벨은 없고, 버튼은 모두 알약 모양이며 파란 버튼은 미리보기의 '견적 요청' 하나뿐이다. 직인 칸은 data-slot 이라 문제로 보지 않았다."
+    }
+  ]
+}
