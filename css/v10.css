@@ -403,6 +403,9 @@ html.v4-motion .rkh:not(.is-in) .rkh__mark svg{transform:translateY(6px) rotate(
 .v10 .cg--w .cgs__v{font-size:16px;font-weight:700;letter-spacing:.02em}
 .v10 .cg--w .cgs__h b{font-weight:700;letter-spacing:-.03em}
 .v10 .cg--w .cg__note{margin-top:10px;font-size:12px;line-height:18px;color:#9A979E}
+/* 계절 카드 4개: 고른 카드 비율을 줄여(5.4 → 3.2) 좁은 카드도 사진이 보이게. 좁은 카드 이름(영문)은 글자를 세우지 않고 줄 전체를 90도 돌린다 */
+.v10 .cg--w .cg__row--4 .cgs.is-on{flex-grow:3.2}
+.v10 .cg--w .cg__row--4 .cgs__v{bottom:26px;writing-mode:vertical-rl;text-orientation:sideways;font-size:20px;font-weight:700;letter-spacing:.04em;line-height:1}
 @media (max-width:900px){
   .v10 .cg--w .cg__row{align-items:flex-start}   /* 가로 줄 + aspect-ratio 카드: 늘이기(stretch)를 쓰지 않는다(Safari) */
 }
