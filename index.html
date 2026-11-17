@@ -222,6 +222,29 @@ if(!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('v4-
     </div>
   </section>
 
+  <!-- 5-1. 품목별 보기 (v8에서 가져옴, 흰 바탕): 세로 조각 10개, 고른 조각이 넓어진다. 폰은 옆으로 넘기는 카드 -->
+  <section class="cg cg--w" id="category" aria-labelledby="cgTitle">
+    <div class="wrap">
+      <header class="vh vh--row">
+        <div><h2 class="vh__t" id="cgTitle"><span class="tt__pre">티셔츠부터 모자까지</span> <span class="tt__key">품목별 보기</span></h2></div>
+        <div class="vh__r cg__links"><a class="lnk" href="#" data-href="category.php">단체복 전체 보기 <i aria-hidden="true">→</i></a><a class="lnk" href="#" data-href="category.php?cat=%EC%9E%91%EC%97%85%EB%B3%B5">작업복 전체 보기 <i aria-hidden="true">→</i></a></div>
+      </header>
+      <ul class="cg__row" id="cgRow" data-lenis-prevent-touch>
+        <li class="cgs is-on"><a href="#" data-href="category.php?cat=%EB%9D%BC%EC%9A%B4%EB%93%9C%20%ED%8B%B0%EC%85%94%EC%B8%A0"><img src="img/rail/rail-round.webp" width="760" height="950" alt="" loading="lazy" decoding="async" draggable="false" data-slot="rail-round" data-temp="ai"><span class="cgs__v" aria-hidden="true">라운드 티셔츠</span><span class="cgs__h"><b>라운드 티셔츠</b><em>상품 보기 <i aria-hidden="true">→</i></em></span></a></li>
+        <li class="cgs"><a href="#" data-href="category.php?cat=%EC%B9%B4%EB%9D%BC%20%ED%8B%B0%EC%85%94%EC%B8%A0"><img src="img/rail/rail-collar.webp" width="760" height="950" alt="" loading="lazy" decoding="async" draggable="false" data-slot="rail-collar" data-temp="ai"><span class="cgs__v" aria-hidden="true">카라 티셔츠</span><span class="cgs__h"><b>카라 티셔츠</b><em>상품 보기 <i aria-hidden="true">→</i></em></span></a></li>
+        <li class="cgs"><a href="#" data-href="category.php?cat=%EB%A7%A8%ED%88%AC%EB%A7%A8%20%ED%8B%B0%EC%85%94%EC%B8%A0"><img src="img/rail/rail-sweat.webp" width="760" height="950" alt="" loading="lazy" decoding="async" draggable="false" data-slot="rail-sweat" data-temp="ai"><span class="cgs__v" aria-hidden="true">맨투맨 티셔츠</span><span class="cgs__h"><b>맨투맨 티셔츠</b><em>상품 보기 <i aria-hidden="true">→</i></em></span></a></li>
+        <li class="cgs"><a href="#" data-href="category.php?cat=%ED%9B%84%EB%93%9C%20%ED%8B%B0%EC%85%94%EC%B8%A0"><img src="img/rail/rail-hood.webp" width="760" height="950" alt="" loading="lazy" decoding="async" draggable="false" data-slot="rail-hood" data-temp="ai"><span class="cgs__v" aria-hidden="true">후드 티셔츠</span><span class="cgs__h"><b>후드 티셔츠</b><em>상품 보기 <i aria-hidden="true">→</i></em></span></a></li>
+        <li class="cgs"><a href="#" data-href="category.php?cat=%EB%AF%BC%EC%86%8C%EB%A7%A4%2C%20%EB%AA%A9%ED%8F%B4%EB%9D%BC"><img src="img/rail/rail-inner.webp" width="760" height="950" alt="" loading="lazy" decoding="async" draggable="false" data-slot="rail-inner" data-temp="ai"><span class="cgs__v" aria-hidden="true">민소매 · 목폴라</span><span class="cgs__h"><b>민소매 · 목폴라</b><em>상품 보기 <i aria-hidden="true">→</i></em></span></a></li>
+        <li class="cgs"><a href="#" data-href="category.php?cat=%EC%A1%B0%EB%81%BC"><img src="img/rail/rail-vest.webp" width="760" height="950" alt="" loading="lazy" decoding="async" draggable="false" data-slot="rail-vest" data-temp="ai"><span class="cgs__v" aria-hidden="true">조끼</span><span class="cgs__h"><b>조끼</b><em>상품 보기 <i aria-hidden="true">→</i></em></span></a></li>
+        <li class="cgs"><a href="#" data-href="category.php?cat=%EC%9E%90%EC%BC%93"><img src="img/rail/rail-jacket.webp" width="760" height="950" alt="" loading="lazy" decoding="async" draggable="false" data-slot="rail-jacket" data-temp="ai"><span class="cgs__v" aria-hidden="true">자켓</span><span class="cgs__h"><b>자켓</b><em>상품 보기 <i aria-hidden="true">→</i></em></span></a></li>
+        <li class="cgs"><a href="#" data-href="category.php?cat=%ED%8C%A8%EB%94%A9"><img src="img/rail/rail-padding.webp" width="760" height="950" alt="" loading="lazy" decoding="async" draggable="false" data-slot="rail-padding" data-temp="ai"><span class="cgs__v" aria-hidden="true">패딩</span><span class="cgs__h"><b>패딩</b><em>상품 보기 <i aria-hidden="true">→</i></em></span></a></li>
+        <li class="cgs"><a href="#" data-href="category.php?cat=%EB%B0%94%EC%A7%80"><img src="img/rail/rail-pants.webp" width="760" height="950" alt="" loading="lazy" decoding="async" draggable="false" data-slot="rail-pants" data-temp="ai"><span class="cgs__v" aria-hidden="true">바지</span><span class="cgs__h"><b>바지</b><em>상품 보기 <i aria-hidden="true">→</i></em></span></a></li>
+        <li class="cgs"><a href="#" data-href="category.php?cat=%EB%AA%A8%EC%9E%90"><img src="img/rail/rail-cap.webp" width="760" height="950" alt="" loading="lazy" decoding="async" draggable="false" data-slot="rail-cap" data-temp="ai"><span class="cgs__v" aria-hidden="true">모자</span><span class="cgs__h"><b>모자</b><em>상품 보기 <i aria-hidden="true">→</i></em></span></a></li>
+      </ul>
+      <p class="cg__note">연출 이미지입니다.</p>
+    </div>
+  </section>
+
   <!-- 6. 협력브랜드 9곳: 브랜드를 바텀 헤더에서 고른다(상품을 내려 보다가도 다른 브랜드로 바로 바꿀 수 있다) -->
   <section class="psec psec--tint" id="brands" aria-labelledby="brandsTitle" data-shop="brand">
     <div class="wrap">
@@ -238,10 +261,40 @@ if(!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('v4-
   </section>
 
   <!-- 7. 후드·맨투맨 (시안 F) -->
-  <section class="psec psec--end" id="hood" aria-labelledby="hoodTitle" data-shop="hood">
+  <section class="psec" id="hood" aria-labelledby="hoodTitle" data-shop="hood">
     <div class="wrap">
       <header class="vh vh--row">
         <div><h2 class="vh__t" id="hoodTitle"><span class="tt__pre">단체로 맞추기 좋은</span> <span class="tt__key">후드·맨투맨</span></h2></div>
+        <div class="vtog" data-vtog></div>
+      </header>
+    </div>
+    <div class="bh" data-bh aria-label="후드·맨투맨 분류"></div>
+    <div class="wrap psec__body">
+      <div class="pgrid" data-grid role="tabpanel" aria-live="polite"></div>
+      <div class="psec__more"><a class="pbtn" data-more href="#" data-href="category.php"></a></div>
+    </div>
+  </section>
+
+  <!-- 7-1. 겨울 아우터 하나 더(5번과 같은 구성. 상품은 js/v10.js SHOP.outer2) -->
+  <section class="psec" id="outer2" aria-labelledby="outer2Title" data-shop="outer">
+    <div class="wrap">
+      <header class="vh vh--row">
+        <div><h2 class="vh__t" id="outer2Title"><span class="tt__pre">겨울을 책임지는</span> <span class="tt__key">겨울 아우터</span></h2></div>
+        <div class="vtog" data-vtog></div>
+      </header>
+    </div>
+    <div class="bh" data-bh aria-label="겨울 아우터 분류"></div>
+    <div class="wrap psec__body">
+      <div class="pgrid pgrid--feat" data-grid role="tabpanel" aria-live="polite"></div>
+      <div class="psec__more"><a class="pbtn" data-more href="#" data-href="category.php"></a></div>
+    </div>
+  </section>
+
+  <!-- 7-2. 후드·맨투맨 하나 더(7번과 같은 구성. 상품은 js/v10.js SHOP.hood2). 구매 후기 앞 마지막 상품 섹션이라 아래 여백(psec--end)을 맡는다 -->
+  <section class="psec psec--end" id="hood2" aria-labelledby="hood2Title" data-shop="hood">
+    <div class="wrap">
+      <header class="vh vh--row">
+        <div><h2 class="vh__t" id="hood2Title"><span class="tt__pre">단체로 맞추기 좋은</span> <span class="tt__key">후드·맨투맨</span></h2></div>
         <div class="vtog" data-vtog></div>
       </header>
     </div>

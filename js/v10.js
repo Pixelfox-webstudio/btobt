@@ -802,6 +802,9 @@
       { label: '맨투맨', keys: ['c226', 'c224', 'c228', 'c225'], more: ['맨투맨 티셔츠 전체 보기', 'category.php?cat=' + enc('맨투맨 티셔츠')] }
     ] }
   };
+  // 같은 구성의 섹션 하나 더(index.html #outer2 · #hood2). 상품을 바꾸려면 여기에 tabs를 따로 적는다
+  SHOP.outer2 = SHOP.outer;
+  SHOP.hood2 = SHOP.hood;
   Object.keys(SHOP).forEach(function (id) {
     var cfg = SHOP[id], sec = $('#' + id); if (!sec) return;
     var bhEl = $('[data-bh]', sec), grid = $('[data-grid]', sec), more = $('[data-more]', sec);
@@ -1185,6 +1188,20 @@
     }
     window.addEventListener('scroll', onScroll, { passive: true });
 
+  })();
+
+  /* ---------- 품목별 보기(v8에서 가져옴): 마우스를 올리거나 초점이 가면 그 조각이 넓어진다.
+     터치 화면(PC 폭)에서는 첫 번째 누름으로 넓히고 두 번째 누름에 이동한다. 폰 폭(≤900)은 옆으로 넘기는 카드라 바로 이동 ---------- */
+  (function () {
+    var row = $('#cgRow'); if (!row) return;
+    var items = $$('.cgs', row);
+    function on(el) { items.forEach(function (x) { x.classList.toggle('is-on', x === el); }); }
+    items.forEach(function (el) {
+      var a = $('a', el);
+      el.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') on(el); });
+      a.addEventListener('focus', function () { on(el); });
+      a.addEventListener('click', function (e) { if (!fine && wideQ.matches && !el.classList.contains('is-on')) { e.preventDefault(); e.stopPropagation(); on(el); } }, true);
+    });
   })();
 
   window.addEventListener('load', function () { if (hasG) ScrollTrigger.refresh(); });
