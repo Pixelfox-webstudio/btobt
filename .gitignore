@@ -5,3 +5,4 @@ review/shots/
 __pycache__/
 _tmp-*
 review/sheets/
+.claude/settings.local.json

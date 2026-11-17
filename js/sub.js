@@ -209,7 +209,7 @@
     p.dispatchEvent(new CustomEvent('pop:close'));
   }
   document.addEventListener('click', function (e) {
-    var o = e.target.closest && e.target.closest('[data-pop]');
+    var o = e.target.closest && e.target.closest('[data-pop]:not(html)');
     if (o) { e.preventDefault(); openPop(o.getAttribute('data-pop'), o); return; }
     var c = e.target.closest && e.target.closest('[data-pop-close]');
     if (c) { e.preventDefault(); closePop(c.closest('.pop, .side')); }
