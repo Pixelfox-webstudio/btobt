@@ -1,0 +1,113 @@
+{
+  "key": "quote",
+  "pages": [
+    "quote.html",
+    "quote-intro.html"
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "date": "2026-11-17",
+      "key": "quote",
+      "checks": {
+        "pages": "화면 점검: 페이지 2 · 상태 33 · 렌더링 198회 · 실패 1 — quote-intro.html [default] c1024: 열기 실패: Page.goto: Timeout 30000ms exceeded. (같은 페이지만 다시 돌렸을 때는 렌더링 12회 실패 0으로 통과. 페이지 열기 시간 초과로 보이며 화면 문제는 아님)",
+        "els": "요소 점검(quote-intro.html, quote.html): 절 5개 · 항목 113 · 빠짐 0 · 선택자 문제 0"
+      },
+      "checkPagesFailed": 1,
+      "elsMissing": 0,
+      "scores": {
+        "elements": 930,
+        "states": 850,
+        "design": 780,
+        "consistency": 850,
+        "layout": 830
+      },
+      "findings": [
+        {
+          "item": "design",
+          "page": "quote.html",
+          "state": "default, state=start, state=from (대화형 질문 카드)",
+          "problem": "대화형 질문 카드의 선택지(인쇄방법 '열전사 인쇄/나염 인쇄/자수 인쇄/기타', 상품 유형 '쇼핑몰 내 상품/쇼핑몰에 없는 상품', 포장 '기본포장/고급포장/상담 후 결정')가 모서리가 작은 사각 타일로 그려져 있다. DESIGN.md 규칙은 '버튼·탭·조작 버튼은 알약(999px)', '하나의 화면 안에서 조작 요소는 알약 하나로 통일'인데 이를 어긴다. 같은 페이지의 한 화면 양식(mode=form)에서는 같은 선택지가 알약이라 두 방식의 모양도 서로 다르다.",
+          "evidence": "review/sheets/quote-pc-1.png 왼쪽 위 default 칸 아래쪽 질문 카드(2×2 사각 타일), 가운데 위 state=start 칸 질문 카드(사각 타일 2개), quote-pc-6.png 오른쪽 아래 state=from 칸 '포장은 어떻게 할까요?' 카드, quote-m-1.png 첫 칸(default) 아래쪽 카드. 비교: quote-pc-7.png mode=form 칸 '포장/인쇄방법' 알약",
+          "fix": "대화형 선택지를 양식 모드와 같은 알약(.chip 계열, border-radius:999px, 폰 높이 44 이상)으로 바꾼다. 설명이 붙은 상품 유형 선택지를 카드로 남기려면 모서리를 16px로 맞춰 카드 규칙을 따른다."
+        },
+        {
+          "item": "layout",
+          "page": "quote.html",
+          "state": "state=qty-err, state=second, mode=form, mode=form&state=err, mode=form&state=from",
+          "problem": "수량 입력의 '−' '+' 버튼이 모서리가 작은 사각 버튼이고, 폰에서 약 39px 정도라 터치 대상 44px에 못 미친다. 모양도 '조작 버튼은 알약이나 원'이라는 모서리 규칙과 맞지 않는다.",
+          "evidence": "review/sheets/quote-m-4.png 첫 칸(mode=form) 수량 줄의 −/+ 사각 버튼(표시 크기 약 31px, 실제 약 39px), 셋째 칸(err) 수량 줄; quote-pc-3.png 왼쪽 아래 state=qty-err 질문 카드의 '− 0 +'",
+          "fix": "−/+를 44px 원형 버튼(border-radius:50%, 선은 inset 0 0 0 1px)으로 바꾸고, PC·폰 모두 44px 이상으로 둔다."
+        },
+        {
+          "item": "states",
+          "page": "quote.html",
+          "state": "mode=form&state=err",
+          "problem": "요소 목록 L685(다음 진행 전 검사 안내) 중 '상품 1개 이상 필요', '첨부 전체 20개 초과', '첨부 합계 100MB 초과', '회사명·담당자·연락처 미입력' 안내와 L684 '첨부 상품당 5개 초과 안내'가 어떤 상태 화면에도 보이지 않는다. 검사 오류 상태에는 수량·상품명·20MB 초과 세 줄만 나온다.",
+          "evidence": "review/sheets/quote-pc-7.png 오른쪽 위 mode=form&state=err 칸 위쪽 빨간 오류 상자(3줄), quote-m-4.png 셋째 칸 오류 상자(3줄); mode=form&state=noitems 칸에는 빈 상태만 있고 다음 진행 검사 문구는 없음",
+          "fix": "오류 상자에 연락처 정보 미입력(연락처 칸 빨간 테두리+문구 포함)과 첨부 전체 20개·합계 100MB 초과 줄을 더하거나, 'form&state=err-attach'(상품당 5개 초과·전체 한도 초과)와 'form&state=err-contact' 같은 상태를 spec/pages.json에 추가한다. 상품 0개에서 다음을 누를 때 안내도 상태로 보이게 한다."
+        },
+        {
+          "item": "states",
+          "page": "quote.html",
+          "state": "state=attach-err",
+          "problem": "대화형 L635 '첨부 한도 초과 안내(상품당 합쳐 5개, 전체 20개, 합계 100MB)'가 오류 문구로 나오는 상태가 없다. 상품당 5개·파일당 20MB 오류만 있고, 전체 20개·100MB는 카드 아래 도움말로만 적혀 있다.",
+          "evidence": "review/sheets/quote-pc-4.png 오른쪽 위 state=attach-err 칸 빨간 안내 2줄(상품당 5개, 20MB)과 그 위 회색 도움말 문장",
+          "fix": "attach-err 상태에 '모든 상품 합쳐 20개·100MB를 넘었습니다' 오류 줄을 하나 더 보여 주거나 별도 상태(state=attach-total)를 추가한다."
+        },
+        {
+          "item": "design",
+          "page": "quote.html",
+          "state": "state=typing, default(답 말풍선 속 상품 사진)",
+          "problem": "css/sub.css에서 입력 중 표시 말풍선(.subp .qt-wait p)과 답 말풍선 속 상품 사진(.subp .qt-a__p img)이 border-radius:12px다. 다른 말풍선·카드(.qt-q, .qt-a__b, .qt-card)는 16px라 같은 화면에서 모서리가 섞이고, 사진은 16px(폰 14px) 규칙에서 벗어난다.",
+          "evidence": "css/sub.css .subp .qt-wait p{border-radius:12px}, .subp .qt-a__p img{border-radius:12px}; review/sheets/quote-pc-4.png 가운데 아래 state=typing 칸 왼쪽 아래 '•••' 말풍선",
+          "fix": ".qt-wait p는 다른 말풍선처럼 16px로, .qt-a__p img는 사진 규칙(16px, 폰 14px)이나 원형으로 맞춘다."
+        }
+      ],
+      "notes": "기본 화면 외에 검색 중/결과 없음/불러오기 실패/첨부 오류/수량 오류/입력 중/두 번째 상품/접수 중/접수 실패/접수 완료/상품 상세에서 넘어옴/비회원, 상품 검색 창의 추천·자동완성·결과·없음·찾는 중·너무 김·오류·등록 상품 없음까지 상태로 볼 수 있다. 헤더·푸터·하단 상담 바는 홈과 같고, 이모지·영문 라벨·검은 섹션 배경·자동 흐름 띠는 없다. 파란 강조 버튼은 폰 하단 상담 바 하나뿐이다. 스크립트를 쓸 수 없을 때 안내는 noscript로 들어가 있다."
+    },
+    {
+      "round": 2,
+      "date": "2026-11-17",
+      "key": "quote",
+      "rescored": [
+        "design"
+      ],
+      "checks": {
+        "pages": "화면 점검: 페이지 2 · 상태 36 · 렌더링 216회 · 실패 0 (36초)",
+        "els": "요소 점검(quote-intro.html, quote.html): 절 5개 · 항목 113 · 빠짐 0 · 선택자 문제 0"
+      },
+      "checkPagesFailed": 0,
+      "elsMissing": 0,
+      "scores": {
+        "elements": 930,
+        "states": 850,
+        "design": 860,
+        "consistency": 850,
+        "layout": 830
+      },
+      "previousFindings": [
+        {
+          "finding": "대화형 질문 카드 선택지가 사각 타일",
+          "status": "고쳐짐",
+          "evidence": "review/shots/quote/default-c1440.jpg 질문 카드(열전사 인쇄/나염 인쇄/자수 인쇄/기타), state-from-c1440.jpg(기본포장/고급포장/상담 후 결정), review/sheets/quote-pc-1.png state=start(쇼핑몰 내 상품/쇼핑몰에 없는 상품) 모두 알약. 한 화면 양식과 모양이 같아짐"
+        },
+        {
+          "finding": ".qt-wait p, .qt-a__p img 12px",
+          "status": "고쳐짐",
+          "evidence": "css/sub.css 1630행 .qt-wait p 16px, 1606행 .qt-a__p img 16px, 1759행 폰 14px. review/shots/quote/state-typing-c1440.jpg 답 말풍선 속 상품 사진 모서리가 다른 말풍선과 맞음"
+        }
+      ],
+      "findings": [
+        {
+          "item": "design",
+          "page": "quote.html",
+          "state": "state=search-none, state=search(안내 줄), state=search-pick(자동완성 목록), 요약 상자 진행률",
+          "problem": "앞선 지적 2건은 고쳐졌다(선택지 알약, .qt-wait p·.qt-a__p img 16px/폰 14px). 다만 css/sub.css에 상자 모서리 12px가 아직 남아 있다: .subp .qt-sxr__none(1687행, '방염 작업복에 맞는 상품이 없습니다' 회색 상자), .subp .qt-sxr__hint(1685행), .subp .qt-ac 와 .qt-ac li(1673·1674행, 상품 자동완성 목록 팝업), .subp .qt-prog--sum(1811행). DESIGN.md는 12px를 브랜드 로고 칸·아바타·입력칸에만 쓰고 카드·상자·팝업은 16px로 정한다. 같은 질문 카드(.qt-card 16px) 안에 12px 상자가 들어가 모서리가 섞인다. 화면에서 눈에 띄는 정도는 작다.",
+          "evidence": "review/sheets/quote-pc-2.png 가운데 칸(state=search-none) 질문 카드 안 회색 '맞는 상품이 없습니다' 상자, css/sub.css 1673·1674·1685·1687·1811행",
+          "fix": "네 곳의 border-radius:12px 를 16px로 바꾼다(.qt-ac li 는 목록 안 줄이라 12px를 지우고 바탕만 칠하거나 16px로 맞춘다)."
+        }
+      ]
+    }
+  ]
+}

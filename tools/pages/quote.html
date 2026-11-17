@@ -1,0 +1,184 @@
+<!--{"title": "견적문의", "desc": "비투비티 견적문의. 질문에 답하거나 한 화면 양식으로 상품·수량·인쇄 정보를 적으면 담당자가 맞춤 견적을 안내합니다.", "name": "견적문의 — 비회원 안내·대화형 입력·한 화면 입력 양식·상품 검색", "group": 4, "order": 2, "type": "form",
+ "sections": ["견적문의 — 비회원 안내", "견적문의 — 대화형 입력", "견적문의 — 한 화면 입력 양식", "견적문의 — 상품 검색"],
+ "scripts": ["js/catalog.js", "js/brands.js", "js/rank.js", "js/extra.js", "js/sub-data.js", "js/sub-quote.js"],
+ "states": [["default", "대화형 진행 중"], ["state=start", "대화 시작"], ["state=search", "상품 검색 질문"], ["state=search-busy", "상품 검색 질문 — 찾는 중"], ["state=search-none", "상품 검색 질문 — 결과 없음"], ["state=search-fail", "상품 검색 질문 — 불러오기 실패"], ["state=search+pick", "상품 검색 질문 — 상품 검색 창 열림"],
+  ["state=attach", "첨부 질문"], ["state=attach-err", "첨부 한도 초과(상품당 5개·20MB)"], ["state=attach-total", "첨부 한도 초과(전체 20개·100MB)"], ["state=qty-err", "수량 확인 안내"], ["state=typing", "상대 입력 중 표시"], ["state=second", "두 번째 상품"], ["state=contact", "연락받을 정보 확인"], ["state=last", "마지막 단계"], ["state=sending", "접수 중"], ["state=fail", "접수 실패"], ["state=done", "접수 완료"], ["state=from", "상품 상세에서 넘어옴(대화형)"],
+  ["mode=form", "한 화면 양식"], ["mode=form&state=noitems", "양식 — 상품 없음"], ["mode=form&state=err", "양식 — 검사 오류(상품·수량·20MB)"], ["mode=form&state=err-attach", "양식 — 검사 오류(첨부 한도)"], ["mode=form&state=err-empty", "양식 — 검사 오류(상품 없음·연락처 비어 있음)"], ["mode=form&state=from", "양식 — 상품 상세에서 넘어옴"],
+  ["mode=form&state=pick", "상품 검색 열림·추천 상품"], ["mode=form&state=pick-ac", "상품 검색 — 자동완성"], ["mode=form&state=pick-result", "상품 검색 — 검색 결과"], ["mode=form&state=pick-none", "상품 검색 — 결과 없음"], ["mode=form&state=pick-busy", "상품 검색 — 찾는 중"], ["mode=form&state=pick-long", "상품 검색 — 검색어 너무 김"], ["mode=form&state=pick-fail", "상품 검색 — 불러오기 오류"], ["mode=form&state=pick-empty", "상품 검색 — 등록된 상품 없음"],
+  ["state=guest", "비회원 안내"]]}-->
+<section class="sub-head sub-head--row qt-head">
+  <div class="wrap">
+    <div class="qt-head__l">
+      <nav class="crumb" aria-label="현재 위치"><a href="#" data-href="index.php">홈</a><span aria-hidden="true">/</span><a href="#" data-href="quote-intro.php">견적문의 안내</a><span aria-hidden="true">/</span><span aria-current="page">견적문의</span></nav>
+      <h1 class="sub-head__t" data-el="L576 L592 L644">견적문의</h1>
+      <p class="sub-head__d" data-qt-m="chat" hidden>질문에 차례로 답하면 견적문의가 정리됩니다. 마지막에 견적서 미리보기로 확인하고 보내 주세요.</p>
+      <p class="sub-head__d" data-qt-m="form" hidden>상품마다 수량과 인쇄 정보를 적고 다음을 누르면 견적서 미리보기가 새 창으로 열립니다. 견적 요청은 미리보기에서 보냅니다.</p>
+    </div>
+    <div class="qt-cs" data-qt-m="form" hidden>
+      <p class="qt-cs__l">평일 고객상담</p>
+      <a class="qt-cs__tel num" href="tel:050713786094" data-el="L645">0507-1378-6094</a>
+      <p class="qt-cs__h">주중 10시~18시 · 점심 12시~13시 · 주말·공휴일 제외</p>
+      <div class="acts"><a class="sb sb--gray sb--m" href="tel:050713786094" data-el="L678"><i class="i i-phone i--18" aria-hidden="true"></i>전화상담</a><a class="sb sb--gray sb--m" href="https://pf.kakao.com/_uxjxmxjn" target="_blank" rel="noopener" data-el="L679"><i class="i i-kakao i--18" aria-hidden="true"></i>카카오톡 상담<span class="sr-only"> (새 창)</span></a></div>
+    </div>
+  </div>
+</section>
+<noscript class="qt-nojs" data-el="L638"><div class="wrap"><p class="msg msg--err">견적문의는 브라우저의 스크립트 기능이 켜져 있어야 쓸 수 있습니다. 스크립트를 켜거나 전화 0507-1378-6094(주중 10시~18시)로 문의해 주세요.</p></div></noscript>
+
+<!-- ========== 대화형 입력(기본) ========== -->
+<div class="wrap sub-body qt-chat" id="qtChat" data-qt-m="chat" hidden>
+  <aside class="qt-side" aria-label="견적문의 진행">
+    <div class="qt-prog" role="group" aria-label="진행률" data-el="L594">
+      <p class="qt-prog__h"><span class="qt-prog__l">진행률</span><b class="qt-prog__pct num" data-qt-pct>0%</b></p>
+      <span class="qt-prog__bar" aria-hidden="true"><i data-qt-bar></i></span>
+      <p class="qt-prog__n">답한 질문 <b class="num" data-qt-done>0</b> / <span class="num" data-qt-total>0</span></p>
+    </div>
+    <details class="qt-guide" id="qtGuide" open data-el="L593">
+      <summary>견적문의 이용 안내</summary>
+      <ul class="qt-guide__l">
+        <li>질문에 차례로 답해 주세요. 선택 질문은 건너뛸 수 있습니다.</li>
+        <li>답한 질문은 답 아래 <b>수정</b>을 눌러 언제든 고칠 수 있습니다.</li>
+        <li>마지막에 견적서 미리보기로 내용을 확인한 뒤 보내 주세요.</li>
+        <li>접수하면 담당자가 확인해 연락처로 연락드립니다.</li>
+      </ul>
+      <dl class="qt-guide__h"><dt>상담 시간</dt><dd>주중 10시~18시 (점심 12시~13시 / 주말·공휴일 제외)</dd></dl>
+    </details>
+    <a class="sb sb--line sb--block qt-side__pv" href="#" data-href="quote-preview.php?state=readonly" target="_blank" data-el="L624"><i class="i i-doc i--18" aria-hidden="true"></i>견적서 미리보기<span class="sr-only"> (새 창, 보기 전용)</span></a>
+    <p class="qt-side__h">미리보기는 보기 전용입니다. 보내기는 마지막 단계에서 합니다.</p>
+  </aside>
+  <section class="qt-talk" aria-label="견적문의 대화">
+    <p class="msg msg--ok qt-from" data-st="from" data-el="L626"><i class="i i-check" aria-hidden="true"></i><span>상품 상세에서 고른 <b>방한 후드 패딩</b>의 정보와 인쇄 파일 2개를 첫 상품에 채워 두었습니다. 넘겨받은 내용은 1시간 동안 유지되며, 파일은 10MB 이하로 5개까지 옮겨집니다.</span></p>
+    <div class="qt-q qt-hello" data-el="L595"><p><b data-sample>김민준</b>님, 견적문의를 시작합니다. 몇 가지 질문에 답해 주시면 견적서로 정리해 담당자에게 전달합니다.</p></div>
+    <ol class="qt-log" id="qtLog" aria-label="질문과 답" data-el="L596 L601 L616"></ol>
+    <div class="qt-typing" id="qtTyping" hidden data-el="L597"><span class="qt-typing__b"><i></i><i></i><i></i></span><span class="sr-only">다음 질문을 입력하는 중입니다.</span></div>
+    <p class="sr-only" id="qtLive" aria-live="polite"></p>
+  </section>
+</div>
+
+<!-- ========== 한 화면 입력 양식(?mode=form) ========== -->
+<div class="wrap sub-body qt-fm" id="qtFm" data-qt-m="form" hidden>
+  <form class="qt-fm__main" id="qtForm" novalidate>
+    <ol class="stp qt-stp" id="qtStp" aria-label="입력 단계" data-el="L646">
+      <li class="is-on" aria-current="step"><b>1</b><a href="#qtItemsSec"><span>상품 정보</span></a></li>
+      <li><b>2</b><a href="#qtContact"><span>연락처 정보</span></a></li>
+      <li><b>3</b><span>견적서 확인</span></li>
+    </ol>
+    <p class="msg msg--ok qt-from" data-st="from" data-el="L680"><i class="i i-check" aria-hidden="true"></i><span>상품 상세에서 고른 <b>방한 후드 패딩</b>의 정보와 인쇄 파일 2개를 첫 상품에 채워 두었습니다. 인쇄 파일은 파일당 10MB 이하로 10개까지 옮겨집니다.</span></p>
+    <div class="qt-errs" id="qtErrs" role="alert" tabindex="-1" hidden data-el="L685">
+      <p class="qt-errs__t"><i class="i i-alert" aria-hidden="true"></i>입력한 내용을 확인해 주세요</p>
+      <ul class="qt-errs__l"></ul>
+    </div>
+    <section class="qt-items" id="qtItemsSec" aria-labelledby="qtItemsT">
+      <div class="st-row qt-items__h"><h2 class="st" id="qtItemsT">문의 상품 <small id="qtItemsN" class="num">0개</small></h2><p class="qt-req"><em>*</em> 필수 항목</p></div>
+      <div id="qtItems" data-el="L656"></div>
+      <div class="empty qt-items__empty" id="qtItemsEmpty" hidden data-el="L683">
+        <span class="empty__ic"><i class="i i-box" aria-hidden="true"></i></span>
+        <p class="empty__t">문의할 상품이 없습니다.</p>
+        <p class="empty__d">상품 추가를 눌러 문의할 상품을 넣어 주세요. 쇼핑몰에 없는 상품도 상품명을 적어 문의할 수 있습니다.</p>
+      </div>
+      <button type="button" class="sb sb--line sb--l sb--block qt-add" id="qtAdd" data-el="L674"><i class="i i-plus i--18" aria-hidden="true"></i>상품 추가</button>
+    </section>
+    <fieldset class="fset qt-contact" id="qtContact">
+      <legend class="fset__t" data-el="L653 L667">연락처 정보 <small>회원 정보로 채웠습니다. 다르면 고쳐 주세요.</small></legend>
+      <div class="fgrid">
+        <div class="fld full" data-el="L668"><label class="fld__l" for="qtCo">회사명 <em>*</em><span class="r"><span id="qtCoN">9</span> / 100</span></label><input class="inp" id="qtCo" maxlength="100" required data-count="qtCoN" value="한결산업 주식회사" autocomplete="organization" data-sample></div>
+        <div class="fld" data-el="L669"><label class="fld__l" for="qtPs">담당자 <em>*</em></label><input class="inp" id="qtPs" maxlength="50" required value="김민준" autocomplete="name" data-sample></div>
+        <div class="fld" data-el="L670"><label class="fld__l" for="qtPh">연락처 <em>*</em></label><input class="inp num" id="qtPh" type="tel" maxlength="30" required data-fmt="phone" inputmode="tel" value="010-1234-5678" autocomplete="tel" data-sample></div>
+        <div class="fld full" data-el="L671"><label class="fld__l" for="qtRq">요청사항 <small>선택</small><span class="r"><span id="qtRqN">0</span> / 2,000</span></label><textarea class="txa txa--s" id="qtRq" maxlength="2000" data-count="qtRqN" placeholder="납품 장소·일정, 견적서 받을 이메일처럼 담당자가 알아야 할 내용을 적어 주세요."></textarea><p class="fld__help"><i class="i i-phone i--14" aria-hidden="true"></i> 입력 내용을 검토한 뒤 상담원이 연락처로 전화드립니다.</p></div>
+      </div>
+    </fieldset>
+  </form>
+  <aside class="qt-sum" aria-labelledby="qtSumT" data-el="L648">
+    <div class="qt-sum__box">
+      <h2 class="qt-sum__t" id="qtSumT">입력 요약</h2>
+      <div class="qt-prog qt-prog--sum" data-el="L652">
+        <p class="qt-prog__h"><span class="qt-prog__l">필수 항목</span><b class="qt-prog__pct num" data-qs-pct>0%</b></p>
+        <span class="qt-prog__bar" aria-hidden="true"><i data-qs-bar></i></span>
+        <p class="qt-prog__n">채운 항목 <b class="num" data-qs-done>0</b> / <span class="num" data-qs-total>0</span></p>
+      </div>
+      <ol class="qt-sum__l" id="qtSumL" data-el="L649"></ol>
+      <dl class="qt-sum__dl">
+        <div data-el="L650"><dt>상품·디자인 이미지</dt><dd><b class="num" id="qtSumF">0</b>개<span class="num" id="qtSumB"></span></dd></div>
+        <div data-el="L651"><dt>회사명</dt><dd id="qtSumCo"></dd></div>
+        <div><dt>담당자</dt><dd id="qtSumPs"></dd></div>
+        <div><dt>연락처</dt><dd class="num" id="qtSumPh"></dd></div>
+      </dl>
+      <button type="submit" form="qtForm" class="bt bt--ink bt--full qt-sum__go" data-el="L677"><span>다음: 견적서 미리보기</span><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></button>
+      <p class="qt-sum__h">입력 내용을 확인한 뒤 견적서 미리보기가 새 창으로 열립니다.</p>
+    </div>
+  </aside>
+</div>
+
+<!-- ========== 비회원 안내(state=guest) ========== -->
+<div class="wrap sub-body qt-guest" id="qtGuest" data-qt-m="guest" hidden>
+  <section class="qt-gbox" aria-labelledby="qtGuestT">
+    <span class="smark smark--ink"><i class="i i-lock" aria-hidden="true"></i></span>
+    <h2 class="qt-gbox__t" id="qtGuestT" data-el="L577">견적문의는 회원만 이용할 수 있습니다.</h2>
+    <p class="qt-gbox__d" data-el="L578">상품·인쇄 방법·수량을 알려 주시면 담당자가 확인해 맞춤 견적을 안내합니다. 로그인하면 보낸 견적문의와 답변을 마이페이지에서 확인할 수 있습니다.</p>
+    <div class="qt-gbox__acts">
+      <a class="bt bt--ink bt--full" href="#" data-href="login.php?return=quote.php" data-el="L582"><span>로그인</span><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></a>
+      <a class="sb sb--line sb--l sb--block" href="#" data-href="signup.php?return=quote.php" data-el="L583">회원가입</a>
+    </div>
+    <div class="qt-sns" data-el="L584">
+      <p class="qt-sns__t"><span>간편 로그인</span></p>
+      <div class="qt-sns__l">
+        <a class="qt-sns__b" href="#" data-href="login.php?sns=kakao&amp;return=quote.php"><span class="qt-sns__ic"><i class="i i-kakao i--18" aria-hidden="true"></i></span>카카오</a>
+        <a class="qt-sns__b" href="#" data-href="login.php?sns=naver&amp;return=quote.php"><span class="qt-sns__ic"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M6 5h4.2l3.7 5.6V5H18v14h-4.2l-3.7-5.6V19H6z"/></svg></span>네이버</a>
+        <a class="qt-sns__b" href="#" data-href="login.php?sns=google&amp;return=quote.php"><span class="qt-sns__ic"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M21 12.2c0-.7-.1-1.3-.2-1.9H12v3.6h5a4.3 4.3 0 0 1-1.9 2.8v2.3h3A9 9 0 0 0 21 12.2zM12 21c2.5 0 4.6-.8 6.1-2.2l-3-2.3c-.8.6-1.9.9-3.1.9-2.4 0-4.4-1.6-5.1-3.8H3.8v2.4A9 9 0 0 0 12 21zM6.9 13.6a5.4 5.4 0 0 1 0-3.4V7.8H3.8a9 9 0 0 0 0 8.2l3.1-2.4zM12 6.6c1.3 0 2.5.5 3.5 1.3l2.6-2.6A9 9 0 0 0 3.8 7.8l3.1 2.4C7.6 8.1 9.6 6.6 12 6.6z"/></svg></span>Google</a>
+      </div>
+    </div>
+    <div class="qt-gcs">
+      <p class="qt-gcs__t">로그인하지 않고 상담하려면</p>
+      <div class="qt-gcs__l">
+        <a class="qt-gcs__b" href="tel:050713786094" data-el="L585"><i class="i i-phone" aria-hidden="true"></i><span><b>전화상담</b><span class="num">0507-1378-6094</span></span></a>
+        <a class="qt-gcs__b" href="https://pf.kakao.com/_uxjxmxjn" target="_blank" rel="noopener" data-el="L586"><i class="i i-kakao" aria-hidden="true"></i><span><b>카카오톡 상담</b><span>채널로 이동<span class="sr-only"> (새 창)</span></span></span></a>
+      </div>
+      <p class="qt-gcs__h">주중 10시~18시 (점심 12시~13시 / 주말·공휴일 제외)</p>
+    </div>
+  </section>
+  <section class="qt-gflow" aria-labelledby="qtGflowT" data-el="L579">
+    <h2 class="st st--s" id="qtGflowT">견적문의는 이렇게 진행됩니다</h2>
+    <ol class="qt-flow">
+      <li class="qt-flow__i is-on" aria-current="step"><span class="qt-flow__no">1단계</span><div><p class="qt-flow__t">상품 검색 또는 상품명 직접 입력 <span class="stag stag--ink">지금 단계</span></p><p class="qt-flow__d">쇼핑몰 상품은 이름이나 품번으로 검색해 고릅니다. 쇼핑몰에 없는 상품은 상품명과 참고 이미지로 적습니다.</p></div></li>
+      <li class="qt-flow__i"><span class="qt-flow__no">2단계</span><div><p class="qt-flow__t">수량·옵션·인쇄 정보 입력</p><p class="qt-flow__d">수량과 색상·사이즈 같은 옵션, 포장, 인쇄 방법과 인쇄 부위를 적습니다. 로고 파일도 함께 올릴 수 있습니다.</p></div></li>
+      <li class="qt-flow__i"><span class="qt-flow__no">3단계</span><div><p class="qt-flow__t">담당자 확인 후 답변</p><p class="qt-flow__d">담당자가 내용을 확인해 견적을 안내하고 연락처로 전화드립니다. 답변은 마이페이지 견적문의 내역에서도 볼 수 있습니다.</p></div></li>
+    </ol>
+    <figure class="qt-gflow__ph" data-temp="ai">
+      <img src="img/v5/duo-uniform.webp" alt="같은 작업복을 입은 두 직원" width="1400" height="875" loading="lazy" decoding="async" data-slot="quote-guest-photo">
+      <figcaption class="qt-note">연출 이미지입니다.</figcaption>
+    </figure>
+  </section>
+</div>
+<!--@after-->
+<div class="pop pop--full qt-pick" id="qtPick" role="dialog" aria-modal="true" aria-labelledby="qtPickT" hidden>
+  <div class="pop__dim" data-pop-close></div>
+  <div class="pop__box pop__box--l">
+    <div class="pop__head"><h2 class="pop__t" id="qtPickT" data-el="L691">상품 검색</h2><button type="button" class="pop__x" data-pop-close aria-label="상품 검색 닫기" data-el="L704"><i class="i i-x" aria-hidden="true"></i></button></div>
+    <form class="qt-sx qt-sx--pop" id="qtPickF" novalidate>
+      <div class="qt-sx__row">
+        <div class="qt-sx__in">
+          <i class="i i-search i--18" aria-hidden="true"></i>
+          <input class="inp" id="qtPickQ" type="text" maxlength="100" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="qtPickAc" aria-label="상품명 검색어" placeholder="상품명 또는 품번" autocomplete="off" enterkeyhint="search" data-el="L697">
+          <button type="button" class="qt-sx__x" id="qtPickX" aria-label="검색어 지우기" hidden data-el="L703"><i class="i i-x i--16" aria-hidden="true"></i></button>
+          <ul class="qt-ac" id="qtPickAc" role="listbox" aria-label="검색어 추천" hidden data-el="L698"></ul>
+        </div>
+        <button type="submit" class="sb sb--ink qt-sx__go" data-el="L702">검색</button>
+      </div>
+      <p class="qt-sx__msg" id="qtPickLong" role="alert" hidden data-el="L710"><i class="i i-alert i--16" aria-hidden="true"></i>검색어는 100자까지 입력할 수 있습니다. 상품명이나 품번만 짧게 적어 주세요.</p>
+    </form>
+    <div class="pop__body qt-pick__body">
+      <div class="qt-res__h"><h3 class="qt-res__t" id="qtResT">추천 상품</h3><p class="qt-res__c" id="qtResC"></p></div>
+      <ul class="qt-res" id="qtRes" aria-labelledby="qtResT" data-el="L692 L693 L694 L699"></ul>
+      <div class="qt-res__busy" id="qtResBusy" hidden data-el="L707"><p class="qt-busy" role="status">상품을 찾고 있습니다.</p><ul class="qt-res" aria-hidden="true"><li class="qt-pr qt-pr--sk"><span class="skel"></span><span class="skel"></span></li><li class="qt-pr qt-pr--sk"><span class="skel"></span><span class="skel"></span></li><li class="qt-pr qt-pr--sk"><span class="skel"></span><span class="skel"></span></li><li class="qt-pr qt-pr--sk"><span class="skel"></span><span class="skel"></span></li></ul></div>
+      <div class="empty" id="qtResNone" hidden data-el="L709"><span class="empty__ic"><i class="i i-search" aria-hidden="true"></i></span><p class="empty__t"><span id="qtResNoneQ"></span>에 맞는 상품이 없습니다.</p><p class="empty__d">상품명의 일부나 품번으로 다시 찾아보세요. 쇼핑몰에 없는 상품은 상품 유형을 ‘쇼핑몰에 없는 상품’으로 바꿔 상품명을 직접 적으면 됩니다.</p><div class="acts"><button type="button" class="sb sb--line" data-qt-clear>검색어 지우기</button></div></div>
+      <div class="empty" id="qtResEmpty" hidden data-el="L708"><span class="empty__ic"><i class="i i-box" aria-hidden="true"></i></span><p class="empty__t">등록된 상품이 없습니다.</p><p class="empty__d">지금은 고를 수 있는 쇼핑몰 상품이 없습니다. 상품 유형을 ‘쇼핑몰에 없는 상품’으로 바꿔 상품명을 직접 적어 주세요.</p></div>
+      <div class="empty" id="qtResErr" hidden data-el="L711"><span class="empty__ic qt-ic--err"><i class="i i-alert" aria-hidden="true"></i></span><p class="empty__t">상품 목록을 불러오지 못했습니다.</p><p class="empty__d">잠시 후 다시 시도해 주세요. 계속 안 되면 0507-1378-6094로 연락해 주세요.</p><div class="acts"><button type="button" class="sb sb--ink" data-qt-retry><i class="i i-refresh i--16" aria-hidden="true"></i>다시 시도</button></div></div>
+    </div>
+  </div>
+</div>
+<div class="pop pop--c" id="qtDone" role="alertdialog" aria-modal="true" aria-labelledby="qtDoneT" aria-describedby="qtDoneD" hidden>
+  <div class="pop__dim"></div>
+  <div class="pop__box">
+    <div class="pop__body"><span class="smark"><i class="i i-check" aria-hidden="true"></i></span><h2 class="pop__t" id="qtDoneT">견적문의를 접수했습니다</h2><p class="pop__d" id="qtDoneD">문의번호 <b class="num" data-sample>Q-20261110-0012</b><br>담당자가 확인한 뒤 연락드립니다. 답변은 마이페이지 견적문의 내역에서 볼 수 있습니다.</p><p class="qt-done__go" id="qtDoneGo" hidden>잠시 뒤 견적문의 내역으로 이동합니다.</p></div>
+    <div class="pop__foot"><a class="sb sb--ink" href="mypage.html?section=inquiries">견적문의 내역 보기</a></div>
+  </div>
+</div>
