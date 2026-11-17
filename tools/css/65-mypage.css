@@ -1,0 +1,475 @@
+/* ============================================================
+   65. 마이페이지(mypage.html) — 접두어 my
+   PC: 옆 메뉴(회원 요약 + 메뉴 묶음) 264 + 본문. 폰: 요약 두 줄 + 가로 밀기 메뉴 + 본문
+   근거: research/decisions/account.md
+   ============================================================ */
+
+/* ---------- 틀 ---------- */
+.my{padding-top:40px}
+.my__crumb{margin-bottom:28px}
+.my__grid{display:grid;grid-template-columns:264px minmax(0,1fr);gap:56px;align-items:start}
+.my__side{position:sticky;top:calc(var(--bh-top,108px) + 24px)}
+.my__main{min-width:0}
+.my-mnav{display:none}
+.my-gate{padding-top:72px}
+.my__hd{display:flex;align-items:flex-end;justify-content:space-between;gap:12px 24px;flex-wrap:wrap;padding-bottom:24px}
+.my__hd .sub-head__t{margin-top:0}
+.my__hd .sd{margin-top:6px}
+.my__hd .acts{flex:none}
+.my__cnt{margin-left:4px;font-weight:700;color:var(--accent-text)}
+.my__back{display:inline-flex;align-items:center;gap:4px}
+.my-sec>.note{margin-top:var(--blk-s)}
+.my-cond{display:flex;align-items:center;flex-wrap:wrap;gap:4px 6px;margin-top:16px;font-size:14px;line-height:22px;color:var(--fg3)}
+.my-cond b{font-weight:700;color:#000}
+.my-sec>.my-cond:first-child,.my-sec>div>.my-cond:first-child{margin-top:0}
+.my-cond__x{display:inline-flex;align-items:center;gap:2px;height:28px;margin-left:6px;padding:0 10px;border-radius:999px;background:#F1F1F3;font-size:13px;font-weight:600;color:var(--ink)}
+.my-cond__x:hover{background:var(--ln)}
+.my-empty{margin-top:12px;border-radius:16px;border:1px solid var(--ln)}
+
+/* ---------- 회원 요약 ---------- */
+.my-sum{padding:24px 24px 20px;border-radius:16px;background:var(--tint)}
+.my-sum__who{display:flex;align-items:center;gap:14px}
+.my-sum__av{display:grid;place-items:center;flex:none;width:52px;height:52px;border-radius:50%;background:#000;color:#fff;font-size:20px;font-weight:700;line-height:1}
+.my-sum__id{min-width:0}
+.my-sum__type{font-size:12px;font-weight:700;line-height:18px;color:var(--accent-text)}
+.my-sum__name{font-size:15px;line-height:23px;color:#000}
+.my-sum__name b{font-size:17px;font-weight:700;letter-spacing:-.02em}
+.my-sum__org{font-size:13px;line-height:20px;color:var(--fg2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.my-sum__nums{margin-top:18px;border-top:1px solid var(--ln)}
+.my-sum__nums>div{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:12px 0 0;font-size:14px;line-height:20px}
+.my-sum__nums dt{color:var(--fg2)}
+.my-sum__nums dt small{display:block;font-size:12px;color:var(--fg3)}
+.my-sum__nums dd{flex:none;color:#000;white-space:nowrap}
+.my-sum__nums dd b{margin-right:1px;font-size:17px;font-weight:700;letter-spacing:-.01em}
+.my-sum__nums a:hover b{text-decoration:underline;text-underline-offset:3px}
+.my-sum__edit{display:flex;align-items:center;justify-content:center;gap:2px;height:44px;margin-top:18px;border-radius:999px;background:#fff;box-shadow:inset 0 0 0 1px var(--ln);font-size:14px;font-weight:600;color:var(--ink);transition:box-shadow .15s}
+.my-sum__edit:hover{box-shadow:inset 0 0 0 1px #000}
+
+/* ---------- 메뉴 묶음 ---------- */
+.my-menu{margin-top:32px}
+.my-menu__t{padding-bottom:10px;font-size:13px;font-weight:700;line-height:20px;color:var(--fg3)}
+.my-menu ul{border-top:1px solid #000}
+.my-menu ul+.my-menu__t{margin-top:28px}
+.my-menu a{position:relative;display:flex;align-items:center;gap:8px;min-height:48px;padding:0 6px 0 14px;border-bottom:1px solid var(--ln);font-size:15px;font-weight:500;letter-spacing:-.01em;color:var(--fg2);transition:color .15s}
+.my-menu a>span:first-child{flex:1}
+.my-menu a:hover{color:#000}
+.my-menu a[aria-current]{font-weight:700;color:#000}
+.my-menu a[aria-current]::before{content:"";position:absolute;left:0;top:14px;bottom:14px;width:2px;background:#000}
+.my-side__out{display:inline-flex;align-items:center;min-height:44px;margin-top:12px;font-size:13px;color:var(--fg3);text-decoration:underline;text-underline-offset:3px}
+.my-side__out:hover,.my-side__out[aria-current]{color:#000}
+
+/* ---------- 진행 단계 띠 ---------- */
+.my-step{padding:8px 8px 4px;border-radius:16px;background:var(--tint)}
+.my-step__row{display:grid;grid-template-columns:repeat(6,minmax(0,1fr))}
+.my-step__c{position:relative;display:flex;flex-direction:column;align-items:center;gap:8px;padding:18px 6px 16px;border-radius:12px;transition:background-color .15s,box-shadow .15s}
+.my-step__c span{font-size:14px;font-weight:500;line-height:20px;color:var(--fg2);white-space:nowrap}
+.my-step__c b{font-size:26px;font-weight:700;line-height:30px;letter-spacing:-.02em;color:#C8C8CC}
+.my-step__c.is-on b{color:#000}
+.my-step__c+.my-step__c::before{content:"";position:absolute;left:-7px;top:50%;width:14px;height:14px;margin-top:-7px;background:#C8C8CC;-webkit-mask:var(--i-chev) center/contain no-repeat;mask:var(--i-chev) center/contain no-repeat;transform:rotate(-90deg)}
+.my-step__c:hover{background:#fff}
+.my-step__c[aria-pressed="true"]{background:#fff;box-shadow:inset 0 0 0 1.5px #000}
+.my-step__c[aria-pressed="true"] span{font-weight:700;color:#000}
+.my-step__etc{display:flex;align-items:center;flex-wrap:wrap;gap:2px 4px;margin:4px 8px 0;padding:6px 0;border-top:1px solid var(--ln);font-size:14px;color:var(--fg2)}
+.my-step__etc button{display:inline-flex;align-items:center;gap:4px;min-height:36px;padding:0 10px;border-radius:999px;transition:background-color .15s,color .15s}
+.my-step__etc button:first-child{margin-left:-10px}
+.my-step__etc button b{font-weight:600;color:#C8C8CC}
+.my-step__etc button.is-on b{color:#000}
+.my-step__etc button:hover{background:#fff}
+.my-step__etc button[aria-pressed="true"]{background:#000;color:#fff}
+.my-step__etc button[aria-pressed="true"] b{color:#fff}
+.my-step__note{margin-left:auto;font-size:13px;color:var(--fg3)}
+
+/* ---------- 견적 문의 요약 ---------- */
+.my-qs{margin-top:32px}
+.my-qs__hd{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:12px;border-bottom:1px solid #000}
+.my-qs__hd .st b{margin-left:2px}
+.my-qs__list a{display:grid;grid-template-columns:168px 52px minmax(0,1fr) auto 16px;align-items:center;gap:16px;min-height:56px;padding:6px 4px 6px 0;border-bottom:1px solid var(--ln);font-size:14px;line-height:22px;transition:background-color .15s}
+.my-qs__list a:hover{background:var(--tint)}
+.my-qs__k{font-weight:600;color:#000}
+.my-qs__n{font-size:15px;font-weight:700;color:#000;text-align:right}
+.my-qs__st{font-size:14px;color:var(--fg3)}
+.my-qs__st b{font-weight:600;color:var(--ink)}
+.my-qs__list .i{color:#8B8B90}
+
+/* ---------- 도구 막대(기간 · 상태) ---------- */
+.my-list{margin-top:var(--blk-s)}
+.my-tool{display:flex;align-items:center;flex-wrap:wrap;gap:10px 14px;padding:14px 0;border-top:1px solid #000;border-bottom:1px solid var(--ln)}
+.my-tool--pt{margin-top:var(--blk-s)}
+.my-tool__q{display:flex;gap:6px}
+.my-tool__d{display:flex;align-items:center;gap:8px}
+.my-tool__d>span{color:#8B8B90}
+.subp .my-tool__d .inp{width:156px;height:42px;padding:0 12px;font-size:14px}
+.subp .my-tool__s{width:160px;height:42px;margin-left:auto;font-size:14px}
+
+/* ---------- 주문 카드 ---------- */
+.my-ords{display:grid;gap:12px;margin-top:12px}
+.my-ord{border:1px solid var(--ln);border-radius:16px;background:#fff;overflow:hidden;scroll-margin-top:140px}
+.my-ords__more{display:none}
+.my-ord.is-pick{border-color:#000;box-shadow:inset 0 0 0 1px #000}
+.my-ord:focus{outline:0}
+.my-ord__hd{display:flex;align-items:center;flex-wrap:wrap;gap:4px 10px;min-height:52px;padding:6px 10px 6px 20px;background:var(--tint);font-size:14px;line-height:20px}
+.my-ord__date{color:var(--fg3)}
+.my-ord__no{min-height:36px;font-size:15px;font-weight:700;color:#000;text-decoration:underline;text-decoration-color:#C8C8CC;text-underline-offset:4px}
+.my-ord__no:hover{text-decoration-color:#000}
+.my-ord__tags{display:inline-flex;flex-wrap:wrap;gap:4px}
+.my-ord__more{display:inline-flex;align-items:center;gap:2px;min-height:40px;margin-left:auto;padding:0 8px 0 12px;border-radius:999px;font-size:14px;font-weight:600;color:var(--fg2);transition:background-color .15s,color .15s}
+.my-ord__more:hover{background:#fff;color:#000}
+.my-ord__bd{display:grid;grid-template-columns:72px minmax(0,1fr) 150px 152px;gap:20px;align-items:center;padding:20px}
+.my-ord__img{display:block;width:72px;height:72px;border-radius:12px;background:#F2F2F2;object-fit:cover}
+.my-ord__img--none{display:grid;place-items:center;color:#8B8B90}
+.my-ord__img--none .i{font-size:28px}
+.my-ord__info{min-width:0}
+.my-ord__name{font-size:16px;font-weight:700;letter-spacing:-.02em;line-height:24px;color:#000}
+.my-ord__name span{font-weight:500;color:var(--fg3)}
+.my-ord__opt{margin-top:2px;font-size:14px;line-height:21px;color:var(--fg2)}
+.my-ord__say{margin-top:8px;font-size:14px;line-height:22px;color:var(--ink)}
+.my-ord__warn{display:flex;align-items:flex-start;gap:4px;margin-top:4px;font-size:13px;line-height:20px;color:var(--fg3)}
+.my-ord__warn .i{margin-top:2px}
+.my-ord__amt{display:flex;flex-direction:column;align-items:flex-end;text-align:right}
+.my-ord__d2{display:none}
+.my-ord__al{font-size:13px;line-height:18px;color:var(--fg3)}
+.my-ord__av{margin-top:2px;font-size:14px;color:#000}
+.my-ord__av b{font-size:17px;font-weight:800;line-height:24px}
+.my-ord__av small{display:block;font-size:13px;color:var(--fg3)}
+.my-ord__acts{display:flex;flex-direction:column;gap:6px}
+.my-ord__acts .sb{width:100%}
+
+/* ---------- 문의 목록(견적문의 · 안전용품) ---------- */
+.my-inq{display:grid;gap:12px;margin-top:12px}
+.my-inq__i{border:1px solid var(--ln);border-radius:16px;background:#fff;overflow:hidden}
+.my-inq__row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:16px 28px;padding:20px 20px 20px 24px}
+.my-inq__main{min-width:0}
+.my-inq__meta{display:flex;align-items:center;flex-wrap:wrap;gap:4px 10px;font-size:14px;line-height:22px;color:var(--fg3)}
+.my-inq__meta b{font-size:15px;font-weight:700;color:#000}
+.my-inq__name{margin-top:8px;font-size:16px;font-weight:700;letter-spacing:-.02em;line-height:24px;color:#000}
+.my-inq__name .stag{margin-right:6px;vertical-align:2px}
+.my-inq__name small{display:block;margin-top:2px;font-size:14px;font-weight:400;letter-spacing:0;line-height:21px;color:var(--fg2)}
+.my-inq__name--clip{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:15px;font-weight:600;line-height:23px}
+.my-inq__sub{display:flex;flex-wrap:wrap;gap:2px 0;margin-top:6px;font-size:14px;line-height:21px;color:var(--fg2)}
+.my-inq__sub>span+span::before{content:"";display:inline-block;width:1px;height:11px;margin:0 10px;background:#C8C8CC;vertical-align:-1px}
+.my-inq__sub b{font-weight:600;color:#000}
+.my-inq__acts{display:flex;flex-direction:column;gap:6px;width:184px}
+.my-inq__acts .sb{width:100%}
+.my-inq__msg{margin:0 24px 16px}
+.my-inq__wait{padding:14px 24px;border-top:1px solid var(--ln);font-size:14px;line-height:21px;color:var(--fg3)}
+.my-inq__tog{display:flex;align-items:center;gap:10px;width:100%;min-height:48px;padding:0 18px 0 24px;border-top:1px solid var(--ln);font-size:14px;font-weight:600;color:#000;text-align:left;transition:background-color .15s}
+.my-inq__tog:hover{background:var(--tint)}
+.my-inq__tog .num{margin-left:auto;font-size:13px;font-weight:400;color:var(--fg3)}
+.my-inq__tog .i{color:#8B8B90;transition:transform .3s var(--ease)}
+.my-inq__tog[aria-expanded="true"] .i{transform:rotate(180deg)}
+.my-inq__ans{display:grid;gap:18px;padding:20px 24px 24px;border-top:1px solid var(--ln);background:var(--tint)}
+.my-inq__lb{margin-bottom:4px;font-size:13px;font-weight:700;line-height:20px;color:#000}
+.my-inq__lb .num{margin-left:6px;font-weight:400;color:var(--fg3)}
+.my-inq__q p:not(.my-inq__lb),.my-inq__a p:not(.my-inq__lb){font-size:15px;line-height:1.75;color:var(--fg2)}
+.my-inq__a{padding-top:18px;border-top:1px solid var(--ln)}
+.my-inq__a .files{margin-top:12px}
+.my-inq__a .files li{background:#fff}
+.my-inq__a .files__x{width:40px;height:40px}
+
+/* ---------- 관심상품 ---------- */
+.my-wish{margin-top:8px}
+.my-wish .pc{transition:opacity .2s,transform .2s}
+.my-wish .pc.is-out{opacity:0;transform:scale(.97)}
+@media (min-width:769px){ .subp .my-wish{grid-template-columns:repeat(3,minmax(0,1fr));gap:40px 20px} }
+
+/* ---------- 포인트 ---------- */
+.my-pt{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-radius:16px;background:var(--tint)}
+.my-pt>div{padding:22px 24px}
+.my-pt>div+div{border-left:1px solid var(--ln)}
+.my-pt dt{font-size:14px;line-height:20px;color:var(--fg2)}
+.my-pt dt small{margin-left:6px;font-size:12px;color:var(--fg3)}
+.my-pt dd{margin-top:6px;font-size:14px;color:#000}
+.my-pt dd b{margin-right:2px;font-size:26px;font-weight:700;letter-spacing:-.02em;line-height:32px}
+.my-ptt{margin-top:12px}
+.my-ptt .my-ptt__d{width:132px;color:var(--fg3)}
+.my-ptt .my-ptt__c{color:#000}
+.my-ptt .my-ptt__c .num{margin-left:4px;color:var(--fg3)}
+.my-ptt .my-ptt__v{width:120px;font-weight:600}
+.my-ptt .is-plus{color:var(--accent-text)}
+.my-ptt .is-minus{color:#000}
+.my-ptt .my-ptt__b{width:120px}
+
+/* ---------- 배송지 ---------- */
+/* 모든 카드 같은 1px 선 · 16px 모서리. 기본 배송지는 선 색만 검정. 같은 줄 카드는 높이를 맞추고 버튼 줄은 맨 아래 */
+.my-ads{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;align-items:stretch}
+.my-ad{display:flex;flex-direction:column;min-width:0;padding:22px 24px 20px;border:1px solid var(--ln);border-radius:16px;background:#fff}
+.my-ad.is-def{border-color:#000}
+.my-ad__hd{display:flex;align-items:center;gap:8px}
+.my-ad__name{font-size:16px;font-weight:700;letter-spacing:-.02em;line-height:24px;color:#000}
+.my-ad__to{display:flex;flex-wrap:wrap;gap:0 10px;margin-top:10px;font-size:15px;line-height:22px;color:#000}
+.my-ad__to .num{color:var(--fg2)}
+.my-ad__addr{margin-top:2px;font-size:14px;line-height:22px;color:var(--fg2)}
+.my-ad__auto{margin-top:6px;font-size:13px;line-height:20px;color:var(--fg3)}
+.my-ad__acts{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:18px}
+.my-ad__acts .sb{min-height:44px}
+
+/* ---------- 회원정보 · 비밀번호 · 탈퇴 ---------- */
+.my-sub{margin-bottom:32px}
+.my-form .fset+.fset{margin-top:40px}
+.my-form--n{max-width:560px}
+.my-form__msg{margin-bottom:20px}
+.my-form__acts{justify-content:flex-start}
+.my-form__out{margin-top:28px;padding-top:20px;border-top:1px solid var(--ln);font-size:14px}
+.my-form__out .tl{display:inline-flex;align-items:center;min-height:44px}
+.my-wd{display:grid;gap:32px}
+.my-wd__warn{display:flex;align-items:flex-start;gap:18px;padding:24px 28px;border-radius:16px;background:var(--tint)}
+.my-wd__warn .smark{flex:none;width:44px;height:44px}
+.my-wd__warn .smark .i{font-size:22px}
+.my-wd__t{font-size:17px;font-weight:700;letter-spacing:-.02em;line-height:26px;color:#000}
+.my-wd__warn ul{display:grid;gap:4px;margin-top:8px}
+.my-wd__warn li{position:relative;padding-left:12px;font-size:14px;line-height:22px;color:var(--fg2)}
+.my-wd__warn li::before{content:"";position:absolute;left:0;top:10px;width:3px;height:3px;border-radius:50%;background:#8B8B90}
+.my-wd__dl{margin-top:12px;max-width:560px}
+.my-wd__dl dd{display:flex;align-items:baseline;gap:4px}
+.my-wd__dl dd b{font-weight:700}
+.my-wd__dl .tl{margin-left:auto}
+.my-wd__form{display:grid;gap:20px}
+.my-wd__form .form-acts{margin-top:8px}
+.my-wd__go{min-width:200px}
+
+/* ---------- 팝업: 주문 상세 ---------- */
+.my-dt__top{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:20px}
+.my-dt__sum>div{grid-template-columns:96px minmax(0,1fr);padding:11px 0}
+.my-dt__st{display:flex;flex-wrap:wrap;gap:4px}
+.my-dt__say{flex-basis:100%;margin-top:4px;font-size:13px;line-height:20px;color:var(--fg2)}
+.my-dt__msg{padding:18px 20px;border-radius:16px;background:var(--tint);font-size:14px;line-height:22px;color:var(--fg2)}
+.my-dt__lb{display:flex;align-items:center;gap:6px;margin-bottom:6px;font-size:14px;font-weight:700;color:#000}
+.my-dt__none{color:var(--fg3)}
+.my-dt__h{margin-top:28px;padding-bottom:12px;border-bottom:1px solid #000}
+.my-dt__items>li{display:grid;grid-template-columns:88px minmax(0,1fr);gap:20px;padding:20px 0;border-bottom:1px solid var(--ln)}
+.my-dt__img{display:block;width:88px;height:88px;border-radius:12px;background:#F2F2F2;object-fit:cover}
+.my-dt__img--none{display:grid;place-items:center;color:#8B8B90}
+.my-dt__name{display:inline-flex;align-items:center;gap:2px;font-size:16px;font-weight:800;letter-spacing:-.02em;line-height:24px;color:var(--ink)}
+a.my-dt__name:hover{text-decoration:underline;text-underline-offset:3px}
+.my-dt__dl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 24px;margin-top:8px}
+.my-dt__dl>div{display:grid;grid-template-columns:92px minmax(0,1fr);gap:10px;padding:5px 0;font-size:14px;line-height:21px}
+.my-dt__dl dt{color:var(--fg3)}
+.my-dt__dl dd{color:var(--ink)}
+.my-dt__dl dd small{display:block;color:var(--fg3)}
+.my-dt__pr{grid-column:1 / -1}
+.my-dt__no{color:var(--fg3)}
+
+/* ---------- 팝업: 입금 안내 ---------- */
+.my-bank__d{margin-bottom:16px;font-size:15px;line-height:1.75;color:var(--fg2)}
+.my-bank__dl>div{grid-template-columns:104px minmax(0,1fr);align-items:center}
+.my-bank__amt{font-size:20px;font-weight:800}
+.my-bank__dl dd small{margin-left:4px;font-size:13px;color:var(--fg3)}
+.my-bank__acc{display:flex;align-items:center;flex-wrap:wrap;gap:6px 10px}
+.my-bank__acc .num{font-size:16px;font-weight:700;color:#000}
+.my-bank__none{margin-top:16px}
+.my-bank__help{margin-top:14px;font-size:13px;line-height:20px;color:var(--fg3)}
+
+/* ---------- 팝업: 후기 ---------- */
+.my-rvh{display:flex;align-items:center;gap:14px;margin-bottom:20px;padding:12px 16px 12px 12px;border-radius:16px;background:var(--tint)}
+.my-rvh__img{display:block;flex:none;width:64px;height:64px;border-radius:12px;background:#F2F2F2;object-fit:cover}
+.my-rvh__no{font-size:13px;line-height:18px;color:var(--fg3)}
+.my-rvh__name{font-size:15px;font-weight:800;letter-spacing:-.02em;line-height:22px;color:var(--ink)}
+.my-rvh__org{margin-top:2px;font-size:13px;line-height:20px;color:var(--fg2)}
+.my-rvh__org small{display:block;font-size:12px;line-height:18px;color:var(--fg3)}
+.my-rv__big{margin-bottom:16px}
+.my-rv__note{display:flex;align-items:center;gap:6px;margin-top:20px;font-size:13px;line-height:20px;color:var(--fg3)}
+.my-star{display:flex;align-items:center;gap:0}
+.my-star label{position:relative;display:grid;place-items:center;width:44px;height:44px;cursor:pointer}
+.my-star input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
+.my-star .i{font-size:30px;color:var(--ln);transition:color .15s}
+.my-star label.is-on .i{color:#1B1B1F}
+.my-star label:hover .i{color:#8B8B90}
+.my-star label.is-on:hover .i{color:#1B1B1F}
+.my-star input:focus-visible+.i{outline:2px solid var(--accent);outline-offset:4px;border-radius:50%}
+.my-star__v{margin-left:10px;font-size:14px;font-weight:600;color:var(--fg3)}
+.my-rvv__meta{display:flex;align-items:center;flex-wrap:wrap;gap:6px 12px;font-size:13px;color:var(--fg3)}
+.my-rvv__stars{display:inline-flex;gap:1px}
+.my-rvv__stars .i{font-size:18px;color:var(--ln)}
+.my-rvv__stars .is-on .i{color:#1B1B1F}
+.my-rvv__ph{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.my-rvv__ph img{display:block;width:120px;height:120px;border-radius:12px;background:#F2F2F2;object-fit:cover}
+.my-rvv__txt{margin-top:16px;font-size:15px;line-height:1.75;color:#2A2A2E;white-space:pre-line}
+.my-rvv__help{margin-top:16px;padding-top:14px;border-top:1px solid var(--ln);font-size:13px;line-height:20px;color:var(--fg3)}
+
+/* ---------- 1100 이하: 주문 카드 버튼을 아래 줄로 ---------- */
+@media (max-width:1100px){
+  .my-ord__bd{grid-template-columns:72px minmax(0,1fr) auto;row-gap:16px}
+  .my-ord__acts{grid-column:1 / -1;flex-direction:row;justify-content:flex-end;padding-top:16px;border-top:1px solid var(--ln)}
+  .my-ord__acts .sb{width:auto;min-width:132px}
+  .my-qs__list a{grid-template-columns:150px 44px minmax(0,1fr) auto 16px;gap:12px}
+}
+/* ---------- 1024 이하: 옆 메뉴를 좁게 ---------- */
+@media (max-width:1024px){
+  .my__grid{grid-template-columns:216px minmax(0,1fr);gap:32px}
+  .my-sum{padding:20px 18px 18px}
+  .my-sum__av{width:44px;height:44px;font-size:17px}
+  .my-menu a{padding-left:12px;font-size:14px}
+  .my-step__c span{font-size:13px}
+  .my-step__c b{font-size:22px;line-height:26px}
+  .my-qs__list a{grid-template-columns:minmax(0,1fr) auto 16px;grid-template-areas:"k n i" "s t i";row-gap:0;padding:10px 4px 10px 0}
+  .my-qs__k{grid-area:k}.my-qs__n{grid-area:n}.my-qs__st{grid-area:s}.my-qs__list .stag{grid-area:t;justify-self:end}.my-qs__list .i{grid-area:i}
+  .my-tool__s{margin-left:0}
+  .my-inq__row{grid-template-columns:minmax(0,1fr)}
+  .my-inq__acts{flex-direction:row;flex-wrap:wrap;width:auto}
+  .my-inq__acts .sb{width:auto}
+  .my-pt>div{padding:18px}
+  .my-pt dt small{display:block;margin:0}
+  .my-pt dd b{font-size:22px;line-height:28px}
+  .my-ads{grid-template-columns:minmax(0,1fr)}
+  .my-dt__top{grid-template-columns:minmax(0,1fr)}
+  .my-wd__warn{padding:20px}
+}
+@media (min-width:769px) and (max-width:1024px){ .subp .my-wish{grid-template-columns:repeat(2,minmax(0,1fr))} }
+
+/* ---------- 폰 ---------- */
+@media (max-width:768px){
+  .my{padding-top:16px}
+  .my__crumb{margin-bottom:14px}
+  .my__grid{grid-template-columns:minmax(0,1fr);gap:0}
+  .my__side{position:static}
+  .my-menu,.my-side__out,.my-sum__edit{display:none}
+  .my-gate{padding-top:40px}
+  /* 요약 두 줄 */
+  .my-sum{padding:14px 16px}
+  .my-sum__who{gap:12px}
+  .my-sum__av{width:40px;height:40px;font-size:16px}
+  .my-sum__id{display:flex;flex-wrap:wrap;align-items:baseline;gap:0 8px}
+  .my-sum__type{order:2;font-size:12px}
+  .my-sum__name{order:1;font-size:14px}
+  .my-sum__name b{font-size:16px}
+  .my-sum__org{order:3;flex-basis:100%;font-size:13px;line-height:18px}
+  .my-sum__nums{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin-top:12px;padding-top:10px}
+  .my-sum__nums>div{display:block;padding:0}
+  .my-sum__nums>div+div{padding-left:14px;border-left:1px solid var(--ln)}
+  .my-sum__nums dt{font-size:13px;line-height:18px}
+  .my-sum__nums dt small{display:inline;margin-left:4px;font-size:12px}
+  .my-sum__nums dd{margin-top:2px;font-size:13px}
+  .my-sum__nums dd b{font-size:16px}
+  /* 가로 밀기 메뉴 */
+  .my-mnav{display:flex;margin-top:12px}
+  .my-mnav a{gap:4px}
+  .my-mnav .nb{margin-left:2px}
+  .my__hd{padding:24px 0 16px;align-items:center}
+  .my__hd .sd{display:none}
+  .my-sub{margin:-4px 0 24px}
+  /* 단계 띠: 3칸 × 2줄 */
+  .my-step{padding:4px}
+  .my-step__row{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .my-step__c{gap:2px;padding:12px 4px 10px}
+  .my-step__c+.my-step__c::before{display:none}
+  .my-step__c span{font-size:13px;line-height:18px}
+  .my-step__c b{font-size:20px;line-height:26px}
+  .my-step__etc{margin:2px 6px 0;padding:2px 0}
+  .my-step__etc button{min-height:40px;font-size:13px}
+  .my-step__note{display:none}
+  .my-qs{margin-top:24px}
+  .my-qs__list a{grid-template-columns:minmax(0,1fr) auto auto 16px;grid-template-areas:"k t n i" "s s s i";min-height:0;gap:2px 8px;padding:10px 0;font-size:14px}
+  .my-qs__st{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .my-qs__list .stag{height:22px;padding:0 8px;font-size:12px}
+  .my-ord.is-fold{display:none}
+  .my-ords__more{display:flex;height:48px;margin-top:4px}
+  .my-list{margin-top:28px}
+  /* 도구 막대: 빠른 기간 / 날짜 / 상태 */
+  .my-tool{gap:8px}
+  .my-tool__q{width:100%}
+  .my-tool__q .fchip{flex:1;justify-content:center}
+  .my-tool__d{width:100%;gap:6px}
+  .subp .my-tool__d .inp{flex:1 1 0;width:auto;min-width:0;height:44px;padding:0 8px;font-size:14px}
+  .my-tool__d .sb{height:44px;padding:0 14px}
+  .subp .my-tool__s{width:100%;height:44px}
+  .my-cond{margin-top:12px;font-size:13px}
+  /* 주문 카드: 머리 줄(번호·상태·상세) → 사진 + 상품명·옵션 → 접수일·금액 | 버튼. 상태 풀이 문장은 주문 상세에서 본다 */
+  .my-ord__hd{flex-wrap:nowrap;min-height:44px;padding:0 0 0 12px;font-size:13px;gap:6px}
+  .my-ord__tags .stag{padding:0 8px}
+  .my-ord__date,.my-ord__say{display:none}
+  .my-ord__no{flex:none;min-height:44px;font-size:13px}
+  .my-ord__tags{flex:0 1 auto;min-width:0;padding:6px 0}
+  .my-ord__hd .nd{flex:none}
+  .my-ord__more{justify-content:center;width:44px;min-height:44px;padding:0}
+  .my-ord__mt{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .my-ord__bd{grid-template-columns:56px minmax(0,1fr) auto;grid-template-areas:"img info info" "amt amt acts";gap:12px;align-items:center;padding:14px}
+  .my-ord--a0 .my-ord__bd{grid-template-areas:"img info info" "amt amt amt"}
+  .my-ord--a2 .my-ord__bd{grid-template-areas:"img info info" "amt amt amt" "acts acts acts"}
+  .my-ord__img{grid-area:img;align-self:start;width:56px;height:56px}
+  .my-ord__info{grid-area:info}
+  .my-ord__name{font-size:15px;line-height:22px}
+  .my-ord__opt{font-size:13px;line-height:19px}
+  .my-ord__amt{grid-area:amt;flex-direction:row;flex-wrap:wrap;align-items:baseline;column-gap:6px;text-align:left}
+  .my-ord__d2{display:block;flex-basis:100%;font-size:13px;line-height:18px;color:var(--fg3)}
+  .my-ord__av{margin:0}
+  .my-ord__av b{font-size:15.5px;line-height:22px}
+  .my-ord__av small{display:inline;margin-left:4px}
+  .my-ord__acts{grid-area:acts;gap:6px;padding:0;border:0}
+  .my-ord__acts .sb{height:44px;min-width:0;padding:0 18px}
+  .my-ord--a2 .my-ord__acts .sb{flex:1 1 0;padding:0 10px}
+  /* 문의 */
+  .my-inq__row{padding:16px 14px;gap:12px}
+  .my-inq__name{font-size:15px;line-height:22px}
+  .my-inq__name--clip{font-size:14.5px;line-height:22px}
+  .my-inq__acts{gap:6px}
+  .my-inq__acts .sb{flex:1 1 calc(50% - 3px);min-width:0;height:44px;padding:0 10px}
+  .my-inq__acts .sb:first-child:nth-last-child(odd){flex-basis:100%}
+  .my-inq__msg{margin:0 14px 14px;font-size:13px}
+  .my-inq__wait{padding:12px 14px;font-size:13px}
+  .my-inq__tog{padding:0 10px 0 14px;font-size:14px}
+  .my-inq__ans{padding:16px 14px 18px}
+  .my-inq__q p:not(.my-inq__lb),.my-inq__a p:not(.my-inq__lb){font-size:14px}
+  .my-empty{padding:44px 16px}
+  /* 포인트 */
+  .my-pt>div{padding:14px 12px}
+  .my-pt dt{font-size:13px;line-height:18px}
+  .my-pt dt small{font-size:12px}
+  .my-pt dd{margin-top:4px;font-size:13px}
+  .my-pt dd b{font-size:17px;line-height:24px}
+  .my-ptt thead{display:none}
+  .my-ptt,.my-ptt tbody{display:block}
+  .my-ptt tr{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;padding:14px 0;border-bottom:1px solid var(--ln)}
+  .my-ptt td{padding:0;border:0}
+  .my-ptt .my-ptt__c{grid-column:1;grid-row:1;font-size:14px}
+  .my-ptt .my-ptt__c .num{display:block;margin:0;font-size:13px}
+  .my-ptt .my-ptt__v{grid-column:2;grid-row:1;width:auto;font-size:15px}
+  .my-ptt .my-ptt__d{grid-column:1;grid-row:2;width:auto;font-size:13px}
+  .my-ptt .my-ptt__b{grid-column:2;grid-row:2;width:auto;font-size:13px;color:var(--fg3)}
+  .my-ptt .my-ptt__b::before{content:"잔여 "}
+  /* 배송지 */
+  .my-ad{padding:18px 16px 16px}
+  .my-ad__acts{flex-wrap:nowrap}
+  .my-ad__acts .sb{flex:1 1 0;min-width:0;height:44px;padding:0 8px}
+  /* 양식 */
+  .my-form .fset+.fset{margin-top:32px}
+  .my-form__acts .bt{width:100%}
+  .my-wd{gap:24px}
+  .my-wd__warn{gap:12px;padding:16px}
+  .my-wd__warn .smark{width:36px;height:36px}
+  .my-wd__warn .smark .i{font-size:18px}
+  .my-wd__t{font-size:15px;line-height:22px}
+  .my-wd__warn li{font-size:14px}
+  .my-wd__go{min-width:0}
+  /* 팝업 */
+  .my-dt__items>li{grid-template-columns:64px minmax(0,1fr);gap:14px;padding:16px 0}
+  .my-dt__img{width:64px;height:64px}
+  .my-dt__name{font-size:15px}
+  .my-dt__dl{grid-template-columns:minmax(0,1fr)}
+  .my-dt__dl>div{grid-template-columns:84px minmax(0,1fr)}
+  .my-rvv__ph img{width:96px;height:96px}
+  .my-star label{width:44px;height:44px}
+  .my-star .i{font-size:28px}
+}
+@media (prefers-reduced-motion:reduce){
+  .my-wish .pc,.my-inq__tog .i,.my-step__c,.my-star .i{transition:none}
+}
+
+/* ============================================================
+   임시: 공용 부품(00-base · 10-form)의 값을 마이페이지에서만 고쳐 둔다.
+   공용 쪽이 고쳐지면 이 묶음을 지운다(보고서 '공용 부품에 필요한 것'에 적음).
+   ============================================================ */
+/* 글자 크기를 DESIGN.md 단계로: 묶음 제목 = 패널 제목 20/28, 보조 설명 = 캡션 13, 작은 표식 = 상품 분류 12 */
+body[data-page="mypage"] .fset__t{font-size:20px;line-height:28px}
+body[data-page="mypage"] .fld__l small,body[data-page="mypage"] .fld__l .r,body[data-page="mypage"] .upl__tx small,body[data-page="mypage"] .files__s{font-size:13px}
+body[data-page="mypage"] .nb{min-width:20px;height:20px;font-size:12px}
+body[data-page="mypage"] .files__ext,body[data-page="mypage"] .thumbs em{font-size:12px}
+/* 둥근 표식: 떠 있지 않으니 그림자 없이 단색 원 */
+body[data-page="mypage"] .smark{box-shadow:none}
+@media (max-width:768px){
+  body[data-page="mypage"] .fset__t{font-size:17px;line-height:24px}
+  /* 알림: 화면 안(좌우 16)에 가두고 줄바꿈. 두 줄이 되어도 잘리지 않게 높이는 최소값만 */
+  body[data-page="mypage"] .sub-toast{left:16px;right:16px;max-width:none;height:auto;min-height:48px;padding:12px 16px;white-space:normal;line-height:22px;transform:translateY(260%)}
+  body[data-page="mypage"] .sub-toast.is-on{transform:none}
+  body[data-page="mypage"] .sub-toast>span{flex:1 1 auto;min-width:0}
+  body[data-page="mypage"] .sub-toast button{align-self:stretch;height:auto;margin:-12px -16px -12px 0;white-space:nowrap}
+}

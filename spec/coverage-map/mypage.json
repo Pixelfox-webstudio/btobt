@@ -1,0 +1,12 @@
+{
+ "_about": "mypage.html 에서 data-el 을 붙일 수 없는 항목(실행 중에 뜨는 알림). 상태 키는 조각의 states 그대로.",
+ "L538": {"file": "mypage.html", "state": "section=wishlist&state=clear-fail", "selector": ".sub-toast--err.is-on", "note": "전체 삭제 실패 알림. 이 상태에서 전체 삭제를 눌러도 같은 알림이 뜬다"},
+ "L1397": {"file": "mypage.html", "state": "section=wishlist&state=like-fail", "selector": ".sub-toast--err.is-on", "note": "하트를 눌러 빼기에 실패하면 카드가 그대로 남고 알림이 뜬다"},
+ "L1269": {"file": "mypage.html", "state": "section=orders&state=payfail", "selector": ".sub-toast--err.is-on", "note": "결제진행을 눌러도 같은 알림. 주문 내역 아래 안내 상자에도 고객센터 문의 문구가 있다"},
+ "L1270": {"file": "mypage.html", "state": "section=orders&state=confirmfail", "selector": ".sub-toast--err.is-on"},
+ "L1444": {"file": "mypage.html", "state": "section=addresses&state=addr-full", "selector": ".sub-toast--err.is-on", "note": "새 배송지 추가를 누를 때 20개가 차 있으면 뜨는 알림"},
+ "L1445": {"file": "mypage.html", "state": "section=addresses&state=addr-fail", "selector": ".sub-toast--err.is-on", "note": "저장·삭제·기본 지정에 실패하면 뜨는 알림"},
+ "L1483": {"file": "mypage.html", "state": "section=profile&state=saved", "selector": ".sub-toast.is-on"},
+ "L1503": {"file": "mypage.html", "state": "section=password&state=pw-done", "selector": ".sub-toast.is-on", "note": "간편 가입 회원은 '비밀번호를 설정했습니다' 문구"},
+ "L1523": {"file": "mypage.html", "state": "section=withdraw&state=wd-fail", "selector": ".sub-toast--err.is-on"}
+}
