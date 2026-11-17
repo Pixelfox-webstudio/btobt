@@ -238,7 +238,7 @@
   function order() {
     var form = $('#coForm'); if (!form || SUB.auth === 'guest' || SUB.has('invalid')) return;
     body.setAttribute('data-codock', '');
-    var TOTAL = 6146000, HAVE = 12450, balance = SUB.has('balance');
+    var TOTAL = 6760600, HAVE = 12450, balance = SUB.has('balance');
     var payBtn = $('#coPayBtn'), dockBtn = dockSubmit(form), pt = $('#coPt');
     var draw = errSummary(form);
     fold();
