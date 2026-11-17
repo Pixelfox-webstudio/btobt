@@ -1,0 +1,72 @@
+{
+  "rounds": [
+    {
+      "key": "center",
+      "page": "customer-center.html",
+      "date": "2026-11-17T11:42:10",
+      "checkPagesFailed": 0,
+      "elsMissing": 0,
+      "checkLog": [
+        "화면 점검: 페이지 1 · 상태 34 · 렌더링 204회 · 실패 0 (47초)",
+        "요소 점검(customer-center.html): 절 8개 · 항목 139 · 빠짐 0 · 선택자 문제 0"
+      ],
+      "scores": {
+        "elements": 950,
+        "states": 950,
+        "design": 880,
+        "consistency": 850,
+        "layout": 860
+      },
+      "findings": [
+        {
+          "item": "layout",
+          "page": "customer-center.html",
+          "state": "tab=qna&view=write 외 문의 작성 상태 전부",
+          "problem": "문의 작성 화면만 폼 칸(약 760px)이 안쪽으로 들여져 있어, 위의 페이지 제목·상담 연결 상자·탭 줄과 다른 탭의 섹션 제목이 서 있는 왼쪽 정렬선(.wrap 시작점)과 어긋난다.",
+          "evidence": "customer-center-pc-6.png 오른쪽 칸(문의 작성(회원)): '← 문의 내역으로 / 문의 작성'이 탭 줄 왼쪽 끝보다 약 260px 안쪽에서 시작. pc-7·pc-8·pc-9 모든 칸 동일",
+          "fix": "폼 칸을 왼쪽 정렬(margin-inline-start:0, max-width는 유지)로 바꿔 탭·제목과 같은 선에서 시작하게 하거나, 뒤로 링크·'문의 작성' 제목은 다른 탭과 같은 왼쪽 줄에 두고 폼만 폭을 제한한다."
+        },
+        {
+          "item": "consistency",
+          "page": "customer-center.html",
+          "state": "default, tab=order-guide, tab=qna, tab=notice",
+          "problem": "탭 안 섹션 제목('자주 묻는 질문 질문 14개', '주문방법', '1:1 문의 4건', '공지사항 21건')이 홈 섹션 제목(.vh__t 600/26, 앞말 .tt__pre + 이름 .tt__key) 구조가 아니고 홈보다 작다. 바로 위 탭 이름을 그대로 되풀이한다(DESIGN.md 체크리스트 7번).",
+          "evidence": "customer-center-pc-1.png 첫 칸 탭 줄 아래 '자주 묻는 질문' 제목, customer-center-pc-10.png 첫 칸 '공지사항 21건'",
+          "fix": "섹션 머리를 .vh.vh--row + h2.vh__t(.tt__pre + .tt__key, 600/26·폰 20)로 바꾸고 개수·검색은 .vh__r 쪽에 둔다. 탭 이름과 겹치는 게 싫으면 앞말로 구분한다(예: '자주 찾는' + '질문')."
+        },
+        {
+          "item": "design",
+          "page": "customer-center.html",
+          "state": "tab=order-guide, tab=order-guide&type=noprint",
+          "problem": "주문 순서 목록의 번호 원(1~5)과 따로, 오른쪽 상세 제목 앞에도 검은 원 번호를 또 붙였다. 목록의 번호는 순서를 알려 주지만 오른쪽 제목의 번호는 반복 장식이다(사장님이 싫다고 한 장식용 단계 번호 쪽).",
+          "evidence": "customer-center-pc-2.png 왼쪽·가운데 칸: 오른쪽 상세 제목 '❶ 상품 옵션·수량 고르기'",
+          "fix": "오른쪽 상세 제목(.cc-step__bt) 안의 b.cc-step__n을 빼고 제목 글자만 남긴다. 번호는 왼쪽 순서 목록 한 곳에만 둔다."
+        },
+        {
+          "item": "layout",
+          "page": "customer-center.html",
+          "state": "모든 탭(폰 390)",
+          "problem": "폰에서 페이지 제목·설명 두 줄·상담 연결 상자(대표전화 + 아이콘 3칸)·탭 줄이 첫 화면의 절반 넘게(약 470px) 차지해서 모든 탭(공지 상세·문의 작성 포함)의 실제 내용이 첫 화면 아래쪽에서 시작한다. 하단 상담 바(채팅·전화·견적문의)와 하는 일도 겹친다.",
+          "evidence": "customer-center-etc.png w390 칸: '자주 묻는 질문' 제목이 y≈470. customer-center-m-5.png 공지 상세·문의 작성 칸도 같음",
+          "fix": "폰(≤768)에서는 상담 연결 상자를 기본(자주 묻는 질문) 탭에만 보여 주거나, 대표전화 줄을 빼고 아이콘 3칸만 한 줄로 줄인다. 설명 문장도 폰에서 한 줄로 줄인다."
+        },
+        {
+          "item": "layout",
+          "page": "customer-center.html",
+          "state": "tab=qna, tab=qna&state=pending, tab=qna&state=done",
+          "problem": "조회 기간 날짜 칸이 '08/19/2026'처럼 영어식 월/일/년으로 보이는데, 같은 표의 접수일은 '2026-11-13'이라 날짜 표기가 한 화면에서 둘로 갈린다(브라우저 언어에 따라 바뀌는 기본 날짜칸 표시).",
+          "evidence": "customer-center-pc-2.png 오른쪽 칸 '조회 기간' 줄, customer-center-pc-3.png 왼쪽·가운데 칸",
+          "fix": "기본 date 칸 대신 '2026-08-19' 글자를 보여 주는 입력칸 + 달력 아이콘 버튼으로 바꾸거나, 보이는 값을 표의 날짜 형식과 같게 맞춘다."
+        },
+        {
+          "item": "layout",
+          "page": "customer-center.html",
+          "state": "tab=notice&id=3",
+          "problem": "공지 상세가 제목·등록일·본문 네 줄·목록 버튼뿐이라 PC 1440에서 화면이 빈약하다. 다른 공지로 넘어갈 길이 목록 버튼 하나뿐이다.",
+          "evidence": "customer-center-pc-11.png 가운데 칸(공지사항 상세): 본문 4줄 뒤 바로 '목록' 버튼과 푸터",
+          "fix": "본문 아래에 이전 글·다음 글 두 줄(제목 + 날짜, 1px 선)을 넣고, 견본 본문을 실제 공지 길이(문단 2~3개, 필요하면 표나 목록)로 늘린다."
+        }
+      ]
+    }
+  ]
+}
