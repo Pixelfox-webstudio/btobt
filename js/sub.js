@@ -313,7 +313,7 @@
     var cnt = $('.upl__cnt', box), files = [], fld = box.closest('.fld');
     // 견본으로 미리 넣어 둔 파일(data-files='[["로고.ai",2400000]]')
     try { JSON.parse(box.getAttribute('data-files') || '[]').forEach(function (f) { files.push({ name: f[0], size: f[1], sample: true, src: f[2] }); }); } catch (e) {}
-    function err(m) { toast(m, { error: true }); if (fld) { var mm = $('.fld__msg--err', fld); if (mm) { mm.textContent = m; fld.classList.add('is-err'); } } }
+    function err(m) { var mm = fld && $('.fld__msg--err', fld); if (mm) { mm.textContent = m; fld.classList.add('is-err'); } else toast(m, { error: true }); } // 칸 아래에 문장이 있으면 알림을 겹쳐 띄우지 않는다
     function draw() {
       if (cnt) cnt.textContent = files.length + (o.max ? ' / ' + o.max : '') + '개';
       box.dispatchEvent(new CustomEvent('upl:change', { bubbles: true, detail: files }));
@@ -369,7 +369,7 @@
       $$('input, select, textarea', fld).forEach(function (i) {
         if (bad || i.disabled || i.type === 'file') return;
         var v = (i.value || '').trim(), rule = i.getAttribute('data-rule');
-        if (i.type === 'checkbox' || i.type === 'radio') { if (i.required && !$$('input[name="' + i.name + '"]:checked', form).length) bad = i.getAttribute('data-msg') || label + ' 항목을 선택해 주세요.'; return; }
+        if (i.type === 'checkbox' || i.type === 'radio') { if (i.required && !(i.name ? $$('input[name="' + i.name + '"]:checked', form).length : i.checked)) bad = i.getAttribute('data-msg') || label + ' 항목을 선택해 주세요.'; return; }
         if (i.required && !v) bad = i.getAttribute('data-msg') || label + ' 항목을 입력해 주세요.';
         else if (v && rule && RULE[rule] && !RULE[rule][0].test(v)) bad = RULE[rule][1];
         else if (v && i.maxLength > 0 && v.length > i.maxLength) bad = '입력할 수 있는 길이(' + i.maxLength + '자)를 넘었습니다.';

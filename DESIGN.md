@@ -711,6 +711,8 @@ components:
 
 파일 이름은 홈 링크의 php 이름을 `.html`로 바꿔 쓴다(예: `category.php` → `category.html`). 위치는 `index.html`과 같은 폴더다.
 
+**만드는 방법**: 완성 HTML을 손으로 쓰지 않는다. 페이지마다 조각 하나(`tools/pages/<이름>.html`)에 본문만 쓰고 `python3 tools/build.py`를 돌리면, 빌드가 `index.html`에서 `<head>` 설정·헤더·서랍·푸터·하단 상담 바·우측 상담을 잘라 붙여 아래 골격의 완성 파일을 만든다. 조각 맨 위의 `<!--{…}-->` 머리에 제목·설명·요소 목록 절 이름(`sections`)·상태 목록(`states`)·추가 스크립트를 적는다. 같은 빌드가 `tools/css/*.css`를 합쳐 `css/sub.css`를 만들고(선택자 앞에 `.subp `를 자동으로 붙인다), 모든 페이지·상태 링크를 모은 `pages.html`을 만든다. 점검은 `python3 tools/check.py pages <이름>`(Chromium 1440·1024·768·390 + WebKit 1710·390에서 가로 스크롤·콘솔 오류·깨진 이미지·h1 개수·헤더/푸터 일치·CSS 순서)과 `python3 tools/check.py els <이름>`(요소 목록 대조)로 한다.
+
 ```html
 <!DOCTYPE html>
 <html lang="ko" data-accent="blue" data-claim="on">
@@ -735,8 +737,10 @@ components:
 <link rel="stylesheet" href="css/ui-v8.css?v=20261116">
 <link rel="stylesheet" href="css/v9.css?v=20261116">
 <link rel="stylesheet" href="css/v10.css?v=20261116">
-<link rel="stylesheet" href="css/sub.css?v=20261116">   <!-- 하위 페이지 공용(아래 규칙). 없으면 처음 만들 때 생성 -->
+<link rel="stylesheet" href="css/sub.css?v=20261116">   <!-- 하위 페이지 공용. tools/css/*.css 를 빌드가 합친 파일 -->
 <script src="js/site-v10.js?v=20261116" defer></script>
+<script src="js/sub.js?v=20261117" defer></script>   <!-- 상태 보기·팝업·알림·양식 검사 -->
+<script src="js/sub-{과제}.js?v=20261117" defer></script>   <!-- 페이지 전용(있을 때만) -->
 </head>
 <body>
 <!-- ② index.html의 <header class="site-head v9h" id="siteHead"> ~ </header>,
@@ -747,115 +751,82 @@ components:
     <div class="wrap">
       <nav class="crumb" aria-label="현재 위치"><a href="#" data-href="index.php">홈</a><span aria-hidden="true">/</span><a href="#" data-href="category.php">단체복</a><span aria-hidden="true">/</span><span aria-current="page">라운드 티셔츠</span></nav>
       <h1 class="sub-head__t">라운드 티셔츠</h1>
-      <p class="sh__d">반팔·긴팔·아동용 라운드 티셔츠를 모았습니다.</p>
+      <p class="sub-head__d">반팔·긴팔·아동용 라운드 티셔츠를 모았습니다.</p>
     </div>
   </section>
-  <section class="psec" aria-labelledby="…">…</section>   <!-- 내용 섹션: .wrap 안에, 섹션 간격은 var(--sec) -->
+  <div class="wrap sub-body">…</div>   <!-- 본문. 묶음 사이는 .blk(64/44) · .blk-s(40/28) -->
 </main>
 
 <!-- ③ index.html의 <footer class="ft"> ~ </footer>, <nav class="mbar"> ~ </nav>, <div class="side-cs"> ~ </div> 를 그대로 복사 -->
 </body>
 </html>
 ```
-- CSS 순서를 바꾸지 않는다. 뒤 파일이 앞 파일을 덮어쓰는 구조다(`ds-blue` → `site` → `v4` → `v8-base` → `v8` → `ui-v8` → `v9` → `v10` → `sub`).
+- CSS 순서를 바꾸지 않는다. 뒤 파일이 앞 파일을 덮어쓰는 구조다(`ds-blue` → `site` → `v4` → `v8-base` → `v8` → `ui-v8` → `v9` → `v10` → `sub.css`).
+- `main`의 클래스는 `subp`다. 홈 CSS에 이미 `.sub`가 있어서 겹치지 않게 이 이름을 쓴다.
 - 현재 메뉴 강조가 필요하면 해당 `.bz`에 `is-open`을 쓰지 않는다(드롭다운이 열린다). 하위 페이지에서는 따로 강조하지 않는다.
-- 빠른 보기·장바구니 서랍·토스트가 필요한 페이지는 `index.html`의 해당 블록을 복사하고 동작은 페이지 전용 JS로 붙인다(`v10.js`는 홈 전용).
+- 따로 열리는 창(견적서 7종, 시안확인)은 조각 머리에 `"shell": "bare", "win": true`를 적는다. 사이트 헤더·푸터 대신 얇은 머리줄 `.win__bar`(로고 · 문서 이름 · 닫기 · 주요 버튼)를 쓰고 바탕은 `#F5F5F6`이다.
+- 주문서·바로주문·주문 완료·카드 결제 처리는 `"nocs": true`로 빠른 상담(하단 상담 바·우측 상담)을 감춘다.
+- `js/sub.js`는 홈에 없는 공통 요소(로그인 이름·로그아웃, 장바구니 수, 인기 검색어·진행 중 이벤트, 우측 상담 메뉴, 방문 기록 동의)를 실행 중에 붙인다. 홈에도 같은 요소를 넣으면 이 부분은 지운다.
 
-## Subpage Components (하위 페이지 전용, 파생 규칙)
+## Subpage Components (하위 페이지 전용)
 
-홈에 없는 컴포넌트다. 아래 값만 쓰고 `css/sub.css` 한 파일에 모은다(페이지마다 다시 정의하지 않는다). 모든 값은 위 토큰에서 왔다.
+홈에 없는 부품이다. 값은 모두 위 토큰과 홈 CSS에 이미 있는 값에서 가져왔다. 원본은 `tools/css/00-base.css`(골격·안내·표·팝업) · `10-form.css`(양식) · `20-list.css`(상품 목록) · `95-icons.css`(아이콘)이고, `tools/build.py`가 이 조각들을 `css/sub.css` 한 파일로 합친다. 마크업 견본은 `kit.html`(부품 견본 페이지, 원본 `tools/pages/kit.html`)에 모두 있다. 새 페이지는 먼저 이 부품을 쓰고, 없을 때만 페이지 조각 CSS에 접두어를 붙여 만든다.
 
-```css
-/* css/sub.css — 하위 페이지 공용 (DESIGN.md 'Subpage Components' 그대로) */
-/* 페이지 머리: 헤더 아래 첫 구역. 위 56 / 폰 40, 아래는 다음 섹션의 --sec이 맡는다 */
-.sub-head{padding-top:56px}
-.crumb{display:flex;flex-wrap:wrap;align-items:center;gap:0 8px;font-size:13px;line-height:20px;color:#6B6B70}
-.crumb a:hover{color:#000;text-decoration:underline;text-underline-offset:3px}
-.crumb span[aria-hidden]{color:#C8C8CC}
-.crumb [aria-current]{color:#000;font-weight:600}
-.sub-head__t{margin-top:12px;font-size:32px;font-weight:700;letter-spacing:-.025em;line-height:1.3;color:#000;text-wrap:balance}
-.sub-head .sh__d{margin-top:8px}
-.sub .psec:first-of-type{padding-top:40px}   /* 머리 바로 다음 섹션 */
+**하위 페이지에서만 쓰는 변수**(`#main.subp`에 정의): `--fg #000`(제목) · `--fg2 #474747`(본문) · `--fg3 #6B6B70`(보조) · `--ln #DEDEE2`(선) · `--tint #F5F5F6`(회색 바탕) · `--blk 64px / 폰 44px`(묶음 사이) · `--blk-s 40px / 폰 28px`(작은 묶음 사이). 본문 기본 15px / 1.7 / `#0E0E10`.
 
-/* 목록 도구 줄: 왼쪽 개수 · 오른쪽 정렬 */
-.lbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:16px;border-bottom:1px solid #000}
-.lbar__cnt{font-size:14px;color:#6B6B70}
-.lbar__cnt b{color:#000;font-weight:700}
-.sort{display:flex;gap:16px}
-.sort button{font-size:14px;font-weight:500;color:#8B8B90}
-.sort button[aria-pressed="true"]{color:#000;font-weight:700}
+**홈 CSS에서 가져와 하위 페이지에서 처음 쓰는 값**: 입력 오류는 `site.css`의 red 강조 세트 세 값만 쓴다 — 선·아이콘 `#D10019`, 글자 `#B80016`, 옅은 바탕 `#FFF0F1`. 오류는 색만으로 알리지 않고 항상 문장을 함께 둔다. 검정 버튼 눌림 `#262626`(`v9.css .hq:hover`), 옅은 칸 바탕 `#EDEDEF`(`v10.css`). 이 밖의 hex는 새로 만들지 않는다. 알림(토스트)은 오류일 때도 검정 바탕 + 경고 아이콘이다(빨간 토스트를 쓰지 않는다).
 
-/* 필터칩(.rva__tab과 같은 값) */
-.chips{display:flex;flex-wrap:wrap;gap:6px}
-.chip{height:36px;padding:0 14px;border:1px solid #DDDDE1;border-radius:999px;background:#fff;font-size:13.5px;font-weight:600;color:#55545A;white-space:nowrap;transition:background-color .15s,border-color .15s,color .15s}
-.chip:hover{border-color:#1B1B1F;color:#1B1B1F}
-.chip[aria-pressed="true"]{border-color:#1B1B1F;background:#1B1B1F;color:#fff}
+| 부품 | 클래스 | 값 |
+|---|---|---|
+| 페이지 머리 | `.sub-head` > `.wrap` > `.crumb` + `h1.sub-head__t`(+`small`) + `p.sub-head__d` · 가운데 `.sub-head--c` · 오른쪽에 도구 `.sub-head--row` | 위 48(폰 40) · 경로 13/20 `--fg3`, 현재 위치 600 `#000` · 제목 32/700/1.3 -0.025em(폰 24/1.35) · 설명 15/1.75 `--fg2` 최대 640 |
+| 본문 시작 | `.wrap.sub-body` · 좁은 열 `.wrap--760` `--560` `--440` | 머리 아래 40(폰 28) |
+| 작은 제목 | `h2.st`(+`small`) · `.st--s` · 제목 줄 `.st-row` · 설명 `.sd` | 20/700/28 -0.02em · 17/24 · 설명 14/22 `--fg3` |
+| 페이지 안 메뉴 | 알약 탭 `.stab`(`a[aria-current]` / `button[role=tab][aria-selected]`) · 가운데 `.stab--c` | `tab-pill` 값 그대로: 칸 46(폰 44) · 15/500 `#8B8B90`(폰 14) → 선택 `#000` 바탕 흰 글자 700. 칸들을 1px `--ln` 알약 줄(안쪽 4px)에 담는다. 넘치면 옆으로 민다 |
+| 분류 고르기 | 홈의 떠 있는 알약 줄 `.bh`(구조는 `category.html`) | 홈 값 그대로 |
+| 보조 버튼 | `.sb` + `--ink --line --gray --soft --acc` + 크기 `--s 36 / --m 44 / 기본 48 / --l 56` · `.sb--block` | 알약 · 14/600(`--l` 15/700). 폰에서 혼자 누르는 버튼은 44 이상 |
+| 버튼 줄 | `.acts` `.acts--c` `.acts--end` · 양식 끝 `.form-acts` | 간격 8 |
+| 상태 칩 | `.stag` + `--ink --acc --line --red` · 큰 것 `--l` | 높이 24(28) · 12/600 · 알약 · 기본 `#F1F1F3` 바탕 `#6B6B70` |
+| 선 상자 | `.cbox` · 회색 `.cbox--tint` · 작은 것 `.cbox--s` | 안쪽 28(20) · 1px `--ln` · 16px |
+| 안내 상자 | `.note`(+`.note__t` + `ul`) · 선 `.note--line` | 20/24 안쪽 · 회색 바탕 · 16px · 14/22 `--fg2` · 목록 점 3px |
+| 한 줄 안내 | `.msg` · `.msg--err` · `.msg--ok` | 13/16 안쪽 · 16px · 오류 `#FFF0F1`/`#B80016` · 완료 `--accent-soft`/`--accent-text` |
+| 빈 상태 | `.empty` > `.empty__ic` + `.empty__t` + `.empty__d` + `.acts` | 위아래 72 · 둥근 표식 52(회색) · 제목 17/700 · 설명 14/22 최대 420 |
+| 한 가지 결과 화면 | `.gate` > `.smark` + `.gate__t` + `.gate__d` + `.gate__box` + `.acts` (`unsubscribe.html`) | 위 96 · 표식 52 원(파랑 옅은 바탕, `--ink --gray --red`) · 제목 24/700 · 설명 15/1.75 최대 440 |
+| 정보 줄 | `dl.dl` > `div` > `dt` + `dd` · 작은 것 `.dl--sm` · 선 없음 `.dl--plain` | 위 1px 검정, 줄마다 1px `--ln` · 이름 칸 132(작은 것 96) · 14.5/22 |
+| 표 | `table.tbl` · 폰에서 쌓기 `.tbl--stack`(`td[data-th]`) · 정렬 `.r` `.c` · 넘침 `.tbl-scroll` | 위 1px 검정 · 머리 회색 바탕 600 · 칸 16/12 · 14/22 `#363636` |
+| 쪽 번호 | `.pager`(`SUBDATA.pager()`) | 44 원(폰은 칸이 많으면 폭만 줄어듦) · 현재 쪽 검정 바탕 흰 글자 · 위 48(폰 32) |
+| 펼침 목록 | `.qlist` > `details` > `summary` + `.qlist__a` | 위 1px 검정 · 질문 16/600 · 꺾쇠가 180° 돈다 |
+| 단계 표시 | `ol.stp` > `li.is-done / .is-on` > `b` + `span` | 순서를 알리는 작은 크기로만 쓴다(크게 장식하지 않는다) |
+| 팝업 | `.pop` > `.pop__dim` + `.pop__box(--m 640 / --l 880 / --xl 1120)` > `.pop__head`(`.pop__t` + `.pop__x`) + `.pop__body` + `.pop__foot` · 가운데 확인형 `.pop--c` | 기본 폭 480 · 16px · 제목 20/700(폰 18) · 닫기 44 원 · 그림자 `0 40px 90px -30px rgba(0,0,0,.6)` |
+| 옆 패널 | `.side` > `.side__dim` + `.side__panel` > `__head` `__body` `__foot` | 폭 480 · 오른쪽에서 들어온다 |
+| 양식 | `fieldset.fset` > `legend.fset__t` · 2열 `.fgrid`(`.full`) · 1열 `.fstack` · 항목 `.fld` > `.fld__l`(`em` 필수) + 입력 + `.fld__help` + `.fld__msg--err/--ok` | 묶음 위 1px 검정, 묶음 사이 48 · 묶음 제목 18/700 · 칸 간격 24 20 · 라벨 14/600 |
+| 입력 | `.inp` `.sel` `.txa` · 입력+버튼 `.inrow` · 주소 `.addr` · 비밀번호 `.pw` · 체크 `.chk` · 라디오 `.rdo` · 알약 선택 `.seg` · 카드 선택 `.opts` > `.opt` · 칩 `.fchips` > `.fchip` · 첨부 `.upl` + `.files` / `.thumbs` · 수량 `.qty` · 자동등록방지 `.cap` · 동의 `.agree` | 입력칸 높이 48 · 모서리 12(입력칸·작은 칸만) · 1px `#C8C8CC` → 포커스 강조색 + 3px `--accent-soft` · 오류 `#D10019` 테두리 + 아래 `#B80016` 문장 · 체크·라디오 20 원, 고르면 검정 · 카드 선택 16px |
+| 따로 열리는 창 | `.win__bar`(로고 + 문서 이름 + 닫기) · `.win__body` | 사이트 헤더·푸터 없이 얇은 머리줄만 둔다 |
+| 사진 표시 | 연출 사진 위 `.lhero__note`("연출 이미지입니다.") · 교체할 자리 `data-slot` · 견본 값 `data-sample` | |
+| 아이콘 | `<i class="i i-이름" aria-hidden="true">` · 크기 `.i--14`~`.i--32`(기본 20) | 마스크 아이콘 62종(`95-icons.css`). 1.6px 선, 둥근 끝 |
 
-/* 쪽 번호 */
-.pager{display:flex;justify-content:center;align-items:center;gap:4px;margin-top:48px}
-.pager a,.pager button{display:grid;place-items:center;min-width:40px;height:40px;padding:0 6px;border-radius:999px;font-size:14px;font-weight:600;color:#6B6B70;font-variant-numeric:tabular-nums;transition:background-color .15s,color .15s}
-.pager a:hover{color:#000;background:#F1F1F3}
-.pager [aria-current="page"]{background:#000;color:#fff}
-.pager .arw{width:40px;height:40px}
+**상태 보기**: 시안의 모든 상태는 주소 값으로 연다(`?state=empty`, `?state=guest`, `?tab=notice&state=empty`). `js/sub.js`가 `data-st="상태"`(그 상태에서만 보임), `data-st-not`(그 상태에서 숨김), `@member` / `@guest`, `data-open-st`(팝업 연 채로), `data-toast-st`, `data-err-st`, `data-ok-st`, `data-busy-st`를 처리한다. 상태 목록은 페이지 조각 머리의 `states`에 적고, `pages.html`(검수 목록)이 그 목록으로 링크를 만든다.
 
-/* 입력 */
-.fld{display:grid;gap:8px}
-.fld__l{font-size:14px;font-weight:600;line-height:22px;color:#000}
-.fld__l em{font-style:normal;color:var(--accent-text)}          /* 필수 표시 * */
-.inp,.sel,.txa{width:100%;height:48px;padding:0 16px;border:1px solid #C8C8CC;border-radius:12px;background:#fff;font:400 15px/1.5 var(--ds-font);color:#0E0E10;transition:border-color .15s}
-.txa{height:auto;min-height:140px;padding:14px 16px;line-height:1.75;resize:vertical}
-.inp::placeholder,.txa::placeholder{color:#9A979E}
-.inp:hover,.sel:hover,.txa:hover{border-color:#8B8B90}
-.inp:focus,.sel:focus,.txa:focus{outline:0;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
-.fld__help{font-size:13px;line-height:20px;color:#6B6B70}
-.fld.is-err .inp{border-color:#D10019}.fld.is-err .fld__help{color:#D10019}   /* 오류색 = data-accent="red" 세트 값 */
+## 페이지 유형별 조립법
 
-/* 표 */
-.tbl{width:100%;border-collapse:collapse;border-top:1px solid #000;font-size:14px;line-height:22px;color:#363636}
-.tbl th{padding:14px 12px;border-bottom:1px solid #DEDEE2;background:#F5F5F6;font-weight:600;color:#000;text-align:left}
-.tbl td{padding:16px 12px;border-bottom:1px solid #DEDEE2;vertical-align:top}
-.tbl .num{text-align:right}
+유형마다 레퍼런스 캡처를 보고 정한 구조다. 근거와 버린 후보는 `research/decisions/<유형>.md`, 캡처는 `research/refs/<유형>/`에 있다. 새 페이지는 가장 가까운 유형의 조립을 그대로 따른다. 모든 유형에 공통: 머리는 `.sub-head`(경로 → h1 → 설명 한 줄), 본문은 `.wrap.sub-body`, 버튼은 한 화면에 파란 것 하나까지, 빈 상태·오류·비로그인·처리 중·완료는 모두 주소 값(`?state=`)으로 볼 수 있게 만든다.
 
-/* 자주 묻는 질문 */
-.faq{border-top:1px solid #000}
-.faq details{border-bottom:1px solid #DEDEE2}
-.faq summary{display:flex;justify-content:space-between;gap:20px;padding:22px 0;font-size:16px;font-weight:700;line-height:24px;letter-spacing:-.01em;color:#000;cursor:pointer;list-style:none}
-.faq summary::-webkit-details-marker{display:none}
-.faq summary::after{content:"+";font-size:22px;font-weight:400;line-height:24px;color:#8B8B90;transition:transform .3s var(--ease)}
-.faq details[open] summary::after{transform:rotate(45deg)}
-.faq details p{padding:0 40px 24px 0;font-size:15px;line-height:1.75;color:#474747}
+| 유형 | 페이지 | 조립 (위에서 아래, PC → 폰) | 결정 문서 |
+|---|---|---|---|
+| A. 상품 목록 | `category` `brand` `search` | 경로 → 분류 사진 배너(PC 높이 280 안팎 · 폰 3:2, 사진 위 "앞말 + 이름" h1과 견적문의 버튼. 사진이 여러 장이면 이전·다음과 진행 막대, 자동으로 넘기지 않음) → 세부 분류 `.bh`(헤더 아래 붙는 알약 줄) → 도구 줄(왼쪽 상품 수 · 필터 버튼 6개, 오른쪽 정렬 3개 글자) → 고른 필터 칩 → (작업복·브랜드 베스트 한 줄) → `.pgrid` 4/3/2열 `.pc` → `.pager`. 필터는 PC에서 버튼 아래 뜨는 상자(한 번에 한 종류, 초기화·적용), 폰에서 화면 가득 필터 모음(아래 `초기화 / N개 상품 보기` 고정). 브랜드는 `.bh--logo` + 형태 칩 묶음, 검색은 배너 없이 제목과 수만. 결과 없음은 격자 자리에 `.empty` + 다음 행동 | `list.md` |
+| B. 상품 상세·구매 | `product` | PC 사진 5fr : 구매 6fr(사이 56, 사진은 붙어 따라옴) · 769~1099 2:3 · 폰 한 단. 구매 칸 순서(PC·폰 같음): 분류 → 상품명 h1(28/800, 폰 22) + 관심 → 가격(24/800) + 수량 할인 한 줄 → 정보 줄 → 제작 기간 → 색상 → 색상 × 사이즈 수량 표(색상별 소계, 사이즈별 합계) → 포장 → 인쇄(고른 뒤에만 펼침) → 선택 요약(총수량 · 할인율 · 총액) → 주문하기 · 장바구니 · 견적문의. 요약이 화면을 벗어나면 따라오는 바(PC 아래 72px 한 줄, 폰 두 줄 — 이 페이지만 `.mbar`를 감춤). 상세 정보 4절은 탭으로 숨기지 않고 펼친 채 붙는 이동 줄(`.stab`)을 단다. 각 절은 PC 왼쪽 제목 240 + 내용 | `product.md` |
+| C. 장바구니·결제 | `cart` `order` `order-now` | PC 왼쪽 목록(남는 폭) + 오른쪽 요약 380(헤더 아래 붙어 따라옴) · 1024 이하 한 열 · 폰은 화면 아래 고정 띠(선택 수 · 총 수량 + 요청 버튼). 장바구니 한 건: 체크 → 사진(104, 폰 72) → 분류 · 상품명 · 색상/인쇄/포장 한 줄 → 사이즈별 `− 수량 +` 칸 격자(PC 3~4칸, 폰 2칸) → 합계 한 줄. 목록 머리 "전체 선택 (n/N) · 선택 삭제". 주문서 왼쪽: 주문 상품(수정 불가) → 견적정보 → 주문정보 → 배송정보 → 포인트 → 결제수단(+ 결제 희망일 · 증빙서류) → 유의사항. 오른쪽: 금액 → 동의 → 금액이 들어간 결제 버튼. 선택지는 드롭다운 없이 펼친다(`.seg`, `.opts`), 고른 값의 추가 칸은 바로 아래 | `cart-checkout.md` |
+| D. 결과·안내 | `order-complete` `nicepay-return` `unsubscribe` | 가운데 한 열. `.gate`(둥근 표식 → h1 → 안내 한두 줄) → 폭 560 본문: 정보 줄 `dl.dl`(번호 · 유형 · 금액 · 결제수단) → 회색 상자 "다음 순서"(22px 원 안 작은 번호, 순서만 알림) → 안내 한 줄 → 검정 버튼 하나. 빠른 상담은 감춘다(`nocs`). 실패 화면은 같은 틀에 상태 칩과 다시 할 일 | `result.md` |
+| E. 견적·입력 양식 | `quote` `quote-intro` `custom-intro` `partnership` | 견적문의 대화형: 대화 열(최대 760) + 오른쪽 340(붙어 따라옴: 진행률 → 이용 안내 → 견적서 미리보기). 답한 질문은 쌓이고 눌러서 고친다. 한 화면 양식(`?mode=form`): 왼쪽 상품 블록 + 오른쪽 요약. 맞춤작업복: 첫 화면 사진 7 : 소개 5 → 양식 묶음(PC 왼쪽 260 묶음 제목 + 오른쪽 칸, 묶음 위 1px 검정 선) → 개인정보 동의 → 버튼 줄. 오류는 양식 위 요약 상자 + 칸 아래 문장 두 곳. 파트너 제휴: 소개·연락처 5 : 양식 7(폰 소개 → 양식 → 연락처). 견적문의 안내: `.sub-head--row`(오른쪽 검정 버튼) → 3단계 카드(사진 4:3 → 작은 "1단계" → 이름 17/700 → 설명, 높이 같게) → `.note` | `quote-form.md` `quote-form-custom.md` |
+| F. 로그인·가입 | `login` `signup` `signup-general` `signup-business` `signup-general-info` `signup-business-info` | 로그인 · 유형 선택 · 가입 방법: PC 같은 폭 2칸(사이 80) — 왼쪽 가운데 440 양식, 오른쪽 사진(16px, 왼쪽 아래 "앞말 + 이름" 소개 문구, "연출 이미지입니다.") · 폰 양식 → 사진(화면 끝까지, 4:3). 정보 입력: 단계 표시(작게) → 제목 → 양식(묶음 제목 + 검정 선, 짝이 되는 짧은 칸만 한 줄 2칸, 버튼 딸린 칸은 한 줄) + 오른쪽 340 "가입 전 확인"(남은 조건 체크 + 가입 버튼, 붙어 따라옴). 기업은 회사정보 → 개인정보 → 동의 → 자동등록방지 | `auth.md` |
+| G. 계정 | `mypage`(`?section=`) `draft-preview` `inquiry-draft` | 마이페이지: PC 옆 메뉴 264 + 사이 56 + 본문(옆 메뉴는 붙어 따라옴). 옆 메뉴 = 회원 요약(첫 글자 원 · 구분 칩 · 이름 · 기업명 → 포인트 · 누적 주문금액) → "쇼핑 정보" 묶음 → 선 → "계정 관리" 묶음. 현재 위치는 굵게 + 왼쪽 2px 검정 선, 처리할 일만 새 소식 수 `.nb`. 폰은 옆 메뉴 대신 회원 요약 두 줄 + 메뉴 탭 한 줄(`.stab`, 옆으로 민다). 부분은 주소(`?section=orders` 등)로 바꾸고 새로 불러오지 않는다. 시안확인 창: `.win__bar` + 회색 바탕 흰 카드 — 왼쪽 시안 격자(품목 묶음마다 2열 정사각, 번호) + 오른쪽 380(견적 요약 → 시안 검토), 칸을 누르면 큰 팝업 | `account.md` `account-draft.md` |
+| H. 게시판·콘텐츠 | `customer-center`(`?tab=`) `reviews` `review-view` `event` `event-view` `delivery-cases` | 고객센터: 머리 → 상담 연결 띠(회색 16 한 칸을 넷으로: 대표전화 22/800 + 운영시간 · 카카오톡 · 1:1 문의 · 견적문의) → 탭 4개(`.stab`, 주소 `?tab=`) → 탭별 내용(자주 묻는 질문: 제목 줄 + 검색 320 → 분류 칩 → `.qlist`, 공지: 표 + `.pager`, 1:1 문의: 목록/작성 `?view=write`). 콘텐츠: `.sub-head` → 묶음 메뉴 `.stab`(납품사례 · 구매후기 · 이벤트 · 파트너십) → 본문. 후기 목록은 회색 구역 위 홈 `.rv__card` 3/2열(폰 2열) + `.pager`, 상세의 h1은 "구매후기"·"이벤트"이고 글 제목은 h2. 납품사례: 로고 벽(PC 8열, 폰 두 줄 옆으로 밀기) → 고른 업체 설명 + 사진 격자 → 크게 보기 | `support-board.md` `support-board-content.md` |
+| I. 문서 | 견적서 7종(`quote-preview` `quote-document` `quote-request-document` `custom-quote-*` `safety-quote-*`), `terms` `privacy` `refund-policy` `guest-privacy` | 견적서 창: `.win__bar`(문서 이름 · 닫기 · 주요 버튼 하나) + 종이(흰 바탕, 16px, 그림자 없음, 최대 1040, 안쪽 56/64 · 폰 28/20): 가운데 "견적서"(32/700, 폰 24) + 번호 → 머리 2단(왼쪽 수신 · 견적금액, 오른쪽 공급자 상자) → 품목 표 → 합계 → 안내. 폰은 견적금액 → 수신 → 공급자 순. 약관: 경로 → h1 → 문서 정보 줄(현행 칩 · 적용일 · 이전 방침 보기) → 약관 묶음 탭(`.stab`) → 본문(조항 제목 16/700, 본문 15/1.75). 개인정보처리방침은 PC 왼쪽 232 목차(붙어 따라옴, 읽는 항목 표시) + 본문 760, 1023 이하 회색 목차 상자(폰 2열) | `document.md` `document-policy.md` |
 
-/* 안내 상자 · 빈 상태 */
-.note{padding:20px 24px;border-radius:16px;background:#F5F5F6;font-size:14px;line-height:22px;color:#474747}
-.note b{color:#000}
-.empty{padding:80px 20px;text-align:center;font-size:15px;color:#6B6B70}
-.empty .pbtn{margin-top:24px}
-
-@media (max-width:768px){
-  .sub-head{padding-top:40px}
-  .sub-head__t{margin-top:8px;font-size:24px;line-height:1.35;letter-spacing:-.02em}
-  .sub .psec:first-of-type{padding-top:28px}
-  .pager{margin-top:32px}
-  .tbl--stack thead{display:none}
-  .tbl--stack tr{display:grid;gap:4px;padding:16px 0;border-bottom:1px solid #DEDEE2}
-  .tbl--stack td{padding:0;border:0}
-  .note{padding:16px 18px}
-}
-```
-
-**페이지 유형별 조립법**
-| 페이지 | 조립 |
-|---|---|
-| 카테고리 목록 `category` | `.sub-head` → `.bh` 알약 탭(하위 분류) → `.lbar`(개수·정렬) → `.pgrid`(4/3/2열, 카드 24개) → `.pager` |
-| 브랜드 `brand` | `.sub-head` → `.bh.bh--logo`(로고 탭, 홈 구조 복사) → 브랜드 정보 줄 `.bi` → `.pgrid` + `.pc__quote` 카드 → `.pager` |
-| 상품 상세 `product` | 2단(PC 사진 7 : 정보 5, gap 48 / 폰 1단). 사진 1:1·모서리 16·썸네일 줄, 정보는 빠른 보기 순서(분류 Barlow 14 대문자 `#8E8E94` → 이름 30/800 → 가격 24/800 → `dl` 사이즈·색상·수량 → `.bt--ink` 장바구니 담기 + `.bt--line` 견적문의) → 아래 상세 이미지 → 같은 분류 상품 `.md__rail` |
-| 견적문의 `quote-intro` / `custom-intro` | `.sub-head` → 사진 배너 → 진행 순서(번호 + 제목 + 설명 목록) → `.fld` 폼(2열, 폰 1열, gap 24 20) → `.bt--acc` 제출 하나 |
-| 고객센터 `customer-center` | `.sub-head` → `.bh` 탭(주문방법·공지사항·FAQ·1:1 문의) → 탭별 `.faq` / `.tbl` / `.note` |
-| 구매후기 `reviews` | `.sub-head` → `.chips`(전체·글 후기·납품 사진) → `.rv__list`(3/2열) → `.pager` |
-| 납품사례 `delivery-cases` | `.sub-head` → `.chips`(품목) → 사진 카드 격자(1:1 사진 16px + 업체명 16/700 + 품목 13 `#6B6B70`) |
-| 로그인·회원가입 | 가운데 단일 열 `max-width:440px`, `.sub-head__t` 가운데 정렬, `.fld` 세로 gap 20, `.bt--ink` 전체 폭 |
-| 약관·개인정보 `terms` / `privacy` | 단일 열 `max-width:760px`, 조항 제목 16/700 `#000`, 본문 15/1.75 `#474747`, 조항 사이 32 |
-| 마이페이지 `mypage` | `.bh` 탭(주문내역·시안확인) → `.tbl.tbl--stack` 또는 카드 목록 → `.empty` |
+**유형을 가리지 않는 규칙** (작업 중에 정한 것)
+- 오른쪽에 붙어 따라오는 요약·확인 칸은 폭 340~380, `position:sticky; top:calc(var(--bh-top) + 24px)`. 1024 이하에서는 한 열로 내린다.
+- 폰에서 화면 아래 고정 띠를 쓰는 페이지(상품 상세·장바구니·주문서)는 그 페이지만 `.mbar`를 감추고(`body[data-nocs]`), 띠 안에 상담 수단을 넣거나 상담이 필요 없는 화면임을 확인한다.
+- 사진이 필요한데 자료가 없으면 있는 사진을 쓰고 `data-slot`, AI 연출 사진이면 "연출 이미지입니다."를 붙인다. 회색 빈 상자로 두지 않는다.
+- 단계·순서 번호는 22px 안팎의 작은 원이나 작은 글자로 순서만 알린다. 큰 장식 숫자는 쓰지 않는다.
 
 ## Responsive & Accessibility
 
@@ -876,7 +847,7 @@ components:
 ## Generation Checklist
 
 하위 페이지를 다 만든 뒤 아래를 하나씩 확인한다.
-1. `<head>`의 CSS 9개가 순서대로 들어 있고, `site-v10.js`만 로드했다(`v10.js`·`bgfx.js` 없음).
+1. `<head>`의 CSS 9개가 순서대로 들어 있고, 스크립트는 `site-v10.js` · `sub.js` · 페이지 전용 JS만 로드했다(`v10.js`·`bgfx.js` 없음). 빌드(`tools/build.py`)로 만들면 저절로 맞는다.
 2. 헤더·서랍·푸터·`.mbar`·`.side-cs`가 `index.html`과 글자 하나까지 같다.
 3. `<main id="main" class="v4 v5 v6 v7 v8 v9 v10 subp">`를 썼다.
 4. 새 색 hex가 이 문서 표에 있는 값뿐이다. 강조색은 `var(--accent)`로 참조했다.
@@ -886,6 +857,9 @@ components:
 8. 1440 · 1024 · 768 · 390 네 폭에서 가로 스크롤이 생기지 않는다.
 9. `data-rv`를 쓰지 않았고, 움직임에 `prefers-reduced-motion` 처리를 했다.
 10. 문구가 평서문이고 사실만 담았으며, AI 사진에 "연출 이미지입니다."를 붙였다.
+11. 요소 목록의 "안내·상태"(빈 상태, 오류, 비로그인, 처리 중, 완료, 조건별 화면)를 모두 조각 머리 `states`에 적어 주소로 열 수 있다.
+12. `python3 tools/check.py pages <이름>`(6가지 화면)과 `python3 tools/check.py els <이름>`(요소 목록 대조)이 실패 0이고, `python3 tools/clash.py`가 홈과 겹치는 클래스 0이다.
+13. 폰(390)에서 누르는 칸이 44px 이상이고, 고정 띠·따라오는 바가 내용을 가리지 않는다.
 
 ## Source Map
 
@@ -899,5 +873,12 @@ components:
 | v10 최종: 1280 틀, `--sec`, 알약/16px 모서리, 섹션 제목, 후기, 팝업 | `css/v10.css` |
 | 헤더 동작 | `js/site-v10.js` |
 | 상품 카드 마크업 원본 `cardHTML()` | `js/v10.js` 211행 부근 |
+| 하위 페이지 공용 부품(골격·안내·표·팝업 / 양식 / 상품 목록 / 아이콘) | `tools/css/00-base.css` · `10-form.css` · `20-list.css` · `95-icons.css` → 빌드가 `css/sub.css`로 합침 |
+| 페이지별 스타일 | `tools/css/30-product.css` ~ `85-policy.css`(과제마다 접두어: `pd` `co` `rs` `qt` `cf` `au` `my` `dv` `cc` `ct` `qd` `po`) |
+| 상태 보기·팝업·알림·양식 검사·헤더 보강 | `js/sub.js`(`window.SUB`) |
+| 하위 페이지 상품·브랜드 자료 | `js/sub-data.js`(`window.SUBDATA`, 홈 자료를 합친 것) |
+| 페이지 조각과 빌드·점검 도구 | `tools/pages/*.html`, `tools/build.py`, `tools/check.py`, `tools/els.py`, `tools/clash.py` |
+| 유형별 구조 근거 | `research/decisions/*.md`, 캡처 `research/refs/<유형>/` |
+| 부품 견본 페이지 | `kit.html` |
 
 측정: 2026-11-17, Playwright Chromium, 뷰포트 1440×900 · 1024×768 · 768×1024 · 390×844. 홈 CSS를 고치면 이 파일의 해당 값도 같이 고친다.

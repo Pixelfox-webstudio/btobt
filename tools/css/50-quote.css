@@ -111,8 +111,6 @@
 .qt-qty__row .qty input:focus{outline:0;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
 .fld.is-err .qt-qty__row .qty input{border-color:#D10019}
 .qt-qty__u{font-size:15px;color:var(--fg2)}
-/* 임시: 공용 .upl__cnt 가 폰에서 '2 / 5개' 중간에서 줄바꿈된다(보고서에 적음) */
-.qt-upl .upl__cnt,.qt-ffiles .upl__cnt{white-space:nowrap}
 .qt-date .inp{max-width:240px}
 .qt-ct{gap:16px}
 

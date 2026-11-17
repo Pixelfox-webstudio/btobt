@@ -4,7 +4,7 @@
 사용: python3 tools/clash.py"""
 import re, pathlib
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-ALLOW = set('bt bt--ink bt--acc bt--line bt--wh pbtn lnk arw hq pc pc__media pc__acts pc__sw pc__cat pc__name pc__meta pc__ms pc__price pc__rank pc__swmore pc__quote act act--like act--cart act--view dot qty wrap num sr-only '
+ALLOW = set('side-cs__btn--kakao side-cs__btn--menu bt bt--ink bt--acc bt--line bt--wh pbtn lnk arw hq pc pc__media pc__acts pc__sw pc__cat pc__name pc__meta pc__ms pc__price pc__rank pc__swmore pc__quote act act--like act--cart act--view dot qty wrap num sr-only '
             'toast badge tabs tab bh bh__in bh__scroll bh__list bh__tab bh__logo bh--logo vh vh__t vh--row vh__r tt__pre tt__key sh sh__t sh__d sh--c psec psec__body psec__more psec--tint pgrid md__rail rv__card rv__gal rv__ph rv__body rv__stars rv__meta rv__co rv__item rv__text rv__tag rv__list rv__rest rv__play '
             'hd__icon hd__right hd__icons mh__btn mbar side-cs side-cs__btn bz__link am dr-pane dr-login hd-sx hd-sx__title hd-sx__empty fd__note ss__hero ss__copy ss__t ss__d is-on is-open is-err is-ok is-busy is-done is-over js v9h ic vm vm__dim vm__box vm__x bi bi__logo bi__name bi__cnt'.split())
 def classes(css):

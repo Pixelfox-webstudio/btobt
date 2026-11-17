@@ -56,9 +56,6 @@
   .co-date .inp.is-v+.co-date__ph,.co-date .inp:focus+.co-date__ph{display:none}
 }
 
-/* 임시(공용 10-form 의 12.5px 를 글자 단계 caption 13px 로. 보고서 "공용 부품에 필요한 것"에 적음. 공용이 고쳐지면 지운다) */
-.co .fld__l small,.co .fld__l .r,.co .opt__b small,.co .upl__tx small,.co .files__s,.co-dt .files__s{font-size:13px}
-
 /* ---------- 장바구니 목록 ---------- */
 .co-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:48px;padding-bottom:12px;border-bottom:1px solid #000}
 .co-bar .chk{font-weight:600}
