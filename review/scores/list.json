@@ -1,0 +1,233 @@
+{
+  "rounds": [
+    {
+      "key": "list",
+      "pages": [
+        "category",
+        "brand",
+        "search",
+        "unsubscribe"
+      ],
+      "date": "2026-11-17",
+      "scores": {
+        "elements": 930,
+        "states": 860,
+        "design": 740,
+        "consistency": 830,
+        "layout": 780
+      },
+      "findings": [
+        {
+          "item": "design",
+          "page": "category",
+          "state": "like-fail, like-none",
+          "problem": "관심상품 오류 토스트 바탕이 빨강(#B80016, .sub-toast--err)이다. 토큰에 없는 색이고, 토스트는 primary(#0E0E10) 검정이어야 한다.",
+          "evidence": "review/sheets/category-pc-7.png 왼쪽·오른쪽 칸 첫째 줄 상품 사진 위 빨간 띠, review/sheets/category-m-4.png 오른쪽 두 칸",
+          "fix": "css/sub.css .sub-toast--err 의 background 를 지우고 기본 토스트(var(--ink))를 그대로 쓴다. 오류는 앞에 경고 아이콘(i-alert)과 문구로 구분한다. 오류색이 꼭 필요하면 DESIGN.md 에 토큰을 먼저 추가한다."
+        },
+        {
+          "item": "design",
+          "page": "unsubscribe",
+          "state": "error, invalid",
+          "problem": "오류 안내 상자가 분홍 바탕+빨강 글자(.msg--err #FFF0F1/#B80016), 잘못된 링크 아이콘이 빨강 삼각형+분홍 원, 입력 오류선이 #D10019 로 모두 토큰 밖 색이다.",
+          "evidence": "review/sheets/unsubscribe-pc-2.png 오른쪽 칸(error) 대상 표 위 분홍 띠, 왼쪽 칸(invalid) 제목 위 빨간 아이콘",
+          "fix": ".msg--err 는 바탕 var(--tint)(#F5F5F6)·글자 #0E0E10 + 경고 아이콘으로, invalid 아이콘 원은 다른 상태와 같은 tint 원 + 잉크 아이콘으로 바꾼다. #D10019 는 #000 테두리 + 오류 문구로 대체한다."
+        },
+        {
+          "item": "design",
+          "page": "category, brand, search, unsubscribe",
+          "state": "전체",
+          "problem": "css/sub.css 에 토큰 밖 hex 가 남아 있다: #DDDDE1(정렬 구분선 등 8곳), #262626·#E6E6EA(버튼 hover), #B9B9BE(비활성), #111(.pop__x), #0B32C2(.mh__btn .badge).",
+          "evidence": "모든 목록 페이지의 정렬 줄 '추천순 | 신상품순 | 판매량순' 구분선(review/sheets/category-pc-1.png 필터 줄 오른쪽), css/sub.css",
+          "fix": "#DDDDE1→line(#DEDEE2), #E6E6EA·#111→surface-chip(#F1F1F3)/var(--ink), #262626 hover→accent 차오름 규칙 또는 var(--ink), #B9B9BE→text-mute(#9A979E), 배지색은 index.html 의 배지 값을 그대로 쓴다."
+        },
+        {
+          "item": "design",
+          "page": "category, brand, search",
+          "state": "전체",
+          "problem": "글자 크기 단계 밖 값이 많다: 13.5px(22곳, 폰 정렬·쪽 번호 등), 18px(.st 폰·.pop__t·.fset__t), 10.5px·11px(.thumbs em, .nb, .files__ext), 분류 사진 제목 .lhero__t clamp(28px,2.9vw,40px)(1440 에서 40px, 폰 26px).",
+          "evidence": "review/sheets/category-pc-1.png 사진 배너 제목 '기업·단체를 위한 단체복', review/sheets/category-m-1.png 정렬 글자",
+          "fix": "13.5→13 또는 14, 18→20(panel-title)/17, 10.5·11→11.5(사진 주석) 또는 12, 배너 제목은 DESIGN 의 배너 제목 단계(≈52 clamp / 폰 30)나 페이지 제목(32/24) 중 하나로 맞춘다."
+        },
+        {
+          "item": "design",
+          "page": "unsubscribe",
+          "state": "default, sms, done, error",
+          "problem": "회색 안내 상자(.msg) 모서리가 12px 다. 상자는 16px 규칙이다.",
+          "evidence": "review/sheets/unsubscribe-pc-1.png 각 칸 가운데 '주문·견적·배송처럼 거래에 필요한 안내는…' 회색 상자",
+          "fix": ".subp .msg { border-radius:16px }"
+        },
+        {
+          "item": "consistency",
+          "page": "category(작업복), brand",
+          "state": "cat=작업복, brand 전체 상태",
+          "problem": "'베스트 상품' 제목이 .st 20px/700(폰 18px) 한 덩어리라 홈 섹션 제목(26/600, 앞말+이름, 폰 앞말 14.5 블록+이름 22)과 위계가 다르다. 같은 사이트의 섹션 제목으로 보이지 않는다.",
+          "evidence": "review/sheets/category-pc-1.png 오른쪽 칸 '베스트 상품'(배너 아래 왼쪽), review/sheets/brand-pc-1.png 세 칸 모두 로고 줄 아래 '베스트 상품', 홈 review/home/home-1440.jpg '겨울을 책임지는 겨울 아우터'",
+          "fix": "<header class=\"vh vh--row\"><h2 class=\"vh__t\"><span class=\"tt__pre\">현장에서 많이 찾는</span> <span class=\"tt__key\">베스트 상품</span></h2><div class=\"vh__r\">화살표</div></header> 구조로 바꾸고 제목→내용 28px(폰 16)을 지킨다."
+        },
+        {
+          "item": "layout",
+          "page": "category, brand, search",
+          "state": "폰 전체",
+          "problem": "정렬 버튼(.sort button)이 글자 13.5px·줄높이 22px·여백 0 이라 터치 높이가 약 22px 다(44px 미만). 버튼 사이도 12px 뿐이다.",
+          "evidence": "review/sheets/category-m-1.png 각 칸 탭 줄 아래 오른쪽 '추천순 | 신상품순 | 판매량순', review/sheets/search-m-1.png 같은 위치",
+          "fix": ".sort button 에 min-height:44px; padding:0 4px; display:inline-flex; align-items:center 를 주고 구분선 top 을 가운데로 맞춘다."
+        },
+        {
+          "item": "layout",
+          "page": "category, brand, search",
+          "state": "cat=작업복, 쪽 번호, 필터 팝업",
+          "problem": "베스트 화살표(.lbest__nav .arw) 40px, 쪽 번호 40px(폰 36px), 팝업 닫기(.pop__x) 40px 로 44px 미만이고 홈 화살표(.arw 52px)와도 크기가 다르다.",
+          "evidence": "review/sheets/category-pc-1.png 오른쪽 칸 '베스트 상품' 줄 오른쪽 끝 원형 화살표 두 개, review/sheets/brand-pc-1.png 같은 위치",
+          "fix": "베스트 화살표는 홈 .arw 그대로(52px, 폰 44px), 쪽 번호와 닫기 버튼은 min-width/height 44px 로 올린다."
+        },
+        {
+          "item": "states",
+          "page": "brand",
+          "state": "cat=SSEDA&state=empty",
+          "problem": "빈 상태 화면에서 'SSEDA 베스트 상품' 6개가 보이는데 바로 아래 목록은 '상품 0개 · 조건에 맞는 상품이 없습니다'라 내용이 서로 맞지 않는다(그 브랜드 상품이 있는데 0개).",
+          "evidence": "review/sheets/brand-pc-2.png 오른쪽 칸 베스트 줄과 빈 상태, review/sheets/brand-m-1.png 다섯째 칸",
+          "fix": "빈 상태 견본은 상품이 없는 브랜드·형태 조합으로 만들고 베스트 줄은 숨기거나 '베스트 없음' 안내로 바꾼다."
+        },
+        {
+          "item": "states",
+          "page": "unsubscribe",
+          "state": "(없음)",
+          "problem": "수신거부 버튼을 누른 뒤 처리 중 화면이 없다. 상태는 default·sms·done·invalid·error 뿐이라 확정 버튼의 진행 상태를 볼 수 없다.",
+          "evidence": "review/sheets/unsubscribe-pc-1.png, unsubscribe-pc-2.png 상태 이름 목록",
+          "fix": "spec/pages.json 에 state=busy 를 추가하고 버튼을 disabled + '처리하고 있습니다' 문구, aria-busy=\"true\" 로 보여 준다."
+        },
+        {
+          "item": "design",
+          "page": "unsubscribe",
+          "state": "done",
+          "problem": "완료 아이콘이 파랑 원(accent-soft 바탕 + accent 체크)이다. 파랑은 정해진 포인트 용도에만 쓰는데 상태 아이콘은 그 목록에 없고, 다른 상태 아이콘(회색 원)과도 다르다.",
+          "evidence": "review/sheets/unsubscribe-pc-1.png 오른쪽 칸(done) 제목 위 아이콘",
+          "fix": "다른 상태와 같이 tint 원 + 잉크(#000) 체크 아이콘으로 바꾼다."
+        }
+      ],
+      "checkPagesFailed": 0,
+      "elsMissing": 0,
+      "checks": {
+        "pages": "페이지 4 · 상태 36 · 렌더링 216회 · 실패 0",
+        "els": "절 4개 · 항목 83 · 빠짐 0 · 선택자 문제 0"
+      }
+    },
+    {
+      "key": "list",
+      "pages": [
+        "category",
+        "brand",
+        "search",
+        "unsubscribe"
+      ],
+      "date": "2026-11-17",
+      "round": "rescore design·layout",
+      "scores": {
+        "elements": 930,
+        "states": 860,
+        "design": 870,
+        "consistency": 830,
+        "layout": 830
+      },
+      "checkPagesFailed": 0,
+      "elsMissing": 0,
+      "checks": {
+        "pages": "화면 점검: 페이지 4 · 상태 37 · 렌더링 222회 · 실패 0 (54초)",
+        "els": "요소 점검(brand.html, category.html, search.html, unsubscribe.html): 절 4개 · 항목 83 · 빠짐 0 · 선택자 문제 0"
+      },
+      "previous": [
+        {
+          "no": 1,
+          "status": "fixed",
+          "note": "like-fail·like-none 토스트 바탕 rgb(14,14,16)=primary, 경고 아이콘+문구로 구분 (category-pc-7.png)"
+        },
+        {
+          "no": 2,
+          "status": "fixed",
+          "note": "error·invalid 안내 상자 #F5F5F6 + 잉크 글자, 잘못된 링크 아이콘 회색 원(.smark #F5F5F6), 토큰 밖 색 렌더 0건 (unsubscribe-pc-2.png)"
+        },
+        {
+          "no": 3,
+          "status": "fixed",
+          "note": "네 페이지 37상태를 1440·390에서 계산값으로 훑었을 때 토큰 밖 색은 상품 색상 견본(점·칩)뿐. .pop__x 글자 #0E0E10, hover #F1F1F3. sub.css 원본의 해당 hex 는 다른 페이지용 공용 규칙에 남아 있고 이 네 페이지에서는 덮어써져 있다"
+        },
+        {
+          "no": 4,
+          "status": "mostly fixed",
+          "note": "정렬·쪽 번호 14px, 분류 사진 제목 32/24. 쿠키 배너·빠른 메뉴 패널의 13.5px 만 남음"
+        },
+        {
+          "no": 5,
+          "status": "fixed",
+          "note": ".msg 모서리 16px"
+        },
+        {
+          "no": 6,
+          "status": "fixed",
+          "note": ".sort button 44(56)×44, 14px"
+        },
+        {
+          "no": 7,
+          "status": "fixed",
+          "note": "베스트 화살표 52×52(홈 .arw 와 같음), 쪽 번호 44×44(폰 39×44), 필터 닫기 44×44"
+        },
+        {
+          "no": 8,
+          "status": "fixed",
+          "note": "완료 아이콘 회색 원(.smark #F5F5F6 + 검정 체크), 다른 상태 아이콘과 같음"
+        }
+      ],
+      "findings": [
+        {
+          "item": "layout",
+          "page": "category, brand, search",
+          "state": "폰 전체(필터가 있는 모든 상태)",
+          "problem": "도구 줄 필터 버튼(.fbtn)과 고른 필터 칩(.lapp .fchip), brand 상품 구분 칩(.fchips .fchip)의 높이가 36px이라 터치 대상 44px에 못 미친다(390 실측 70~99×36).",
+          "evidence": "review/sheets/category-m-1.png 각 칸 '필터·소재·형태·색상' 줄(위에서 약 470px), review/sheets/search-m-1.png 같은 줄, review/sheets/brand-m-1.png 둘째·셋째 칸 '상품 구분' 상자 안 칩",
+          "fix": "폰(≤768)에서 .fbtn·.fchip 의 높이를 44px로 올리거나, 보이는 모양은 36px로 두고 ::before{content:'';position:absolute;inset:-4px 0} 로 누르는 칸을 44px까지 늘린다."
+        },
+        {
+          "item": "design",
+          "page": "category",
+          "state": "state=ck, state=ck-set, state=qp, state=qp+offhours",
+          "problem": "쿠키 배너(.ck__d, .ck__opt b, .ck__acts .sb)와 빠른 메뉴 패널(.qp__row, .qp__list a)에 글자 단계 밖 13.5px가 남아 있다. 정렬·쪽 번호는 14px로 고쳐졌지만 이 두 부품은 그대로다.",
+          "evidence": "review/shots/category/state-ck-c390.jpg · state-ck-set-c1440.jpg 아래 쿠키 배너 설명·버튼, review/shots/category/state-qp-c1440.jpg 오른쪽 패널 목록",
+          "fix": "css/sub.css 의 .ck__d·.ck__opt·.sb--m(쿠키 버튼)·.qp__row·.qp__list a 의 13.5px 를 13px(캡션) 또는 14px(작은 본문)로 바꾼다."
+        },
+        {
+          "item": "layout",
+          "page": "category",
+          "state": "state=ck, state=ck-set (폰)",
+          "problem": "쿠키 배너의 거부·동의·선택 저장 버튼 높이가 42px, '항목별 설정' 글자 버튼이 22px, 개인정보처리방침 링크가 16px로 44px 미만이다.",
+          "evidence": "review/shots/category/state-ck-c390.jpg · state-ck-set-c390.jpg 화면 아래 쿠키 배너",
+          "fix": ".ck__acts .sb 높이를 44px로, .ck__more 에 min-height:44px(위아래 여백)를 준다."
+        },
+        {
+          "item": "design",
+          "page": "category",
+          "state": "state=qp, state=qp+offhours",
+          "problem": "빠른 메뉴 패널의 바로가기 칸(.qp__quick a)이 모서리 12px 상자다. 상자는 16px 규칙이다.",
+          "evidence": "review/shots/category/state-qp-c1440.jpg 오른쪽 패널 위쪽 바로가기 칸",
+          "fix": ".subp .qp__quick a 의 border-radius 를 16px 로 바꾼다."
+        },
+        {
+          "item": "design",
+          "page": "unsubscribe",
+          "state": "default, sms, busy, done, invalid, error",
+          "problem": "이 페이지의 h1(.gate__t '광고 수신거부')이 PC 24px·폰 20px다. 페이지 제목 H1 단계는 32/24이고, 폰 20px은 섹션 제목 크기라 다른 페이지 h1과 위계가 다르다.",
+          "evidence": "review/sheets/unsubscribe-pc-1.png · unsubscribe-pc-2.png 가운데 아이콘 아래 제목, review/sheets/unsubscribe-m-1.png 같은 자리",
+          "fix": "좁은 확인 화면이라 32가 크면 확인창 제목 단계(22/1.35, 폰 22)로 맞추고, 아니면 .sub-head__t 와 같은 32/24로 맞춘다. 어느 쪽이든 단계표에 있는 짝(PC/폰)을 그대로 쓴다."
+        },
+        {
+          "item": "layout",
+          "page": "category",
+          "state": "default, state=guest 등 전체보기(폰)",
+          "problem": "폰에서 한 쪽에 상품 48개(2열 24줄)를 다 보여 줘서 화면 높이가 9,783px로 홈(8,441px)보다 길다. brand 전체보기도 8,700px다.",
+          "evidence": "review/shots/category/default-c390.jpg (캡처는 7,000px에서 잘림, 실측 scrollHeight 9,783), review/sheets/category-m-1.png 첫 칸",
+          "fix": "폰(≤768)에서만 한 쪽 상품 수를 24개로 줄이고 쪽 번호를 그대로 쓴다(PC 48개는 유지)."
+        }
+      ]
+    }
+  ]
+}

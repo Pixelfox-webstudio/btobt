@@ -11,12 +11,13 @@
 .lhero__slide img{display:block;width:100%;height:100%;object-fit:cover;object-position:var(--pos,50% 30%)}
 .lhero__frame::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(90deg,rgba(8,9,12,.74) 0%,rgba(8,9,12,.36) 38%,transparent 66%)}
 .lhero__copy{position:absolute;left:clamp(28px,4.4vw,64px);top:0;bottom:0;z-index:2;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;width:min(520px,62%)}
-.subp .lhero__t{font-size:clamp(28px,2.9vw,40px);font-weight:600;letter-spacing:-.02em;line-height:1.22;color:#fff}
+/* 배너 안 제목이 이 페이지의 h1 이라 페이지 제목 단계(32 / 폰 24)를 쓴다. 앞말 400 + 이름 700 */
+.subp .lhero__t{font-size:32px;font-weight:600;letter-spacing:-.025em;line-height:1.3;color:#fff}
 .lhero__t .tt__pre,.lhero__t .tt__key{display:block;font-size:inherit;letter-spacing:inherit;line-height:inherit;color:inherit}
 .lhero__t .tt__pre{font-weight:400}
 .lhero__t .tt__key{font-weight:700}
 .lhero__d{margin-top:10px;font-size:15px;line-height:1.65;opacity:.92}
-.subp .lhero .bt{height:48px;margin-top:20px;font-size:14.5px}
+.subp .lhero .bt{height:48px;margin-top:20px;font-size:15px}
 .subp .lhero .bt>i{width:48px}
 .lhero__ui{position:absolute;right:20px;bottom:16px;z-index:3;display:flex;align-items:center;gap:10px;color:#fff}
 .lhero__ui[hidden]{display:none}
@@ -24,7 +25,7 @@
 .lhero__cnt span{opacity:.6}
 .lhero__prog{width:96px;height:2px;background:rgba(255,255,255,.34)}
 .lhero__prog i{display:block;height:100%;background:#fff;transform-origin:left;transition:transform .5s var(--ease)}
-.lhero__nav{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(255,255,255,.5);color:#fff;transition:background-color .25s,color .25s}
+.lhero__nav{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(255,255,255,.5);color:#fff;transition:background-color .25s,color .25s}
 .lhero__nav:hover{background:#fff;color:var(--ink)}
 .lhero__nav+.lhero__nav{margin-left:-4px}
 .subp .lhero__nav:focus-visible{outline-color:#fff}
@@ -35,7 +36,7 @@
   .lhero__frame{height:auto;aspect-ratio:3/2;margin-inline:0;border-radius:0}
   .lhero__frame::after{background:linear-gradient(0deg,rgba(8,9,12,.78) 0%,rgba(8,9,12,.3) 48%,transparent 74%)}
   .lhero__copy{left:var(--gut);right:var(--gut);width:auto;justify-content:flex-end;padding-bottom:20px}
-  .subp .lhero__t{font-size:26px}
+  .subp .lhero__t{font-size:24px;letter-spacing:-.02em;line-height:1.35}
   .lhero__d{margin-top:6px;font-size:14px}
   .subp .lhero .bt{height:44px;margin-top:14px}
   .subp .lhero .bt>i{width:44px}
@@ -60,19 +61,19 @@
 .fgs{display:grid;gap:10px;margin-bottom:28px;padding:20px 24px;border-radius:16px;background:var(--tint)}
 .fg{display:grid;grid-template-columns:104px minmax(0,1fr);gap:12px;align-items:start}
 .fg__l{padding-top:8px;font-size:13px;font-weight:600;line-height:20px;color:var(--fg3)}
-.fgs .fchip{height:36px;padding:0 13px;font-size:13.5px}
+.fgs .fchip{height:36px;padding:0 14px;font-size:14px;border-color:var(--ln)}
+.fgs .fchip:hover,.fgs .fchip[aria-pressed="true"]{border-color:#1B1B1F}
 @media (max-width:768px){
   .fgs{gap:14px;margin-bottom:20px;padding:16px}
   .fg{grid-template-columns:minmax(0,1fr);gap:6px}
   .fg__l{padding-top:0}
+  .fgs .fchip{height:44px}   /* 폰: 누르는 칸 44px(알약 줄 .bh__tab 과 같은 높이) */
 }
 
-/* 베스트 줄 */
+/* 베스트 줄: 제목은 홈 섹션 제목(.vh--row + 앞말·이름), 화살표는 홈 .arw 그대로(52) */
 .lbest{margin-bottom:48px}
-.lbest__h{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:20px}
-.lbest__nav{display:flex;gap:6px}
-.subp .lbest__nav .arw{width:40px;height:40px}
-.subp .lbest__nav .arw+.arw{margin-left:0}
+.lbest .vh{margin-bottom:28px}
+.lbest__nav[hidden]{display:none}
 .lrail{display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .lrail::-webkit-scrollbar{display:none}
 .lrail>.pc{flex:0 0 calc((100% - 100px) / 6);scroll-snap-align:start}
@@ -85,19 +86,19 @@
 @media (max-width:1024px){ .lrail>.pc{flex-basis:calc((100% - 60px) / 4)} }
 @media (max-width:768px){
   .lbest{margin-bottom:36px}
-  .lbest__h{margin-bottom:14px}
+  .lbest .vh{margin-bottom:16px}
   .lbest__nav{display:none}
   .lrail{gap:12px;margin-inline:calc(var(--gut) * -1);padding-inline:var(--gut);scroll-padding-inline:var(--gut)}
   .lrail>.pc{flex-basis:40%}
 }
 
 /* 도구 줄: 상품 수 · 필터 버튼 · 정렬 */
-.lbar{position:relative;display:flex;align-items:center;flex-wrap:wrap;gap:12px 20px;padding-bottom:16px;border-bottom:1px solid #000}
+.lbar{position:relative;display:flex;align-items:center;flex-wrap:wrap;gap:12px 20px;padding-bottom:12px;border-bottom:1px solid #000}
 .lbar__cnt{flex:none;font-size:14px;line-height:22px;color:var(--fg3)}
 .lbar__cnt b{font-weight:700;color:#000}
 .lbar__f{display:flex;flex:1 1 auto;align-items:center;gap:6px;min-width:0}
-.fbtn{display:inline-flex;align-items:center;gap:4px;flex:none;height:36px;padding:0 10px 0 14px;border:1px solid #DDDDE1;border-radius:999px;background:#fff;font-size:13.5px;font-weight:600;letter-spacing:-.01em;color:#55545A;white-space:nowrap;transition:border-color .15s,color .15s,background-color .15s}
-.subp .fbtn{border:1px solid #DDDDE1;background:#fff;padding:0 10px 0 14px}
+.fbtn{display:inline-flex;align-items:center;gap:4px;flex:none;height:36px;padding:0 10px 0 14px;border:1px solid var(--ln);border-radius:999px;background:#fff;font-size:14px;font-weight:600;letter-spacing:-.01em;color:#55545A;white-space:nowrap;transition:border-color .15s,color .15s,background-color .15s}
+.subp .fbtn{border:1px solid var(--ln);background:#fff;padding:0 10px 0 14px}
 .fbtn .i{font-size:16px;color:#8B8B90;transition:transform .2s}
 .subp .fbtn:hover,.subp .fbtn[aria-expanded="true"]{border-color:#1B1B1F;color:#1B1B1F}
 .fbtn[aria-expanded="true"] .i-chev-d{transform:rotate(180deg)}
@@ -105,17 +106,18 @@
 .fbtn b{font-weight:700;color:var(--accent-text);font-variant-numeric:tabular-nums}
 .subp .fbtn--all{padding:0 14px 0 12px}
 .fbtn--all .i{font-size:18px;color:inherit}
-.sort{display:flex;flex:none;align-items:center;gap:14px;margin-left:auto}
-.sort button{position:relative;font-size:14px;font-weight:500;line-height:22px;color:#8B8B90;transition:color .15s}
-.sort button+button::before{content:"";position:absolute;left:-7px;top:6px;width:1px;height:10px;background:#DDDDE1}
+/* 정렬: 글자 버튼이지만 누르는 칸은 44px 높이. 구분선은 버튼 사이 가운데 */
+.sort{display:flex;flex:none;align-items:center;gap:8px;margin-left:auto}
+.sort button{position:relative;display:inline-flex;align-items:center;min-height:44px;padding:0 4px;font-size:14px;font-weight:500;line-height:22px;color:#8B8B90;transition:color .15s}
+.sort button+button::before{content:"";position:absolute;left:-4.5px;top:50%;width:1px;height:10px;margin-top:-5px;background:var(--ln)}
 .sort button:hover{color:#000}
 .sort button[aria-pressed="true"]{color:#000;font-weight:700}
 /* 고른 필터 */
 .lapp{display:flex;align-items:center;flex-wrap:wrap;gap:6px;padding:14px 0 0}
 .lapp[hidden]{display:none}
-.subp .lapp .fchip{height:32px;padding:0 8px 0 12px;font-size:13px;font-weight:500;border-color:#DDDDE1;background:var(--tint);color:#0E0E10}
+.subp .lapp .fchip{height:36px;padding:0 10px 0 14px;font-size:13px;font-weight:500;border-color:var(--ln);background:var(--tint);color:#0E0E10}
 .lapp .fchip:hover{border-color:#1B1B1F}
-.lapp__clear{margin-left:8px;font-size:13px;font-weight:600;color:var(--fg3);text-decoration:underline;text-underline-offset:3px}
+.lapp__clear{display:inline-flex;align-items:center;min-height:44px;margin-left:4px;padding:0 4px;font-size:13px;font-weight:600;color:var(--fg3);text-decoration:underline;text-underline-offset:3px}
 .lapp__clear:hover{color:#000}
 .lgrid{margin-top:28px}
 /* 필터 선택지(작은 상자 · 필터 모음 공용) */
@@ -125,14 +127,15 @@
 .fopts{display:flex;flex-wrap:wrap;gap:6px}
 .fopt{position:relative;cursor:pointer}
 .fopt input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
-.fopt span{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 13px;border:1px solid #DDDDE1;border-radius:999px;background:#fff;font-size:13.5px;font-weight:500;color:#363636;white-space:nowrap;transition:border-color .15s,background-color .15s,color .15s}
+.fopt span{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border:1px solid var(--ln);border-radius:999px;background:#fff;font-size:14px;font-weight:500;color:#363636;white-space:nowrap;transition:border-color .15s,background-color .15s,color .15s}
 .fopt:hover span{border-color:#1B1B1F}
 .fopt input:checked+span{border-color:#1B1B1F;background:#1B1B1F;color:#fff;font-weight:600}
 .fopt input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px}
 .fopt em{flex:none;width:14px;height:14px;border-radius:50%;background:var(--c);box-shadow:inset 0 0 0 1px rgba(14,14,16,.16)}
 .fopt input:checked+span em{box-shadow:inset 0 0 0 1px rgba(255,255,255,.5)}
 .fpop__foot{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:18px;padding-top:14px;border-top:1px solid var(--ln)}
-.fpop__reset{font-size:13.5px;font-weight:600;color:var(--fg3);text-decoration:underline;text-underline-offset:3px}
+.fpop__foot .sb{height:44px;padding:0 20px;font-size:14px}
+.fpop__reset{display:inline-flex;align-items:center;min-height:44px;padding:0 4px;margin-left:-4px;font-size:14px;font-weight:600;color:var(--fg3);text-decoration:underline;text-underline-offset:3px}
 .fpop__reset:hover{color:#000}
 /* 필터 모음(옆 패널): 종류 탭 + 한 번에 한 종류 */
 .ftabs{display:flex;flex:none;gap:20px;padding:0 28px;border-bottom:1px solid var(--ln);overflow-x:auto;scrollbar-width:none}
@@ -141,17 +144,20 @@
 .ftabs button[aria-selected="true"]{color:#000;font-weight:700}
 .ftabs button[aria-selected="true"]::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:#000}
 .ftabs b{margin-left:3px;font-weight:700;color:var(--accent-text);font-variant-numeric:tabular-nums}
-.fpanel__reset{display:inline-flex;align-items:center;gap:4px;margin-top:20px;font-size:13.5px;font-weight:600;color:var(--fg3);text-decoration:underline;text-underline-offset:3px}
+.fpanel__reset{display:inline-flex;align-items:center;gap:4px;min-height:44px;margin-top:12px;font-size:14px;font-weight:600;color:var(--fg3);text-decoration:underline;text-underline-offset:3px}
 @media (max-width:768px){
   .lbar{gap:10px 12px;padding-bottom:12px}
   .lbar__cnt{order:1}
-  .sort{order:2;gap:12px}
-  .sort button{font-size:13.5px}
+  .sort{order:2;gap:8px}
   .lbar__f{order:3;flex:1 0 100%;margin-inline:calc(var(--gut) * -1);padding-inline:var(--gut);overflow-x:auto;scrollbar-width:none}
   .lbar__f::-webkit-scrollbar{display:none}
   .fpop{display:none !important}
   .lgrid{margin-top:20px}
   .ftabs{padding:0 20px}
+  /* 폰: 필터 버튼 · 고른 필터 칩 · 필터 모음 선택지의 누르는 칸 44px(위 알약 줄 .bh__tab 과 같은 높이) */
+  .fbtn{height:44px}
+  .subp .lapp .fchip{height:44px}
+  .fopt span{height:44px}
 }
 /* 카드: 올리면 다른 사진(사진이 두 장일 때) · 견적문의 표시 */
 @media (hover:hover){
@@ -166,3 +172,55 @@
 /* 협력브랜드 알약 줄의 글자 탭(전체보기) */
 .bh--logo .bh__tab--text{padding:0 18px;font-size:14px;font-weight:600}
 .subp .bh--logo .bh__tab--text[aria-selected="true"]{color:#000;font-weight:700}
+
+/* 쪽 번호: 누르는 칸 44px. 폰(347px)에 9칸(처음·이전 묶음·5쪽·다음 묶음·마지막)이 들어가도록 폭만 줄어든다 */
+#lpager button{min-width:44px;height:44px}
+@media (max-width:768px){
+  #lpager{gap:0}
+  #lpager button{flex:0 1 44px;min-width:0;height:44px;padding:0;font-size:14px}
+}
+
+/* ============================================================
+   공용 부품 임시 덮어쓰기 — 이 과제의 네 페이지에서만 (body[data-page]).
+   00-base.css 를 고치면 지운다(보고서 baseNeeds 에 같은 내용)
+   ============================================================ */
+/* 토스트: 오류도 기본 검정(primary). 앞의 경고 아이콘과 문구로 구분한다 */
+body:is([data-page="category"],[data-page="brand"],[data-page="search"],[data-page="unsubscribe"]) .sub-toast--err{background:var(--ink)}
+body:is([data-page="category"],[data-page="brand"],[data-page="search"],[data-page="unsubscribe"]) .sub-toast--err::before{content:"";flex:none;width:20px;height:20px;margin-right:-6px;background:currentColor;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%221.6%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M12 4.5 3.5 19h17L12 4.5z%22/%3E%3Cpath d=%22M12 10v4.5M12 16.8h.01%22/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%221.6%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M12 4.5 3.5 19h17L12 4.5z%22/%3E%3Cpath d=%22M12 10v4.5M12 16.8h.01%22/%3E%3C/svg%3E") center/contain no-repeat}
+body:is([data-page="category"],[data-page="brand"],[data-page="search"],[data-page="unsubscribe"]) .sub-toast button{font-size:14px}
+@media (max-width:768px){   /* 폰: 긴 문구가 잘리지 않게 화면 폭(좌우 12)에 맞추고 줄을 바꾼다 */
+  body:is([data-page="category"],[data-page="brand"],[data-page="search"],[data-page="unsubscribe"]) .sub-toast{left:12px;right:12px;max-width:none;height:auto;min-height:48px;padding:13px 16px;white-space:normal;line-height:22px;transform:translateY(260%)}
+  body:is([data-page="category"],[data-page="brand"],[data-page="search"],[data-page="unsubscribe"]) .sub-toast.is-on{transform:none}
+  body:is([data-page="category"],[data-page="brand"],[data-page="search"],[data-page="unsubscribe"]) .sub-toast>span{flex:1 1 auto;min-width:0}
+  body:is([data-page="category"],[data-page="brand"],[data-page="search"],[data-page="unsubscribe"]) .sub-toast button{align-self:stretch;height:auto;margin:-13px -16px -13px 0;white-space:nowrap}
+}
+/* 검정 보조 버튼 hover: 홈 주 버튼 hover 와 같은 강조색(button-primary-hover) */
+body:is([data-page="category"],[data-page="brand"],[data-page="search"],[data-page="unsubscribe"]) .sb--ink:hover{background:var(--accent)}
+/* 폰 헤더 장바구니 배지: 홈(v4.css .badge)과 같은 강조색 */
+body:is([data-page="category"],[data-page="brand"],[data-page="search"],[data-page="unsubscribe"]) .mh__btn .badge{background:var(--accent)}
+/* 필터 모음 닫기: 44 원, 칩 바탕(surface-chip) + 잉크 */
+body:is([data-page="category"],[data-page="search"]) .pop__x{width:44px;height:44px;background:#F1F1F3;color:var(--ink)}
+body:is([data-page="category"],[data-page="search"]) .pop__x:hover{background:#F1F1F3}
+/* 방문 기록(쿠키) 안내: 글자 단계(작은 본문 14/22 · 캡션 13/20)와 누르는 칸 44px */
+body:is([data-page="category"],[data-page="brand"],[data-page="search"],[data-page="unsubscribe"]) .ck__d{font-size:14px;line-height:22px}
+body:is([data-page="category"],[data-page="brand"],[data-page="search"],[data-page="unsubscribe"]) .ck__d a{display:inline-flex;align-items:center;min-height:44px;margin:-11px 0}
+body:is([data-page="category"],[data-page="brand"],[data-page="search"],[data-page="unsubscribe"]) .ck__more{min-height:44px;margin:2px 0 -8px}
+body:is([data-page="category"],[data-page="brand"],[data-page="search"],[data-page="unsubscribe"]) .ck__opt{font-size:14px;line-height:22px}
+body:is([data-page="category"],[data-page="brand"],[data-page="search"],[data-page="unsubscribe"]) .ck__opt span{font-size:13px;line-height:20px}
+body:is([data-page="category"],[data-page="brand"],[data-page="search"],[data-page="unsubscribe"]) .ck__acts .sb{height:44px;font-size:14px}
+/* 상담 메뉴(PC 오른쪽 패널): 글자 단계(작은 본문 14/22 · 캡션 13/20), 바로가기 칸은 상자 모서리 16 */
+body:is([data-page="category"],[data-page="brand"],[data-page="search"],[data-page="unsubscribe"]) .qp__ht small{font-size:13px;line-height:20px}
+body:is([data-page="category"],[data-page="brand"],[data-page="search"],[data-page="unsubscribe"]) .qp__quick a{border-radius:16px}
+body:is([data-page="category"],[data-page="brand"],[data-page="search"],[data-page="unsubscribe"]) .qp__list a{font-size:14px;line-height:22px}
+body:is([data-page="category"],[data-page="brand"],[data-page="search"],[data-page="unsubscribe"]) .qp__cs p{font-size:13px;line-height:20px}
+body:is([data-page="category"],[data-page="brand"],[data-page="search"],[data-page="unsubscribe"]) .qp__row{font-size:14px;line-height:22px}
+
+/* 광고 수신거부: 상태 표식은 모두 회색 원(tint) + 검정 아이콘, 안내 상자는 16px, 오류 안내는 회색 바탕 + 잉크 글자 + 경고 아이콘 */
+body[data-page="unsubscribe"] .smark{background:var(--tint);box-shadow:none;color:#000}
+body[data-page="unsubscribe"] .msg{border-radius:16px}
+body[data-page="unsubscribe"] .msg--err{background:var(--tint);color:var(--ink);font-weight:600}
+body[data-page="unsubscribe"] .bt.is-busy[disabled]{opacity:1}
+body[data-page="unsubscribe"] .gate .dl a{display:inline-flex;align-items:center;min-height:44px;margin:-11px 0}
+/* 이 페이지의 h1 은 다른 페이지 h1(.sub-head__t)과 같은 페이지 제목 단계 32/1.3 · 폰 24/1.35 */
+body[data-page="unsubscribe"] .gate__t{font-size:32px;font-weight:700;letter-spacing:-.025em;line-height:1.3}
+@media (max-width:768px){ body[data-page="unsubscribe"] .gate__t{font-size:24px;line-height:1.35} }

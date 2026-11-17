@@ -47,7 +47,8 @@
     base = !words.length ? all : all.filter(function (p) { var hay = norm([p.name, p.code, p.cat, p.brand ? '협력브랜드 ' + p.brandKo : '단체복', p.sub].join(' ')); return words.every(function (w) { return hay.indexOf(w) >= 0; }); });
     title = q ? '‘' + q + '’ 검색 결과' : '전체 상품';
   }
-  if (S.has('empty') && page !== 'search') base = base.slice(0, 0).concat(base);   // 목록은 그대로 두고 필터로 0건을 만든다(아래)
+  // 결과 없음 견본: 단체복은 목록을 그대로 두고 필터로 0건을 만든다(아래). 협력브랜드는 상품이 없는 브랜드라 베스트 줄도 없다
+  if (S.has('empty') && page === 'brand') { base = []; best = null; }
 
   /* ---------- 머리(분류 소개 · 제목) ---------- */
   var hero = $('#lhero');
@@ -115,7 +116,7 @@
     });
     fgs.innerHTML = html;
   }
-  fgs && fgs.addEventListener('click', function (e) { var b = e.target.closest('[data-form]'); if (!b) return; form = b.getAttribute('data-form'); pageNo = 1; drawForms(); draw(true); });
+  fgs && fgs.addEventListener('click', function (e) { var b = e.target.closest('[data-form]'); if (!b) return; form = b.getAttribute('data-form'); pageNo = 1; drawForms(); drawBest(); draw(true); });
 
   /* ---------- 필터 ---------- */
   var GROUPS = page === 'brand' ? [] : [
@@ -236,15 +237,23 @@
 
   /* ---------- 베스트 줄 ---------- */
   var bestBox = $('#lbest');
-  if (bestBox) {
-    if (best === null) bestBox.hidden = true;
-    else {
-      bestBox.hidden = false;
-      var rail = $('.lrail', bestBox), none = $('.lbest__empty', bestBox), nav = $('.lbest__nav', bestBox);
-      rail.innerHTML = best.map(function (p) { return D.card(p, { slim: true }); }).join('');
-      rail.hidden = !best.length; none.hidden = !!best.length; if (nav) nav.hidden = best.length <= 6;
-      $$('.arw', bestBox).forEach(function (b) { b.addEventListener('click', function () { rail.scrollBy({ left: Number(b.getAttribute('data-dir')) * rail.clientWidth * .8, behavior: 'smooth' }); }); });
+  function drawBest() {
+    if (!bestBox) return;
+    if (best === null) { bestBox.hidden = true; return; }
+    var list = best;
+    if (page === 'brand' && brand && form && best.length) {   // 고른 형태의 상품을 앞에 두고, 모자라면 같은 브랜드의 다른 상품으로 채운다
+      list = brand.items.filter(function (p) { return p.form === form; }).concat(brand.items.filter(function (p) { return p.form !== form; })).slice(0, 6);
     }
+    bestBox.hidden = false;
+    var rail = $('.lrail', bestBox), none = $('.lbest__empty', bestBox), nav = $('.lbest__nav', bestBox);
+    rail.innerHTML = list.map(function (p) { return D.card(p, { slim: true }); }).join('');
+    rail.hidden = !list.length; none.hidden = !!list.length; if (nav) nav.hidden = list.length <= 6;
+    rail.scrollLeft = 0;
+  }
+  if (bestBox) {
+    var bestPre = $('.tt__pre', bestBox); if (bestPre && page === 'brand' && brand) bestPre.textContent = brand.ko;   // "케이투 베스트 상품"
+    $$('.arw', bestBox).forEach(function (b) { b.addEventListener('click', function () { var rail = $('.lrail', bestBox); rail.scrollBy({ left: Number(b.getAttribute('data-dir')) * rail.clientWidth * .8, behavior: 'smooth' }); }); });
+    drawBest();
   }
 
   /* ---------- 상태 보기 ---------- */
@@ -252,7 +261,6 @@
     if (S.has('filtered') || S.has('filter-open')) { sel.color = options(GROUPS[2], scope()).filter(function (v) { return v === '블랙' || v === '네이비'; }); sel.season = options(GROUPS[5], scope()).filter(function (v) { return v === '겨울'; }); }
     if (S.has('empty')) { sel.band = ['1만원 미만']; sel.season = ['겨울']; sel.color = ['옐로']; }
   }
-  if (S.has('empty') && page === 'brand') base = [];
   drawForms(); drawButtons(); draw();
   if (S.has('form') && fgs) { var f1 = $('[data-form]:not([data-form=""])', fgs); f1 && f1.click(); }
   if (S.has('filter-open') && GROUPS.length) setTimeout(function () { if (mq.matches) openPanel('color'); else { var b = $('.fbtn[data-fg="color"]', fwrap); b && openPopFor('color', b); } }, 60);

@@ -130,27 +130,30 @@ if(!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('v4-
 <main id="main" class="v4 v5 v6 v7 v8 v9 v10 subp">
 <section class="wrap">
   <div class="gate">
-    <span class="smark smark--gray" data-st="default error"><i class="i i-mail" aria-hidden="true"></i></span>
+    <!-- 상태 표식: 모두 회색 원 + 검정 아이콘(색으로 상태를 나누지 않고 아이콘과 문구로 나눈다) -->
+    <span class="smark smark--gray" data-st="default busy error"><i class="i i-mail" aria-hidden="true"></i></span>
     <span class="smark smark--gray" data-st="sms"><i class="i i-chat" aria-hidden="true"></i></span>
-    <span class="smark" data-st="done"><i class="i i-check" aria-hidden="true"></i></span>
-    <span class="smark smark--red" data-st="invalid"><i class="i i-alert" aria-hidden="true"></i></span>
+    <span class="smark smark--gray" data-st="done"><i class="i i-check" aria-hidden="true"></i></span>
+    <span class="smark smark--gray" data-st="invalid"><i class="i i-alert" aria-hidden="true"></i></span>
     <h1 class="gate__t" data-el="L1530">광고 수신거부</h1>
 
     <!-- 확정 요청: 페이지를 여는 것만으로는 처리하지 않는다 -->
-    <div data-st="default sms error" data-el="L1538">
-      <p class="gate__d" data-st="default error">아래 주소로 보내는 광고 메일을 더 이상 받지 않으시려면 수신거부를 눌러 주세요.</p>
+    <div data-st="default sms busy error" data-el="L1538">
+      <p class="gate__d" data-st="default busy error">아래 주소로 보내는 광고 메일을 더 이상 받지 않으시려면 수신거부를 눌러 주세요.</p>
       <p class="gate__d" data-st="sms">아래 번호로 보내는 광고 문자를 더 이상 받지 않으시려면 수신거부를 눌러 주세요.</p>
     </div>
-    <div class="gate__box" data-st="default sms error">
+    <div class="gate__box" data-st="default sms busy error">
       <p class="msg msg--err" role="alert" data-st="error" data-el="L1541" style="margin-bottom:12px"><i class="i i-alert" aria-hidden="true"></i><span>수신거부를 처리하지 못했습니다. 잠시 후 다시 눌러 주세요.</span></p>
       <dl class="dl" data-el="L1531">
-        <div><dt>대상</dt><dd><span data-st="default error">이메일 광고</span><span data-st="sms">문자 광고</span></dd></div>
-        <div><dt>받는 곳</dt><dd class="num" data-sample><span data-st="default error">mj***@example.com</span><span data-st="sms">010-****-5678</span></dd></div>
+        <div><dt>대상</dt><dd><span data-st="default busy error">이메일 광고</span><span data-st="sms">문자 광고</span></dd></div>
+        <div><dt>받는 곳</dt><dd class="num" data-sample><span data-st="default busy error">mj***@example.com</span><span data-st="sms">010-****-5678</span></dd></div>
       </dl>
       <p class="note" style="margin-top:16px" data-el="L1540">주문·견적·배송처럼 거래에 필요한 안내는 수신거부와 관계없이 계속 보내 드립니다.</p>
       <div class="acts" style="margin-top:24px">
-        <a class="bt bt--ink bt--full" href="unsubscribe.html?state=done" data-el="L1534"><span>수신거부</span><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></a>
+        <a class="bt bt--ink bt--full" href="unsubscribe.html?state=done" data-st-not="busy" data-el="L1534"><span>수신거부</span><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></a>
+        <button type="button" class="bt bt--ink bt--full is-busy" data-st="busy" disabled aria-busy="true"><span>처리하고 있습니다</span><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></button>
       </div>
+      <p class="sr-only" role="status" data-st="busy">수신거부를 처리하고 있습니다. 잠시만 기다려 주세요.</p>
     </div>
 
     <!-- 완료 -->
