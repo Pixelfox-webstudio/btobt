@@ -181,40 +181,8 @@
 }
 
 /* ============================================================
-   공용 부품 임시 덮어쓰기 — 이 과제의 네 페이지에서만 (body[data-page]).
-   00-base.css 를 고치면 지운다(보고서 baseNeeds 에 같은 내용)
+   광고 수신거부 페이지 전용
    ============================================================ */
-/* 토스트: 오류도 기본 검정(primary). 앞의 경고 아이콘과 문구로 구분한다 */
-body:is([data-page="category"],[data-page="brand"],[data-page="search"],[data-page="unsubscribe"]) .sub-toast--err{background:var(--ink)}
-body:is([data-page="category"],[data-page="brand"],[data-page="search"],[data-page="unsubscribe"]) .sub-toast--err::before{content:"";flex:none;width:20px;height:20px;margin-right:-6px;background:currentColor;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%221.6%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M12 4.5 3.5 19h17L12 4.5z%22/%3E%3Cpath d=%22M12 10v4.5M12 16.8h.01%22/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%221.6%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M12 4.5 3.5 19h17L12 4.5z%22/%3E%3Cpath d=%22M12 10v4.5M12 16.8h.01%22/%3E%3C/svg%3E") center/contain no-repeat}
-body:is([data-page="category"],[data-page="brand"],[data-page="search"],[data-page="unsubscribe"]) .sub-toast button{font-size:14px}
-@media (max-width:768px){   /* 폰: 긴 문구가 잘리지 않게 화면 폭(좌우 12)에 맞추고 줄을 바꾼다 */
-  body:is([data-page="category"],[data-page="brand"],[data-page="search"],[data-page="unsubscribe"]) .sub-toast{left:12px;right:12px;max-width:none;height:auto;min-height:48px;padding:13px 16px;white-space:normal;line-height:22px;transform:translateY(260%)}
-  body:is([data-page="category"],[data-page="brand"],[data-page="search"],[data-page="unsubscribe"]) .sub-toast.is-on{transform:none}
-  body:is([data-page="category"],[data-page="brand"],[data-page="search"],[data-page="unsubscribe"]) .sub-toast>span{flex:1 1 auto;min-width:0}
-  body:is([data-page="category"],[data-page="brand"],[data-page="search"],[data-page="unsubscribe"]) .sub-toast button{align-self:stretch;height:auto;margin:-13px -16px -13px 0;white-space:nowrap}
-}
-/* 검정 보조 버튼 hover: 홈 주 버튼 hover 와 같은 강조색(button-primary-hover) */
-body:is([data-page="category"],[data-page="brand"],[data-page="search"],[data-page="unsubscribe"]) .sb--ink:hover{background:var(--accent)}
-/* 폰 헤더 장바구니 배지: 홈(v4.css .badge)과 같은 강조색 */
-body:is([data-page="category"],[data-page="brand"],[data-page="search"],[data-page="unsubscribe"]) .mh__btn .badge{background:var(--accent)}
-/* 필터 모음 닫기: 44 원, 칩 바탕(surface-chip) + 잉크 */
-body:is([data-page="category"],[data-page="search"]) .pop__x{width:44px;height:44px;background:#F1F1F3;color:var(--ink)}
-body:is([data-page="category"],[data-page="search"]) .pop__x:hover{background:#F1F1F3}
-/* 방문 기록(쿠키) 안내: 글자 단계(작은 본문 14/22 · 캡션 13/20)와 누르는 칸 44px */
-body:is([data-page="category"],[data-page="brand"],[data-page="search"],[data-page="unsubscribe"]) .ck__d{font-size:14px;line-height:22px}
-body:is([data-page="category"],[data-page="brand"],[data-page="search"],[data-page="unsubscribe"]) .ck__d a{display:inline-flex;align-items:center;min-height:44px;margin:-11px 0}
-body:is([data-page="category"],[data-page="brand"],[data-page="search"],[data-page="unsubscribe"]) .ck__more{min-height:44px;margin:2px 0 -8px}
-body:is([data-page="category"],[data-page="brand"],[data-page="search"],[data-page="unsubscribe"]) .ck__opt{font-size:14px;line-height:22px}
-body:is([data-page="category"],[data-page="brand"],[data-page="search"],[data-page="unsubscribe"]) .ck__opt span{font-size:13px;line-height:20px}
-body:is([data-page="category"],[data-page="brand"],[data-page="search"],[data-page="unsubscribe"]) .ck__acts .sb{height:44px;font-size:14px}
-/* 상담 메뉴(PC 오른쪽 패널): 글자 단계(작은 본문 14/22 · 캡션 13/20), 바로가기 칸은 상자 모서리 16 */
-body:is([data-page="category"],[data-page="brand"],[data-page="search"],[data-page="unsubscribe"]) .qp__ht small{font-size:13px;line-height:20px}
-body:is([data-page="category"],[data-page="brand"],[data-page="search"],[data-page="unsubscribe"]) .qp__quick a{border-radius:16px}
-body:is([data-page="category"],[data-page="brand"],[data-page="search"],[data-page="unsubscribe"]) .qp__list a{font-size:14px;line-height:22px}
-body:is([data-page="category"],[data-page="brand"],[data-page="search"],[data-page="unsubscribe"]) .qp__cs p{font-size:13px;line-height:20px}
-body:is([data-page="category"],[data-page="brand"],[data-page="search"],[data-page="unsubscribe"]) .qp__row{font-size:14px;line-height:22px}
-
 /* 광고 수신거부: 상태 표식은 모두 회색 원(tint) + 검정 아이콘, 안내 상자는 16px, 오류 안내는 회색 바탕 + 잉크 글자 + 경고 아이콘 */
 body[data-page="unsubscribe"] .smark{background:var(--tint);box-shadow:none;color:#000}
 body[data-page="unsubscribe"] .msg{border-radius:16px}

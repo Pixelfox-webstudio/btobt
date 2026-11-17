@@ -172,8 +172,8 @@
       : '<p>주중 10시~18시 (점심 12시~13시 / 주말·공휴일 제외)</p>';
     var qp = el('<aside class="qp" id="qp" aria-label="상담 메뉴" hidden data-el="L22 L23 L24 L25 L26 L27 L28 L29 L21 L33 L61">' +
       '<div class="qp__head"><span class="qp__masc" data-slot="mascot" aria-hidden="true"><i class="i i-user i--24"></i></span><p class="qp__ht">무엇을 도와드릴까요<small>견적부터 납품까지 담당자가 안내합니다.</small></p><button type="button" class="qp__x" aria-label="상담 메뉴 닫기"><i class="i i-x i--18" aria-hidden="true"></i></button></div>' +
-      '<div class="qp__quick"><a href="#" data-href="quote-intro.php"><i class="i i-pen" aria-hidden="true"></i>견적문의</a><a href="#" data-href="mypage.php?section=draft"><i class="i i-image" aria-hidden="true"></i>시안확인</a><a href="#" data-href="customer-center.php?tab=order-guide"><i class="i i-doc" aria-hidden="true"></i>주문방법</a><a href="' + KAKAO + '" target="_blank" rel="noopener"><i class="i i-kakao" aria-hidden="true"></i>카카오톡</a></div>' +
-      '<div class="qp__list"><a href="#" data-href="mypage.php?section=orders">주문내역</a><a href="#" data-href="mypage.php?section=inquiries">견적문의 내역</a><a href="#" data-href="mypage.php?section=draft">시안확인</a><a href="#" data-href="mypage.php?section=orders&amp;state=shipping">배송조회</a><a href="#" data-href="mypage.php?section=wishlist">관심상품</a><a href="#" data-href="customer-center.php">고객센터</a></div>' +
+      '<div class="qp__quick"><a href="#" data-href="quote-intro.php"><i class="i i-pen" aria-hidden="true"></i>견적문의</a><a href="#" data-href="mypage.php?section=orders"><i class="i i-image" aria-hidden="true"></i>시안확인</a><a href="#" data-href="customer-center.php?tab=order-guide"><i class="i i-doc" aria-hidden="true"></i>주문방법</a><a href="' + KAKAO + '" target="_blank" rel="noopener"><i class="i i-kakao" aria-hidden="true"></i>카카오톡</a></div>' +
+      '<div class="qp__list"><a href="#" data-href="mypage.php?section=orders">주문내역</a><a href="#" data-href="mypage.php?section=inquiries">견적문의 내역</a><a href="#" data-href="mypage.php?section=orders">시안확인</a><a href="#" data-href="mypage.php?section=orders&amp;state=shipping">배송조회</a><a href="#" data-href="mypage.php?section=wishlist">관심상품</a><a href="#" data-href="customer-center.php">고객센터</a></div>' +
       '<div class="qp__cs"><a class="qp__tel num" href="tel:' + TEL.replace(/-/g, '') + '">' + TEL + '</a>' + hours + '<p>noeul@noeul.co</p></div>' +
       (S['nobank'] ? '' : '<div class="qp__row"><span>입금계좌</span><button type="button" id="qpBank" aria-expanded="false" aria-controls="qpBankBox">계좌 확인<i class="i i-chev-d i--16" aria-hidden="true"></i></button></div><div class="qp__bank" id="qpBankBox" hidden data-sample><b class="num">부산은행 101-2000-0000-00</b>예금주 주식회사 노을상사<a class="tl" href="#" data-slot="bank-book" style="display:inline-block;margin-top:6px">통장 사본 보기</a></div>') +
       '<div class="qp__row"><span>기업 로고를 넣은 맞춤 제작</span><a href="#" data-href="custom-intro.php">맞춤작업복<i class="i i-chev-r i--16" aria-hidden="true"></i></a></div>' +
@@ -415,7 +415,7 @@
   document.addEventListener('click', function (e) {
     var b = e.target.closest && e.target.closest('[data-range]'); if (!b) return;
     var box = b.closest('[data-period]') || document, d = $$('input[type=date]', box), n = Number(b.getAttribute('data-range'));
-    var to = new Date(), from = new Date(to.getTime() - n * 86400000), iso = function (x) { return x.toISOString().slice(0, 10); };
+    var to = new Date(Date.UTC(2026, 10, 17)), from = new Date(to.getTime() - n * 86400000), iso = function (x) { return x.toISOString().slice(0, 10); }; // 견본 기준일 2026-11-17
     if (d[0]) d[0].value = iso(from); if (d[1]) d[1].value = iso(to);
     $$('[data-range]', box).forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
     box.dispatchEvent(new CustomEvent('period', { bubbles: true }));
@@ -462,7 +462,7 @@
       views.forEach(function (x) { x.hidden = x.getAttribute('data-view') !== v; });
       $$('[data-view-link]').forEach(function (a) { if (a.getAttribute('data-view-param') && a.getAttribute('data-view-param') !== param) return; var on = a.getAttribute('data-view-link') === v || (a.getAttribute('data-view-group') || '').split(' ').indexOf(v) >= 0; if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
       box.setAttribute('data-view-now', v);
-      if (push) { var u = new URL(location.href); u.searchParams.set(param, v); u.searchParams.delete('state'); history.pushState({}, '', u); window.scrollTo(0, 0); }
+      if (push) { var u = new URL(location.href); u.searchParams.set(param, v); u.searchParams.delete('state'); history.pushState({}, '', u); var top = box.getBoundingClientRect().top; if (top < 0) window.scrollTo(0, Math.max(0, top + window.scrollY - 160)); }
       box.dispatchEvent(new CustomEvent('view', { bubbles: true, detail: v }));
     }
     document.addEventListener('click', function (e) {

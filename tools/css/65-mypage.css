@@ -454,22 +454,3 @@ a.my-dt__name:hover{text-decoration:underline;text-underline-offset:3px}
   .my-wish .pc,.my-inq__tog .i,.my-step__c,.my-star .i{transition:none}
 }
 
-/* ============================================================
-   임시: 공용 부품(00-base · 10-form)의 값을 마이페이지에서만 고쳐 둔다.
-   공용 쪽이 고쳐지면 이 묶음을 지운다(보고서 '공용 부품에 필요한 것'에 적음).
-   ============================================================ */
-/* 글자 크기를 DESIGN.md 단계로: 묶음 제목 = 패널 제목 20/28, 보조 설명 = 캡션 13, 작은 표식 = 상품 분류 12 */
-body[data-page="mypage"] .fset__t{font-size:20px;line-height:28px}
-body[data-page="mypage"] .fld__l small,body[data-page="mypage"] .fld__l .r,body[data-page="mypage"] .upl__tx small,body[data-page="mypage"] .files__s{font-size:13px}
-body[data-page="mypage"] .nb{min-width:20px;height:20px;font-size:12px}
-body[data-page="mypage"] .files__ext,body[data-page="mypage"] .thumbs em{font-size:12px}
-/* 둥근 표식: 떠 있지 않으니 그림자 없이 단색 원 */
-body[data-page="mypage"] .smark{box-shadow:none}
-@media (max-width:768px){
-  body[data-page="mypage"] .fset__t{font-size:17px;line-height:24px}
-  /* 알림: 화면 안(좌우 16)에 가두고 줄바꿈. 두 줄이 되어도 잘리지 않게 높이는 최소값만 */
-  body[data-page="mypage"] .sub-toast{left:16px;right:16px;max-width:none;height:auto;min-height:48px;padding:12px 16px;white-space:normal;line-height:22px;transform:translateY(260%)}
-  body[data-page="mypage"] .sub-toast.is-on{transform:none}
-  body[data-page="mypage"] .sub-toast>span{flex:1 1 auto;min-width:0}
-  body[data-page="mypage"] .sub-toast button{align-self:stretch;height:auto;margin:-12px -16px -12px 0;white-space:nowrap}
-}
