@@ -1,0 +1,161 @@
+{
+  "rounds": [
+    {
+      "key": "policy",
+      "date": "2026-11-17",
+      "pages": [
+        "privacy",
+        "terms",
+        "refund-policy",
+        "guest-privacy"
+      ],
+      "checkPagesFailed": 0,
+      "elsMissing": 0,
+      "checkLog": [
+        "화면 점검: 페이지 4 · 상태 14 · 렌더링 84회 · 실패 0",
+        "요소 점검: 절 4개 · 항목 59 · 빠짐 0 · 선택자 문제 0"
+      ],
+      "scores": {
+        "elements": 950,
+        "states": 900,
+        "design": 780,
+        "consistency": 840,
+        "layout": 790
+      },
+      "findings": [
+        {
+          "item": "design",
+          "page": "privacy, terms, refund-policy, guest-privacy",
+          "state": "모든 상태",
+          "problem": "약관 묶음 이동(이용약관/개인정보처리방침/비회원 개인정보처리방침/취소/환불 정책)이 밑줄 탭(.stab, 글자 16px/600, 선택 시 2px 검정 밑줄)이다. DESIGN.md는 '탭·필터는 .bh 알약 줄이나 필터칩', '버튼·탭·칩은 알약', 탭 글자 15/500→선택 700으로 정했고 홈의 탭(상품 랭킹·겨울 아우터·후드)도 모두 알약이다.",
+          "evidence": "review/sheets/privacy-pc-1.png 세 칸 모두 제목 아래 탭 줄, terms-pc-1.png·refund-policy-pc-1.png·guest-privacy-pc-1.png 같은 자리, review/home/home-1440.jpg 상품 랭킹 탭",
+          "fix": "약관 이동을 .bh 알약 탭 줄(문서 페이지라 sticky 없이 써도 됨)이나 filter-chip(높이 36 알약, 선택 #1B1B1F 바탕)으로 바꾸고 a 링크와 aria-current는 그대로 둔다. 바로 못 바꾸면 최소한 css/sub.css L69 글자를 15px/500(선택 700)으로 맞춘다."
+        },
+        {
+          "item": "design",
+          "page": "privacy, guest-privacy",
+          "state": "state=old",
+          "problem": "이전 방침 안내 상자(.msg)의 모서리가 12px이다. 상자·카드는 16px이 규칙이고 12px은 로고 칸·아바타·입력칸 전용이다.",
+          "evidence": "review/sheets/privacy-pc-1.png 가운데 칸(state=old) 탭 아래 회색 안내 상자, guest-privacy-pc-1.png 가운데 칸 같은 자리",
+          "fix": "css/sub.css L147 .subp .msg 의 border-radius 를 16px 로 바꾼다."
+        },
+        {
+          "item": "design",
+          "page": "privacy, guest-privacy",
+          "state": "default (모바일)",
+          "problem": "토큰에 없는 글자 크기 13.5px을 쓴다: 모바일 .po-meta(적용일 줄), .po-meta .lnk, .po-toc__list a(목차) (css/sub.css L2361·L2362·L2366).",
+          "evidence": "review/sheets/privacy-m-1.png default 칸 제목 아래 '적용일 2026년 11월 1일 이전 방침 보기' 줄과 회색 목차 상자",
+          "fix": "13px(caption) 또는 14px(body-sm)로 맞춘다."
+        },
+        {
+          "item": "layout",
+          "page": "privacy",
+          "state": "default, state=ck-set (모바일)",
+          "problem": "390 폭 기본 화면이 7000px 캡처 한도를 넘어 12번 표 첫 줄에서 잘린다(13번 미표시). 목차는 맨 위 회색 상자에만 있고 폰에서는 따라오지 않아, 중간에서 다른 항목으로 가려면 맨 위까지 다시 올라가야 한다. 사장님이 싫다고 한 '모바일에서 끝없이 긴 스크롤'에 해당한다.",
+          "evidence": "review/shots/privacy/default-c390.jpg·state-ck-set-c390.jpg (390x7000, 맨 아래가 '12. 권리 침해 구제 방법' 첫 행), review/sheets/privacy-m-1.png default 칸",
+          "fix": "폰에서 긴 표(2번 수집 항목, 3번 쿠키 목록, 4번 보관 기간, 12번 구제 기관)를 details로 접고 요약 한 줄만 보이게 하거나, 탭 줄 아래에 따라오는 '목차' 알약 버튼을 두어 목차를 다시 열 수 있게 한다. 고친 뒤 7000px 안에 13번까지 들어오는지 다시 캡처해 확인한다."
+        },
+        {
+          "item": "layout",
+          "page": "privacy, guest-privacy",
+          "state": "default, state=old (모바일)",
+          "problem": "터치 대상이 44px보다 작다: 제목 아래 '이전 방침 보기 →'/'현행 방침 보기 →' 링크(.po-meta .lnk min-height 28px, css/sub.css L2272), 13번 변경 이력의 '이전 방침 보기' 버튼(.sb--s 높이 36px, tools/pages/privacy.html L211), 경로 링크 '홈'(13px/20px).",
+          "evidence": "review/sheets/privacy-m-1.png default·custom 칸 제목 아래 링크, state=old 칸 '현행 방침 보기 →', guest-privacy-m-1.png default 칸 제목 아래 '이전 방침 보기 →'",
+          "fix": "폰에서 .po-meta .lnk 와 .crumb a 에 min-height:44px(또는 padding-block으로 누르는 영역 확대)을 주고, po-hist__go 는 .sb--s 를 빼서 기본 48px 버튼으로 쓴다."
+        },
+        {
+          "item": "layout",
+          "page": "refund-policy, guest-privacy",
+          "state": "모든 상태 (모바일)",
+          "problem": "폰의 약관 이동 탭이 현재 탭으로 자동 스크롤되어 왼쪽 '이용약관'이 안 보이고 '…인정보처리방침'처럼 글자가 반쯤 잘린 채로 시작한다. 가로로 넘길 수 있다는 표시가 없다.",
+          "evidence": "review/sheets/refund-policy-m-1.png·guest-privacy-m-1.png 탭 줄 왼쪽 끝",
+          "fix": "첫 번째 지적대로 알약 탭 줄(폰은 화면 폭 맞춤, 탭 flex:1 0 auto)로 바꾸거나, 링크 4개를 줄바꿈되는 칩 묶음으로 만들어 한 화면에 모두 보이게 한다."
+        },
+        {
+          "item": "states",
+          "page": "guest-privacy",
+          "state": "(없음)",
+          "problem": "요소 L509 '관리자가 직접 쓴 방침 문구(직접 쓴 문구로 표시하도록 정했을 때)'에서 '현행인데 직접 쓴 글로 보여 주는 화면'이 상태로 없다. 이전 방침 화면으로만 확인할 수 있다(privacy 에는 state=custom 이 있다).",
+          "evidence": "spec/pages.json guest-privacy 상태 목록(default/old/empty/fail), review/sheets/guest-privacy-pc-1.png",
+          "fix": "guest-privacy 에 state=custom 을 추가한다(현행 배지와 시행일은 그대로, 자동 생성 표 대신 입력한 글을 보여 줌). spec/pages.json 상태 목록에도 넣는다."
+        }
+      ]
+    },
+    {
+      "key": "policy",
+      "date": "2026-11-17",
+      "round": 2,
+      "rescoreOnly": [
+        "design",
+        "layout"
+      ],
+      "pages": [
+        "privacy",
+        "terms",
+        "refund-policy",
+        "guest-privacy"
+      ],
+      "checkPagesFailed": 0,
+      "elsMissing": 0,
+      "checkLog": [
+        "화면 점검: 페이지 4 · 상태 15 · 렌더링 90회 · 실패 0 (16초)",
+        "요소 점검(guest-privacy.html, privacy.html, refund-policy.html, terms.html): 절 4개 · 항목 59 · 빠짐 0 · 선택자 문제 0"
+      ],
+      "scores": {
+        "elements": 950,
+        "states": 900,
+        "design": 880,
+        "consistency": 840,
+        "layout": 860
+      },
+      "previousFindingsCheck": [
+        {
+          "no": 1,
+          "item": "design",
+          "result": "고쳐짐",
+          "note": "약관 묶음 이동이 알약 필터칩(.po-nav .fchip, 선택 #1B1B1F 바탕·흰 글자, 999px)으로 바뀜. privacy-pc-1.png·terms-pc-1.png·refund-policy-pc-1.png·guest-privacy-pc-1.png 제목 아래 줄, 모바일 시트 모두 확인"
+        },
+        {
+          "no": 2,
+          "item": "design",
+          "result": "고쳐짐",
+          "note": "state=old 이전 방침 안내 상자 모서리 16px(.msg border-radius:16px). review/shots/privacy/state-old-c390.jpg·guest-privacy/state-old-c1440.jpg 안내 상자 확인, 계산값 16px"
+        },
+        {
+          "no": 3,
+          "item": "design",
+          "result": "고쳐짐",
+          "note": "모바일 .po-meta·.po-meta .lnk·.po-toc__list a 모두 14px. 4페이지 계산된 글자 크기는 12·13·14·14.5·15·16·18·20·24·32px 로 DESIGN.md 글자표 안"
+        },
+        {
+          "no": 4,
+          "item": "layout",
+          "result": "고쳐짐",
+          "note": "390 기본 화면 6752px 로 줄어 13번까지 캡처됨(긴 표 4개는 폰에서 요약 한 줄 접기 .po-fold). 목차 상자를 지나면 왼쪽 아래 '목차' 알약(.po-totoc, 44px)이 따라오고 누르면 목차로 올라감을 실제 스크롤·클릭으로 확인. 홈 390 캡처(8493px)보다 짧다"
+        },
+        {
+          "no": 5,
+          "item": "layout",
+          "result": "고쳐짐",
+          "note": "390 실측: 경로 '홈' 44×44, '이전/현행 방침 보기 →' 높이 44, 13번 '이전 방침 보기' 버튼 48(.sb sb--gray), 약관 칩 44, 목차 링크 44, 접기 줄 94"
+        },
+        {
+          "no": 6,
+          "item": "layout",
+          "result": "고쳐짐",
+          "note": "폰에서 약관 칩 네 개가 두 줄로 줄바꿈되어 모두 보이고 잘린 글자 없음(flex-wrap:wrap, scrollWidth=clientWidth 347). refund-policy-m-1.png·guest-privacy-m-1.png 제목 아래"
+        }
+      ],
+      "findings": [
+        {
+          "item": "layout",
+          "page": "privacy (guest-privacy·terms·refund-policy도 같은 틀)",
+          "state": "default, state=ck-set (Chromium 1024)",
+          "problem": "901~1279px 폭에서 화면 오른쪽에 떠 있는 상담 버튼 묶음(.side-cs, right 24px·폭 52px → x 948~1000)이 본문 열(.po-main 오른쪽 끝 x 968)과 20px 겹친다. 1번 표 '회원 가입과 관리' 줄의 '각종 고지·' 글자 끝과 2번 표 선 끝이 노란 상담 버튼 밑으로 들어간다. 스크롤하면 위치가 바뀌는 떠 있는 요소라 가벼운 문제다.",
+          "evidence": "review/sheets/privacy-etc.png 맨 왼쪽 c1024 칸 오른쪽 위(검정·노랑 원이 본문 표 끝에 걸침), 원본 review/shots/privacy/default-c1024.jpg x 940~1000, y 560~700. 측정: .po-main right 968 / .side-cs left 948",
+          "fix": "css/sub.css 85절에 @media (min-width:901px) and (max-width:1279px){ .subp .po-doc{padding-right:64px} } 처럼 떠 있는 버튼 폭만큼 본문 열 오른쪽을 비우거나, 이 구간에서 .po-doc--toc 의 column-gap 을 72→48px 로 줄이고 본문 최대폭을 그만큼 줄인다."
+        }
+      ]
+    }
+  ]
+}
