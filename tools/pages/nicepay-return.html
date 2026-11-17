@@ -1,0 +1,86 @@
+<!--{
+ "title": "카드 결제 처리", "desc": "카드 결제 인증 결과를 받아 승인하고 주문을 확정하는 동안의 처리 중 상태와 실패 안내입니다.", "name": "카드 결제 처리", "group": 3, "order": 5, "type": "result", "nocs": true, "sections": ["카드 결제 처리"],
+ "states": [["default", "처리 중"], ["state=confirm-error", "승인 후 주문 확정 오류"], ["state=session", "결제 세션 확인 불가"], ["state=cancel", "카드 인증 취소·실패"], ["state=expired", "결제 요청 만료·불일치"], ["state=mismatch", "인증정보·주문정보 불일치"], ["state=tamper", "인증정보 위변조 감지"], ["state=approve-error", "카드 승인 오류"]]
+}-->
+<section class="wrap rs" aria-labelledby="rsT">
+  <div class="gate rs__gate">
+    <span class="rs__spin" role="img" aria-label="처리 중" data-st-not="confirm-error session cancel expired mismatch tamper approve-error"></span>
+    <span class="smark smark--red" data-st="confirm-error session cancel expired mismatch tamper approve-error"><i class="i i-alert" aria-hidden="true"></i></span>
+
+    <h1 class="gate__t" id="rsT">
+      <span data-st-not="confirm-error session cancel expired mismatch tamper approve-error">결제를 확인하고 있습니다</span>
+      <span data-st="confirm-error">주문을 확정하지 못했습니다</span>
+      <span data-st="session">결제 정보를 확인할 수 없습니다</span>
+      <span data-st="cancel">카드 인증을 마치지 못했습니다</span>
+      <span data-st="expired">결제 요청 시간이 지났습니다</span>
+      <span data-st="mismatch">결제 정보가 주문과 다릅니다</span>
+      <span data-st="tamper">결제 인증 정보에 문제가 있습니다</span>
+      <span data-st="approve-error">카드 승인을 마치지 못했습니다</span>
+    </h1>
+
+    <!-- 처리 중 -->
+    <p class="gate__d" role="status" data-st-not="confirm-error session cancel expired mismatch tamper approve-error" data-el="L469">카드사 승인을 기다리고 있습니다. <span class="rs__ln">이 화면을 닫거나 새로고침하지 말고 잠시 기다려 주세요.</span></p>
+    <!-- 실패 안내 -->
+    <p class="gate__d" data-st="confirm-error" data-el="L470">카드 승인은 완료되었지만 주문을 확정하는 중에 오류가 생겼습니다. <span class="rs__ln">결제 내역은 마이페이지 주문내역에서 확인해 주세요.</span></p>
+    <p class="gate__d" data-st="session" data-el="L472">결제 요청 정보를 확인할 수 없어 결제를 이어 갈 수 없습니다. <span class="rs__ln">주문내역에서 다시 결제를 요청해 주세요.</span></p>
+    <p class="gate__d" data-st="cancel" data-el="L473">결제창에서 카드 인증을 취소했거나 인증에 실패했습니다. <span class="rs__ln">결제는 진행되지 않았습니다.</span></p>
+    <p class="gate__d" data-st="expired" data-el="L474">결제창을 연 뒤 30분이 지났거나 요청 정보가 맞지 않아 결제 요청이 만료되었습니다. <span class="rs__ln">결제는 진행되지 않았습니다.</span></p>
+    <p class="gate__d" data-st="mismatch" data-el="L475">결제창을 연 뒤 견적 금액이 바뀌었거나 결제 인증 정보가 주문 정보와 달라 승인하지 않았습니다. <span class="rs__ln">결제는 진행되지 않았습니다.</span></p>
+    <p class="gate__d" data-st="tamper" data-el="L476">결제 인증 정보가 바뀐 것으로 확인되어 결제를 멈췄습니다. <span class="rs__ln">결제는 진행되지 않았습니다.</span></p>
+    <p class="gate__d" data-st="approve-error" data-el="L477">승인 서버가 응답하지 않았거나, 승인 응답이 바뀌었거나, 결제사 오류로 승인이 끝나지 않았습니다. <span class="rs__ln">결제 여부는 주문내역에서 확인해 주세요.</span></p>
+
+    <div class="rs__body">
+      <dl class="dl rs__dl">
+        <div data-st-not="session"><dt>주문번호</dt><dd class="num" data-sample><b class="rs__no">O-20261115-0007</b></dd></div>
+        <div data-st-not="session"><dt>결제금액</dt><dd data-sample><b class="rs__amt num">6,146,000원</b></dd></div>
+        <div><dt>결제수단</dt><dd>신용·체크카드</dd></div>
+        <div data-st="confirm-error session cancel expired mismatch tamper approve-error"><dt>결제 상태</dt><dd>
+          <span data-st="confirm-error"><span class="stag stag--red">주문 확정 안 됨</span><small class="rs__sub">카드 승인은 완료되었습니다.</small></span>
+          <span data-st="session cancel expired mismatch tamper"><span class="stag">결제 안 됨</span><small class="rs__sub">카드 승인을 하지 않았습니다.</small></span>
+          <span data-st="approve-error"><span class="stag stag--red">확인 필요</span><small class="rs__sub">승인 결과를 받지 못했습니다.</small></span>
+        </dd></div>
+      </dl>
+
+      <!-- 처리 단계(처리 중) -->
+      <div class="cbox cbox--tint cbox--s rs__next" data-st-not="confirm-error session cancel expired mismatch tamper approve-error">
+        <h2 class="st st--s">처리 단계</h2>
+        <ol class="rs__prog">
+          <li class="is-done"><span class="rs__pi" aria-hidden="true"></span><span>카드 인증 결과 확인</span><span class="rs__ps">완료</span></li>
+          <li class="is-on" aria-current="step"><span class="rs__pi" aria-hidden="true"></span><span>카드 승인</span><span class="rs__ps">진행 중</span></li>
+          <li><span class="rs__pi" aria-hidden="true"></span><span>주문 확정</span><span class="rs__ps">대기</span></li>
+        </ol>
+      </div>
+
+      <!-- 다음 순서(실패) -->
+      <div class="cbox cbox--tint cbox--s rs__next" data-st="confirm-error session cancel expired mismatch tamper approve-error">
+        <h2 class="st st--s">다음 순서</h2>
+        <ol class="rs__steps" data-st="confirm-error">
+          <li>마이페이지 주문내역에서 이 주문의 결제 상태를 확인해 주세요.</li>
+          <li>같은 주문을 다시 결제하지 마세요. 카드 승인이 한 번 더 될 수 있습니다.</li>
+          <li>주문내역에 결제 완료로 보이지 않으면 고객센터 <a class="num" href="tel:050713786094">0507-1378-6094</a>로 주문번호를 알려 주세요.</li>
+        </ol>
+        <ol class="rs__steps" data-st="session cancel expired tamper">
+          <li>마이페이지 주문내역에서 결제할 주문을 찾습니다.</li>
+          <li>결제진행을 눌러 주문서에서 다시 결제합니다.</li>
+          <li data-st="cancel">다른 카드로 결제해도 됩니다.</li>
+          <li data-st="expired">결제창을 연 뒤 30분 안에 결제를 마쳐 주세요.</li>
+        </ol>
+        <ol class="rs__steps" data-st="mismatch">
+          <li>마이페이지 주문내역에서 바뀐 견적 금액을 확인합니다.</li>
+          <li>결제진행을 눌러 바뀐 금액으로 다시 결제합니다.</li>
+        </ol>
+        <ol class="rs__steps" data-st="approve-error">
+          <li>마이페이지 주문내역에서 이 주문의 결제 상태를 확인해 주세요.</li>
+          <li>카드사 승인 문자를 받았는데 결제 완료로 보이지 않으면 다시 결제하지 말고 고객센터 <a class="num" href="tel:050713786094">0507-1378-6094</a>로 알려 주세요.</li>
+          <li>승인 문자를 받지 않았다면 결제진행을 눌러 다시 결제할 수 있습니다.</li>
+        </ol>
+      </div>
+
+      <p class="rs__cap" data-st-not="confirm-error session cancel expired mismatch tamper approve-error" data-el="L469">승인이 끝나면 주문 완료 화면으로 이동합니다. <span class="rs__ln">주문 완료 화면을 열 수 없으면 마이페이지 주문내역으로 이동합니다.</span></p>
+
+      <div class="rs__acts" data-st="confirm-error session cancel expired mismatch tamper approve-error">
+        <a class="bt bt--ink bt--full" href="#" data-href="mypage.php?section=orders" data-el="L470 L471"><span>주문내역으로 이동</span><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></a>
+      </div>
+    </div>
+  </div>
+</section>

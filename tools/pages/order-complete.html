@@ -1,0 +1,92 @@
+<!--{
+ "title": "주문 완료", "desc": "견적·시안 요청 접수 또는 결제 주문 완료를 알리고 번호와 다음 순서를 안내합니다.", "name": "주문 완료", "group": 3, "order": 6, "type": "result", "nocs": true, "sections": ["주문 완료"],
+ "states": [["default", "시안 요청 접수"], ["state=quote", "견적 요청 접수"], ["state=card", "카드 결제 완료"], ["state=bank", "무통장입금 주문"], ["state=later", "후불결제 요청"], ["state=guest", "비로그인"], ["state=none", "주문·요청을 찾을 수 없음"]]
+}-->
+<section class="wrap rs" aria-labelledby="rsT">
+  <div class="gate rs__gate">
+    <span class="smark" data-st-not="guest none" data-el="L483"><i class="i i-check" aria-hidden="true"></i></span>
+    <span class="smark smark--gray" data-st="guest"><i class="i i-lock" aria-hidden="true"></i></span>
+    <span class="smark smark--red" data-st="none"><i class="i i-alert" aria-hidden="true"></i></span>
+
+    <h1 class="gate__t" id="rsT" data-el="L484">
+      <span data-st-not="quote card bank later guest none">시안 요청이 접수되었습니다</span>
+      <span data-st="quote">견적 요청이 접수되었습니다</span>
+      <span data-st="card bank">주문이 완료되었습니다</span>
+      <span data-st="later">후불결제 요청이 완료되었습니다</span>
+      <span data-st="guest">로그인이 필요합니다</span>
+      <span data-st="none">주문 정보를 찾을 수 없습니다</span>
+    </h1>
+
+    <!-- 안내 -->
+    <div data-st-not="guest none" data-el="L485">
+      <p class="gate__d" data-st-not="quote card bank later">담당자가 요청 내용을 확인한 뒤 시안을 안내해 드립니다. <span class="rs__ln">결제는 아직 진행되지 않았습니다.</span></p>
+      <p class="gate__d" data-st="quote">담당자가 요청 내용을 확인한 뒤 견적을 안내해 드립니다. <span class="rs__ln">결제는 아직 진행되지 않았습니다.</span></p>
+      <p class="gate__d" data-st="card">카드 결제가 정상적으로 완료되었습니다.</p>
+      <p class="gate__d" data-st="bank">주문이 정상적으로 완료되었습니다. <span class="rs__ln">아래 계좌로 결제금액을 입금해 주세요.</span></p>
+      <p class="gate__d" data-st="later">주문이 정상적으로 완료되었습니다. <span class="rs__ln">결제는 결제 희망일에 맞춰 진행합니다.</span></p>
+    </div>
+    <p class="gate__d" data-st="guest" data-el="L493">주문 완료 화면은 로그인한 회원만 볼 수 있습니다. 로그인하면 주문 내역을 이어서 확인할 수 있습니다.</p>
+    <p class="gate__d" data-st="none" data-el="L494">본인의 주문·요청을 찾을 수 없습니다. 견적·시안 요청과 결제한 주문은 모두 마이페이지 주문내역에서 확인할 수 있습니다.</p>
+
+    <div class="rs__body">
+      <!-- 요청 접수일 때 -->
+      <dl class="dl rs__dl" data-st-not="card bank later guest none" data-el="L486">
+        <div><dt>요청번호</dt><dd class="num" data-sample><b class="rs__no" data-st-not="quote">R-20261112-0031</b><b class="rs__no" data-st="quote">R-20261110-0027</b></dd></div>
+        <div><dt>요청 유형</dt><dd><span data-st-not="quote">시안 요청<small class="rs__sub">인쇄 상품이 있어 시안 확인을 겸한 요청입니다.</small></span><span data-st="quote">견적 요청<small class="rs__sub">인쇄가 없는 상품만 담긴 요청입니다.</small></span></dd></div>
+        <div><dt>진행 상태</dt><dd><span class="stag stag--line">접수 대기</span></dd></div>
+        <div><dt>안내 메일</dt><dd data-sample>mj.kim@example.com<small class="rs__sub">접수 안내 메일을 보냈습니다.</small></dd></div>
+      </dl>
+
+      <!-- 결제 주문일 때 -->
+      <dl class="dl rs__dl" data-st="card bank later" data-el="L487">
+        <div><dt>주문번호</dt><dd class="num" data-sample><b class="rs__no">O-20261115-0007</b></dd></div>
+        <div><dt>결제금액</dt><dd data-sample><b class="rs__amt num">6,146,000원</b></dd></div>
+        <div><dt>결제수단</dt><dd>
+          <span data-st="card">신용·체크카드</span>
+          <span data-st="bank">무통장입금</span>
+          <span data-st="later">후불결제 요청<small class="rs__sub num" data-sample>결제 희망일 2026-12-15</small></span>
+        </dd></div>
+        <div data-st="bank"><dt>입금 계좌</dt><dd data-sample><b class="rs__no num">부산은행 101-2000-0000-00</b><small class="rs__sub">예금주 주식회사 노을상사</small></dd></div>
+        <div><dt>진행 상태</dt><dd><span class="stag stag--acc" data-st="card">상품 준비중</span><span class="stag stag--line" data-st="bank">입금 대기</span><span class="stag stag--line" data-st="later">후불 요청</span></dd></div>
+        <div><dt>안내 메일</dt><dd data-sample>mj.kim@example.com<small class="rs__sub"><span data-st="card">결제 완료 안내 메일을 보냈습니다.</span><span data-st="bank">입금 안내 메일을 보냈습니다.</span><span data-st="later">후불결제 요청 완료 메일을 보냈습니다.</span></small></dd></div>
+      </dl>
+
+      <!-- 다음 순서 -->
+      <div class="cbox cbox--tint cbox--s rs__next" data-st-not="guest none">
+        <h2 class="st st--s">다음 순서</h2>
+        <ol class="rs__steps" data-st-not="quote card bank later">
+          <li>담당자가 요청 내용과 인쇄 파일을 확인한 뒤 시안을 올립니다.</li>
+          <li>시안이 올라오면 마이페이지 주문내역의 시안확인에서 보고 승인하거나 수정을 요청합니다.</li>
+          <li>시안을 승인하면 견적을 받고, 주문내역의 결제진행에서 결제합니다.</li>
+        </ol>
+        <ol class="rs__steps" data-st="quote">
+          <li>담당자가 요청 내용을 확인한 뒤 견적서를 보내 드립니다.</li>
+          <li>견적서는 안내 메일의 링크나 마이페이지 주문내역에서 볼 수 있습니다.</li>
+          <li>견적 금액을 확인한 뒤 주문내역의 결제진행에서 결제합니다.</li>
+        </ol>
+        <ol class="rs__steps" data-st="card">
+          <li>주문하신 상품을 준비합니다. 진행 상태는 마이페이지 주문내역에서 볼 수 있습니다.</li>
+          <li>제작 기간은 인쇄가 없는 상품 3~4일, 인쇄 상품 4~7일입니다(주말 제외).</li>
+          <li>제작이 끝나면 주문서에 적은 배송방법으로 보내 드립니다.</li>
+        </ol>
+        <ol class="rs__steps" data-st="bank">
+          <li>결제금액 6,146,000원을 위 계좌로 입금해 주세요.</li>
+          <li>입금이 확인되면 주문내역의 진행 상태가 입금 대기에서 바뀝니다.</li>
+          <li>세금계산서를 신청하셨다면 결제 확인 후 영업일 1~3일 안에 담당자 이메일로 보내 드립니다.</li>
+        </ol>
+        <ol class="rs__steps" data-st="later">
+          <li>결제 희망일에 맞춰 마이페이지 주문내역의 결제진행에서 결제합니다.</li>
+          <li>후불결제는 관공서·공공기관·학교만 이용할 수 있습니다.</li>
+          <li>후불결제 요청에는 포인트를 쓸 수 없어 포인트는 차감하지 않았습니다.</li>
+        </ol>
+      </div>
+
+      <p class="rs__cap" data-st-not="guest none" data-el="L485"><span data-st-not="card bank later">접수한 상품은 장바구니에서 빠졌습니다. </span>주문 내역은 마이페이지 주문내역에서 확인할 수 있습니다.</p>
+
+      <div class="rs__acts">
+        <a class="bt bt--ink bt--full" href="#" data-href="mypage.php?section=orders" data-st-not="guest" data-el="L490"><span><span data-st-not="none">주문내역 보기</span><span data-st="none">주문내역으로 이동</span></span><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></a>
+        <a class="bt bt--ink bt--full" href="#" data-href="login.php?return=order-complete.php" data-st="guest"><span>로그인</span><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></a>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,48 @@
+/* ============================================================
+   45. 결과 화면: 주문 완료 · 카드 결제 처리 (접두어 rs)
+   공용 .gate(표식 · 제목 · 안내) 아래에 폭 560px 본문을 둔다.
+   ============================================================ */
+.rs__gate{padding-bottom:0}
+.rs__gate .gate__d{max-width:560px}
+.rs__ln{display:block}
+.rs__body{width:min(560px,100%);margin-top:28px;text-align:left}
+
+/* 정보 줄: 번호는 굵게, 금액은 가격 글자(800), 보조 설명은 값 아래 한 줄 */
+.rs__no{font-weight:700;letter-spacing:.01em;color:#000}
+.rs__amt{font-size:17px;font-weight:800;line-height:22px;color:var(--ink)}
+.rs__sub{display:block;margin-top:2px;font-size:13px;font-weight:400;line-height:20px;color:var(--fg3)}
+.rs__dl .stag{vertical-align:1px}
+
+/* 다음 순서: 22px 원 안의 작은 번호로 순서만 알린다 */
+.rs__next{margin-top:24px}
+.rs__steps{display:grid;gap:10px;margin-top:12px;counter-reset:rs}
+.rs__steps li{position:relative;padding-left:32px;font-size:14.5px;line-height:22px;color:var(--fg2);counter-increment:rs}
+.rs__steps li::before{content:counter(rs);position:absolute;left:0;top:0;display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:inset 0 0 0 1px #C8C8CC;font-family:var(--f-en);font-size:13px;font-weight:700;line-height:1;color:var(--fg2)}
+.rs__steps a{color:#000;font-weight:600;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
+
+.rs__cap{margin-top:20px;font-size:13.5px;line-height:21px;color:var(--fg3);text-align:center}
+.rs__acts{display:grid;gap:8px;margin-top:16px}
+
+/* 카드 결제 처리: 도는 원 · 처리 단계 */
+.rs__spin{display:grid;place-items:center;width:52px;height:52px;border-radius:50%;background:var(--tint)}
+.rs__spin::before{content:"";width:24px;height:24px;border:2.5px solid #DEDEE2;border-top-color:#000;border-radius:50%;animation:subspin .8s linear infinite}
+.rs__prog{display:grid;margin-top:4px}
+.rs__prog li{display:grid;grid-template-columns:22px minmax(0,1fr) auto;align-items:center;gap:12px;padding:11px 0;font-size:14.5px;line-height:22px;color:var(--fg3)}
+.rs__prog li+li{border-top:1px solid var(--ln)}
+.rs__pi{position:relative;display:block;width:22px;height:22px;border-radius:50%;box-shadow:inset 0 0 0 1px #C8C8CC;background:#fff}
+.rs__prog .is-done{color:var(--fg2)}
+.rs__prog .is-done .rs__pi{box-shadow:inset 0 0 0 1px #000}
+.rs__prog .is-done .rs__pi::after{content:"";position:absolute;inset:4px;background:#000;-webkit-mask:var(--i-check) center/contain no-repeat;mask:var(--i-check) center/contain no-repeat}
+.rs__prog .is-on{color:#000;font-weight:600}
+.rs__prog .is-on .rs__pi{box-shadow:none;border:2px solid #DEDEE2;border-top-color:#000;animation:subspin .8s linear infinite}
+.rs__ps{font-size:13px;font-weight:500;color:var(--fg3)}
+.rs__prog .is-on .rs__ps{color:#000;font-weight:600}
+
+@media (max-width:768px){
+  .rs__body{margin-top:24px}
+  .rs__amt{font-size:16px}
+  .rs__steps li{font-size:14px}
+  .rs__next{margin-top:20px}
+  .rs__cap{margin-top:16px;font-size:13px;text-align:left}
+}
+@media (prefers-reduced-motion:reduce){ .rs__spin::before,.rs__prog .is-on .rs__pi{animation-duration:2s} }

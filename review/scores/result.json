@@ -1,0 +1,44 @@
+{
+  "rounds": [
+    {
+      "key": "order-complete,nicepay-return",
+      "at": "2026-11-17",
+      "scores": {
+        "elements": 960,
+        "states": 950,
+        "design": 900,
+        "consistency": 870,
+        "layout": 890
+      },
+      "checkPagesFailed": 0,
+      "elsMissing": 0,
+      "findings": [
+        {
+          "item": "consistency",
+          "page": "order-complete.html, nicepay-return.html",
+          "state": "state=bank/later/default(order-complete) vs state=session/cancel/expired/mismatch/tamper(nicepay-return)",
+          "problem": "같은 성격의 중립 상태 표시가 두 페이지에서 모양이 다르다. 주문 완료의 '접수 대기·입금 대기·후불 요청'은 테두리 알약(stag--line), 카드 결제 처리의 '결제 안 됨'은 회색 바탕 알약(stag)이다. 강조(stag--acc 파랑)·오류(stag--red 빨강)는 바탕 채움인데 중립만 두 가지가 섞여 있다.",
+          "evidence": "order-complete-pc-2.png 왼쪽(bank) '입금 대기' 칩 / nicepay-return-pc-2.png 왼쪽(cancel) '결제 안 됨' 칩",
+          "fix": "중립 상태는 DESIGN.md tag-chip(바탕 surface-chip #F1F1F3) 하나로 통일한다. order-complete.html 의 stag--line 을 stag 로 바꾸거나 sub.css 에서 stag--line 을 없앤다."
+        },
+        {
+          "item": "consistency",
+          "page": "order-complete.html, nicepay-return.html",
+          "state": "order-complete 완료 상태 전체 vs state=none, nicepay-return 오류 상태 전체",
+          "problem": "같은 목적지(마이페이지 주문내역)로 가는 주 버튼 문구가 '주문내역 보기'와 '주문내역으로 이동' 두 가지로 섞여 있다.",
+          "evidence": "order-complete-pc-1.png 버튼 '주문내역 보기' / order-complete-pc-3.png(none)·nicepay-return-pc-1.png 가운데(confirm-error) 버튼 '주문내역으로 이동'",
+          "fix": "두 페이지의 버튼 문구를 하나(예: '주문내역 보기')로 맞춘다."
+        },
+        {
+          "item": "layout",
+          "page": "order-complete.html, nicepay-return.html",
+          "state": "default, state=card 등 안내 문장이 있는 상태 (390)",
+          "problem": "버튼 위 보조 안내 문장이 PC에서는 가운데 정렬인데 폰에서는 왼쪽 정렬로 바뀐다. 폰 화면에서 제목·설명은 가운데, 이 문장만 왼쪽이라 정렬선이 어긋나 보인다.",
+          "evidence": "order-complete-pc-1.png 가운데(card) '주문 내역은 마이페이지…' 가운데 정렬 / order-complete-m-1.png 세 번째(card) 같은 문장 왼쪽 정렬, nicepay-return-m-1.png 첫 번째(default) '승인이 끝나면…' 왼쪽 정렬",
+          "fix": "sub.css 의 해당 안내 문장 클래스에 폰 구간에서도 text-align:center 를 유지하거나, PC·폰 모두 표 정렬선(왼쪽)에 맞춰 하나로 통일한다."
+        }
+      ],
+      "notes": "화면 점검 실패 0(페이지 2·상태 15·렌더링 90회), 요소 점검 빠짐 0(항목 17). 요소 목록의 안내·상태 15개가 모두 상태로 분리되어 보인다. 토큰 밖 색·인라인 스타일·이모지·영문 라벨·임시 문구 없음. 헤더·푸터 홈과 동일. 800 미만 항목 없음."
+    }
+  ]
+}
