@@ -14,7 +14,8 @@
    ============================================================ */
 (function () {
   'use strict';
-  var SECS = ['#lookbook', '#rank', '#hood'];
+  // 2026-11-18 8차 담당자: "바텀 헤더(.bh) 있는 섹션에는 그라데이션 넣지 마" → 후드·맨투맨(#hood) 뺌. 이제 2곳(룩북 · 랭킹, 둘 다 바텀 헤더 없음)
+  var SECS = ['#lookbook', '#rank'];
   var secs = SECS.map(function (s) { return document.querySelector(s); }).filter(Boolean);
   if (!secs.length) return;
   // 색 덩어리 4개 + 양옆 흰 점 격자(css/v10.css 16번 (1))

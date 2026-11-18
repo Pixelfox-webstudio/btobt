@@ -28,10 +28,10 @@ if(!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('v4-
 <link rel="stylesheet" href="css/v9.css?v=20261116">
 <link rel="stylesheet" href="css/v10.css?v=20261117">
 <link rel="stylesheet" href="css/v11-hero.css?v=20261118g">
-<link rel="stylesheet" href="css/v11.css?v=20261118g">
+<link rel="stylesheet" href="css/v11.css?v=20261118h">
 <link rel="stylesheet" href="css/v11-look.css?v=20261118g">
 <link rel="stylesheet" href="css/v11-ind.css?v=20261118g">
-<link rel="stylesheet" href="css/v11-font.css?v=20261118g">
+<link rel="stylesheet" href="css/v11-font.css?v=20261118h">
 <link rel="stylesheet" href="css/v11-m.css?v=20261118e">
 <link rel="stylesheet" href="css/v11-bh.css?v=20261118g">
 <link rel="stylesheet" href="css/v11-fx.css?v=20261118g">
@@ -215,26 +215,6 @@ setTimeout(function(){if(!window.B2BT_INTRO_RUN)drop();if(!window.B2BT_HX)d.clas
   </div><!-- /stk__over -->
   </div><!-- /stk -->
 
-  <!-- 3. 겨울 시즌: 캠페인 배너 + 시간이 지나면 오른쪽으로 넘어가는 상품 줄(끝없이 반복) -->
-  <section class="ss" id="season" aria-labelledby="ssTitle">
-    <div class="wrap">
-      <div class="ss__hero">
-        <picture>
-          <source media="(max-width:768px)" srcset="img/v5/bn-h05-m.webp" width="1000" height="1250">
-          <img src="img/v5/bn-h05.webp" width="2400" height="1021" alt="새벽 능선에 서 있는 방한 자켓 차림의 세 사람" loading="lazy" decoding="async" data-slot="season-hero" data-temp="ai">
-        </picture>
-        <div class="ss__copy">
-          <h2 class="ss__t" id="ssTitle"><span class="tt__pre">겨울 현장을 위한</span> <span class="tt__key">방한 단체복</span></h2>
-          <p class="ss__d">패딩, 겨울조끼, 플리스까지 겨울 시즌 상품을 모았습니다.</p>
-          <a class="bt bt--wh" href="#" data-href="category.php?cat=%ED%8C%A8%EB%94%A9"><span>패딩 전체 보기</span><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></a>
-        </div>
-        <p class="fd__note">연출 이미지입니다.</p>
-      </div>
-      <div class="md__rail ss__rail" id="ssRail" data-lenis-prevent-touch></div>
-      <div class="ss__ctl"><div class="md__prog" aria-hidden="true"><i id="ssProg"></i></div></div>
-    </div>
-  </section>
-
   <!-- 5-1. 품목별 보기 (v8에서 가져옴, 흰 바탕). v11: 계절 카드 4개 → 품목 카드 8개(새 사진 img/v11/npXX). 제목이 "품목별 보기"인데 계절이 들어가 있던 것을 바로잡음.
        고른 카드가 넓어지고(영문 이름 + 우리말 품목 + 상품 보기), 좁은 카드 이름(영문)은 90도로 돌려 적는다. 폰은 옆으로 넘기는 카드.
        --cx = 좁은 카드에서 사진의 어느 가로 지점을 가운데 둘지(얼굴 · 옷이 보이게). 링크는 서랍 메뉴와 같은 category.php 주소 -->
@@ -261,7 +241,7 @@ setTimeout(function(){if(!window.B2BT_INTRO_RUN)drop();if(!window.B2BT_HX)d.clas
       <header class="sh sh--c rkh" id="rkHead">
         <p class="v11-eyebrow" aria-hidden="true">BEST RANKING</p>
         <h2 class="sh__t" id="rkTitle"><span class="ln"><span><span class="tt__key">상품 랭킹</span></span></span></h2>
-        <p class="sh__d" data-rv id="rkBasis">상품 목록 추천순으로 품목별 상품을 모았습니다. 번호는 2026-11-11 진열 순서입니다.</p>
+        <p class="sh__d" data-rv id="rkBasis">비투비티가 품목별로 골라 추천하는 상품입니다.</p>
       </header>
       <div class="rk__bar"><div class="tabs" role="tablist" aria-label="품목" id="rkTabs"><span class="tabs__pill" aria-hidden="true"></span></div></div>
       <div class="rk__stage">
@@ -429,9 +409,9 @@ setTimeout(function(){if(!window.B2BT_INTRO_RUN)drop();if(!window.B2BT_HX)d.clas
     </div>
   </section>
 
-  <!-- 7-2. 후드·바지(7번과 같은 틀). 상품은 js/v10.js SHOP.hood2. 구매 후기 앞 마지막 상품 섹션이라 아래 여백(psec--end)을 맡는다.
+  <!-- 7-2. 후드·바지(7번과 같은 틀). 상품은 js/v10.js SHOP.hood2. (2026-11-18 8차: 아래에 스테디셀러(#season)가 들어와 아래 여백 psec--end는 그쪽으로 넘김).
        v11: 전에는 7번과 제목 · 상품이 똑같았다 → 다른 후드 4개 + 기모 바지 4개로 바꾸고 제목도 바꿈 -->
-  <section class="psec psec--end" id="hood2" aria-labelledby="hood2Title" data-shop="hood">
+  <section class="psec" id="hood2" aria-labelledby="hood2Title" data-shop="hood">
     <div class="wrap">
       <header class="vh vh--row">
         <div><h2 class="vh__t" id="hood2Title"><span class="tt__pre">위아래로 맞추는</span> <span class="tt__key">후드·바지</span></h2></div>
@@ -442,6 +422,30 @@ setTimeout(function(){if(!window.B2BT_INTRO_RUN)drop();if(!window.B2BT_HX)d.clas
     <div class="wrap psec__body">
       <div class="pgrid" data-grid role="tabpanel" aria-live="polite"></div>
       <div class="psec__more"><a class="pbtn" data-more href="#" data-href="category.php"></a></div>
+    </div>
+  </section>
+
+  <!-- 8-0. 스테디셀러(2026-11-18 8차 담당자): 원래 '겨울 현장을 위한 방한 단체복'(룩북 바로 다음, #season) → 후드·바지 아래 · 구매 후기 위로 옮기고 내용을 바꿈.
+       "계절 상관없이 많이 나가는 스테디셀러" = 사진 배너(담당자 첨부 사진 img/v11/bn-steady*, 숲길의 두 사람) + 사계절 기본 상품 줄(js/v10.js SEASON).
+       사진 인물이 왼쪽이라 PC 글은 오른쪽(.ss__hero--r, css/v11.css 9번). 폰은 원래대로 아래. id(#season · #ssRail)는 스크립트가 찾으므로 그대로 둔다.
+       구매 후기 앞 마지막 상품 섹션이라 아래 여백도 이 섹션이 맡는다(css/v11.css 9번, 전에는 #hood2의 psec--end) -->
+  <section class="ss" id="season" aria-labelledby="ssTitle">
+    <div class="wrap">
+      <div class="ss__hero ss__hero--r">
+        <picture>
+          <source media="(max-width:768px)" srcset="img/v11/bn-steady-m.webp" width="1000" height="1250">
+          <img src="img/v11/bn-steady.webp" width="2400" height="1021" alt="안개 낀 숲길을 걷는 검정 방한 자켓 차림의 두 남성" loading="lazy" decoding="async" data-slot="steady-hero" data-temp="ai">
+        </picture>
+        <div class="ss__copy">
+          <p class="v11-eyebrow v11-eyebrow--light" aria-hidden="true">STEADY SELLER</p>
+          <h2 class="ss__t" id="ssTitle"><span class="tt__pre">계절 없이 꾸준히 찾는</span> <span class="tt__key">스테디셀러</span></h2>
+          <p class="ss__d">티셔츠, 맨투맨, 바람막이, 바지까지 사계절 단체 주문이 이어지는 기본 상품을 모았습니다.</p>
+          <a class="bt bt--wh" href="#" data-href="category.php"><span>전체 상품 보기</span><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></a>
+        </div>
+        <p class="fd__note">연출 이미지입니다.</p>
+      </div>
+      <div class="md__rail ss__rail" id="ssRail" data-lenis-prevent-touch></div>
+      <div class="ss__ctl"><div class="md__prog" aria-hidden="true"><i id="ssProg"></i></div></div>
     </div>
   </section>
 
@@ -626,15 +630,15 @@ setTimeout(function(){if(!window.B2BT_INTRO_RUN)drop();if(!window.B2BT_HX)d.clas
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
 <script src="js/catalog.js?v=20261116"></script>
 <script src="js/brands.js?v=20261116"></script>
-<script src="js/rank.js?v=20261118e"></script>
+<script src="js/rank.js?v=20261118h"></script>
 <script src="js/extra.js?v=20261116"></script>
 <script src="js/reviews.js?v=20261116"></script>
-<script src="js/v10.js?v=20261118g"></script>
-<script src="js/bgfx.js?v=20261118g"></script>
+<script src="js/v10.js?v=20261118h"></script>
+<script src="js/bgfx.js?v=20261118h"></script>
 <script src="js/v11-hero.js?v=20261118g"></script>
 <script src="js/v11.js?v=20261118d"></script>
 <script src="js/v11-look.js?v=20261118g"></script>
-<script src="js/v11-font.js?v=20261118g"></script>
+<script src="js/v11-font.js?v=20261118h"></script>
 <script src="js/v11-m.js?v=20261118g"></script>
 <script src="js/v11-fx.js?v=20261118g"></script>
 </body>

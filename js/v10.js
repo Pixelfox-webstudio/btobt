@@ -192,8 +192,10 @@
   //   정확히 같은 옷: np07 · np09. 나머지는 같은 품목의 가까운 모양(후드 패딩 · 조끼 · 필드 자켓 · 후드집업 · 카라 티 · 라운드 티 · 퀼팅 패딩 · 투톤 플리스).
   //   np04(다른 브랜드 신발) · np11(작업복, 품목별 보기에서 사용)은 랭킹에 맞는 상품이 없어 뺐다. 로고 사진은 아래 BRAND_PHOTO(협력브랜드 줄)에서 쓴다
   // 2026-11-18 v11 6차: np01 ~ np05는 new_photo의 [con](컨셉) 파일이다(np01 현장 · np02 회색 후드 현장 · np03 형광 조끼 · np04 신발 · np05 검정 자켓 현장). 랭킹 상품 카드에는 쓰지 않는다 → c487(np02) 뺌
+  // 2026-11-18 8차 담당자: 랭킹 1위 사진 = np17(옅은 녹색 경량 패딩) · 5위 = np04(검정 조거 바지 + 신발, [con]) 지정 → 가장 가까운 상품 c458 경량 웰론 패딩 · c121 죠거 스판 긴바지에 붙임.
+  //   np17은 가슴에 작은 아이더 로고가 있는 사진이지만 담당자가 직접 고른 것이라 쓴다(4위 np03은 BRAND_PHOTO의 케이투 사본 b3227-np). 순서는 js/rank.js
   var WEAR_PHOTO = { c460: 'np16', c195: 'np15', c483: 'np06', c434: 'np21', c465: 'np07', c320: 'np14', c143: 'np13', c462: 'np10', c470: 'np09',
-    c475: 'np12', c431: 'np22', c461: 'np08' };
+    c475: 'np12', c431: 'np22', c461: 'np08', c458: 'np17', c121: 'np04' };
   Object.keys(WEAR_PHOTO).forEach(function (k) {
     var p = P[k]; if (!p) return;
     p.imgs = ['img/v11/' + WEAR_PHOTO[k] + '-s.webp', p.imgs[0]]; p.photo = WEAR_PHOTO[k];
@@ -545,25 +547,28 @@
   })();
 
   /* ============================================================
-     3. 겨울 시즌 상품 줄: 시간이 지나면 한 칸씩 오른쪽 상품으로 넘어가고 끝없이 돈다(같은 목록을 두 번 놓고 절반을 넘으면 처음으로 되돌린다).
+     3. 스테디셀러 상품 줄(2026-11-18 8차: 원래 겨울 시즌 줄. 섹션이 후드·바지 아래로 옮겨지며 사계절 기본 상품으로 바꿈): 시간이 지나면 한 칸씩 오른쪽 상품으로 넘어가고 끝없이 돈다(같은 목록을 두 번 놓고 절반을 넘으면 처음으로 되돌린다).
      마우스를 올리거나, 손을 대거나, 포커스가 있으면 멈춘다. 움직임 줄이기 설정이면 자동으로 넘기지 않는다.
      v10: 상품 아래 조작 줄은 진행 막대만 둔다(숫자 · 멈춤 · 좌우 화살표 삭제). 넘김은 자동 + 손으로 밀기
      ============================================================ */
-  var SEASON = ['m465', 'c464', 'c472', 'm206', 'm194', 'c197', 'm475', 'c203'];
+  // 2026-11-18 8차 담당자: "계절 상관없이 많이 나가는 스테디셀러" → 라운드 티 · 카라 티 · 맨투맨 · 바람막이 · 바지 · 모자(카탈로그 추천순 앞쪽).
+  //   아래 후드·맨투맨(#hood) · 바람막이·패딩(#outer2) · 후드·바지(#hood2) 줄과 겹치지 않는 상품만 골랐다. 시안용이라 담당자 확인 뒤 바꿀 수 있다.
+  //   (전 목록 = 겨울 시즌: m465 · c464 · c472 · m206 · m194 · c197 · m475 · c203)
+  var SEASON = ['c139', 'c328', 'c227', 'c481', 'c119', 'c170', 'c321', 'c506'];
   (function () {
     var rail = $('#ssRail'); if (!rail) return;
     var list = pick(SEASON), n = list.length; if (!n) return;
     // 2026-11-18 v11 6차 담당자: 폰에서 손으로 넘길 때 버벅인다 → 폰(768 이하)은 자동 넘김 · 끝없이 돌기(복제 · 되돌리기)를 끄고
     // 브라우저 기본 가로 스크롤 + 카드에 맞춰 멈춤(css/v11-m.css)만 둔다. 자동 넘김이 손가락과 싸우던 것과 되돌리기(scrollLeft 점프)가 원인
     if (window.matchMedia('(max-width: 768px)').matches) {
-      var mc = renderGrid(rail, list, { kind: '시즌', fid: 'ss-' }), mp = $('#ssProg');
+      var mc = renderGrid(rail, list, { kind: '스테디셀러', fid: 'ss-' }), mp = $('#ssProg');
       rail.classList.add('is-native');
       var mpaint = function () { var max = rail.scrollWidth - rail.clientWidth; if (mp) mp.style.transform = 'scaleX(' + (max > 0 ? Math.max(1 / n, Math.min(1, (rail.scrollLeft + rail.clientWidth) / rail.scrollWidth)) : 1).toFixed(4) + ')'; };
       rail.addEventListener('scroll', mpaint, { passive: true }); window.addEventListener('resize', mpaint);
       railWarm(rail)(); mpaint(); reveal(mc.slice(0, 3), rail, true);
       return;
     }
-    var cards = renderGrid(rail, list.concat(list), { kind: '시즌', fid: 'ss-' });
+    var cards = renderGrid(rail, list.concat(list), { kind: '스테디셀러', fid: 'ss-' });
     cards.slice(n).forEach(function (c) { c.setAttribute('aria-hidden', 'true'); $$('a,button', c).forEach(function (x) { x.tabIndex = -1; }); });
     var prog = $('#ssProg'), U = 0;
     function unit() { return U || (U = cards[0].getBoundingClientRect().width + (parseFloat(getComputedStyle(rail).columnGap) || 16)); } // 한 칸 폭은 재 두고 쓴다(화면 폭이 바뀌면 다시 잰다)
@@ -608,6 +613,10 @@
       { brand: 'ace', en: 'ACE · SSEDA', ko: '에이스', title: '제조 · 설비 현장의<br>에이스 작업복', img: 'img/v9/pb-plant.webp', imgM: 'img/v9/pb-plant-m.webp', alt: '공장에서 부품을 살피는 남색 상하일체형 작업복과 회색 안전모 차림의 작업자', side: 'l', tags: 'mid', act: 1, items: [['b2305', .522, .115, .35, .115], ['b1420', .622, .66, .57, .62]] },
       // 야외(W01): 담당자 착용 상품표로 확정(상의만)
       { brand: 'tbuc', en: 'T-BUC', ko: '티뷰크', title: '야외 · 방한 현장의<br>티뷰크 방한 자켓', img: 'img/v9/pb-outdoor.webp', imgM: 'img/v9/pb-outdoor-m.webp', alt: '설산에서 주황색 반사띠 방한 자켓을 입은 작업자', side: 'l', tags: 'top', items: [['b2041', .645, .52, .62, .52]] },
+      // 2026-11-18 8차 담당자: 티뷰크 장면 다음에 H04 · H01 사진 배너 2장 추가(원본 contents/H04.png · H01.png → img/v11/pb-h04* · pb-h01*, PC 2048×1152 · 폰 1000×1250으로 자름).
+      //   브랜드는 사진 속 로고로 정함(H04 가슴 EIDER = 아이더, H01 가슴 K2 Safety = 케이투). 사진 속 옷이 어떤 상품인지 확인된 목록이 없어 착용 상품 칸(items)은 비워 둔다
+      { brand: 'eider', en: 'EIDER', ko: '아이더', title: '한겨울 출퇴근길의<br>아이더 다운 파카', img: 'img/v11/pb-h04.webp', imgM: 'img/v11/pb-h04-m.webp', alt: '푸른 빛 배경 앞에서 카키색 후드 다운 파카의 지퍼를 올리는 남성', side: 'l', tags: 'top', items: [] },
+      { brand: 'k2', en: 'K2', ko: '케이투', title: '실내 · 설비 현장의<br>케이투 방한 자켓', img: 'img/v11/pb-h01.webp', imgM: 'img/v11/pb-h01-m.webp', alt: '햇빛 드는 콘크리트 실내에 앉은 검정 방한 자켓 차림의 남성', side: 'l', tags: 'top', items: [] },
       // 건설(F04) 장면은 2026-11-15 담당자 지시로 뺌(사진 img/v9/pb-build*.webp는 남겨 둠)
       // 목공(8차_R050): 팔 포켓·패치·가슴 로고가 JK-F6101 상세 사진과 같음. 담당자 확인 대상
       { brand: 'k2', en: 'K2', ko: '케이투', title: '목공 · 인테리어 현장의<br>케이투 방한 자켓', img: 'img/v9/pb-wood.webp', imgM: 'img/v9/pb-wood-m.webp', alt: '목재를 자르는 짙은 회색 방한 자켓 차림의 작업자', side: 'r', tags: 'top', items: [['b3026', .34, .47, .43, .47]] }

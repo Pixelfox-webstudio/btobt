@@ -17,6 +17,7 @@
 @media (max-width:768px){ .hx__ww{font-size:calc(var(--ww-fs) * var(--ww-k,1))} }
 /* 외곽선 WEAR: Google Fonts의 Manrope 파일은 획이 겹친 윤곽선이 그대로라(A 가로획 · R 다리) -webkit-text-stroke로 그리면
    글자 안에 겹친 선이 비친다(정적 800 파일도 같음). 그래서 글자를 흰색으로 채운 뒤 SVG 필터(js/v11-font.js가 넣음)로 선만 남긴다.
+   2026-11-18 8차 담당자: "굵기는 좋은데 왜 둥글어" → 불리는 방법을 가우스 흐림에서 feMorphology dilate로 바꿔 꼭짓점을 각지게(js/v11-font.js 1번)
    2026-11-18 7차 담당자: "border는 그냥 1px, 안의 글자(투명한 부분)를 굵게"
      → 필터가 글자 모양을 바깥으로 불린 뒤(PC 2px · 폰 1px = 800보다 굵은 가짜 볼드) 그 바깥 1px만 흰 선으로 남긴다.
        선은 PC · 폰 모두 1px. 직전에 안쪽 테두리를 1.5 → 3.5px로 두껍게 했던 것은 요청을 잘못 읽은 것이라 되돌렸다.

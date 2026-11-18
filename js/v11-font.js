@@ -30,15 +30,24 @@
       var z = d / s, k = s / (pdf(z) * AA);
       return '<feComponentTransfer in="b" result="' + out + '"><feFuncA type="linear" slope="' + k.toFixed(3) + '" intercept="' + (.5 - k * cdf(z)).toFixed(3) + '"/></feComponentTransfer>';
     };
-    var ring = function (id, fat, s) {
+    // 2026-11-18 8차 담당자: "WEAR 굵기는 좋은데 왜 이렇게 둥글어?" → 가우스 흐림으로 불리면 모서리가 둥글게 불어난다(흐림 반경만큼 꼭짓점이 깎임).
+    //   굵기(불리는 폭 FAT)와 선 두께(1px)는 그대로 두고, 불리는 방법만 feMorphology dilate(사각형으로 불림)로 바꿨다 → W · A · R · E 꼭짓점이 Manrope 원래처럼 각지게 남는다.
+    //   바깥 모양 = 글자를 FAT px 불림, 안쪽 모양 = FAT-1 px 불림(FAT 1이면 글자 그대로) → 바깥에서 안쪽을 빼면 1px 띠 → 흰색.
+    //   (위 cut · pdf · cdf는 흐림 방식용이라 지금은 쓰지 않지만 되돌릴 때를 위해 남겨 둔다. 전 방식 = _qa/_bak_8cha_20261118/js/v11-font.js)
+    //   불린 모양의 가장자리(글자 안티에일리어싱 반투명 띠)를 가파르게 잘라(알파 .3 이하 → 0, .7 이상 → 1) 1px 선이 회색으로 번지지 않고 또렷하게 남게 한다
+    var grow = function (r, out) {
+      return (r > 0 ? '<feMorphology in="SourceAlpha" operator="dilate" radius="' + r + '" result="' + out + '0"/>' : '') +
+        '<feComponentTransfer in="' + (r > 0 ? out + '0' : 'SourceAlpha') + '" result="' + out + '"><feFuncA type="linear" slope="2.5" intercept="-.75"/></feComponentTransfer>';
+    };
+    var ring = function (id, fat) {
       return '<filter id="' + id + '" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB">' +
-        '<feGaussianBlur in="SourceAlpha" stdDeviation="' + s + '" result="b"/>' + cut(-fat, s, 'fat') + cut(1 - fat, s, 'core') +
+        grow(fat, 'fat') + grow(fat - 1, 'core') +
         '<feComposite in="fat" in2="core" operator="out" result="ring"/><feFlood flood-color="#fff"/><feComposite in2="ring" operator="in"/></filter>';
     };
     var svg = document.createElementNS(NS, 'svg');
     svg.setAttribute('width', '0'); svg.setAttribute('height', '0'); svg.setAttribute('aria-hidden', 'true'); svg.setAttribute('focusable', 'false');
     svg.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden';
-    svg.innerHTML = ring('b2btOl', 2, 1.5) + ring('b2btOlS', 1, .9);
+    svg.innerHTML = ring('b2btOl', 2) + ring('b2btOlS', 1);
     document.body.appendChild(svg);
   }
 
