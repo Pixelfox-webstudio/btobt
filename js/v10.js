@@ -191,7 +191,8 @@
   // 2026-11-18 담당자 재요청: "랭킹에는 new_photo 사진, 특히 전체 10개는 전부, 새 사진을 최대한 다 쓰기" → 옷 종류 · 모양이 가장 가까운 상품에 붙인다(로고 없는 사진만).
   //   정확히 같은 옷: np07 · np09. 나머지는 같은 품목의 가까운 모양(후드 패딩 · 조끼 · 필드 자켓 · 후드집업 · 카라 티 · 라운드 티 · 퀼팅 패딩 · 투톤 플리스).
   //   np04(다른 브랜드 신발) · np11(작업복, 품목별 보기에서 사용)은 랭킹에 맞는 상품이 없어 뺐다. 로고 사진은 아래 BRAND_PHOTO(협력브랜드 줄)에서 쓴다
-  var WEAR_PHOTO = { c460: 'np16', c195: 'np15', c483: 'np06', c434: 'np21', c487: 'np02', c465: 'np07', c320: 'np14', c143: 'np13', c462: 'np10', c470: 'np09',
+  // 2026-11-18 v11 6차: np01 ~ np05는 new_photo의 [con](컨셉) 파일이다(np01 현장 · np02 회색 후드 현장 · np03 형광 조끼 · np04 신발 · np05 검정 자켓 현장). 랭킹 상품 카드에는 쓰지 않는다 → c487(np02) 뺌
+  var WEAR_PHOTO = { c460: 'np16', c195: 'np15', c483: 'np06', c434: 'np21', c465: 'np07', c320: 'np14', c143: 'np13', c462: 'np10', c470: 'np09',
     c475: 'np12', c431: 'np22', c461: 'np08' };
   Object.keys(WEAR_PHOTO).forEach(function (k) {
     var p = P[k]; if (!p) return;
@@ -536,6 +537,16 @@
   (function () {
     var rail = $('#ssRail'); if (!rail) return;
     var list = pick(SEASON), n = list.length; if (!n) return;
+    // 2026-11-18 v11 6차 담당자: 폰에서 손으로 넘길 때 버벅인다 → 폰(768 이하)은 자동 넘김 · 끝없이 돌기(복제 · 되돌리기)를 끄고
+    // 브라우저 기본 가로 스크롤 + 카드에 맞춰 멈춤(css/v11-m.css)만 둔다. 자동 넘김이 손가락과 싸우던 것과 되돌리기(scrollLeft 점프)가 원인
+    if (window.matchMedia('(max-width: 768px)').matches) {
+      var mc = renderGrid(rail, list, { kind: '시즌', fid: 'ss-' }), mp = $('#ssProg');
+      rail.classList.add('is-native');
+      var mpaint = function () { var max = rail.scrollWidth - rail.clientWidth; if (mp) mp.style.transform = 'scaleX(' + (max > 0 ? Math.max(1 / n, Math.min(1, (rail.scrollLeft + rail.clientWidth) / rail.scrollWidth)) : 1).toFixed(4) + ')'; };
+      rail.addEventListener('scroll', mpaint, { passive: true }); window.addEventListener('resize', mpaint);
+      railWarm(rail)(); mpaint(); reveal(mc.slice(0, 3), rail, true);
+      return;
+    }
     var cards = renderGrid(rail, list.concat(list), { kind: '시즌', fid: 'ss-' });
     cards.slice(n).forEach(function (c) { c.setAttribute('aria-hidden', 'true'); $$('a,button', c).forEach(function (x) { x.tabIndex = -1; }); });
     var prog = $('#ssProg'), U = 0;
@@ -694,13 +705,50 @@
     frame.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') hover = true; });
     frame.addEventListener('pointerleave', function () { hover = false; });
     frame.addEventListener('focusin', function () { focus = true; }); frame.addEventListener('focusout', function (e) { if (!frame.contains(e.relatedTarget)) focus = false; });
-    // 손으로 넘기기(폰): 옆으로 48px 이상 밀면 한 장
-    var tx = null, ty = 0;
-    frame.addEventListener('touchstart', function (e) { var t = e.touches[0]; tx = t.clientX; ty = t.clientY; touchHold = true; clearTimeout(touchT); }, { passive: true });
-    frame.addEventListener('touchend', function (e) {
+    // 손으로 넘기기(폰). 2026-11-18 v11 6차 담당자: "슬라이드해서 넘길 수 있게, 지금은 버벅거림"
+    // 전에는 손을 뗀 뒤에야 다음 장면이 겹쳐 나타났다(손가락을 따라오지 않음) → 지금은 장면이 손가락을 따라 옆으로 밀리고 옆 장면이 같이 들어온다.
+    // 1/5 이상 밀거나 빠르게 튕기면 넘어가고, 아니면 제자리로 돌아온다. 세로 스크롤은 브라우저에 맡긴다(css/v11-m.css: touch-action pan-y)
+    var tx = null, ty = 0, dx0 = 0, axis = '', nb = -1, t0 = 0, W0 = 0, anim = false;
+    var SWIPE_EASE = 'transform .42s cubic-bezier(.22,.61,.36,1)';
+    function peekSet(el, x, tr) { el.style.transition = tr || 'none'; el.style.transform = 'translate3d(' + x + 'px,0,0)'; }
+    function peekClear(el) { ['transition', 'transform', 'visibility', 'opacity', 'zIndex'].forEach(function (k) { el.style[k] = ''; }); }
+    frame.addEventListener('touchstart', function (e) {
+      touchHold = true; clearTimeout(touchT);
+      if (anim || e.touches.length > 1) { tx = null; return; }
+      var t = e.touches[0]; tx = t.clientX; ty = t.clientY; dx0 = 0; axis = ''; nb = -1; t0 = performance.now(); W0 = frame.clientWidth;
+    }, { passive: true });
+    frame.addEventListener('touchmove', function (e) {
+      if (tx === null || anim) return;
+      var t = e.touches[0], dx = t.clientX - tx, dy = t.clientY - ty;
+      if (!axis) { if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return; axis = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y'; }
+      if (axis !== 'x') return;
+      var want = (cur + (dx < 0 ? 1 : -1) + N) % N;
+      if (want !== nb) { // 미는 방향이 바뀌면 옆 장면을 바꿔 놓는다
+        if (nb >= 0 && nb !== cur) peekClear(slides[nb]);
+        nb = want; var el = slides[nb];
+        el.style.visibility = 'visible'; el.style.opacity = '1'; el.style.zIndex = '3';
+        layout(nb);
+      }
+      dx0 = dx;
+      peekSet(slides[cur], dx); peekSet(slides[nb], dx + (dx < 0 ? W0 : -W0));
+    }, { passive: true });
+    frame.addEventListener('touchend', function () {
       clearTimeout(touchT); touchT = setTimeout(function () { touchHold = false; }, 4500);
-      if (tx === null) return; var t = e.changedTouches[0], dx = t.clientX - tx, dy = t.clientY - ty; tx = null;
-      if (Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy) * 1.4) show(cur + (dx < 0 ? 1 : -1));
+      if (tx === null) return; tx = null;
+      if (axis !== 'x' || nb < 0) return;
+      var dx = dx0, fast = Math.abs(dx) / Math.max(1, performance.now() - t0) > .45 && Math.abs(dx) > 24, go = Math.abs(dx) > W0 * .2 || fast;
+      var a = slides[cur], b = slides[nb], target = nb, dir = dx < 0 ? -1 : 1;
+      anim = true;
+      if (go) { peekSet(a, dir * W0, SWIPE_EASE); peekSet(b, 0, SWIPE_EASE); }
+      else { peekSet(a, 0, SWIPE_EASE); peekSet(b, -dir * W0, SWIPE_EASE); }
+      setTimeout(function () {
+        if (go) {
+          a.style.transition = 'none'; a.style.opacity = '0';
+          show(target);
+          requestAnimationFrame(function () { peekClear(a); peekClear(b); anim = false; });
+        } else { peekClear(b); peekClear(a); anim = false; }
+        nb = -1;
+      }, 440);
     }, { passive: true });
     if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { inView = es[0].isIntersecting; }, { threshold: .45 }).observe(frame); else inView = true;
     if (!reduce) {

@@ -1,0 +1,16 @@
+/* 비투비티 홈 시안 v11 · v11-m.css (2026-11-18 v11 6차)
+   담당자: "모바일에 스크롤 다운 애니메이션이 빠져서 밋밋하다 · 겨울 시즌 줄 손으로 넘길 때 버벅인다 · 왼쪽 배경 단추 숨김"
+   0 검수용 왼쪽 손잡이(배경 · 영문) 숨김 — 모든 폭. 마크업 · js/bgfx.js는 그대로(되살릴 때 이 줄만 지움)
+   1 겨울 시즌 줄(폰): 자동 넘김을 끈 기본 가로 스크롤(js/v10.js 3번 is-native) + 카드마다 멈춤
+   2 파트너 배너(폰): 손가락을 따라 장면이 밀린다(js/v10.js 4번). 세로 스크롤은 브라우저가, 가로 밀기는 스크립트가 맡는다
+   3 폰 스크롤 등장(js/v11-m.js)이 움직이는 사진에 CSS 전환이 겹치지 않게 끔 */
+.rvw{display:none !important}
+
+@media (max-width:768px){
+  .ss__rail.is-native{scroll-snap-type:x mandatory;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}
+  .ss__rail.is-native .pc{scroll-snap-align:start;scroll-snap-stop:always}
+  .pb__frame{touch-action:pan-y}
+  .pbs{will-change:auto}
+  .ss__hero img{transition:none}
+  .ss__hero,.pb__slides{will-change:clip-path}
+}
