@@ -20,7 +20,8 @@
    SVG 필터(#b2btOl = 글자 모양을 1.5px 깎아 낸 만큼만 남김, js/v11-font.js가 넣음)로 안쪽 테두리만 남긴다.
    필터는 굴림 상자의 앞면 · 아랫면(.f3a/.f3b)에 건다(부모에 걸면 3D 굴림이 납작해진다) */
 .hx__ww .f3l--ol{color:#fff;-webkit-text-stroke:0}
-.hx__ww .f3l--ol .f3a,.hx__ww .f3l--ol .f3b{filter:url(#b2btOl)}
+.hx__ww .f3l--ol .f3a,.hx__ww .f3l--ol .f3b{filter:url(#b2btOl)}   /* 테두리 두께 PC 3.5px(2026-11-18 1.5 → 3.5) */
+@media (max-width:768px){ .hx__ww .f3l--ol .f3a,.hx__ww .f3l--ol .f3b{filter:url(#b2btOlS)} }   /* 폰 1.8px */
 
 /* ---------- 3. 가격 숫자 · 순위 번호 ----------
    가격: 글꼴만 바꾼다(크기 · 굵기 · 줄 높이는 그대로라 카드 높이가 변하지 않는다). 숫자 폭이 같게 tabular-nums(.num 공통 규칙)는 그대로 둔다.

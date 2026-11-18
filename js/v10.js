@@ -188,7 +188,11 @@
   // 상품 사진이 바뀌는 것이라 이 상품이 나오는 다른 줄(겨울 아우터 등) · 빠른 보기에도 같은 사진이 보인다. 카드 사진 맞춤은 css/v11.css 6번
   // 2026-11-18 대조 결과: 랭킹 목록 60개 중 분명히 같은 옷은 둘뿐(np07 = 모자 일체형 하프패딩, np09 = 미니멀 카라 바람막이).
   // np10(마름모 퀼팅) · np14(주황 배색 카라) · np15(플리스 깃 조끼)는 비슷한 품목은 있어도 디테일이 달라 넣지 않았다. np20은 K2 로고라 협력브랜드 상품.
-  var WEAR_PHOTO = { c465: 'np07', c470: 'np09' };
+  // 2026-11-18 담당자 재요청: "랭킹에는 new_photo 사진, 특히 전체 10개는 전부, 새 사진을 최대한 다 쓰기" → 옷 종류 · 모양이 가장 가까운 상품에 붙인다(로고 없는 사진만).
+  //   정확히 같은 옷: np07 · np09. 나머지는 같은 품목의 가까운 모양(후드 패딩 · 조끼 · 필드 자켓 · 후드집업 · 카라 티 · 라운드 티 · 퀼팅 패딩 · 투톤 플리스).
+  //   np04(다른 브랜드 신발) · np11(작업복, 품목별 보기에서 사용)은 랭킹에 맞는 상품이 없어 뺐다. 로고 사진은 아래 BRAND_PHOTO(협력브랜드 줄)에서 쓴다
+  var WEAR_PHOTO = { c460: 'np16', c195: 'np15', c483: 'np06', c434: 'np21', c487: 'np02', c465: 'np07', c320: 'np14', c143: 'np13', c462: 'np10', c470: 'np09',
+    c475: 'np12', c431: 'np22', c461: 'np08' };
   Object.keys(WEAR_PHOTO).forEach(function (k) {
     var p = P[k]; if (!p) return;
     p.imgs = ['img/v11/' + WEAR_PHOTO[k] + '-s.webp', p.imgs[0]]; p.photo = WEAR_PHOTO[k];
@@ -201,6 +205,16 @@
       P['b' + d.id] = { key: 'b' + d.id, id: d.id, tag: b.en, brand: b.key, name: d.name, code: '', size: '', colorText: '', price: '견적문의',
         imgs: ['img/brandp/' + d.id + '.webp'], dots: [], more: '', slot: 'brand-' + d.id };
     });
+  });
+  // 2026-11-18 담당자: 협력브랜드 줄의 쇼핑몰 연출 사진(두 모델이 나란히 선 사진, 예: 케이투 LB2-F150)이 품질이 떨어져 보임 → 같은 브랜드 로고가 들어간 새 모델 사진으로 첫 장을 바꾸고, 마우스를 올리면 원래 사진.
+  //   케이투 로고: np03(형광 후드) · np20(후드 패딩). 아이더 로고: np01 · np05 · np17 · np18 · np19. 케이투 PT-2302(반팔 · 반바지)는 맞는 로고 사진이 없어 그대로
+  var BRAND_PHOTO = { b3227: 'np03', b3026: 'np20', b2746: 'np01', b3141: 'np05', b3001: 'np17', b3032: 'np19', b3022: 'np18' };
+  //   같은 상품이 '사진 속 착용 상품' 칸(배너 · 현장 사진과 짝)에도 나오므로, 협력브랜드 줄에서만 쓰는 사본(키 끝 -np)을 만든다
+  Object.keys(BRAND_PHOTO).forEach(function (k) {
+    var p = P[k]; if (!p) return;
+    var q = {}; for (var f in p) q[f] = p[f];
+    q.key = k + '-np'; q.imgs = ['img/v11/' + BRAND_PHOTO[k] + '-s.webp', p.imgs[0]]; q.photo = BRAND_PHOTO[k];
+    P[q.key] = q;
   });
   // 사진 속 착용 상품: 배너·현장 사진을 만들 때 넣은 실제 상품(담당자 확인 목록). 2026-11-11 noeul.shop 상품 페이지 제목과 대표 사진으로 대조함
   var WORN = [
@@ -859,7 +873,7 @@
     bottomHeader(bhEl, list.map(function (b) { return '<img class="bh__logo bh__logo--' + b.key + '" src="img/brandlogo/' + b.key + '.webp" width="' + (LOGO[b.key] || [b.w, b.h])[0] + '" height="' + (LOGO[b.key] || [b.w, b.h])[1] + '" alt="' + esc(b.en + ' ' + b.ko) + '" decoding="async" draggable="false">'; }), function (i, user) {
       var b = list[i], url = 'brand.php?cat=' + enc(b.en + ' ' + b.ko);
       if (more) { more.textContent = b.ko + ' 상품 전체 보기'; more.setAttribute('data-href', url); }
-      var cards = renderGrid(grid, b.items.slice(0, 8).map(function (d) { return P['b' + d.id]; }).filter(Boolean), { fid: 'br-' });
+      var cards = renderGrid(grid, b.items.slice(0, 8).map(function (d) { return P['b' + d.id + '-np'] || P['b' + d.id]; }).filter(Boolean), { fid: 'br-' });
       swap(cards, first, grid);
       first = false;
       if (user) snapTop(sec, bhEl);

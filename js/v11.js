@@ -80,13 +80,13 @@
     gsap.fromTo(frame, { clipPath: 'inset(10% 7% 10% 7%)' }, { clipPath: 'inset(0% 0% 0% 0%)', ease: 'none', scrollTrigger: stg({ onUpdate: openAt, onRefresh: openAt }) });
     gsap.fromTo(media, { scale: 1.16 }, { scale: 1, ease: 'none', scrollTrigger: stg() });
     if (fine && img && copy) {
-      var qx = gsap.quickTo(img, 'x', { duration: .9, ease: 'power3.out' }), qy = gsap.quickTo(img, 'y', { duration: .9, ease: 'power3.out' });
+      // 2026-11-18: 사진은 왼쪽 아래 가장자리까지 보여야 해서 움직이지 않는다(글만 x ±12)
       var cx = gsap.quickTo(copy, 'x', { duration: 1.1, ease: 'power3.out' });
-      var rest = function () { qx(0); qy(0); cx(0); };
+      var rest = function () { cx(0); };
       frame.addEventListener('pointermove', function (e) {
         if (e.pointerType !== 'mouse' || phoneQ.matches) return; // 폰 폭에서는 사진에 여유 크기가 없어 움직이지 않는다
         var r = frame.getBoundingClientRect(), dx = (e.clientX - r.left) / r.width - .5, dy = (e.clientY - r.top) / r.height - .5;
-        qx(dx * -28); qy(dy * -18); cx(dx * 12);
+        cx(dx * 12);
       });
       frame.addEventListener('pointerleave', rest);
       onMq(phoneQ, rest);

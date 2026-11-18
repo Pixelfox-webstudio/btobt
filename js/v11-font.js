@@ -13,7 +13,10 @@
     svg.setAttribute('width', '0'); svg.setAttribute('height', '0'); svg.setAttribute('aria-hidden', 'true'); svg.setAttribute('focusable', 'false');
     svg.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden';
     svg.innerHTML = '<filter id="b2btOl" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB">' +
-      '<feMorphology in="SourceAlpha" operator="erode" radius="1.5" result="core"/><feComposite in="SourceGraphic" in2="core" operator="out"/></filter>';
+      '<feMorphology in="SourceAlpha" operator="erode" radius="3.5" result="core"/><feComposite in="SourceGraphic" in2="core" operator="out"/></filter>' +
+      // 2026-11-18 담당자: WEAR만 얇아 보임 → 테두리 1.5px → PC 3.5px · 폰 1.8px(획 굵기의 약 1/4, 더 두꺼우면 글자 안이 막혀 보임)(#b2btOlS)
+      '<filter id="b2btOlS" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB">' +
+      '<feMorphology in="SourceAlpha" operator="erode" radius="1.8" result="core"/><feComposite in="SourceGraphic" in2="core" operator="out"/></filter>';
     document.body.appendChild(svg);
   }
 
