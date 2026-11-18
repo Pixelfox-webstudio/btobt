@@ -438,7 +438,7 @@ html.is-acp-open{overflow:hidden}
 .ft{padding:56px 0 48px;background:var(--site-footer);color:#9A979E}
 .ft__top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px 32px;padding-bottom:24px;border-bottom:1px solid #2C2C30}
 .ft__logo{display:inline-flex}
-.ft__logo img{display:block;width:auto;height:32px;aspect-ratio:199/56;filter:brightness(0) invert(1)}
+.ft__logo img{display:block;width:auto;height:32px;aspect-ratio:130/56;filter:brightness(0) invert(1)}
 .ft__links{display:flex;flex-wrap:wrap;gap:0 24px}
 .ft__links a{display:inline-flex;align-items:center;min-height:44px;color:#B7B7B7;font-size:14px;line-height:20px}
 .ft__links a.is-strong{color:#fff;font-weight:700}
