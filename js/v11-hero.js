@@ -1,8 +1,9 @@
-/* 비투비티 홈 시안 v11 · v11-hero.js (2026-11-17)
-   히어로 전용: 첫 접속 인트로(화면이 열림) · 바뀌는 문구 · WORKWEAR 글자 뒤집기. js/v10.js 다음에 불러온다.
+/* 비투비티 홈 시안 v11 · v11-hero.js (2026-11-17, 2026-11-18 7차)
+   히어로 전용: 첫 접속 인트로(화면이 열림) · WORKWEAR 위 바뀌는 단어 · WORKWEAR 글자 뒤집기. js/v10.js 다음에 불러온다.
    영상 고르기 · 재생 · 전체 영상 팝업은 js/v10.js 1번 블록 그대로(파일 이름만 hero-film으로 바꿈).
-   순서: <body> 뒤 짧은 스크립트가 막(#hxIntro)을 띄워 둠 → 이 파일이 막을 위아래로 갈라 열고(영상은 1.12배 → 1배) → 문구 등장 → 단어 반복 · WORKWEAR 뒤집기.
-   움직임 줄이기면 인트로 · 단어 굴림 · 뒤집기를 모두 끄고 첫 단어만 보인다. */
+   순서: <body> 뒤 짧은 스크립트가 막(#hxIntro)을 띄워 둠 → 이 파일이 막을 위아래로 갈라 열고(영상은 1.12배 → 1배) → 단어 등장 → WORKWEAR → 단어 반복 · WORKWEAR 뒤집기.
+   2026-11-18 7차 담당자: 가운데 문구(B2BT PRODUCTS · ○○을 · 한 곳에서 주문합니다.)를 빼고 WORKWEAR 위 단어 하나만(작업복 → 안전용품 → 단체복). 라벨 · 둘째 줄 코드는 지움.
+   움직임 줄이기면 인트로 · 단어 굴림 · 뒤집기를 모두 끄고 첫 단어(작업복)만 보인다. */
 (function () {
   'use strict';
 
@@ -12,7 +13,7 @@
      검수할 때 인트로 없이 보려면 주소 끝에 ?intro=off */
   var ONCE_PER_SESSION = false;
   var KEY = 'b2bt-v11-intro';
-  var STEP = 2.2;          // 파란 단어가 바뀌는 간격(초)
+  var STEP = 2.2;          // WORKWEAR 위 파란 단어가 바뀌는 간격(초)
   var SPLIT_AT = 1.18;     // 접속 후 막이 갈라지기 시작하는 때(초). 로고가 다 나타난(0.92초) 뒤 잠깐 멈춤
   var OPEN = 1.05;         // 막이 열리는 시간(초)
 
@@ -31,7 +32,7 @@
   if (!hero) { root.classList.remove('hx-wait'); if (intro && intro.parentNode) intro.parentNode.removeChild(intro); root.classList.remove('is-intro'); return; }
 
   var slide = $('.bn__slide--film', hero), over = $('#stkOver');
-  var label = $('.hx__label', hero), line2 = $('.hx__line2', hero), words = $$('.hx__word', hero), ww = $('#hxWW');
+  var words = $$('.hx__word', hero), ww = $('#hxWW');
 
   /* ---------- 1. WORKWEAR 글자 뒤집기 (v9.js 히어로 제목 그대로) ----------
      글자마다 상자(앞면 .f3a + 아랫면 .f3b)를 만들고, 상자를 X축으로 90도 굴려 아랫면이 앞으로 오게 한다.
@@ -62,7 +63,8 @@
     ww.addEventListener('click', function () { flip('center'); });
   }
 
-  /* ---------- 2. 파란 단어 반복: 단체복을 → 작업복을 → 안전용품을 (모션 영상 4장면과 같은 움직임) ----------
+  /* ---------- 2. 파란 단어 반복: 작업복 → 안전용품 → 단체복 → 작업복 (마크업 순서 그대로, 모션 영상 4장면과 같은 움직임) ----------
+     2026-11-18 7차: 가운데 문구에서 WORKWEAR 바로 위 작은 단어로 옮김("을"을 뺀 세 단어만). 움직임은 그대로.
      나가는 단어는 위로(yPercent -110), 들어오는 단어는 아래에서(110 → 0), .42초 power3.inOut. STEP초마다.
      히어로가 화면 밖이거나 다음 면에 덮였거나 탭이 가려졌으면 바꾸지 않고 기다린다(0.6초마다 다시 확인) */
   var idx = 0, loopOn = false;
@@ -87,23 +89,20 @@
     loopOn = true; gsap.delayedCall(STEP - .4, tick);
   }
 
-  /* ---------- 3. 문구 등장 (모션 영상 타임라인 그대로): 라벨이 흐림에서 또렷하게 → 첫 단어가 아래에서 올라옴 → 둘째 줄 → WORKWEAR ---------- */
+  /* ---------- 3. 등장: 첫 단어(작업복)가 칸 아래에서 올라옴 → WORKWEAR가 살짝 올라오며 나타나고 글자를 한 번 굴림 ----------
+     2026-11-18 7차: 라벨 · 둘째 줄이 빠져 단어 → WORKWEAR 두 단계만 남김(시간 간격은 예전 단어 · WORKWEAR와 같은 느낌으로 .06초 / .2초) */
   var entered = false, waited = root.classList.contains('hx-wait');
   function entrance() {
     if (entered) return; entered = true;
     if (!motion) { root.classList.remove('hx-wait'); return; }
     // 이 파일이 아주 늦게 불려 <body> 뒤 스크립트가 이미 문구를 보여 줬으면(4.2초 안전장치) 다시 숨겼다 띄우지 않고 반복만 시작
     if (!waited) { gsap.set(words, { y: 0, yPercent: function (i) { return i ? 110 : 0; } }); if (ww) flip('first'); startLoop(); return; }
-    gsap.set(label, { opacity: 0, y: 14, filter: 'blur(8px)' });
-    gsap.set(line2, { opacity: 0, y: 24, filter: 'blur(10px)' });
     gsap.set(words, { y: 0, yPercent: 110 });
     if (ww) gsap.set(ww, { opacity: 0, y: 18 });
     root.classList.remove('hx-wait');
-    var tl = gsap.timeline({ onComplete: function () { gsap.set([label, line2], { clearProps: 'filter,transform,opacity' }); if (ww) gsap.set(ww, { clearProps: 'transform,opacity' }); } });
-    tl.to(label, { opacity: 1, y: 0, filter: 'blur(0px)', duration: .7, ease: 'power3.out' }, 0)
-      .to(words[0], { yPercent: 0, duration: .6, ease: 'power4.out' }, .06)
-      .to(line2, { opacity: 1, y: 0, filter: 'blur(0px)', duration: .65, ease: 'power3.out' }, .23);
-    if (ww) tl.to(ww, { opacity: 1, y: 0, duration: .7, ease: 'power3.out' }, .34).call(function () { flip('first'); }, null, .4);
+    var tl = gsap.timeline({ onComplete: function () { if (ww) gsap.set(ww, { clearProps: 'transform,opacity' }); } });
+    tl.to(words[0], { yPercent: 0, duration: .6, ease: 'power4.out' }, .06);
+    if (ww) tl.to(ww, { opacity: 1, y: 0, duration: .7, ease: 'power3.out' }, .2).call(function () { flip('first'); }, null, .26);
     startLoop();
   }
 

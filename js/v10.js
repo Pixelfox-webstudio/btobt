@@ -198,6 +198,17 @@
     var p = P[k]; if (!p) return;
     p.imgs = ['img/v11/' + WEAR_PHOTO[k] + '-s.webp', p.imgs[0]]; p.photo = WEAR_PHOTO[k];
   });
+  // 2026-11-18 7차 담당자: "상품 섹션에서 가장 크게 들어가는 사진(큰 카드)을 new photo에서 골라 넣어줘"
+  //   → 두 상품 섹션(#outer 겨울 아우터 · #outer2 바람막이·패딩)의 탭마다 큰 카드(첫 칸, .pc--feat) 첫 사진 = 모델 착용 사진(img/v11/npXX.webp 1000w · npXX-l.webp 1600w),
+  //     둘째 칸(마우스 올림) = 그 상품 누끼(1200px 앞 사진 hi가 있으면 그것, 없으면 원래 카탈로그 누끼). 이 카드에만 쓰고 p.imgs(랭킹 · 빠른 보기 사진)는 그대로 둔다.
+  //   사진 속 옷이 카드 상품이어야 하므로 사진과 맞는 상품을 그 탭의 첫 칸으로 옮겼다(아래 SHOP.outer · SHOP.outer2 keys 순서).
+  //   로고 사진(np01 · np03 · np05 · np17 ~ np20)과 컨셉 사진(np01 ~ np05)은 쓰지 않는다. "연출 이미지" 표시 없음.
+  //   패딩: c449 아스펜 패딩 = np16(크림색 후드 파카 · 소매 끝 검정 줄 · 덮개 주머니, 상품에 크림 #F2EBDD 색상 있음)
+  //   겨울조끼: c195 웰론 보온 겨울조끼 = np15(WEAR_PHOTO와 같은 짝) / 패딩·조끼: c461 라이트 패딩 = np08(WEAR_PHOTO와 같은 짝)
+  //   플리스 자켓: c418 헤비 후드 플리스자켓 = np22(아이보리 양털 후드집업 · 올리브색 끈 · 주머니 테두리)
+  //   바람막이: np09(검정 · 셔츠처럼 접힌 카라). 탭 안 상품(c482 · c473 · c479 · c481 · c477)은 스탠드 카라이거나 후드라 맞지 않음 → 카라가 접힌 c470 미니멀 카라 바람막이를 첫 칸에 넣었다
+  //   카드 모양은 cardHTML(.pc--photo · .pc__ph), 사진 맞춤은 css/v11.css 8번
+  var FEAT_PHOTO = { c449: 'np16', c195: 'np15', c418: 'np22', c461: 'np08', c470: 'np09' };
 
   // 협력브랜드 상품: 2026-11-11 noeul.shop 브랜드 목록 앞쪽 상품(js/brands.js). 쇼핑몰 표시가 "견적문의"라 가격·사이즈 칸은 비운다
   var BR = window.B2BT_BRANDS || [];
@@ -236,17 +247,22 @@
   function cardHTML(p, n, opt) {
     opt = opt || {};
     var kind = opt.kind || '', feat = !!opt.feat && n === 1, srcs = feat && p.hi ? p.hi : p.imgs, px = feat && p.hi ? 1200 : 600;
+    // 2026-11-18 7차 담당자: 큰 카드 + FEAT_PHOTO(위 WEAR_PHOTO 아래) = 첫 장 모델 사진(srcset 1000w · 1600w, 3:4), 둘째 장 상품 누끼 → 진행 막대 2칸.
+    //   누끼 = 1200px 앞 사진(hi[0]), 없으면 원래 카탈로그 누끼(WEAR_PHOTO가 붙은 상품은 p.imgs[0]이 모델 사진이라 p.imgs[1])
+    var fp = feat && FEAT_PHOTO[p.key];
+    if (fp) srcs = ['img/v11/' + fp + '.webp', p.hi ? p.hi[0] : p.photo ? p.imgs[1] : p.imgs[0]];
     var imgs = srcs.map(function (src, i) {
-      return '<img' + (i ? ' data-src="' + src + '"' : ' class="is-on" src="' + src + '" loading="lazy" data-slot="' + p.slot + '"') + ' alt="' + (i ? '' : esc(p.name)) + '" width="' + px + '" height="' + px + '" decoding="async" draggable="false">';
+      var ph = fp && !i, wh = ph ? ' width="1000" height="1336"' : ' width="' + px + '" height="' + px + '"';
+      return '<img' + (i ? ' data-src="' + src + '"' : ' class="is-on' + (ph ? ' pc__ph' : '') + '" src="' + src + '"' + (ph ? ' srcset="img/v11/' + fp + '.webp 1000w, img/v11/' + fp + '-l.webp 1600w" sizes="(max-width:768px) 100vw, 50vw"' : '') + ' loading="lazy" data-slot="' + p.slot + '"') + ' alt="' + (i ? '' : esc(p.name)) + '"' + wh + ' decoding="async" draggable="false">';
     }).join('');
     var bars = srcs.length > 1 ? srcs.map(function (_, i) { return '<i' + (i ? '' : ' class="is-on"') + '></i>'; }).join('') : '';
-    var dots = p.dots.map(function (d) {
-      return d.i && !(feat && p.hi) ? '<button type="button" class="dot" style="--c:' + d.hex + '" data-i="' + d.i + '" aria-label="' + esc(d.label) + ' 사진 보기"></button>' : '<span class="dot" style="--c:' + d.hex + '"></span>';
+    var dots = p.dots.map(function (d) { // 사진 번호로 바꾸는 색 점(d.i)은 사진 목록이 다른 큰 카드(hi · 모델 사진)에서는 그냥 점으로
+      return d.i && !(feat && (p.hi || fp)) ? '<button type="button" class="dot" style="--c:' + d.hex + '" data-i="' + d.i + '" aria-label="' + esc(d.label) + ' 사진 보기"></button>' : '<span class="dot" style="--c:' + d.hex + '"></span>';
     }).join('') + (p.more ? '<span class="pc__swmore">' + esc(p.more) + '</span>' : '');
     var cat = [kind, p.tag].filter(Boolean).map(esc).join(' · ');
     var metas = [p.size, opt.slim ? '' : p.colorText].filter(Boolean).map(function (m) { return '<p class="pc__meta">' + esc(m) + '</p>'; }).join('');
     if (metas) metas = '<div class="pc__ms">' + metas + '</div>';
-    return '<article class="pc' + (kind === '착용 상품' ? ' pc--worn' : '') + (feat ? ' pc--feat' : '') + (opt.slim ? ' pc--slim' : '') + '" data-key="' + p.key + '"' + (p.brand ? ' data-brand="' + p.brand + '"' : '') + ' data-flip-id="' + (opt.fid || '') + p.key + '">' +
+    return '<article class="pc' + (kind === '착용 상품' ? ' pc--worn' : '') + (feat ? ' pc--feat' : '') + (fp ? ' pc--photo' : '') + (opt.slim ? ' pc--slim' : '') + '" data-key="' + p.key + '"' + (p.brand ? ' data-brand="' + p.brand + '"' : '') + ' data-flip-id="' + (opt.fid || '') + p.key + '">' +
       '<div class="pc__media">' + imgs + '<div class="pc__bars" aria-hidden="true">' + bars + '</div>' +
       (opt.rank ? '<span class="pc__rank num"><span class="sr-only">순위 </span>' + n + '</span>' : '') +
       '<div class="pc__acts"><button type="button" class="act act--view" aria-label="빠른 보기">' + IC.view + '</button><button type="button" class="act act--like" aria-pressed="false" aria-label="관심상품">' + IC.heart + '</button><button type="button" class="act act--cart" aria-label="장바구니 담기">' + IC.bag + '</button></div>' +
@@ -868,11 +884,13 @@
   }
 
   // 겨울 아우터 · 후드·맨투맨: 2026-11-14 시안 F의 구성(상품과 순서 그대로). 겨울 아우터는 첫 상품을 크게 놓는다
+  // 2026-11-18 7차 담당자: 큰 카드에 모델 사진(FEAT_PHOTO)을 넣으며 사진 속 상품을 탭 첫 칸으로 옮김
+  //   (전: 패딩 c455 · c449 …, 겨울조끼 c202 · c195 …, 플리스 자켓 c403 … c418 → 지금: c449 · c195 · c418이 첫 칸, 나머지 순서는 그대로)
   var SHOP = {
     outer: { kind: '시즌', feat: true, tabs: [
-      { label: '패딩', keys: ['c455', 'c449', 'c472', 'c453', 'c458'], more: ['패딩 전체 보기', 'category.php?cat=' + enc('패딩')] },
-      { label: '겨울조끼', keys: ['c202', 'c195', 'c200', 'c201', 'c204'], more: ['겨울조끼 전체 보기', 'category.php?cat=' + enc('조끼') + '&sub=' + enc('겨울조끼')] },
-      { label: '플리스 자켓', keys: ['c403', 'c408', 'c412', 'c416', 'c418'], more: ['플리스 자켓 전체 보기', 'category.php?cat=' + enc('자켓') + '&sub=' + enc('플리스 자켓')] }
+      { label: '패딩', keys: ['c449', 'c455', 'c472', 'c453', 'c458'], more: ['패딩 전체 보기', 'category.php?cat=' + enc('패딩')] },
+      { label: '겨울조끼', keys: ['c195', 'c202', 'c200', 'c201', 'c204'], more: ['겨울조끼 전체 보기', 'category.php?cat=' + enc('조끼') + '&sub=' + enc('겨울조끼')] },
+      { label: '플리스 자켓', keys: ['c418', 'c403', 'c408', 'c412', 'c416'], more: ['플리스 자켓 전체 보기', 'category.php?cat=' + enc('자켓') + '&sub=' + enc('플리스 자켓')] }
     ] },
     hood: { tabs: [
       { label: '후드', keys: ['c426', 'c440', 'c444', 'c433'], more: ['후드 티셔츠 전체 보기', 'category.php?cat=' + enc('후드 티셔츠')] },
@@ -884,9 +902,13 @@
   // 그래서 위 섹션 · 랭킹 첫 탭(전체) · 겨울 시즌 줄에 나오지 않는 상품으로만 따로 채웠다. 고른 상품은 시안용이라 담당자 확인 뒤 바꿀 수 있다
   //   outer2 = 바람막이 · 패딩·조끼(제목 "현장에서 겹쳐 입는 바람막이·패딩"), hood2 = 후드 · 바지(제목 "위아래로 맞추는 후드·바지")
   //   큰 카드(첫 칸)는 1200px 사진(hi)이 없어 600px 상품 사진을 그대로 쓴다
+  //   2026-11-18 7차 담당자: 큰 카드 첫 사진 = 모델 사진(FEAT_PHOTO). 사진 속 상품을 첫 칸으로 —
+  //     바람막이: np09(접힌 카라)와 맞는 상품이 탭 안에 없어 c470 미니멀 카라 바람막이를 첫 칸에 넣었다(랭킹 전체 탭에도 나오는 상품 = 위 "겹치지 않게" 원칙의 예외).
+  //       대신 c481(검정 스탠드 카라 블루종)을 뺐다: c470과 색 · 모양이 거의 같고, 5칸(큰 카드 + 4)을 넘기면 마지막 한 장이 혼자 아랫줄로 내려간다
+  //     패딩·조끼: c461(np08)을 첫 칸으로(전: c466 · c461 …)
   SHOP.outer2 = { kind: '시즌', feat: true, tabs: [
-    { label: '바람막이', keys: ['c482', 'c473', 'c479', 'c481', 'c477'], more: ['바람막이 자켓 전체 보기', 'category.php?cat=' + enc('자켓') + '&sub=' + enc('바람막이 자켓')] },
-    { label: '패딩·조끼', keys: ['c466', 'c461', 'c463', 'c198', 'c196'], more: ['패딩 전체 보기', 'category.php?cat=' + enc('패딩')] }
+    { label: '바람막이', keys: ['c470', 'c482', 'c473', 'c479', 'c477'], more: ['바람막이 자켓 전체 보기', 'category.php?cat=' + enc('자켓') + '&sub=' + enc('바람막이 자켓')] },
+    { label: '패딩·조끼', keys: ['c461', 'c466', 'c463', 'c198', 'c196'], more: ['패딩 전체 보기', 'category.php?cat=' + enc('패딩')] }
   ] };
   SHOP.hood2 = { tabs: [
     { label: '후드', keys: ['c447', 'c431', 'c435', 'c446'], more: ['후드 티셔츠 전체 보기', 'category.php?cat=' + enc('후드 티셔츠')] },

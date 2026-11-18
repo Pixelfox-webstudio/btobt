@@ -1,0 +1,40 @@
+/* ============================================================
+   비투비티 홈 시안 v11 · v11-bh.css (2026-11-18 7차) — 바텀 헤더(.bh) PC판
+   2026-11-18 7차 담당자: "v9 바텀 헤더가 눈에 덜 띈다 → 영역·글자 키워서 PC에만, 모바일은 건드리지 말 것" 요청.
+   PC(769px 이상)만 v10의 떠 있는 알약 줄 → v9의 꽉 찬 분류 바(밑줄 글자 탭)로 되돌리고 더 눈에 띄게 키움:
+   높이 52 → 64px · 글자 15 → 17px(안 고른 탭 600 #6B6B70, 고른 탭 700 검정) · 밑줄 2 → 3px · 탭 사이 36 → 42px.
+   폰(768px 이하)은 그대로: 이 파일의 규칙은 전부 @media (min-width:769px) 안에 있다. 1개/2개 보기(.vtog)도 폰 전용이라 손대지 않음.
+   바탕 = 반투명 유리(흰 88% + 뒤 흐림·채도). 흰 섹션에서는 그냥 흰 바(v9와 같음), 협력브랜드(회색 #F5F5F6)는 같은 회색 유리라 섹션과 이어지고,
+   파스텔 그라데이션이 깔린 섹션에서는 바탕색이 은은히 비쳐 '섹션 위에 얹힌 유리 바'로 보인다. 붙어서 상품이 밑으로 지나갈 때는 흐림 덕분에 글자가 또렷하다.
+   밑줄 선 = .bh 안쪽 그림자 1px(rgba 검정 12%: 흰·회색·파스텔 어디서나 같은 농도로 보임). 고른 탭의 3px 밑줄이 그 선 위에 겹친다.
+   v10 규칙(.v10 .bh… · .v10.v9 .psec--tint .bh · .v10 .bh--logo …)은 같은/더 높은 우선순위 선택자로 덮는다(이 파일이 v10.css보다 뒤에 온다).
+   ============================================================ */
+@media (min-width:769px){
+  /* 바: 화면 끝까지 꽉 찬 띠, 헤더 바로 아래(헤더가 숨으면 --bh-top:0 → 화면 맨 위)에 붙는다. 붙으면 아래로 옅은 그림자 */
+  .v10 .bh{--bh-pad:14px;top:var(--bh-top);padding:0;background:rgba(255,255,255,.88);-webkit-backdrop-filter:saturate(1.4) blur(14px);backdrop-filter:saturate(1.4) blur(14px);border-bottom:0;box-shadow:inset 0 -1px 0 rgba(14,14,16,.12);pointer-events:auto;transition:top .2s ease-out,box-shadow .25s}
+  .v10 .bh.is-stuck{box-shadow:inset 0 -1px 0 rgba(14,14,16,.12),0 12px 28px -20px rgba(14,14,16,.5)}
+  .v10.v9 .psec--tint .bh{background:rgba(245,245,246,.88)}
+  /* 탭 줄 폭 = 본문(.wrap)과 같은 폭 + 양쪽 탭 여백 → 첫 탭 글자가 본문 왼쪽 선에 맞는다(v9의 '목록 margin-left:-10px'은 첫 탭 포커스 테두리가 잘려서 이렇게 바꿈) */
+  .v10 .bh__in,.v10 .bh.is-stuck .bh__in{width:calc(min(100% - var(--gut) * 2, 1760px) + var(--bh-pad) * 2);max-width:none;height:64px;margin-inline:auto;padding:0;border-radius:0;background:none;box-shadow:none}
+  .v10 .bh__scroll{border-radius:0}
+  .v10 .bh__list{gap:14px;margin-left:0}
+  .v10 .bh__tab{padding:0 var(--bh-pad);border-radius:0;font-size:17px;font-weight:600;letter-spacing:-.01em;color:#6B6B70;transition:color .2s}
+  .v10 .bh__tab:hover{color:var(--v9-ink)}
+  .v10 .bh__tab[aria-selected="true"]{background:none;color:var(--v9-ink);font-weight:700}
+  /* 밑줄: 탭 맨 아래(스크롤 상자 안쪽이라 잘리지 않음), 글자 폭만큼. 고르면 가운데서 양옆으로 펼쳐진다(v9 scaleX) */
+  .v10 .bh__tab::after{display:block;left:var(--bh-pad);right:var(--bh-pad);bottom:0;height:3px;border-radius:3px 3px 0 0}
+  /* 협력브랜드 로고 탭: 흰 칩 + 테두리 → v9처럼 밑줄. 고른 브랜드만 원래 색(v10 규칙 그대로), 로고는 12% 키움(로고별 높이 비 --lh 유지) */
+  .v10 .bh.bh--logo{--bh-pad:16px}
+  .v10 .bh--logo .bh__list{gap:6px}
+  .v10 .bh--logo .bh__tab{padding:0 var(--bh-pad)}
+  .v10 .bh--logo .bh__tab[aria-selected="true"]{background:none;box-shadow:none}
+  .v10 .bh--logo .bh__logo{--ls:1.12}
+}
+/* 1199px 이하(태블릿 가로·작은 노트북): 로고 9개가 1024px에서 한 줄에 다 들어오게 로고는 v10 크기, 탭 여백 14px. 더 좁으면 옆으로 밀어 본다(밑줄은 안 잘림) */
+@media (min-width:769px) and (max-width:1199px){
+  .v10 .bh.bh--logo{--bh-pad:14px}
+  .v10 .bh--logo .bh__logo{--ls:1}
+}
+@media (min-width:769px) and (prefers-reduced-motion:reduce){
+  .v10 .bh__tab::after{transition:none}
+}

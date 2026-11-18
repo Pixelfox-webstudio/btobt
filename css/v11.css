@@ -119,6 +119,20 @@ html.v4-motion .cb:not(.is-open) .cb__copy>*{opacity:0;transform:translateY(22px
 .pc__media img[src*="img/v11/np03-"]{object-position:50% 6%}   /* 케이투 LB2-F150 카드: 가슴 K2 Safety 글자와 반사띠가 보이게 위쪽 */
 .pc__media img[src*="img/v11/np20-"]{object-position:50% 40%}   /* 아이더 PT-S2567(바지) 카드: 바지 · 무릎 보호대가 보이게 아래쪽 */
 
+/* ---------- 7. 섹션 순서 바꿈(2026-11-18 7차 담당자) ----------
+   순서: 히어로 → 윈터 룩북(첫 화면 쌓기 .stk__over 안) → 겨울 시즌 → 품목별 보기 → 랭킹 → 파트너 배너 → 협력브랜드 → 겨울 아우터
+         → 업종별 추천 → 후드·맨투맨 → 바람막이·패딩 → 아이더 배너 → 후드·바지 → 구매 후기.
+   "히어로 바로 다음 섹션은 위 72px(폰 56)"(D시안, v10.css 랭킹에 있던 값)을 룩북이 이어받고, 랭킹은 다른 섹션과 같은 리듬(--sec)으로 */
+.v10 .stk__over>.lk{padding-top:72px}
+.v10 .rk{padding-top:var(--sec)}
+@media (max-width:768px){ .v10 .stk__over>.lk{padding-top:56px} }
+
+/* ---------- 8. 상품 섹션 큰 카드의 모델 사진(2026-11-18 7차 담당자: "가장 크게 들어가는 사진을 new photo에서 골라 넣어줘") ----------
+   #outer(패딩 · 겨울조끼 · 플리스 자켓) · #outer2(바람막이 · 패딩·조끼) 탭마다 큰 카드(.pc--feat)에 .pc--photo가 붙는다(js/v10.js FEAT_PHOTO).
+   첫 사진(.pc__ph) = 모델 착용 사진(3:4, 1000w · 1600w)을 칸에 꽉 채운다(cover). 얼굴과 옷이 함께 보이게 가로 가운데 · 세로 위쪽 22% 기준(6번 카드 사진의 28%보다 위).
+   마우스를 올리면 나오는 둘째 사진(상품 누끼)은 v9.css 9번 그대로 contain + 회색 바탕 #F2F2F2. 폰(≤768) 큰 카드는 v9.css대로 1:1 칸 */
+.pgrid--feat .pc--feat.pc--photo .pc__media img.pc__ph{object-fit:cover;object-position:50% 22%}
+
 /* ---------- 움직임 줄이기 ---------- */
 @media (prefers-reduced-motion:reduce){
   .rkh .v11-eyebrow,.cb__copy>*{transition:none}

@@ -1,8 +1,8 @@
 /* 비투비티 홈 시안 v11 · v11-font.css (2026-11-17, 2026-11-18 Manrope 확정)
    영문 글꼴 = Manrope로 확정(담당자 2026-11-18). 비교용 "영문" 단추와 다른 후보(Archivo · Space Grotesk · Oswald · 기존)는 지웠다.
    한글 본문 · 상품명 · 사이즈 글자는 Pretendard 그대로다. 영문 글꼴이 들어가는 자리(이 셋뿐):
-     ㄱ. --f-lat  영문 라벨(.v11-eyebrow, 히어로 "B2BT PRODUCTS", 품목 카드 영문 이름, LOOK · 번호 라벨 등). 값은 css/v11.css 0번
-     ㄴ. --f-ww   히어로 오른쪽 아래 WORKWEAR. 값은 css/v11-hero.css 0번. 폭 · 굵기 · 크기 배율은 아래 1번
+     ㄱ. --f-lat  영문 라벨(.v11-eyebrow, 품목 카드 영문 이름, LOOK · 번호 라벨 등. 히어로 "B2BT PRODUCTS"는 2026-11-18 7차에 빠짐). 값은 css/v11.css 0번
+     ㄴ. --f-ww   히어로 왼쪽 아래 WORKWEAR. 값은 css/v11-hero.css 0번. 폭 · 굵기 · 크기 배율은 아래 1번
      ㄷ. --f-num  상품 카드 가격 숫자(.pc__price.num, "59,000"만 Manrope, "원"은 Pretendard) + 랭킹 순위 번호
    글꼴 파일: index.html <head>의 Google Fonts 한 줄(Manrope 500~800). */
 
@@ -16,12 +16,15 @@
 .hx__ww{font-size:calc(clamp(64px,8vw,132px) * var(--ww-k,1));font-weight:var(--ww-wt,800);font-stretch:var(--ww-st,100%)}
 @media (max-width:768px){ .hx__ww{font-size:calc(var(--ww-fs) * var(--ww-k,1))} }
 /* 외곽선 WEAR: Google Fonts의 Manrope 파일은 획이 겹친 윤곽선이 그대로라(A 가로획 · R 다리) -webkit-text-stroke로 그리면
-   글자 안에 겹친 선이 비친다(정적 800 파일도 같음). 그래서 글자를 흰색으로 채운 뒤
-   SVG 필터(#b2btOl = 글자 모양을 1.5px 깎아 낸 만큼만 남김, js/v11-font.js가 넣음)로 안쪽 테두리만 남긴다.
-   필터는 굴림 상자의 앞면 · 아랫면(.f3a/.f3b)에 건다(부모에 걸면 3D 굴림이 납작해진다) */
-.hx__ww .f3l--ol{color:#fff;-webkit-text-stroke:0}
-.hx__ww .f3l--ol .f3a,.hx__ww .f3l--ol .f3b{filter:url(#b2btOl)}   /* 테두리 두께 PC 3.5px(2026-11-18 1.5 → 3.5) */
-@media (max-width:768px){ .hx__ww .f3l--ol .f3a,.hx__ww .f3l--ol .f3b{filter:url(#b2btOlS)} }   /* 폰 1.8px */
+   글자 안에 겹친 선이 비친다(정적 800 파일도 같음). 그래서 글자를 흰색으로 채운 뒤 SVG 필터(js/v11-font.js가 넣음)로 선만 남긴다.
+   2026-11-18 7차 담당자: "border는 그냥 1px, 안의 글자(투명한 부분)를 굵게"
+     → 필터가 글자 모양을 바깥으로 불린 뒤(PC 2px · 폰 1px = 800보다 굵은 가짜 볼드) 그 바깥 1px만 흰 선으로 남긴다.
+       선은 PC · 폰 모두 1px. 직전에 안쪽 테두리를 1.5 → 3.5px로 두껍게 했던 것은 요청을 잘못 읽은 것이라 되돌렸다.
+   필터는 굴림 상자의 앞면 · 아랫면(.f3a/.f3b)에 건다(부모에 걸면 3D 굴림이 납작해진다).
+   자간 .04em: 글자마다 따로 불어나(양쪽 2px) 이웃 글자 선이 맞닿지 않게 WEAR 글자 사이를 조금 띄운다(1440에서 약 3px) */
+.hx__ww .f3l--ol{color:#fff;-webkit-text-stroke:0;letter-spacing:.04em}
+.hx__ww .f3l--ol .f3a,.hx__ww .f3l--ol .f3b{filter:url(#b2btOl)}   /* PC: 2px 불림 + 1px 선 */
+@media (max-width:768px){ .hx__ww .f3l--ol .f3a,.hx__ww .f3l--ol .f3b{filter:url(#b2btOlS)} }   /* 폰: 1px 불림 + 1px 선 */
 
 /* ---------- 3. 가격 숫자 · 순위 번호 ----------
    가격: 글꼴만 바꾼다(크기 · 굵기 · 줄 높이는 그대로라 카드 높이가 변하지 않는다). 숫자 폭이 같게 tabular-nums(.num 공통 규칙)는 그대로 둔다.

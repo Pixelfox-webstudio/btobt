@@ -1,7 +1,8 @@
-/* 비투비티 홈 시안 v11 · v11-look.js (2026-11-17)
+/* 비투비티 홈 시안 v11 · v11-look.js (2026-11-17, 2026-11-18 7차 등장 고침)
    윈터 룩북 섹션(#lookbook) 동작. js/v11.js 다음에 불러온다.
+   자리(7차): 히어로 바로 다음, 첫 화면 쌓기 .stk__over 안의 첫 면(영상 위로 덮여 올라옴). 카드는 모두 같은 크기(첫 카드 1.12배 없앰, css/v11-look.css 3번).
    1 카드 줄 조작: 마우스로 끌기(놓으면 밀던 만큼 더 가서 카드에 맞춰 섬) · 화살표 = 한 장씩 · 진행 막대 · 끝에서 화살표 흐리게 · 사진 미리 받기
-   2 등장: 섹션이 올라오면 카드가 엇갈려 올라오며 아래에서부터 드러난다(v8 품목별 보기 등장과 같은 방식, 스크롤에 맞춰 scrub)
+   2 등장: 섹션이 올라오면 카드가 엇갈려 올라오며 아래에서부터 드러난다(v8 품목별 보기 등장과 같은 방식, 스크롤에 맞춰 scrub). 모든 카드가 같은 때 끝난다(7차)
    손가락(터치)은 브라우저 기본 가로 스크롤 + CSS 멈춤 자리(scroll-snap)에 맡긴다. 줄의 data-lenis-prevent-touch로 Lenis가 가로 밀기를 가로채지 않는다.
    움직임을 쓸지는 js/v10.js와 같은 규칙(GSAP이 있고 움직임 줄이기가 아닐 때). 움직임 줄이기면 등장 없이 처음부터 보이고, 화살표 · 놓기는 미끄러지지 않고 바로 옮긴다. */
 (function () {
@@ -117,17 +118,25 @@
 
   /* ============================================================
      2. 등장(움직임을 쓸 때만). 카드 안쪽 겹(.lk__rv)이 아래에서 올라오며(yPercent) 아래쪽부터 드러난다(clip-path inset 위 100% → 0).
-     카드마다 시작 높이를 조금씩 다르게(짝수 · 홀수 + 차례) 해서 엇갈려 올라온다. 스크롤에 맞춰 움직인다(scrub .6, 줄 위가 화면 94% → 40%).
-     v8 품목별 보기(js/v8.js 6번)와 같은 값의 방식. 폰은 덜 올라오게(카드가 화면 폭에 가까워 많이 움직이면 어지럽다).
-     a가 아니라 안쪽 겹을 움직여서 초점 테두리가 잘리지 않는다
-     ============================================================ */
+     카드마다 시작 높이를 조금씩 다르게(짝수 · 홀수 + 차례) 해서 엇갈려 올라온다. 스크롤에 맞춰 움직인다(scrub .6, 줄 위가 화면 94% → 52%).
+     v8 품목별 보기와 같은 값의 방식. 폰은 덜 올라오게(카드가 화면 폭에 가까워 많이 움직이면 어지럽다).
+     a가 아니라 안쪽 겹을 움직여서 초점 테두리가 잘리지 않는다.
+     2026-11-18 7차(룩북이 히어로 바로 다음 첫 섹션이 됨 + 담당자 "카드 이미지가 미묘하게 다 다르다"):
+     - 전에는 차례(stagger .08)가 끝나는 때까지 밀려서, 줄 위가 화면 40~55%쯤에서 스크롤을 멈추면(큰 화면에서 카드가 다 보이는 자리)
+       뒤쪽 카드가 아직 위가 잘리고(최대 약 20%) 아래로 내려가 있었다 → 시작만 차례로 늦추고 모든 카드가 같은 때(줄 위 = 화면 52%) 끝나게 바꿨다.
+       52% = 1440×1100 · 1440×900 · 1024×768 · 768×1024 · 390×844 모두에서 화면 안 카드 사진의 아래 끝이 아직 화면 밖일 때(사진이 다 보이기 전에 끝남).
+     - 처음 상태(숨김 + 아래로)를 gsap.set으로 먼저 적는다. fromTo로 두면 ScrollTrigger가 다시 잴 때(load · 글꼴) 처음 상태가 지워져
+       진행 0에서 카드가 다 보였다가 스크롤이 시작점을 넘는 순간 사라지고, 폰(시작점이 이미 지난 채 열림)에서는 첫 카드만 숨고 둘째 카드는 보였다.
+     - 끝 상태 = translate(0, 0) · inset(0%)(변형 없음과 같음). 사진 크기 · 자리가 모든 카드에서 같다 */
   if (!motion) return;
   var layers = items.map(function (li) { return li.querySelector('.lk__rv'); }).filter(Boolean);
   var phoneQ = window.matchMedia('(max-width: 768px)');
-  gsap.fromTo(layers,
-    { yPercent: function (i) { return (phoneQ.matches ? 6 : 10) + (i % 2 ? 6 : 0) + i * 1.2; }, clipPath: 'inset(100% 0% 0% 0%)' },
-    { yPercent: 0, clipPath: 'inset(0% 0% 0% 0%)', ease: 'none', stagger: .08,
-      scrollTrigger: { trigger: rail, start: 'top 94%', end: 'top 40%', scrub: .6, invalidateOnRefresh: true } });
+  var gap = Math.min(.08, .6 / Math.max(1, layers.length - 1)); // 카드 사이 시작 차례(카드가 늘어도 마지막 카드 길이가 .4 아래로 줄지 않게)
+  gsap.set(layers, { yPercent: function (i) { return (phoneQ.matches ? 6 : 10) + (i % 2 ? 6 : 0) + i * 1.2; }, clipPath: 'inset(100% 0% 0% 0%)' });
+  var tl = gsap.timeline({ scrollTrigger: { trigger: rail, start: 'top 94%', end: 'top 52%', scrub: .6 } });
+  layers.forEach(function (el, i) { // i번째 카드 = i × gap에 시작해서 1에 끝남(모두 같은 때 끝)
+    tl.to(el, { yPercent: 0, clipPath: 'inset(0% 0% 0% 0%)', ease: 'none', duration: 1 - i * gap }, i * gap);
+  });
   // 사진(늦게 불러옴) · 글꼴 · 위쪽 상품 격자가 바뀌면 시작 위치가 달라지므로 한 번 더 잰다
   var rT = 0;
   function refresh() { clearTimeout(rT); rT = setTimeout(function () { ScrollTrigger.refresh(); }, 200); }

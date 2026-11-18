@@ -27,12 +27,14 @@ if(!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('v4-
 <link rel="stylesheet" href="css/ui-v8.css?v=20261116">
 <link rel="stylesheet" href="css/v9.css?v=20261116">
 <link rel="stylesheet" href="css/v10.css?v=20261117">
-<link rel="stylesheet" href="css/v11-hero.css?v=20261118b">
-<link rel="stylesheet" href="css/v11.css?v=20261118d">
-<link rel="stylesheet" href="css/v11-look.css?v=20261117b">
-<link rel="stylesheet" href="css/v11-ind.css?v=20261118">
-<link rel="stylesheet" href="css/v11-font.css?v=20261118d">
+<link rel="stylesheet" href="css/v11-hero.css?v=20261118g">
+<link rel="stylesheet" href="css/v11.css?v=20261118g">
+<link rel="stylesheet" href="css/v11-look.css?v=20261118g">
+<link rel="stylesheet" href="css/v11-ind.css?v=20261118g">
+<link rel="stylesheet" href="css/v11-font.css?v=20261118g">
 <link rel="stylesheet" href="css/v11-m.css?v=20261118e">
+<link rel="stylesheet" href="css/v11-bh.css?v=20261118g">
+<link rel="stylesheet" href="css/v11-fx.css?v=20261118g">
 <link rel="preload" as="image" fetchpriority="high" href="img/v11/hero-poster.webp" media="(min-width:769px)">
 <link rel="preload" as="image" fetchpriority="high" href="img/v11/hero-poster-m.webp" media="(max-width:768px)">
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
@@ -153,7 +155,7 @@ setTimeout(function(){if(!window.B2BT_INTRO_RUN)drop();if(!window.B2BT_HX)d.clas
 <main id="main" class="v4 v5 v6 v7 v8 v9 v10">
   <!-- 1 + 2. 메인 영상(고정) 위로 다음 면이 덮여 올라온다: 21st.dev Smooth Scroll(sticky 화면 쌓기 + Lenis)을 옮김 -->
   <div class="stk" id="stk">
-  <!-- v11 히어로: 원래 실사 영상(media/hero-film-*) + 바뀌는 문구(가운데, 2026-11-18) + WORKWEAR(왼쪽 아래) + 전체 영상 보기(오른쪽 아래). 스타일 css/v11-hero.css, 동작 js/v11-hero.js -->
+  <!-- v11 히어로: 원래 실사 영상(media/hero-film-*) + WORKWEAR(왼쪽 아래) 위 바뀌는 단어(2026-11-18 7차) + 전체 영상 보기(오른쪽 아래). 스타일 css/v11-hero.css, 동작 js/v11-hero.js -->
   <section class="bn bn--film hv hx" id="hero" aria-label="메인 영상 배너">
     <div class="bn__track">
       <div class="bn__slide bn__slide--l bn__slide--film is-on">
@@ -165,11 +167,12 @@ setTimeout(function(){if(!window.B2BT_INTRO_RUN)drop();if(!window.B2BT_HX)d.clas
         <h1 class="sr-only">비투비티 기업 단체복 및 작업복</h1>
       </div>
     </div>
-    <div class="hx__copy" id="hxCopy">
-      <p class="hx__label" lang="en">B2BT PRODUCTS</p>
-      <p class="hx__msg" aria-live="off"><span class="sr-only">단체복 · 작업복 · 안전용품을 한 곳에서 주문합니다.</span><span class="hx__slot" id="hxSlot" aria-hidden="true"><span class="hx__word"><b>단체복</b>을</span><span class="hx__word"><b>작업복</b>을</span><span class="hx__word"><b>안전용품</b>을</span></span><span class="hx__line2" aria-hidden="true">한 곳에서 주문합니다.</span></p>
+    <!-- 2026-11-18 7차 담당자: 가운데 문구(B2BT PRODUCTS · ○○을 · 한 곳에서 주문합니다.)를 빼고, WORKWEAR 바로 위에 단어 하나만 작게.
+         작업복 → 안전용품 → 단체복 순서로 지금과 같은 효과(아래에서 밀려 올라옴)로 바뀐다. 단어 + WORKWEAR를 한 묶음(.hx__btm)으로 왼쪽 아래에 둔다 -->
+    <div class="hx__btm" id="hxBtm">
+      <p class="hx__kw" id="hxCopy"><span class="sr-only">단체복 · 작업복 · 안전용품을 한 곳에서 주문합니다.</span><span class="hx__slot" id="hxSlot" aria-hidden="true"><span class="hx__word">작업복</span><span class="hx__word">안전용품</span><span class="hx__word">단체복</span></span></p>
+      <p class="hx__ww" id="hxWW" lang="en" aria-hidden="true"><span class="f3l">WORK</span><span class="f3l f3l--ol">WEAR</span></p>
     </div>
-    <p class="hx__ww" id="hxWW" lang="en" aria-hidden="true"><span class="f3l">WORK</span><span class="f3l f3l--ol">WEAR</span></p>
     <div class="hv__shade" id="hvShade" aria-hidden="true"></div>
     <div class="bn__ui">
       <button type="button" class="hv__full" id="filmOpen" aria-haspopup="dialog" aria-controls="filmModal"><span class="hv__full-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.5 6.6v10.8a.6.6 0 0 0 .92.5l8.4-5.4a.6.6 0 0 0 0-1L9.42 6.1a.6.6 0 0 0-.92.5z"/></svg></span><span>전체 영상 보기</span></button>
@@ -177,21 +180,36 @@ setTimeout(function(){if(!window.B2BT_INTRO_RUN)drop();if(!window.B2BT_HX)d.clas
   </section>
 
   <div class="stk__over" id="stkOver">
-  <!-- 2. 랭킹: 가운데 제목 + 품목 탭 + 순위 번호가 붙은 상품 줄 (참고: k-village.co.kr/k2 랭킹). v11: 왕관 표식을 빼고 제목 위에 영문 라벨(.v11-eyebrow) -->
-  <section class="rk" id="rank" aria-labelledby="rkTitle">
+  <!-- 2. 윈터 룩북 (v11): 2026-11-18 7차 담당자 순서 바꿈으로 히어로 바로 다음(첫 화면 쌓기 .stk__over 안, 영상 위로 덮여 올라오는 면). 처음엔 상품 섹션 두 개 사이를 잡지 화보처럼 끊는 섹션이었다. 새 모델 사진(img/v11/np16~22 · np07 · np10) 7장면.
+       LOOK 06은 np08(LOOK 04 np07과 같은 모델 · 비슷한 밝은 회색 패딩이라 같은 사진처럼 보임) 대신 np10(남성 · 짙은 회색 퀼팅 패딩). np08은 품목별 보기 PADDING으로 옮김.
+       세로 3:4 카드를 옆으로 넘긴다(PC 마우스로 끌기 · 화살표 = 한 장씩, 폰 = 손으로 넘김 + 카드에 맞춰 멈춤). 카드 사진은 모두 같은 크기(2026-11-18 7차: 첫 카드 1.12배를 없앰), 카드마다 높이만 엇갈리게(--oy, css/v11-look.css).
+       LOOK 02는 한 장(np19 후드 숏 패딩, 2026-11-18 두 사람 MATCH 카드에서 바꿈). 카드 = 비슷한 품목 목록으로 가는 링크(서랍 메뉴와 같은 category.php 주소).
+       캡션은 사진에 보이는 옷 종류만 적는다(상품 이름 · 가격을 지어내지 않는다). 움직임 = js/v11-look.js -->
+  <section class="lk" id="lookbook" aria-labelledby="lkTitle">
     <div class="wrap">
-      <header class="sh sh--c rkh" id="rkHead">
-        <p class="v11-eyebrow" aria-hidden="true">BEST RANKING</p>
-        <h2 class="sh__t" id="rkTitle"><span class="ln"><span><span class="tt__key">상품 랭킹</span></span></span></h2>
-        <p class="sh__d" data-rv id="rkBasis">상품 목록 추천순으로 품목별 상품을 모았습니다. 번호는 2026-11-11 진열 순서입니다.</p>
+      <header class="vh vh--row lk__head">
+        <div>
+          <p class="v11-eyebrow" aria-hidden="true">WINTER LOOKBOOK</p>
+          <h2 class="vh__t" id="lkTitle"><span class="tt__pre">함께 맞춰 입는</span> <span class="tt__key">겨울 룩북</span></h2>
+        </div>
+        <div class="vh__r lk__nav">
+          <button type="button" class="arw" id="lkPrev" aria-label="이전 룩" aria-controls="lkRail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+          <button type="button" class="arw" id="lkNext" aria-label="다음 룩" aria-controls="lkRail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        </div>
       </header>
-      <div class="rk__bar"><div class="tabs" role="tablist" aria-label="품목" id="rkTabs"><span class="tabs__pill" aria-hidden="true"></span></div></div>
-      <div class="rk__stage">
-        <button type="button" class="arw rk__arw rk__arw--p" id="rkPrev" aria-label="이전 상품"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
-        <div class="md__rail rk__rail" id="rkRail" role="tabpanel" aria-label="랭킹 상품" data-lenis-prevent-touch></div>
-        <button type="button" class="arw rk__arw rk__arw--n" id="rkNext" aria-label="다음 상품"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-      </div>
-      <div class="psec__more rk__more"><a class="pbtn" id="rkMore" href="#" data-href="category.php">전체 상품 보기</a></div>
+    </div>
+    <ul class="lk__rail" id="lkRail" aria-label="겨울 룩북" data-lenis-prevent-touch>
+      <li class="lk__it" style="--oy:0"><a class="lk__card" href="#" data-href="category.php?cat=%ED%8C%A8%EB%94%A9" aria-label="LOOK 01 후드 파카 · 비슷한 상품 보기" draggable="false"><span class="lk__rv"><span class="lk__ph"><img src="img/v11/np16.webp" srcset="img/v11/np16-s.webp 500w, img/v11/np16.webp 1000w" sizes="(max-width:768px) 72vw, (max-width:1023px) 36vw, 26vw" width="1000" height="1336" alt="하늘색 배경 앞에서 베이지 후드 파카를 입은 여성" loading="lazy" decoding="async" draggable="false" data-slot="lookbook-01" data-temp="ai"></span><span class="lk__cap"><span class="lk__no">LOOK 01</span><span class="lk__nm">후드 파카</span><span class="lk__go">비슷한 상품 보기 <i aria-hidden="true">→</i></span></span></span></a></li>
+      <li class="lk__it" style="--oy:2.4"><a class="lk__card" href="#" data-href="category.php?cat=%ED%8C%A8%EB%94%A9&amp;sub=%ED%8C%A8%EB%94%A9%EC%A0%90%ED%8D%BC" aria-label="LOOK 02 후드 숏 패딩 · 비슷한 상품 보기" draggable="false"><span class="lk__rv"><span class="lk__ph"><img src="img/v11/np19.webp" srcset="img/v11/np19-s.webp 500w, img/v11/np19.webp 1000w" sizes="(max-width:768px) 72vw, (max-width:1023px) 36vw, 26vw" width="1000" height="1336" alt="검정 후드 숏 패딩을 입은 남성" loading="lazy" decoding="async" draggable="false" data-slot="lookbook-02" data-temp="ai"></span><span class="lk__cap"><span class="lk__no">LOOK 02</span><span class="lk__nm">후드 숏 패딩</span><span class="lk__go">비슷한 상품 보기 <i aria-hidden="true">→</i></span></span></span></a></li>
+      <li class="lk__it" style="--oy:.8"><a class="lk__card" href="#" data-href="category.php?cat=%ED%8C%A8%EB%94%A9" aria-label="LOOK 03 경량 패딩 · 비슷한 상품 보기" draggable="false"><span class="lk__rv"><span class="lk__ph"><img src="img/v11/np17.webp" srcset="img/v11/np17-s.webp 500w, img/v11/np17.webp 1000w" sizes="(max-width:768px) 72vw, (max-width:1023px) 36vw, 26vw" width="1000" height="1336" alt="저녁 설산 바위에 앉은, 옅은 녹색 경량 패딩 차림의 남성" loading="lazy" decoding="async" draggable="false" data-slot="lookbook-03" data-temp="ai"></span><span class="lk__cap"><span class="lk__no">LOOK 03</span><span class="lk__nm">경량 패딩</span><span class="lk__go">비슷한 상품 보기 <i aria-hidden="true">→</i></span></span></span></a></li>
+      <li class="lk__it" style="--oy:3"><a class="lk__card" href="#" data-href="category.php?cat=%ED%8C%A8%EB%94%A9&amp;sub=%ED%8C%A8%EB%94%A9%EC%A0%90%ED%8D%BC" aria-label="LOOK 04 후드 다운 점퍼 · 비슷한 상품 보기" draggable="false"><span class="lk__rv"><span class="lk__ph"><img src="img/v11/np07.webp" srcset="img/v11/np07-s.webp 500w, img/v11/np07.webp 1000w" sizes="(max-width:768px) 72vw, (max-width:1023px) 36vw, 26vw" width="1000" height="1336" alt="밝은 회색 후드 다운 점퍼를 입은 여성" loading="lazy" decoding="async" draggable="false" data-slot="lookbook-04" data-temp="ai"></span><span class="lk__cap"><span class="lk__no">LOOK 04</span><span class="lk__nm">후드 다운 점퍼</span><span class="lk__go">비슷한 상품 보기 <i aria-hidden="true">→</i></span></span></span></a></li>
+      <li class="lk__it" style="--oy:1"><a class="lk__card" href="#" data-href="category.php?cat=%ED%8C%A8%EB%94%A9&amp;sub=%ED%8C%A8%EB%94%A9%EC%A0%90%ED%8D%BC" aria-label="LOOK 05 패딩 점퍼 · 비슷한 상품 보기" draggable="false"><span class="lk__rv"><span class="lk__ph"><img src="img/v11/np20.webp" srcset="img/v11/np20-s.webp 500w, img/v11/np20.webp 1000w" sizes="(max-width:768px) 72vw, (max-width:1023px) 36vw, 26vw" width="1000" height="1336" alt="비 내리는 밤거리에서 검정 후드 패딩 점퍼를 입은 남성" loading="lazy" decoding="async" draggable="false" data-slot="lookbook-05" data-temp="ai"></span><span class="lk__cap"><span class="lk__no">LOOK 05</span><span class="lk__nm">패딩 점퍼</span><span class="lk__go">비슷한 상품 보기 <i aria-hidden="true">→</i></span></span></span></a></li>
+      <li class="lk__it" style="--oy:2.6"><a class="lk__card" href="#" data-href="category.php?cat=%ED%8C%A8%EB%94%A9" aria-label="LOOK 06 퀼팅 패딩 · 비슷한 상품 보기" draggable="false"><span class="lk__rv"><span class="lk__ph"><img src="img/v11/np10.webp" srcset="img/v11/np10-s.webp 500w, img/v11/np10.webp 1000w" sizes="(max-width:768px) 72vw, (max-width:1023px) 36vw, 26vw" width="1000" height="1336" alt="짙은 회색 퀼팅 패딩을 입은 남성" loading="lazy" decoding="async" draggable="false" data-slot="lookbook-06" data-temp="ai"></span><span class="lk__cap"><span class="lk__no">LOOK 06</span><span class="lk__nm">퀼팅 패딩</span><span class="lk__go">비슷한 상품 보기 <i aria-hidden="true">→</i></span></span></span></a></li>
+      <li class="lk__it" style="--oy:.6"><a class="lk__card" href="#" data-href="category.php?cat=%EC%9E%90%EC%BC%93&amp;sub=%ED%94%8C%EB%A6%AC%EC%8A%A4%20%EC%9E%90%EC%BC%93" aria-label="LOOK 07 플리스 후드 집업 · 비슷한 상품 보기" draggable="false"><span class="lk__rv"><span class="lk__ph"><img src="img/v11/np22.webp" srcset="img/v11/np22-s.webp 500w, img/v11/np22.webp 1000w" sizes="(max-width:768px) 72vw, (max-width:1023px) 36vw, 26vw" width="1000" height="1336" alt="베이지 플리스 후드 집업을 입은 여성" loading="lazy" decoding="async" draggable="false" data-slot="lookbook-07" data-temp="ai"></span><span class="lk__cap"><span class="lk__no">LOOK 07</span><span class="lk__nm">플리스 후드 집업</span><span class="lk__go">비슷한 상품 보기 <i aria-hidden="true">→</i></span></span></span></a></li>
+    </ul>
+    <div class="wrap lk__ctl">
+      <div class="md__prog" aria-hidden="true"><i id="lkProg"></i></div>
+      <p class="lk__note">연출 이미지입니다.</p>
     </div>
   </section>
   </div><!-- /stk__over -->
@@ -217,104 +235,6 @@ setTimeout(function(){if(!window.B2BT_INTRO_RUN)drop();if(!window.B2BT_HX)d.clas
     </div>
   </section>
 
-  <!-- 4. 파트너 브랜드 (v9): 움직이는 배너. 이전 On Site(현장별 착용 상품)의 사진과 착용 상품을 브랜드별 장면으로 옮겼다.
-       사진 위 흰 사각형(상품 자리)과 착용 상품 칸을 한 번 꺾이는 흰 선(가로 + 사선)으로 잇는다. 장면과 선은 js/v10.js가 그린다 -->
-  <section class="pb" id="partner" aria-labelledby="pbTitle" aria-roledescription="carousel">
-    <h2 class="sr-only" id="pbTitle">파트너 브랜드</h2>
-    <div class="pb__frame" id="pbFrame">
-      <div class="pb__slides" id="pbSlides"></div>
-      <div class="pb__ui">
-        <div class="pb__dots" id="pbDots"></div>
-        <button type="button" class="pb__pause" id="pbAuto" aria-pressed="false" aria-label="배너 자동 넘김 멈춤"></button>
-      </div>
-      <p class="pb__note">연출 이미지입니다.</p>
-    </div>
-  </section>
-
-  <!-- 4-1. 업종별 추천 (v11, 2026-11-18 디자인 바꿈: 회색 판 카드 → 사진이 카드 전체를 채우고 글 · 칩을 사진 위에 얹는 카드. 담당자 "사진마다 나눈 건 좋은데 디자인이 밋밋하다").
-       기업 담당자가 자기 현장(업종)을 고르면 맞는 품목으로 바로 간다. 카드 4장 = 연출 사진 + 번호 · 영문 업종 + 업종 + 한 줄 설명 + 품목 칩 3개 + 오른쪽 위 화살표(추천 상품 보기).
-       "추천 상품 보기" 링크의 ::after가 카드 전체를 덮어서 사진 · 업종 이름을 눌러도 같은 곳으로 간다(링크 안에 링크를 넣지 않으려고). 칩은 따로 누르는 링크라 덮개 위에 올린다.
-       PC 4열, 601~1023 2열, 600 이하 옆으로 넘기는 카드. 모양은 css/v11-ind.css. 등장은 li의 data-rv(js/v10.js 등장 블록), 스크립트 추가 없음.
-       사진 기준점(얼굴 · 옷이 보이게)은 img의 --op. 링크는 서랍 메뉴와 같은 category.php 주소 -->
-  <section class="ind" id="industry" aria-labelledby="indTitle">
-    <div class="wrap">
-      <header class="vh vh--row">
-        <div><p class="v11-eyebrow" aria-hidden="true">BY INDUSTRY</p><h2 class="vh__t" id="indTitle"><span class="tt__pre">현장에 맞춰 고르는</span> <span class="tt__key">업종별 추천</span></h2></div>
-        <div class="vh__r"><a class="lnk" href="#" data-href="custom-intro.php">맞춤작업복 견적문의 <i aria-hidden="true">→</i></a></div>
-      </header>
-      <ul class="ind__list" data-lenis-prevent-touch>
-        <li class="ind__item" data-rv>
-          <div class="ind__card">
-            <div class="ind__media"><img src="img/v11/np01.webp" srcset="img/v11/np01-s.webp 500w, img/v11/np01.webp 1000w" sizes="(max-width:600px) 78vw, (max-width:1023px) 46vw, (max-width:1440px) 22vw, 320px" width="1000" height="1336" alt="단열재를 건네는 패딩 작업복 차림의 작업자" loading="lazy" decoding="async" draggable="false" style="--op:62% 16%" data-slot="industry-1" data-temp="ai"></div>
-            <div class="ind__body">
-              <p class="ind__no" aria-hidden="true"><b>01</b><span>CONSTRUCTION</span></p>
-              <h3 class="ind__t">건설 · 인테리어</h3>
-              <p class="ind__d">먼지 · 마찰이 많은 현장</p>
-              <ul class="ind__chips" aria-label="건설 · 인테리어 추천 품목"><li><a class="ind__chip" href="#" data-href="category.php?cat=%EC%9E%91%EC%97%85%EB%B3%B5">작업복</a></li><li><a class="ind__chip" href="#" data-href="category.php?cat=%EC%9E%91%EC%97%85%EB%B3%B5&amp;sub=%EA%B2%A8%EC%9A%B8%20%EC%9E%91%EC%97%85%EB%B3%B5">겨울 작업복</a></li><li><a class="ind__chip" href="#" data-href="category.php?cat=%EC%A1%B0%EB%81%BC&amp;sub=%EC%9E%91%EC%97%85%EC%A1%B0%EB%81%BC">작업조끼</a></li></ul>
-              <a class="ind__go" href="#" data-href="category.php?cat=%EC%9E%91%EC%97%85%EB%B3%B5" aria-label="건설 · 인테리어 추천 상품 보기"><span class="ind__gol">추천 상품 보기</span><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></i></a>
-            </div>
-          </div>
-        </li>
-        <li class="ind__item" data-rv>
-          <div class="ind__card">
-            <div class="ind__media"><img src="img/v11/np05.webp" srcset="img/v11/np05-s.webp 500w, img/v11/np05.webp 1000w" sizes="(max-width:600px) 78vw, (max-width:1023px) 46vw, (max-width:1440px) 22vw, 320px" width="1000" height="1336" alt="무릎 보호대를 차고 앉은 회색 작업 자켓 차림의 작업자" loading="lazy" decoding="async" draggable="false" style="--op:50% 30%" data-slot="industry-2" data-temp="ai"></div>
-            <div class="ind__body">
-              <p class="ind__no" aria-hidden="true"><b>02</b><span>MANUFACTURING</span></p>
-              <h3 class="ind__t">제조 · 설비</h3>
-              <p class="ind__d">매일 입는 상하복이 필요한 곳</p>
-              <ul class="ind__chips" aria-label="제조 · 설비 추천 품목"><li><a class="ind__chip" href="#" data-href="category.php?cat=%EC%9E%91%EC%97%85%EB%B3%B5">작업복</a></li><li><a class="ind__chip" href="#" data-href="category.php?cat=%EC%9E%90%EC%BC%93">자켓</a></li><li><a class="ind__chip" href="#" data-href="category.php?cat=%EB%B0%94%EC%A7%80">바지</a></li></ul>
-              <a class="ind__go" href="#" data-href="category.php?cat=%EC%9E%91%EC%97%85%EB%B3%B5" aria-label="제조 · 설비 추천 상품 보기"><span class="ind__gol">추천 상품 보기</span><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></i></a>
-            </div>
-          </div>
-        </li>
-        <li class="ind__item" data-rv>
-          <div class="ind__card">
-            <div class="ind__media"><img src="img/v11/np03.webp" srcset="img/v11/np03-s.webp 500w, img/v11/np03.webp 1000w" sizes="(max-width:600px) 78vw, (max-width:1023px) 46vw, (max-width:1440px) 22vw, 320px" width="1000" height="1336" alt="밤에 짐을 싣는 형광 작업복 차림의 작업자들" loading="lazy" decoding="async" draggable="false" style="--op:40% 30%" data-slot="industry-3" data-temp="ai"></div>
-            <div class="ind__body">
-              <p class="ind__no" aria-hidden="true"><b>03</b><span>LOGISTICS</span></p>
-              <h3 class="ind__t">물류 · 야간 작업</h3>
-              <p class="ind__d">밤에도 잘 보여야 하는 현장</p>
-              <ul class="ind__chips" aria-label="물류 · 야간 작업 추천 품목"><li><a class="ind__chip" href="#" data-href="category.php?cat=%EC%A1%B0%EB%81%BC&amp;sub=%EC%9E%91%EC%97%85%EC%A1%B0%EB%81%BC">작업조끼</a></li><li><a class="ind__chip" href="#" data-href="category.php?cat=%ED%8C%A8%EB%94%A9">패딩</a></li><li><a class="ind__chip" href="#" data-href="category.php?cat=%EB%AA%A8%EC%9E%90">모자</a></li></ul>
-              <a class="ind__go" href="#" data-href="category.php?cat=%EC%A1%B0%EB%81%BC&amp;sub=%EC%9E%91%EC%97%85%EC%A1%B0%EB%81%BC" aria-label="물류 · 야간 작업 추천 상품 보기"><span class="ind__gol">추천 상품 보기</span><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></i></a>
-            </div>
-          </div>
-        </li>
-        <li class="ind__item" data-rv>
-          <div class="ind__card">
-            <div class="ind__media"><img src="img/v11/np06.webp" srcset="img/v11/np06-s.webp 500w, img/v11/np06.webp 1000w" sizes="(max-width:600px) 78vw, (max-width:1023px) 46vw, (max-width:1440px) 22vw, 320px" width="1000" height="1336" alt="카키색 작업 자켓을 입은 남성" loading="lazy" decoding="async" draggable="false" style="--op:50% 14%" data-slot="industry-4" data-temp="ai"></div>
-            <div class="ind__body">
-              <p class="ind__no" aria-hidden="true"><b>04</b><span>OFFICE</span></p>
-              <h3 class="ind__t">관리 · 사무 근무복</h3>
-              <p class="ind__d">사무실과 현장을 오가는 근무</p>
-              <ul class="ind__chips" aria-label="관리 · 사무 근무복 추천 품목"><li><a class="ind__chip" href="#" data-href="category.php?cat=%EC%9E%90%EC%BC%93">자켓</a></li><li><a class="ind__chip" href="#" data-href="category.php?cat=%EC%B9%B4%EB%9D%BC%20%ED%8B%B0%EC%85%94%EC%B8%A0">카라 티셔츠</a></li><li><a class="ind__chip" href="#" data-href="category.php?cat=%EB%A7%A8%ED%88%AC%EB%A7%A8%20%ED%8B%B0%EC%85%94%EC%B8%A0">맨투맨</a></li></ul>
-              <a class="ind__go" href="#" data-href="category.php?cat=%EC%9E%90%EC%BC%93" aria-label="관리 · 사무 근무복 추천 상품 보기"><span class="ind__gol">추천 상품 보기</span><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></i></a>
-            </div>
-          </div>
-        </li>
-      </ul>
-      <p class="ind__note">연출 이미지입니다.</p>
-    </div>
-  </section>
-
-  <!-- ============ v9 (2026-11-14): 파트너 브랜드 아래 = 시안 F의 상품 섹션 구성 + 시안 A의 상품 카드.
-       섹션마다 "바텀 헤더"(.bh)가 있다. 섹션에 도착하면 그 섹션의 선택지가 헤더 바로 아래에 붙고, 다음 섹션으로 가면 그 섹션의 것으로 바뀐다.
-       v10: PC도 폰처럼 떠 있는 알약 줄. 1개/2개 보기는 섹션 제목 줄 오른쪽(폰). 탭과 상품은 js/v10.js가 채운다 ============ -->
-
-  <!-- 5. 겨울 아우터 (시안 F): 패딩 · 겨울조끼 · 플리스 자켓 -->
-  <section class="psec" id="outer" aria-labelledby="outerTitle" data-shop="outer">
-    <div class="wrap">
-      <header class="vh vh--row">
-        <div><h2 class="vh__t" id="outerTitle"><span class="tt__pre">겨울을 책임지는</span> <span class="tt__key">겨울 아우터</span></h2></div>
-        <div class="vtog" data-vtog></div>
-      </header>
-    </div>
-    <div class="bh" data-bh aria-label="겨울 아우터 분류"></div>
-    <div class="wrap psec__body">
-      <div class="pgrid pgrid--feat" data-grid role="tabpanel" aria-live="polite"></div>
-      <div class="psec__more"><a class="pbtn" data-more href="#" data-href="category.php"></a></div>
-    </div>
-  </section>
-
   <!-- 5-1. 품목별 보기 (v8에서 가져옴, 흰 바탕). v11: 계절 카드 4개 → 품목 카드 8개(새 사진 img/v11/npXX). 제목이 "품목별 보기"인데 계절이 들어가 있던 것을 바로잡음.
        고른 카드가 넓어지고(영문 이름 + 우리말 품목 + 상품 보기), 좁은 카드 이름(영문)은 90도로 돌려 적는다. 폰은 옆으로 넘기는 카드.
        --cx = 좁은 카드에서 사진의 어느 가로 지점을 가운데 둘지(얼굴 · 옷이 보이게). 링크는 서랍 메뉴와 같은 category.php 주소 -->
@@ -335,6 +255,42 @@ setTimeout(function(){if(!window.B2BT_INTRO_RUN)drop();if(!window.B2BT_HX)d.clas
     </div>
   </section>
 
+  <!-- 5. 랭킹(2026-11-18 7차: 첫 화면 쌓기에서 빠져 품목별 보기 다음): 가운데 제목 + 품목 탭 + 순위 번호가 붙은 상품 줄 (참고: k-village.co.kr/k2 랭킹). v11: 왕관 표식을 빼고 제목 위에 영문 라벨(.v11-eyebrow) -->
+  <section class="rk" id="rank" aria-labelledby="rkTitle">
+    <div class="wrap">
+      <header class="sh sh--c rkh" id="rkHead">
+        <p class="v11-eyebrow" aria-hidden="true">BEST RANKING</p>
+        <h2 class="sh__t" id="rkTitle"><span class="ln"><span><span class="tt__key">상품 랭킹</span></span></span></h2>
+        <p class="sh__d" data-rv id="rkBasis">상품 목록 추천순으로 품목별 상품을 모았습니다. 번호는 2026-11-11 진열 순서입니다.</p>
+      </header>
+      <div class="rk__bar"><div class="tabs" role="tablist" aria-label="품목" id="rkTabs"><span class="tabs__pill" aria-hidden="true"></span></div></div>
+      <div class="rk__stage">
+        <button type="button" class="arw rk__arw rk__arw--p" id="rkPrev" aria-label="이전 상품"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+        <div class="md__rail rk__rail" id="rkRail" role="tabpanel" aria-label="랭킹 상품" data-lenis-prevent-touch></div>
+        <button type="button" class="arw rk__arw rk__arw--n" id="rkNext" aria-label="다음 상품"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+      </div>
+      <div class="psec__more rk__more"><a class="pbtn" id="rkMore" href="#" data-href="category.php">전체 상품 보기</a></div>
+    </div>
+  </section>
+
+  <!-- 4. 파트너 브랜드 (v9): 움직이는 배너. 이전 On Site(현장별 착용 상품)의 사진과 착용 상품을 브랜드별 장면으로 옮겼다.
+       사진 위 흰 사각형(상품 자리)과 착용 상품 칸을 한 번 꺾이는 흰 선(가로 + 사선)으로 잇는다. 장면과 선은 js/v10.js가 그린다 -->
+  <section class="pb" id="partner" aria-labelledby="pbTitle" aria-roledescription="carousel">
+    <h2 class="sr-only" id="pbTitle">파트너 브랜드</h2>
+    <div class="pb__frame" id="pbFrame">
+      <div class="pb__slides" id="pbSlides"></div>
+      <div class="pb__ui">
+        <div class="pb__dots" id="pbDots"></div>
+        <button type="button" class="pb__pause" id="pbAuto" aria-pressed="false" aria-label="배너 자동 넘김 멈춤"></button>
+      </div>
+      <p class="pb__note">연출 이미지입니다.</p>
+    </div>
+  </section>
+
+  <!-- ============ v9 (2026-11-14): 파트너 브랜드 아래 = 시안 F의 상품 섹션 구성 + 시안 A의 상품 카드.
+       섹션마다 "바텀 헤더"(.bh)가 있다. 섹션에 도착하면 그 섹션의 선택지가 헤더 바로 아래에 붙고, 다음 섹션으로 가면 그 섹션의 것으로 바뀐다.
+       v10: PC도 폰처럼 떠 있는 알약 줄. 1개/2개 보기는 섹션 제목 줄 오른쪽(폰). 탭과 상품은 js/v10.js가 채운다 ============ -->
+
   <!-- 6. 협력브랜드 9곳: 브랜드를 바텀 헤더에서 고른다(상품을 내려 보다가도 다른 브랜드로 바로 바꿀 수 있다) -->
   <section class="psec psec--tint" id="brands" aria-labelledby="brandsTitle" data-shop="brand">
     <div class="wrap">
@@ -350,6 +306,79 @@ setTimeout(function(){if(!window.B2BT_INTRO_RUN)drop();if(!window.B2BT_HX)d.clas
     </div>
   </section>
 
+  <!-- 5. 겨울 아우터 (시안 F): 패딩 · 겨울조끼 · 플리스 자켓 -->
+  <section class="psec" id="outer" aria-labelledby="outerTitle" data-shop="outer">
+    <div class="wrap">
+      <header class="vh vh--row">
+        <div><h2 class="vh__t" id="outerTitle"><span class="tt__pre">겨울을 책임지는</span> <span class="tt__key">겨울 아우터</span></h2></div>
+        <div class="vtog" data-vtog></div>
+      </header>
+    </div>
+    <div class="bh" data-bh aria-label="겨울 아우터 분류"></div>
+    <div class="wrap psec__body">
+      <div class="pgrid pgrid--feat" data-grid role="tabpanel" aria-live="polite"></div>
+      <div class="psec__more"><a class="pbtn" data-more href="#" data-href="category.php"></a></div>
+    </div>
+  </section>
+
+  <!-- 4-1. 업종별 추천 (v11, 2026-11-18 디자인 바꿈: 회색 판 카드 → 사진이 카드 전체를 채우고 글 · 칩을 사진 위에 얹는 카드. 담당자 "사진마다 나눈 건 좋은데 디자인이 밋밋하다").
+       기업 담당자가 자기 현장(업종)을 고르면 맞는 품목으로 바로 간다. 카드 4장 = 연출 사진 + 번호 · 영문 업종 + 업종 + 오른쪽 위 화살표(추천 상품 보기).
+       2026-11-18 7차 담당자: 한 줄 설명(p.ind__d) · 품목 칩(ul.ind__chips)을 뺌.
+       "추천 상품 보기" 링크의 ::after가 카드 전체를 덮어서 사진 · 업종 이름을 눌러도 같은 곳으로 간다.
+       PC 4열, 601~1023 2열, 600 이하 옆으로 넘기는 카드. 모양은 css/v11-ind.css. 등장은 li의 data-rv(js/v10.js 등장 블록), 스크립트 추가 없음.
+       사진 기준점(얼굴 · 옷이 보이게)은 img의 --op. 링크는 서랍 메뉴와 같은 category.php 주소 -->
+  <section class="ind" id="industry" aria-labelledby="indTitle">
+    <div class="wrap">
+      <header class="vh vh--row">
+        <div><p class="v11-eyebrow" aria-hidden="true">BY INDUSTRY</p><h2 class="vh__t" id="indTitle"><span class="tt__pre">현장에 맞춰 고르는</span> <span class="tt__key">업종별 추천</span></h2></div>
+        <div class="vh__r"><a class="lnk" href="#" data-href="custom-intro.php">맞춤작업복 견적문의 <i aria-hidden="true">→</i></a></div>
+      </header>
+      <ul class="ind__list" data-lenis-prevent-touch>
+        <li class="ind__item" data-rv>
+          <div class="ind__card">
+            <div class="ind__media"><img src="img/v11/np01.webp" srcset="img/v11/np01-s.webp 500w, img/v11/np01.webp 1000w" sizes="(max-width:600px) 78vw, (max-width:1023px) 46vw, (max-width:1440px) 22vw, 320px" width="1000" height="1336" alt="단열재를 건네는 패딩 작업복 차림의 작업자" loading="lazy" decoding="async" draggable="false" style="--op:62% 16%" data-slot="industry-1" data-temp="ai"></div>
+            <div class="ind__body">
+              <p class="ind__no" aria-hidden="true"><b>01</b><span>CONSTRUCTION</span></p>
+              <h3 class="ind__t">건설 · 인테리어</h3>
+              <a class="ind__go" href="#" data-href="category.php?cat=%EC%9E%91%EC%97%85%EB%B3%B5" aria-label="건설 · 인테리어 추천 상품 보기"><span class="ind__gol">추천 상품 보기</span><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></i></a>
+            </div>
+          </div>
+        </li>
+        <li class="ind__item" data-rv>
+          <div class="ind__card">
+            <div class="ind__media"><img src="img/v11/np05.webp" srcset="img/v11/np05-s.webp 500w, img/v11/np05.webp 1000w" sizes="(max-width:600px) 78vw, (max-width:1023px) 46vw, (max-width:1440px) 22vw, 320px" width="1000" height="1336" alt="무릎 보호대를 차고 앉은 회색 작업 자켓 차림의 작업자" loading="lazy" decoding="async" draggable="false" style="--op:50% 30%" data-slot="industry-2" data-temp="ai"></div>
+            <div class="ind__body">
+              <p class="ind__no" aria-hidden="true"><b>02</b><span>MANUFACTURING</span></p>
+              <h3 class="ind__t">제조 · 설비</h3>
+              <a class="ind__go" href="#" data-href="category.php?cat=%EC%9E%91%EC%97%85%EB%B3%B5" aria-label="제조 · 설비 추천 상품 보기"><span class="ind__gol">추천 상품 보기</span><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></i></a>
+            </div>
+          </div>
+        </li>
+        <li class="ind__item" data-rv>
+          <div class="ind__card">
+            <div class="ind__media"><img src="img/v11/np03.webp" srcset="img/v11/np03-s.webp 500w, img/v11/np03.webp 1000w" sizes="(max-width:600px) 78vw, (max-width:1023px) 46vw, (max-width:1440px) 22vw, 320px" width="1000" height="1336" alt="밤에 짐을 싣는 형광 작업복 차림의 작업자들" loading="lazy" decoding="async" draggable="false" style="--op:40% 30%" data-slot="industry-3" data-temp="ai"></div>
+            <div class="ind__body">
+              <p class="ind__no" aria-hidden="true"><b>03</b><span>LOGISTICS</span></p>
+              <h3 class="ind__t">물류 · 야간 작업</h3>
+              <a class="ind__go" href="#" data-href="category.php?cat=%EC%A1%B0%EB%81%BC&amp;sub=%EC%9E%91%EC%97%85%EC%A1%B0%EB%81%BC" aria-label="물류 · 야간 작업 추천 상품 보기"><span class="ind__gol">추천 상품 보기</span><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></i></a>
+            </div>
+          </div>
+        </li>
+        <li class="ind__item" data-rv>
+          <div class="ind__card">
+            <div class="ind__media"><img src="img/v11/np06.webp" srcset="img/v11/np06-s.webp 500w, img/v11/np06.webp 1000w" sizes="(max-width:600px) 78vw, (max-width:1023px) 46vw, (max-width:1440px) 22vw, 320px" width="1000" height="1336" alt="카키색 작업 자켓을 입은 남성" loading="lazy" decoding="async" draggable="false" style="--op:50% 14%" data-slot="industry-4" data-temp="ai"></div>
+            <div class="ind__body">
+              <p class="ind__no" aria-hidden="true"><b>04</b><span>OFFICE</span></p>
+              <h3 class="ind__t">관리 · 사무 근무복</h3>
+              <a class="ind__go" href="#" data-href="category.php?cat=%EC%9E%90%EC%BC%93" aria-label="관리 · 사무 근무복 추천 상품 보기"><span class="ind__gol">추천 상품 보기</span><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></i></a>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <p class="ind__note">연출 이미지입니다.</p>
+    </div>
+  </section>
+
   <!-- 7. 후드·맨투맨 (시안 F) -->
   <section class="psec" id="hood" aria-labelledby="hoodTitle" data-shop="hood">
     <div class="wrap">
@@ -361,6 +390,22 @@ setTimeout(function(){if(!window.B2BT_INTRO_RUN)drop();if(!window.B2BT_HX)d.clas
     <div class="bh" data-bh aria-label="후드·맨투맨 분류"></div>
     <div class="wrap psec__body">
       <div class="pgrid" data-grid role="tabpanel" aria-live="polite"></div>
+      <div class="psec__more"><a class="pbtn" data-more href="#" data-href="category.php"></a></div>
+    </div>
+  </section>
+
+  <!-- 7-1. 바람막이·패딩(5번과 같은 틀, 큰 카드 포함). 상품은 js/v10.js SHOP.outer2.
+       v11: 전에는 5번과 제목 · 상품이 똑같았다 → 위 섹션 · 랭킹 · 겨울 시즌 줄에 없는 상품(바람막이 · 패딩·조끼)으로 바꾸고 제목도 바꿈 -->
+  <section class="psec" id="outer2" aria-labelledby="outer2Title" data-shop="outer">
+    <div class="wrap">
+      <header class="vh vh--row">
+        <div><h2 class="vh__t" id="outer2Title"><span class="tt__pre">현장에서 겹쳐 입는</span> <span class="tt__key">바람막이·패딩</span></h2></div>
+        <div class="vtog" data-vtog></div>
+      </header>
+    </div>
+    <div class="bh" data-bh aria-label="바람막이·패딩 분류"></div>
+    <div class="wrap psec__body">
+      <div class="pgrid pgrid--feat" data-grid role="tabpanel" aria-live="polite"></div>
       <div class="psec__more"><a class="pbtn" data-more href="#" data-href="category.php"></a></div>
     </div>
   </section>
@@ -381,55 +426,6 @@ setTimeout(function(){if(!window.B2BT_INTRO_RUN)drop();if(!window.B2BT_HX)d.clas
         <div class="cb__btns"><a class="bt bt--wh" href="#" data-href="brand.php?cat=EIDER%20%EC%95%84%EC%9D%B4%EB%8D%94"><span>아이더 상품 보기</span><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></a><a class="bt bt--ghost" href="#" data-href="product.php?id=3027"><span>착용 상품 바로가기</span></a></div>
       </div>
       <p class="fd__note">연출 이미지입니다.</p>
-    </div>
-  </section>
-
-  <!-- 7-1. 바람막이·패딩(5번과 같은 틀, 큰 카드 포함). 상품은 js/v10.js SHOP.outer2.
-       v11: 전에는 5번과 제목 · 상품이 똑같았다 → 위 섹션 · 랭킹 · 겨울 시즌 줄에 없는 상품(바람막이 · 패딩·조끼)으로 바꾸고 제목도 바꿈 -->
-  <section class="psec" id="outer2" aria-labelledby="outer2Title" data-shop="outer">
-    <div class="wrap">
-      <header class="vh vh--row">
-        <div><h2 class="vh__t" id="outer2Title"><span class="tt__pre">현장에서 겹쳐 입는</span> <span class="tt__key">바람막이·패딩</span></h2></div>
-        <div class="vtog" data-vtog></div>
-      </header>
-    </div>
-    <div class="bh" data-bh aria-label="바람막이·패딩 분류"></div>
-    <div class="wrap psec__body">
-      <div class="pgrid pgrid--feat" data-grid role="tabpanel" aria-live="polite"></div>
-      <div class="psec__more"><a class="pbtn" data-more href="#" data-href="category.php"></a></div>
-    </div>
-  </section>
-
-  <!-- 7-1-1. 윈터 룩북 (v11): 상품 섹션 두 개(바람막이·패딩 · 후드·바지) 사이를 잡지 화보처럼 끊는 섹션. 새 모델 사진(img/v11/np16~22 · np07 · np10) 7장면.
-       LOOK 06은 np08(LOOK 04 np07과 같은 모델 · 비슷한 밝은 회색 패딩이라 같은 사진처럼 보임) 대신 np10(남성 · 짙은 회색 퀼팅 패딩). np08은 품목별 보기 PADDING으로 옮김.
-       세로 3:4 카드를 옆으로 넘긴다(PC 마우스로 끌기 · 화살표 = 한 장씩, 폰 = 손으로 넘김 + 카드에 맞춰 멈춤). 첫 카드는 크게, 카드마다 높이를 엇갈리게(--oy, css/v11-look.css).
-       LOOK 02는 같은 숏 패딩을 맞춰 입은 두 사람(np18 + np19)을 한 카드에 나란히(MATCH). 카드 = 비슷한 품목 목록으로 가는 링크(서랍 메뉴와 같은 category.php 주소).
-       캡션은 사진에 보이는 옷 종류만 적는다(상품 이름 · 가격을 지어내지 않는다). 움직임 = js/v11-look.js -->
-  <section class="lk" id="lookbook" aria-labelledby="lkTitle">
-    <div class="wrap">
-      <header class="vh vh--row lk__head">
-        <div>
-          <p class="v11-eyebrow" aria-hidden="true">WINTER LOOKBOOK</p>
-          <h2 class="vh__t" id="lkTitle"><span class="tt__pre">함께 맞춰 입는</span> <span class="tt__key">겨울 룩북</span></h2>
-        </div>
-        <div class="vh__r lk__nav">
-          <button type="button" class="arw" id="lkPrev" aria-label="이전 룩" aria-controls="lkRail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
-          <button type="button" class="arw" id="lkNext" aria-label="다음 룩" aria-controls="lkRail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-        </div>
-      </header>
-    </div>
-    <ul class="lk__rail" id="lkRail" aria-label="겨울 룩북" data-lenis-prevent-touch>
-      <li class="lk__it lk__it--lg" style="--oy:0"><a class="lk__card" href="#" data-href="category.php?cat=%ED%8C%A8%EB%94%A9" aria-label="LOOK 01 후드 파카 · 비슷한 상품 보기" draggable="false"><span class="lk__rv"><span class="lk__ph"><img src="img/v11/np16.webp" srcset="img/v11/np16-s.webp 500w, img/v11/np16.webp 1000w" sizes="(max-width:768px) 80vw, (max-width:1023px) 44vw, 32vw" width="1000" height="1336" alt="하늘색 배경 앞에서 베이지 후드 파카를 입은 여성" loading="lazy" decoding="async" draggable="false" data-slot="lookbook-01" data-temp="ai"></span><span class="lk__cap"><span class="lk__no">LOOK 01</span><span class="lk__nm">후드 파카</span><span class="lk__go">비슷한 상품 보기 <i aria-hidden="true">→</i></span></span></span></a></li>
-      <li class="lk__it" style="--oy:2.4"><a class="lk__card" href="#" data-href="category.php?cat=%ED%8C%A8%EB%94%A9&amp;sub=%ED%8C%A8%EB%94%A9%EC%A0%90%ED%8D%BC" aria-label="LOOK 02 후드 숏 패딩 · 비슷한 상품 보기" draggable="false"><span class="lk__rv"><span class="lk__ph"><img src="img/v11/np19.webp" srcset="img/v11/np19-s.webp 500w, img/v11/np19.webp 1000w" sizes="(max-width:768px) 72vw, (max-width:1023px) 36vw, 26vw" width="1000" height="1336" alt="검정 후드 숏 패딩을 입은 남성" loading="lazy" decoding="async" draggable="false" data-slot="lookbook-02" data-temp="ai"></span><span class="lk__cap"><span class="lk__no">LOOK 02</span><span class="lk__nm">후드 숏 패딩</span><span class="lk__go">비슷한 상품 보기 <i aria-hidden="true">→</i></span></span></span></a></li>
-      <li class="lk__it" style="--oy:.8"><a class="lk__card" href="#" data-href="category.php?cat=%ED%8C%A8%EB%94%A9" aria-label="LOOK 03 경량 패딩 · 비슷한 상품 보기" draggable="false"><span class="lk__rv"><span class="lk__ph"><img src="img/v11/np17.webp" srcset="img/v11/np17-s.webp 500w, img/v11/np17.webp 1000w" sizes="(max-width:768px) 72vw, (max-width:1023px) 36vw, 26vw" width="1000" height="1336" alt="저녁 설산 바위에 앉은, 옅은 녹색 경량 패딩 차림의 남성" loading="lazy" decoding="async" draggable="false" data-slot="lookbook-03" data-temp="ai"></span><span class="lk__cap"><span class="lk__no">LOOK 03</span><span class="lk__nm">경량 패딩</span><span class="lk__go">비슷한 상품 보기 <i aria-hidden="true">→</i></span></span></span></a></li>
-      <li class="lk__it" style="--oy:3"><a class="lk__card" href="#" data-href="category.php?cat=%ED%8C%A8%EB%94%A9&amp;sub=%ED%8C%A8%EB%94%A9%EC%A0%90%ED%8D%BC" aria-label="LOOK 04 후드 다운 점퍼 · 비슷한 상품 보기" draggable="false"><span class="lk__rv"><span class="lk__ph"><img src="img/v11/np07.webp" srcset="img/v11/np07-s.webp 500w, img/v11/np07.webp 1000w" sizes="(max-width:768px) 72vw, (max-width:1023px) 36vw, 26vw" width="1000" height="1336" alt="밝은 회색 후드 다운 점퍼를 입은 여성" loading="lazy" decoding="async" draggable="false" data-slot="lookbook-04" data-temp="ai"></span><span class="lk__cap"><span class="lk__no">LOOK 04</span><span class="lk__nm">후드 다운 점퍼</span><span class="lk__go">비슷한 상품 보기 <i aria-hidden="true">→</i></span></span></span></a></li>
-      <li class="lk__it" style="--oy:1"><a class="lk__card" href="#" data-href="category.php?cat=%ED%8C%A8%EB%94%A9&amp;sub=%ED%8C%A8%EB%94%A9%EC%A0%90%ED%8D%BC" aria-label="LOOK 05 패딩 점퍼 · 비슷한 상품 보기" draggable="false"><span class="lk__rv"><span class="lk__ph"><img src="img/v11/np20.webp" srcset="img/v11/np20-s.webp 500w, img/v11/np20.webp 1000w" sizes="(max-width:768px) 72vw, (max-width:1023px) 36vw, 26vw" width="1000" height="1336" alt="비 내리는 밤거리에서 검정 후드 패딩 점퍼를 입은 남성" loading="lazy" decoding="async" draggable="false" data-slot="lookbook-05" data-temp="ai"></span><span class="lk__cap"><span class="lk__no">LOOK 05</span><span class="lk__nm">패딩 점퍼</span><span class="lk__go">비슷한 상품 보기 <i aria-hidden="true">→</i></span></span></span></a></li>
-      <li class="lk__it" style="--oy:2.6"><a class="lk__card" href="#" data-href="category.php?cat=%ED%8C%A8%EB%94%A9" aria-label="LOOK 06 퀼팅 패딩 · 비슷한 상품 보기" draggable="false"><span class="lk__rv"><span class="lk__ph"><img src="img/v11/np10.webp" srcset="img/v11/np10-s.webp 500w, img/v11/np10.webp 1000w" sizes="(max-width:768px) 72vw, (max-width:1023px) 36vw, 26vw" width="1000" height="1336" alt="짙은 회색 퀼팅 패딩을 입은 남성" loading="lazy" decoding="async" draggable="false" data-slot="lookbook-06" data-temp="ai"></span><span class="lk__cap"><span class="lk__no">LOOK 06</span><span class="lk__nm">퀼팅 패딩</span><span class="lk__go">비슷한 상품 보기 <i aria-hidden="true">→</i></span></span></span></a></li>
-      <li class="lk__it" style="--oy:.6"><a class="lk__card" href="#" data-href="category.php?cat=%EC%9E%90%EC%BC%93&amp;sub=%ED%94%8C%EB%A6%AC%EC%8A%A4%20%EC%9E%90%EC%BC%93" aria-label="LOOK 07 플리스 후드 집업 · 비슷한 상품 보기" draggable="false"><span class="lk__rv"><span class="lk__ph"><img src="img/v11/np22.webp" srcset="img/v11/np22-s.webp 500w, img/v11/np22.webp 1000w" sizes="(max-width:768px) 72vw, (max-width:1023px) 36vw, 26vw" width="1000" height="1336" alt="베이지 플리스 후드 집업을 입은 여성" loading="lazy" decoding="async" draggable="false" data-slot="lookbook-07" data-temp="ai"></span><span class="lk__cap"><span class="lk__no">LOOK 07</span><span class="lk__nm">플리스 후드 집업</span><span class="lk__go">비슷한 상품 보기 <i aria-hidden="true">→</i></span></span></span></a></li>
-    </ul>
-    <div class="wrap lk__ctl">
-      <div class="md__prog" aria-hidden="true"><i id="lkProg"></i></div>
-      <p class="lk__note">연출 이미지입니다.</p>
     </div>
   </section>
 
@@ -633,12 +629,13 @@ setTimeout(function(){if(!window.B2BT_INTRO_RUN)drop();if(!window.B2BT_HX)d.clas
 <script src="js/rank.js?v=20261118e"></script>
 <script src="js/extra.js?v=20261116"></script>
 <script src="js/reviews.js?v=20261116"></script>
-<script src="js/v10.js?v=20261118e"></script>
-<script src="js/bgfx.js?v=20261118"></script>
-<script src="js/v11-hero.js?v=20261117"></script>
+<script src="js/v10.js?v=20261118g"></script>
+<script src="js/bgfx.js?v=20261118g"></script>
+<script src="js/v11-hero.js?v=20261118g"></script>
 <script src="js/v11.js?v=20261118d"></script>
-<script src="js/v11-look.js?v=20261117b"></script>
-<script src="js/v11-font.js?v=20261118d"></script>
-<script src="js/v11-m.js?v=20261118e"></script>
+<script src="js/v11-look.js?v=20261118g"></script>
+<script src="js/v11-font.js?v=20261118g"></script>
+<script src="js/v11-m.js?v=20261118g"></script>
+<script src="js/v11-fx.js?v=20261118g"></script>
 </body>
 </html>

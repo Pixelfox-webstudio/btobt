@@ -5,7 +5,8 @@
    2 파트너 배너(#pbSlides): 같은 방식(위아래 열림 + 사진 당김). 틀(#pbFrame)의 clip-path는 js/v10.js 4번이 쓰므로 안쪽 상자에 건다
    3 섹션 제목 줄(.vh): 영문 라벨 → 앞 문구 → 굵은 문구 → 오른쪽 링크 순서로 올라온다
    4 품목별 보기 카드(#cgRow): 오른쪽에서 차례로 들어온다
-   5 '전체 보기' 단추(.psec__more): 올라온다
+   5 '전체 보기' 단추(.psec__more): 올라온다(2026-11-18 7차: 랭킹 단추도 포함 — 랭킹이 첫 화면 쌓기에서 빠짐)
+   PC(769 이상) 스크롤 등장은 js/v11-fx.js(2026-11-18 7차)
    움직임 줄이기 · GSAP이 없으면 아무것도 하지 않는다(처음부터 보이는 모습) */
 (function () {
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -41,8 +42,8 @@
     var cg = $$('#cgRow > li');
     if (cg.length) gsap.from(cg, { x: 70, opacity: 0, duration: .9, stagger: .07, ease: 'power3.out', clearProps: 'transform,opacity', scrollTrigger: once('#cgRow', 'top 90%') });
     // 5 전체 보기 단추
+    // 2026-11-18 7차 담당자: 랭킹이 첫 화면 쌓기(.stk__over)에서 빠져(지금 쌓기 안은 룩북, 단추 없음) 랭킹 '전체 상품 보기'도 같이 올라온다
     $$('.psec__more').forEach(function (m) {
-      if (m.closest('#rank')) return; // 랭킹은 첫 화면 쌓기 안이라 그대로
       gsap.from(m, { y: 22, opacity: 0, duration: .7, ease: 'power3.out', scrollTrigger: once(m, 'top 94%') });
     });
     // 사진 · 글꼴이 늦게 들어와 위치가 바뀌면 다시 잰다
