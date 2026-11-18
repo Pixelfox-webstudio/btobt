@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>버전 비교 · 비투비티 홈</title>
+<style>
+:root{
+  --bg:#f4f5f7; --bar:#ffffff; --line:#e3e5ea; --tx:#16181d; --sub:#6b7180;
+  --on:#16181d; --on-tx:#ffffff; --chip:#f1f2f5; --new:#e8f0ff; --new-tx:#1f4fd1;
+  --gone:#fff1e6; --gone-tx:#b4530b;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--tx);font:14px/1.4 -apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo","Noto Sans KR",sans-serif;display:flex;flex-direction:column}
+button{font:inherit;color:inherit;cursor:pointer}
+.bar{background:var(--bar);border-bottom:1px solid var(--line);padding:10px 16px;display:flex;flex-direction:column;gap:8px;flex:none}
+.row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.ttl{font-weight:700;margin-right:6px;white-space:nowrap}
+.seg{display:inline-flex;background:var(--chip);border-radius:999px;padding:3px}
+.seg button{border:0;background:transparent;padding:6px 12px;border-radius:999px;white-space:nowrap}
+#vers{max-width:100%;overflow-x:auto;scrollbar-width:none}
+#vers::-webkit-scrollbar{display:none}
+.seg button[aria-pressed="true"]{background:var(--on);color:var(--on-tx)}
+.sp{flex:1}
+.lnk{color:var(--sub);text-decoration:none;font-size:13px;white-space:nowrap}
+.lnk:hover{color:var(--tx)}
+.secs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:thin;padding-bottom:2px}
+.secs button{border:1px solid var(--line);background:var(--bar);border-radius:999px;padding:5px 11px;white-space:nowrap;font-size:13px}
+.secs button:hover{border-color:var(--tx)}
+.secs button.gone{background:var(--gone);border-color:#f6d3b6;color:var(--gone-tx)}
+.secs button.merged{background:var(--new);border-color:#c9d9ff;color:var(--new-tx)}
+.secs button .tag{font-size:11px;margin-left:5px;opacity:.85}
+.note{font-size:12px;color:var(--sub)}
+.note b{font-weight:600}
+.note .k1{color:var(--gone-tx)} .note .k2{color:var(--new-tx)}
+.stage{flex:1;min-height:0;display:flex;justify-content:center;padding:0}
+.stage iframe{border:0;background:#fff;width:100%;height:100%;display:block}
+.stage.m{padding:16px}
+.stage.m iframe{width:390px;max-width:100%;border-radius:20px;box-shadow:0 0 0 1px var(--line),0 8px 30px rgba(0,0,0,.08)}
+@media (max-width:640px){ .wbtn{display:none} .stage.m{padding:0} .stage.m iframe{border-radius:0;box-shadow:none} }
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){--bg:#0f1115;--bar:#16191f;--line:#2a2e37;--tx:#eceef2;--sub:#9aa1ae;--on:#eceef2;--on-tx:#16181d;--chip:#21252d;--new:#18264a;--new-tx:#9dbbff;--gone:#3a2414;--gone-tx:#ffb27a}
+  :root:not([data-theme="light"]) .secs button.gone{border-color:#5a3a22}
+  :root:not([data-theme="light"]) .secs button.merged{border-color:#2c3f6e}
+}
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="row">
+    <span class="ttl">비투비티 홈 버전 비교</span>
+    <div class="seg" id="vers" role="group" aria-label="버전"></div>
+    <div class="seg wbtn" id="wid" role="group" aria-label="화면 폭">
+      <button type="button" data-w="pc" aria-pressed="true">PC</button>
+      <button type="button" data-w="m" aria-pressed="false">폰</button>
+    </div>
+    <span class="sp"></span>
+    <a class="lnk" id="open" href="/" target="_blank" rel="noopener">새 탭에서 열기 ↗</a>
+  </div>
+  <div class="secs" id="secs" aria-label="섹션으로 이동"></div>
+  <div class="note" id="note"></div>
+</header>
+<main class="stage" id="stage">
+  <iframe id="fr" title="선택한 버전 미리 보기" src="about:blank"></iframe>
+</main>
+<script>
+/* v11 기준으로 없는 섹션 = gone, 지금 파트너 배너로 합친 섹션 = merged (2026-11-17: v11이 루트, v10은 /v10/)
+   q = 미리 보기 창에만 붙이는 주소 꼬리(v11은 첫 화면 인트로를 끄고 연다. 새 탭에서 열기는 인트로 그대로) */
+var V = {
+  '11': { path:'/', q:'&intro=off', label:'v11 (현재)', secs:[
+    ['hero','히어로 영상 + 문구'],['rank','상품 랭킹'],['season','겨울 시즌'],['partner','파트너 브랜드'],
+    ['industry','업종별 추천'],['outer','겨울 아우터'],['category','품목별 보기'],['brands','협력브랜드'],
+    ['hood','후드·맨투맨'],['campaign','아이더 배너'],['outer2','바람막이·패딩'],['lookbook','윈터 룩북'],
+    ['hood2','후드·바지'],['reviews','구매 후기']]},
+  '10': { path:'/v10/', label:'v10', secs:[
+    ['hero','히어로 영상'],['rank','상품 랭킹'],['season','겨울 시즌'],['partner','파트너 브랜드'],
+    ['outer','겨울 아우터'],['brands','협력브랜드'],['hood','후드·맨투맨'],['reviews','구매 후기']]},
+  '9': { path:'/v9/', label:'v9', secs:[
+    ['hero','히어로 WORK WEAR'],['rank','상품 랭킹'],['season','겨울 시즌'],['partner','파트너 브랜드'],
+    ['outer','겨울 아우터'],['brands','협력브랜드 9곳'],['hood','후드·맨투맨'],['flow','견적부터 납품까지','gone']]},
+  '8': { path:'/v8/', label:'v8', secs:[
+    ['hero','히어로'],['rank','상품 랭킹'],['season','겨울 시즌'],['k2','케이투 방한 자켓','merged'],
+    ['md','MD 추천','gone'],['field','현장별 착용 상품','merged'],['clients','3000+ 기업 납품사례 (로고)','gone'],
+    ['flow','견적부터 납품까지','gone'],['brands','협력브랜드 9곳'],['category','품목별 보기'],
+    ['custom','회사 이름 넣어 보기 (3D 조끼)','gone']]},
+  '7': { path:'/v7/', label:'v7', secs:[
+    ['hero','히어로'],['rank','상품 랭킹'],['season','겨울 시즌'],['k2','케이투 방한 자켓','merged'],
+    ['md','MD 추천','gone'],['field','현장별 착용 상품','merged'],['clients','3000+ 기업 납품사례','gone'],
+    ['flow','견적부터 납품까지 (START 흐름형)','gone'],['brands','협력브랜드 9곳'],['category','품목별 보기'],
+    ['custom','회사 이름 넣어 보기 (3D 조끼)','gone']]},
+  '6': { path:'/v6/', label:'v6', secs:[
+    ['hero','히어로'],['rank','상품 랭킹'],['season','겨울 시즌'],['k2','케이투 방한 자켓','merged'],
+    ['md','MD 추천','gone'],['field','현장에서 쓰는 상품','merged'],['budget','예산별 상품','gone'],
+    ['clients','3000+ 기업 납품사례 (로고)','gone'],['flow','견적부터 납품까지','gone'],['brands','협력브랜드 9곳'],
+    ['duo','단체복·작업복 둘러보기','gone'],['rail','카테고리별 상품','gone'],['custom','회사 이름 넣어 보기 (3D 조끼)','gone']]},
+  '5': { path:'/v5/', label:'v5', secs:[
+    ['hero','히어로 (현장 사진)'],['season','겨울 시즌'],['md','MD 추천 · 베스트','gone'],['mdPick','MD 추천 (케이투)','gone'],
+    ['field','현장별 상품','merged'],['rail','카테고리별 상품','gone'],['best','베스트','gone'],
+    ['duo','단체복·작업복 둘러보기','gone'],['budget','예산별 상품','gone'],['brands','협력브랜드 9곳'],
+    ['flow','견적부터 납품까지','gone'],['clients','3000+ 기업 납품사례 (로고)','gone'],['custom','회사 이름 넣어 보기 (3D 조끼)','gone']]},
+  '4': { path:'/v4/', label:'v4', secs:[
+    ['hero','히어로 (B2BT FILM)'],['.mq','이용 방법 띠','gone'],['md','MD 추천','gone'],['shop','카테고리별 추천 상품','gone'],
+    ['brands','협력브랜드 9곳'],['biz','품목별 둘러보기 (4장)','gone'],['stage3d','로고 미리 보기 (3D)','gone'],
+    ['rule','고객이 보는 세 가지 (가격·납기 등)','gone'],['flow','견적부터 납품까지','gone'],['clients','납품사례 34곳','gone'],
+    ['faq','자주 묻는 질문','gone'],['contact','구매 목록 보내기','gone']]},
+  '3': { path:'/v3/', label:'v3', secs:[
+    ['hero','히어로'],['.tick','신뢰·이용 안내 띠','gone'],['md','MD 추천','gone'],['shop','카테고리별 추천 상품','gone'],
+    ['biz','품목별 둘러보기','gone'],['rail','카테고리별 상품','gone'],['brands','협력브랜드 9곳'],
+    ['stage3d','로고 미리 보기 (3D)','gone'],['flow','견적부터 납품까지','gone'],['clients','납품사례 34곳','gone'],
+    ['faq','자주 묻는 질문','gone'],['contact','구매 목록 보내기','gone']]},
+  '2': { path:'/v2/', label:'v2', secs:[
+    ['hero','히어로'],['.site-trust','신뢰·이용 안내 띠','gone'],['md','MD 추천','gone'],['biz','품목별 둘러보기','gone'],
+    ['rail','카테고리별 상품','gone'],['flow','견적부터 납품까지','gone'],['clients','납품사례 34곳','gone'],
+    ['faq','자주 묻는 질문','gone'],['contact','구매 목록 보내기','gone']]},
+  '1': { path:'/v1/', label:'v1', secs:[
+    ['hero','히어로'],['.trust','신뢰·이용 안내 띠','gone'],['md','MD 추천','gone'],['biz','품목별 둘러보기','gone'],
+    ['rail','카테고리별 상품','gone'],['flow','견적부터 납품까지','gone'],['clients','납품사례 34곳','gone'],
+    ['faq','자주 묻는 질문','gone'],['contact','구매 목록 보내기','gone']]}
+};
+var ORDER = ['11','10','9','8','7','6','5','4','3','2','1'];
+var st = { v:'11', w:'pc', s:'' };
+var fr = document.getElementById('fr'), stage = document.getElementById('stage');
+var versEl = document.getElementById('vers'), secsEl = document.getElementById('secs');
+var noteEl = document.getElementById('note'), openEl = document.getElementById('open');
+
+function readHash(){
+  var p = new URLSearchParams(location.hash.slice(1));
+  if (V[p.get('v')]) st.v = p.get('v');
+  if (p.get('w') === 'm' || p.get('w') === 'pc') st.w = p.get('w');
+  st.s = p.get('s') || '';
+}
+function writeHash(){
+  var p = new URLSearchParams(); p.set('v', st.v); if (st.w !== 'pc') p.set('w', st.w); if (st.s) p.set('s', st.s);
+  history.replaceState(null, '', '#' + p.toString());
+}
+
+ORDER.forEach(function(k){
+  var b = document.createElement('button'); b.type = 'button'; b.dataset.v = k; b.textContent = V[k].label;
+  b.addEventListener('click', function(){ if (st.v === k) return; st.v = k; st.s = ''; render(true); });
+  versEl.appendChild(b);
+});
+document.getElementById('wid').addEventListener('click', function(e){
+  var b = e.target.closest('button'); if (!b || b.dataset.w === st.w) return;
+  st.w = b.dataset.w; render(true);
+});
+
+function render(reload){
+  var cur = V[st.v];
+  [].forEach.call(versEl.children, function(b){ b.setAttribute('aria-pressed', b.dataset.v === st.v); });
+  [].forEach.call(document.querySelectorAll('#wid button'), function(b){ b.setAttribute('aria-pressed', b.dataset.w === st.w); });
+  stage.classList.toggle('m', st.w === 'm');
+  openEl.href = cur.path;
+  secsEl.innerHTML = '';
+  var gone = 0, merged = 0;
+  cur.secs.forEach(function(s){
+    var b = document.createElement('button'); b.type = 'button'; b.textContent = s[1];
+    if (s[2] === 'gone'){ b.className = 'gone'; gone++; b.title = 'v11에 없는 섹션'; }
+    if (s[2] === 'merged'){ b.className = 'merged'; merged++; b.title = 'v9부터 파트너 배너로 합친 섹션'; }
+    b.addEventListener('click', function(){ st.s = s[0]; writeHash(); jump(s[0], true); });
+    secsEl.appendChild(b);
+  });
+  noteEl.innerHTML = st.v === '11'
+    ? '지금 배포 중인 버전입니다. 위에서 다른 버전을 고르면 v11에 없는 섹션이 색으로 표시됩니다.'
+    : (gone ? '<b class="k1">주황</b> = v11에 없는 섹션 ' + gone + '개' : '') +
+      (merged ? ' · <b class="k2">파랑</b> = 지금 파트너 배너로 합친 섹션' : '') +
+      ' · 섹션 이름을 누르면 그 위치로 이동합니다.';
+  writeHash();
+  if (reload){
+    // 폰 폭은 iframe 폭이 바뀌어야 페이지가 폰 레이아웃을 고르므로 다시 읽는다
+    fr.src = cur.path + '?cmp=' + st.v + st.w + (cur.q || '');
+  }
+}
+
+function jump(id, smooth){
+  var d; try { d = fr.contentDocument; } catch(e) { return; }
+  if (!d) return;
+  var el = id.charAt(0) === '.' ? d.querySelector('section' + id) : d.getElementById(id);
+  if (!el) return;
+  var w = fr.contentWindow;
+  var top = el.getBoundingClientRect().top + w.scrollY - 64;
+  w.scrollTo({ top: Math.max(0, top), behavior: smooth ? 'smooth' : 'auto' });
+}
+
+fr.addEventListener('load', function(){
+  // 페이지 스크립트(Lenis·이미지)가 자리를 잡은 뒤 한 번 더 맞춘다
+  if (st.s) [700, 1800].forEach(function(t){ setTimeout(function(){ jump(st.s, false); }, t); });
+});
+
+readHash();
+render(true);
+</script>
+</body>
+</html>

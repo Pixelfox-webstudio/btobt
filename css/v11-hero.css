@@ -1,0 +1,96 @@
+/* 비투비티 홈 시안 v11 · v11-hero.css (2026-11-17)
+   히어로 전용: 첫 접속 때 화면이 열리는 장면(인트로) · 원래 히어로 영상 · 바뀌는 문구 · 오른쪽 아래 WORKWEAR.
+   v10.css 다음, v11.css 앞에 불러온다. 값을 바꾸면 DESIGN.md의 해당 값도 같이 고친다.
+   히어로 틀 높이(PC 화면 높이 - 헤더 - 66, 최대 900 / 폰 min(138vw, 화면 높이 - 헤더 - 58))와 화면 쌓기(.stk)는 건드리지 않는다(사장님이 바꾼 높이를 되돌린 적 있음). */
+
+/* ---------- 0. 변수 ----------
+   --f-ww   = WORKWEAR 글꼴. Manrope로 확정(2026-11-18). 넓은 글꼴이라 크기 배율 .72로 예전 Barlow Condensed와 같은 너비가 되게 한다.
+              글꼴마다 폭 · 굵기 · 크기 배율(--ww-st · --ww-wt · --ww-k)은 css/v11-font.css가 맡는다(Manrope 확정값)
+   --hx-blue = 영상 위 바뀌는 단어 색. 브랜드 파랑(#3182F6)은 어두운 영상 위에서 흐려 보여 흰색을 20% 섞은 밝은 파랑을 쓴다 */
+:root{--f-ww:"Manrope",var(--f-en);--hxi-bg:#0E0F12}
+#hero.hx{--hx-blue:#5A9BF8;--hx-blue:color-mix(in srgb,var(--accent,#3182F6) 80%,#fff)}
+
+/* ---------- 1. 인트로: 첫 접속 때 검은 막 + 흰 로고 → 위아래로 갈라지며 열린다 ----------
+   처음 그릴 때부터 덮고 있어야 해서 마크업은 <body> 바로 뒤, 숨김 판단은 그 옆 짧은 스크립트가 한다.
+   움직임은 js/v11-hero.js(GSAP). 스크립트가 멈춰도 3.5초 뒤 이 CSS 애니메이션이 막을 스스로 걷는다(.is-run이 붙으면 JS가 맡는다).
+   클래스 접두어 hxi: v4.css에 옛 .intro(로딩 화면)가 남아 있어 이름이 겹치지 않게 한다.
+   너비 100vw: 인트로 동안 스크롤 막대 자리(scrollbar-gutter)를 비워 두므로 그 자리까지 덮는다 */
+.hxi{position:fixed;left:0;top:0;bottom:0;z-index:10000;width:100vw;background:var(--hxi-bg);cursor:pointer;-webkit-tap-highlight-color:transparent;animation:hxi-safe .45s ease 3.5s forwards}
+.hxi.is-run{animation:none}
+.hxi.is-open{background:transparent;pointer-events:none}
+@keyframes hxi-safe{to{opacity:0;visibility:hidden}}
+/* 막 두 장: 위 절반 · 아래 절반. 둘 다 같은 로고를 갈라지는 선(화면 가운데)에 맞춰 넣어 한 장처럼 보인다 */
+.hxi__half{position:absolute;left:0;right:0;height:50%;overflow:hidden;background:var(--hxi-bg);will-change:transform}
+.hxi__half--t{top:0}
+.hxi__half--b{top:50%}
+.hxi__mark{position:absolute;left:50%;width:clamp(200px,21vw,300px);translate:-50% -50%}
+.hxi__half--t .hxi__mark{top:100%}
+.hxi__half--b .hxi__mark{top:0}
+.hxi__logo{display:block;width:100%;max-width:none;height:auto;animation:hxi-logo .8s cubic-bezier(.2,.75,.2,1) .12s both}
+.hxi__sub{position:absolute;left:50%;top:calc(100% + clamp(16px,1.6vw,22px));translate:-50% 0;padding-left:.32em;color:rgba(255,255,255,.58);font-size:clamp(12px,.95vw,14px);font-weight:500;letter-spacing:.32em;line-height:1;white-space:nowrap;animation:hxi-sub .8s cubic-bezier(.2,.75,.2,1) .42s both}
+@keyframes hxi-logo{from{opacity:0;filter:blur(12px);transform:scale(.94)}to{opacity:1;filter:blur(0);transform:none}}
+@keyframes hxi-sub{from{opacity:0;letter-spacing:.6em}to{opacity:1;letter-spacing:.32em}}
+/* 인트로 동안 화면이 움직이지 않게. 스크롤 막대 자리는 남겨 열린 뒤 화면이 옆으로 밀리지 않게 하고, 그 자리 바탕도 막 색으로 */
+html.is-intro{overflow:hidden;scrollbar-gutter:stable;background:var(--hxi-bg)}
+@media (prefers-reduced-motion:reduce){ .hxi{display:none} }
+
+/* ---------- 2. 영상 위 그늘: 글이 올라가는 왼쪽 + 아래(WORKWEAR · 버튼) ----------
+   v10은 아래쪽만 옅게 깔았다. 흰 글자가 밝은 콘크리트 벽 위에서도 읽히게 왼쪽 90deg 그늘을 더한다 */
+/* 2026-11-18: 문구가 가운데로 옮겨서 왼쪽 그늘 대신 가운데 둥근 그늘 + 아래 그늘(WORKWEAR · 버튼) */
+#hero.hx .bn__slide--film::after{background:linear-gradient(0deg,rgba(8,9,12,.52) 0%,transparent 32%),radial-gradient(ellipse 62% 54% at 50% 50%,rgba(8,9,12,.46) 0%,rgba(8,9,12,.2) 55%,transparent 100%)}
+
+/* ---------- 3. 바뀌는 문구 (모션 영상 4장면 'B2BT PRODUCTS / 단체복을·작업복을·안전용품을 / 한 곳에서 주문합니다.') ----------
+   PC: 왼쪽 가운데(v9 문구 자리). 폰: 아래 버튼 줄 위, 왼쪽 정렬.
+   파란 단어 칸은 넘치는 부분을 잘라(overflow:hidden) 단어가 아래에서 밀려 올라오며 바뀐다. 단어 셋을 한 칸(grid 1/1)에 겹쳐 칸 너비 = 가장 긴 단어 */
+/* 2026-11-18 담당자: 문구를 가운데 정렬(PC · 폰 모두 화면 가운데). 단어 칸도 가운데 기준으로 바뀐다 */
+.hx__copy{position:absolute;left:50%;top:50%;z-index:4;display:flex;flex-direction:column;align-items:center;width:max-content;max-width:calc(100% - var(--gut) * 2);color:#fff;text-align:center;transform:translate(-50%,-54%);pointer-events:none;text-shadow:0 2px 28px rgba(0,0,0,.22)}
+.hx__label{padding-left:.24em;color:rgba(255,255,255,.88);font-family:var(--f-lat,"Pretendard Variable",Pretendard,sans-serif);font-size:clamp(13px,1vw,15px);font-weight:600;letter-spacing:.24em;line-height:20px;text-transform:uppercase}
+.hx__msg{margin-top:clamp(10px,1.1vw,16px)}
+/* 글꼴은 Pretendard(사이트 본문과 같음). 2026-11-18 담당자 "폰트가 이상하다" → 900 굵기 + 자간 -0.045em이 뭉쳐 보여서 800 · -0.025em으로 풀었다 */
+.hx__slot{display:grid;justify-items:center;width:max-content;max-width:100%;padding:0 0 .04em;overflow:hidden;font-family:"Pretendard Variable",Pretendard,sans-serif;font-size:clamp(44px,5.4vw,88px);font-weight:800;letter-spacing:-.025em;line-height:1.18}
+.hx__word{grid-area:1/1;white-space:nowrap;will-change:transform}
+.hx__word+.hx__word{transform:translateY(110%)}
+.hx__word b{color:var(--hx-blue);font-weight:800}
+.hx__line2{display:block;margin-top:.22em;font-family:"Pretendard Variable",Pretendard,sans-serif;font-size:clamp(24px,2.6vw,42px);font-weight:600;letter-spacing:-.02em;line-height:1.3}
+/* 스크립트가 등장 장면을 맡기 전에는 숨겨 둔다(html.hx-wait = <body> 뒤 스크립트가 붙이고 v11-hero.js가 뗀다. 4.2초 뒤 스스로 떨어진다) */
+html.hx-wait .hx__label,html.hx-wait .hx__line2,html.hx-wait .hx__ww{opacity:0}
+html.hx-wait .hx__word:first-child{transform:translateY(110%)}
+
+/* ---------- 4. WORKWEAR (v9 히어로 제목을 오른쪽 아래 장식으로) ----------
+   WORK = 채운 글자, WEAR = 외곽선. 글자마다 상자(앞면 .f3a + 아랫면 .f3b)를 만들어 X축으로 굴린다(js/v11-hero.js, v9.js 그대로).
+   굴리는 동안(.is-f3)에만 3D로 놓아 평소 글자는 또렷하게 둔다. 장식이라 aria-hidden
+   2026-11-18 담당자: 오른쪽 아래 → 왼쪽 아래. 왼쪽 끝을 본문 여백(--gut)에, 아래는 다음 면 그림자(아래 90px) 위로 96px */
+.hx__ww{--fh:.86em;--ol:max(1.5px,.016em);position:absolute;left:var(--gut);bottom:96px;z-index:5;display:flex;column-gap:.18em;color:#fff;font-family:var(--f-ww,var(--f-en));font-size:clamp(64px,8vw,132px);font-weight:800;letter-spacing:0;line-height:var(--fh);text-transform:uppercase;white-space:nowrap;cursor:default;-webkit-user-select:none;user-select:none}
+.hx__ww .f3l{display:block;flex:none}
+.hx__ww .f3w{perspective:5em}
+.hx__ww .f3l--ol{color:transparent;-webkit-text-stroke:var(--ol) #fff;paint-order:stroke fill}
+.hx__ww.is-f3 .f3c{transform-style:preserve-3d;transform:translateZ(calc(var(--fh) * -.5))}
+.hx__ww.is-f3 .f3a{-webkit-backface-visibility:hidden;backface-visibility:hidden;transform:translateZ(calc(var(--fh) * .5))}
+.hx__ww.is-f3 .f3b{visibility:visible;-webkit-backface-visibility:hidden;backface-visibility:hidden;transform:rotateX(-90deg) translateZ(calc(var(--fh) * .5))}
+
+/* ---------- 5. "전체 영상 보기": 오른쪽 아래(2026-11-18 담당자. WORKWEAR가 왼쪽 아래로 옮김).
+   PC(901 이상)는 화면 오른쪽 아래에 떠 있는 상담 · 맨 위로 단추(오른쪽 24 + 폭 52)와 겹치지 않게 오른쪽을 최소 96px 띄운다 ---------- */
+#hero.hx .bn__ui{left:auto;right:var(--gut);bottom:96px;justify-content:flex-end}   /* 아래 90px은 다음 면 그림자(css/v8-base.css .stk__over::before)라 흰 글자가 바래서 WORKWEAR와 같이 96px 위에 둔다 */
+#hero.hx .hv__full{margin-left:0}
+@media (min-width:901px){ #hero.hx .bn__ui{right:max(var(--gut),96px)} }
+
+/* ---------- 6. 폰 · 태블릿 세로(768 이하) ----------
+   2026-11-18: 문구는 화면 가운데(위아래 46%), 아래 줄 = 왼쪽 WORKWEAR 두 줄 + 오른쪽 전체 영상 보기(아래 끝을 맞춤).
+   히어로 아래 90px에는 다음 면(#stkOver::before)이 드리우는 그림자가 덮여 있어, 흰 글자가 그 안에 들어가면 아래쪽이 회색으로 바랜다 → 아래 줄은 92px 위부터 */
+@media (max-width:768px){
+  #hero.hx{--ww-fs:clamp(44px,12.4vw,64px);--hx-b:78px}
+  #hero.hx .bn__slide--film::after{background:linear-gradient(0deg,rgba(8,9,12,.62) 0%,transparent 26%),radial-gradient(ellipse 90% 40% at 50% 46%,rgba(8,9,12,.5) 0%,rgba(8,9,12,.18) 60%,transparent 100%)}
+  .hx__copy{top:46%;bottom:auto;max-width:calc(100% - var(--gut) * 2);transform:translate(-50%,-50%)}
+  .hx__label{font-size:12px;letter-spacing:.22em;line-height:16px}
+  .hx__msg{margin-top:8px}
+  .hx__slot{font-size:clamp(34px,10vw,56px)}
+  .hx__line2{margin-top:.18em;font-size:clamp(19px,5.4vw,30px)}
+  .hx__ww{left:var(--gut);right:auto;bottom:92px;flex-direction:column;align-items:flex-start;font-size:var(--ww-fs)}
+  #hero.hx .bn__ui{right:var(--gut);bottom:92px}
+}
+
+/* ---------- 7. 움직임 줄이기: 인트로 · 단어 굴림 · 글자 뒤집기 없이 첫 단어만 ---------- */
+@media (prefers-reduced-motion:reduce){
+  html.hx-wait .hx__label,html.hx-wait .hx__line2,html.hx-wait .hx__ww{opacity:1}
+  .hx__word:first-child,html.hx-wait .hx__word:first-child{transform:none}
+}

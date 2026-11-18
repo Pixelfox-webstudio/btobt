@@ -1,0 +1,122 @@
+/* 비투비티 홈 시안 v11 · v11.css (2026-11-17)
+   v10(개발자 수정본) 위에 덮어쓰는 홈 전용 스타일. v10.css · v11-hero.css 다음에 불러온다.
+   히어로(첫 화면 열림 · 문구 · WORKWEAR)는 css/v11-hero.css, 나머지 섹션은 이 파일.
+   번호는 섹션 단위로 붙인다. 값을 바꾸면 DESIGN.md의 해당 값도 같이 고친다. */
+
+/* ---------- 0. 영문 글꼴 변수 ----------
+   --f-lat = 영문 라벨 · 영문 제목용. Manrope로 확정(2026-11-18 담당자, 비교했던 Archivo · Space Grotesk · Oswald는 뺐다). 한글이 섞이면 Pretendard로 넘어간다.
+   검수 중에는 왼쪽 손잡이 "영문" 단추로 바꿔 볼 수 있다(css/v11-font.css · js/v11-font.js). 글꼴이 정해지면 이 값 하나만 남긴다 */
+:root{--f-lat:"Manrope","Pretendard Variable",Pretendard,sans-serif}
+
+
+/* ============================================================
+   섹션(히어로 제외) · 2026-11-17 v11 수정사항 (sections)
+   1 영문 라벨(.v11-eyebrow) · 2 랭킹 머리 · 3 품목별 보기 8칸 · 4 파트너 배너(폰) · 5 캠페인 배너(.cb)
+   구매 후기 버튼의 개수 빼기 · 배경 고르기의 동그라미 빼기는 마크업/스크립트만 고쳐서 여기에는 없다
+   ============================================================ */
+
+/* ---------- 1. 영문 라벨(.v11-eyebrow): 제목 위 작은 영문 한 줄. 랭킹("BEST RANKING")에서 처음 쓰고 캠페인 배너도 같은 클래스를 쓴다.
+   흰 바탕 = 강조 글자색(--accent-text, 파랑), 사진 · 어두운 바탕 = --light(흰색). 글꼴은 영문 글꼴 변수 --f-lat(0번) ---------- */
+.v11-eyebrow{display:block;margin:0 0 10px;font-family:var(--f-lat);font-size:13px;font-weight:600;letter-spacing:.2em;line-height:18px;text-transform:uppercase;color:var(--accent-text,var(--ds-accent-text))}
+.v11-eyebrow--light{color:rgba(255,255,255,.86)}
+.sh--c .v11-eyebrow{text-indent:.2em}   /* 가운데 정렬: 마지막 글자 뒤에 붙는 자간만큼 앞에도 띄워 정확히 가운데로 */
+@media (max-width:768px){ .v11-eyebrow{margin-bottom:8px;font-size:12px;line-height:16px} }
+
+/* ---------- 2. 랭킹 머리: 왕관 표식(.rkh__mark, v10.css 13번)을 빼고 영문 라벨로 바꿈(마크업에서 지워서 표식 여백도 함께 사라짐).
+   제목이 화면에 들어오면(.rkh.is-in, js/v10.js 2번) 라벨이 살짝 올라오며 나타난다 ---------- */
+.rkh .v11-eyebrow{transition:opacity .6s var(--ease),transform .8s var(--ease)}
+html.v4-motion .rkh:not(.is-in) .v11-eyebrow{opacity:0;transform:translateY(10px)}
+
+/* ---------- 3. 품목별 보기: 계절 카드 4개 → 품목 카드 8개(.cg__row--8). 구조 · 넓어지는 움직임은 v8.css 10번 + v10.css 18번 그대로.
+   PC(901 이상): 고른 카드가 줄의 약 47%(flex-grow 6.2 : 나머지 1 × 7). 좁은 카드는 흑백 + 영문 이름을 90도로 돌려 세운다.
+   넓은 카드 = 영문 이름(--f-lat 800) + 우리말 품목 + "상품 보기 →". 사진은 세로 3:4(1000 × 1336).
+   --cx = 좁은 카드에서 가운데 둘 사진의 가로 지점(카드마다 index.html에 적음), --cy = 넓은 카드에서 위아래가 잘릴 때 기준(얼굴이 남게 위쪽) ---------- */
+.v10 .cg--w .cg__row--8 .cgs.is-on{flex-grow:6.2}
+.v10 .cg--w .cg__row--8 .cgs img{left:var(--cx,50%);object-position:50% var(--cy,18%);transform:translateX(calc(var(--cx,50%) * -1)) scale(1.06)}
+.v10 .cg--w .cg__row--8 .cgs.is-on img{transform:translateX(calc(var(--cx,50%) * -1))}
+.v10 .cg--w .cg__row--8 .cgs__v{bottom:24px;writing-mode:vertical-rl;text-orientation:sideways;font-family:var(--f-lat);font-size:18px;font-weight:700;letter-spacing:.12em;line-height:1}
+.v10 .cg--w .cg__row--8 .cgs__h b{font-family:var(--f-lat);font-size:clamp(30px,2.8vw,40px);font-weight:800;letter-spacing:.01em;line-height:1.05}
+.cgs__ko{display:block;margin-top:8px;font-size:16px;font-weight:600;letter-spacing:-.02em;line-height:22px;opacity:.92}
+.v10 .cg--w .cg__row--8 .cgs__h em{margin-top:14px}
+/* 폰 · 태블릿(900 이하): 옆으로 넘기는 3:4 카드(사진 비율과 같아 잘리지 않음). 600 이하는 한 장이 화면의 70%라 다음 카드가 살짝 보인다 */
+@media (max-width:900px){
+  .v10 .cg--w .cg__row--8 .cgs,.v10 .cg--w .cg__row--8 .cgs.is-on{flex-basis:36vw;aspect-ratio:3/4}
+  .v10 .cg--w .cg__row--8 .cgs img,.v10 .cg--w .cg__row--8 .cgs.is-on img{transform:translateX(calc(var(--cx,50%) * -1));filter:none}
+  .v10 .cg--w .cg__row--8 .cgs__h b{font-size:clamp(24px,6.4vw,30px)}
+  .cgs__ko{margin-top:4px;font-size:14px;line-height:20px}
+  .v10 .cg--w .cg__row--8 .cgs__h em{margin-top:10px}
+}
+@media (max-width:600px){ .v10 .cg--w .cg__row--8 .cgs,.v10 .cg--w .cg__row--8 .cgs.is-on{flex-basis:70vw} }
+/* 2026-11-18 담당자 "너무 많다 → 5개만": 티셔츠 · 후드 · 플리스 · 패딩 · 작업복(.cg__row--5 함께 붙음, 빠진 카라 · 자켓 · 조끼 사진은 상품 랭킹 카드로 옮김).
+   카드가 5장이라 고른 카드 비율을 줄인다: 고른 카드 ≈ 줄의 45%(flex-grow 3.3 : 나머지 1 × 4) */
+.v10 .cg--w .cg__row--5 .cgs.is-on{flex-grow:3.3}
+
+/* ---------- 4. 파트너 배너(폰 ≤768): PC처럼 글(제목 + 브랜드 상품 보기)을 다시 보인다. 얼굴이 조금 가려지거나 잘려도 다 들어가게(2026-11-17 담당자).
+   틀 = 3:4(v10.css 15번의 4:5보다 세로를 늘려 글 · 착용 상품 칸 · 조작 줄이 겹치지 않게). 사진은 가운데 기준으로 양옆이 조금 잘린다.
+   글은 위 왼쪽(위쪽 어둠 그라데이션), 착용 상품 칸 · 선 · 사각형 자리는 js/v10.js 4번이 그대로 잡고, 맨 아래 점 + 멈춤.
+   글 자리에 사각형(상품 자리)이 걸리면 js/v11.js 1번이 글을 그 사각형 아래로 내린다(--copy-t. 지금은 제조 장면의 안전모).
+   글이 나타나는 때는 PC와 같다(.pb.is-open — 폰에서도 스크롤 장치가 붙인다. 틀이 열리는 clip-path만 폰에서 꺼져 있다).
+   "연출 이미지입니다."는 제목과 겹치지 않게 오른쪽 위 → 오른쪽 아래(점 줄 높이)로 옮김 ---------- */
+@media (max-width:768px){
+  .v10 .pb__frame{aspect-ratio:3/4;max-height:min(calc(100vh - 60px),720px);max-height:min(calc(100svh - 60px),720px)}
+  .v10 .pbs__shade,.v10 .pbs--r .pbs__shade{background:linear-gradient(180deg,rgba(8,9,12,.68) 0%,rgba(8,9,12,.34) 26%,transparent 48%),linear-gradient(0deg,rgba(8,9,12,.72) 0%,rgba(8,9,12,.22) 26%,transparent 44%)}
+  .v10 .pbs__copy,.v10 .pbs--r .pbs__copy{display:flex;left:var(--gut);right:var(--gut);top:var(--copy-t,24px);bottom:auto;width:auto;justify-content:flex-start}
+  .v10.v5 .pbs__t{margin-top:0;font-size:clamp(23px,6.6vw,28px);letter-spacing:-.04em;line-height:1.22}
+  .v10 .pbs__copy .bt{height:46px;margin-top:14px;font-size:14.5px}
+  .v10 .pbs__copy .bt>span{padding:0 18px 0 22px}
+  .v10 .pbs__copy .bt>i{width:46px}
+  .v10 .pb__note{top:auto;right:14px;bottom:20px}
+}
+/* 태블릿 세로(521~768): 3:4에 최대 높이까지 걸리면 위아래가 잘려 제조 장면의 안전모 사각형이 틀 밖으로 나갔다 → 폰 사진 비율(4:5) 그대로, 높이는 화면까지만 */
+@media (min-width:521px) and (max-width:768px){
+  .v10 .pb__frame{aspect-ratio:4/5;max-height:min(calc(100vh - 60px),960px);max-height:min(calc(100svh - 60px),960px)}
+}
+
+/* ---------- 5. 캠페인 배너(.cb, 후드·맨투맨과 바람막이·패딩(#outer2) 사이) — v6 케이투 배너 구성 ----------
+   2026-11-18 담당자 1차: "EIDER SAFETY 섹션이 이상하다 → v6 Partner Brand · K2처럼, 글은 한 줄만" → 검정 띠(.cb--dark)를 빼고 화면 끝까지 찬 사진.
+   2026-11-18 담당자 2차: "세로가 너무 크다 · 상품 띄우는 것(점 · 착용 상품 카드)은 빼고 CTA 단추로" → 높이를 줄이고(1440에서 약 570) 점 · 카드를 지움, 단추 두 개.
+   틀: PC 높이 clamp(400px,40vw,620px), 폰 4:5. 글: 영문 라벨(Partner Brand · EIDER) → 제목 한 줄(줄바꿈 없음) → 단추 줄(흰 "아이더 상품 보기" + 흰 테두리 "착용 상품 바로가기").
+   사진 인물이 왼쪽이라 글은 오른쪽 빈 배경(v6는 왼쪽). 폰은 아래(아래 어둠 그라데이션).
+   스크롤 장치(js/v11.js 2번): 틀이 inset(10% 7%) → 0, 사진 1.16 → 1배, 70%쯤 열리면 .cb.is-open → 글이 차례로 나온다.
+   PC(마우스)에서는 사진이 커서 반대쪽으로 x ±28 · y ±18, 글은 x ±12 움직인다. 그래서 사진은 틀보다 사방으로 조금 크게 깐다 */
+.cb{padding-top:var(--sec)}
+.cb__frame{position:relative;height:clamp(400px,40vw,620px);overflow:hidden;background:var(--dark);color:#fff;isolation:isolate}
+.cb__media{position:absolute;inset:0;display:block;will-change:transform}
+.cb__media img{position:absolute;left:-28px;top:-18px;width:calc(100% + 56px);height:calc(100% + 36px);max-width:none;object-fit:cover;object-position:30% 32%}
+.cb__frame::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(0deg,rgba(8,9,12,.42) 0%,transparent 30%),linear-gradient(270deg,rgba(8,9,12,.62) 0%,rgba(8,9,12,.24) 34%,transparent 56%)}
+.cb__copy{position:absolute;right:var(--gut);top:0;bottom:0;z-index:3;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;width:min(640px,46vw)}
+.cb__copy .v11-eyebrow{margin-bottom:14px}
+.v10 .cb__t{font-size:clamp(28px,3.2vw,50px);font-weight:700;letter-spacing:-.03em;line-height:1.2;white-space:nowrap;color:#fff}
+.cb__btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+.cb__btns .bt{height:54px;font-size:15px}
+.cb__btns .bt>i{width:54px}
+.cb .fd__note{left:var(--gut);right:auto;bottom:14px;z-index:3}
+/* 글 등장: 움직임을 쓸 때만(html.v4-motion) 숨겨 두었다가 열리면 차례로. 움직임 줄이기 · 스크립트가 없으면 처음부터 보인다 */
+.cb__copy>*{transition:opacity .7s var(--ease),transform .9s var(--ease)}
+html.v4-motion .cb:not(.is-open) .cb__copy>*{opacity:0;transform:translateY(22px)}
+.cb.is-open .cb__copy>:nth-child(2){transition-delay:.08s}
+.cb.is-open .cb__copy>:nth-child(3){transition-delay:.16s}
+@media (max-width:768px){
+  .cb__frame{width:100%;height:auto;aspect-ratio:4/5;max-height:min(calc(100vh - 120px),640px);max-height:min(calc(100svh - 120px),640px)}   /* width를 적어 두어야 최대 높이에 걸려도 폭이 줄지 않는다(태블릿 세로) */
+  .cb__media img{left:0;top:0;width:100%;height:100%;object-position:50% 26%}
+  .cb__frame::after{background:linear-gradient(0deg,rgba(8,9,12,.86) 0%,rgba(8,9,12,.42) 40%,transparent 66%)}
+  .cb__copy{left:var(--gut);right:var(--gut);top:auto;bottom:26px;width:auto;justify-content:flex-end}
+  .cb__copy .v11-eyebrow{margin-bottom:10px}
+  .v10 .cb__t{font-size:clamp(22px,6.4vw,32px)}
+  .cb__btns{gap:8px;margin-top:16px}
+  .cb__btns .bt{height:46px;font-size:14px}
+  .cb__btns .bt>span{padding:0 18px}
+  .cb__btns .bt>i{width:46px}
+  .cb .fd__note{left:auto;top:12px;right:12px;bottom:auto}
+}
+@media (max-width:380px){ .cb__btns .bt>span{padding:0 14px} .cb__btns .bt{font-size:13.5px} }
+
+/* ---------- 6. 상품 카드의 모델 사진(2026-11-18): js/v10.js WEAR_PHOTO로 첫 사진이 모델 착용 사진(img/v11/npXX-s.webp, 3:4)인 카드.
+   카드 사진 칸은 1:1이라 위아래가 잘린다 → 옷(가슴 ~ 허리)이 가운데 오게 위쪽 28% 기준. "연출 이미지" 표시는 넣지 않는다(담당자) ---------- */
+.pc__media img[src*="img/v11/np"]{object-position:50% 28%}
+
+/* ---------- 움직임 줄이기 ---------- */
+@media (prefers-reduced-motion:reduce){
+  .rkh .v11-eyebrow,.cb__copy>*{transition:none}
+  .cb__media{will-change:auto}
+}

@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="ko" data-accent="blue" data-claim="on">
+<head>
+<script>
+(function(){var d=document.documentElement,s=d.dataset,g=null,c=null,ok=/^(grad|dot|grid|ring|off)$/;s.accent='blue';s.cta='solid';s.claim='on';s.pop='both';s.version='10';
+try{var q=new URLSearchParams(location.search).get('bg')||'';if(ok.test(q))localStorage.setItem('b2bt-v10-bg',q);g=localStorage.getItem('b2bt-v10-bg')||'';c=localStorage.getItem('b2bt-v9-cols');}catch(e){}
+s.band='f';s.bg=ok.test(g||'')?g:'grad';s.cols=c==='1'?'1':'2';d.classList.add('js');
+if(!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('v4-motion');setTimeout(function(){if(!window.B2BT_READY)d.classList.remove('v4-motion');},4000);}})();
+</script>
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>주문서 작성 | 비투비티</title>
+<meta name="description" content="견적을 확인한 주문의 주문·배송 정보와 결제수단을 입력하고 결제합니다.">
+<link rel="icon" type="image/png" href="img/b2bt-v2-h56.png">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="css/ds-blue.css?v=20261116">
+<link rel="stylesheet" href="css/site.css?v=20261116">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="css/v4.css?v=20261116">
+<link rel="stylesheet" href="css/v8-base.css?v=20261116">
+<link rel="stylesheet" href="css/v8.css?v=20261116">
+<link rel="stylesheet" href="css/ui-v8.css?v=20261116">
+<link rel="stylesheet" href="css/v9.css?v=20261116">
+<link rel="stylesheet" href="css/v10.css?v=20261116">
+<link rel="stylesheet" href="css/sub.css?v=20261117">
+<script src="js/site-v10.js?v=20261116" defer></script>
+<script src="js/sub.js?v=20261117" defer></script>
+<script src="js/sub-cart.js?v=20261117" defer></script>
+</head>
+<body data-page="order" data-shell="full" data-auth="member" data-nocs>
+<header class="site-head v9h" id="siteHead">
+  <div class="band" id="band" role="region" aria-label="안내">
+    <button type="button" class="band__nav band__nav--prev" id="bandPrev" aria-label="이전 소식"><svg class="ic" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14.5 6 8.5 12l6 6"/></svg></button>
+    <div class="band__track">
+      <p class="band__slide is-active"><span class="band__seg">기업 단체복 및 작업복</span><span class="band__sep" aria-hidden="true"></span><span class="band__seg">사업자등록증 확인 후 기업회원 승인</span><span class="band__sep" aria-hidden="true"></span><span class="band__seg">구매 목록으로 견적 문의</span></p>
+      <p class="band__slide" data-claim="pending"><span class="band__seg">기업 단체복 및 작업복</span><span class="band__sep" aria-hidden="true"></span><span class="band__seg">기업회원 승인 후 담당자 1:1 상담</span><span class="band__sep" aria-hidden="true"></span><span class="band__seg">2017년부터</span></p>
+      <p class="band__slide"><span class="band__seg">카카오톡 채널로 구매 목록을 보내주세요</span><span class="band__sep" aria-hidden="true"></span><span class="band__seg"><a class="band__link" href="#" data-href="https://pf.kakao.com/_uxjxmxjn">상담하기</a></span></p>
+      <p class="band__slide"><span class="band__seg">노을상사 회사 소개</span><span class="band__sep" aria-hidden="true"></span><span class="band__seg"><a class="band__link" href="https://noeul.ai.kr" target="_blank" rel="noopener">바로가기<svg class="ic" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7.5 16.5 16.5 7.5"/><path d="M9 7.5h7.5V15"/></svg></a></span></p>
+    </div>
+    <button type="button" class="band__nav band__nav--next" id="bandNext" aria-label="다음 소식"><svg class="ic" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9.5 6l6 6-6 6"/></svg></button>
+  </div>
+  <div class="hd" id="hd">
+    <div class="hd__inner">
+      <button type="button" class="hd__all" id="allBtn" aria-expanded="false" aria-controls="allMenu" aria-label="전체 메뉴"><span class="burger" aria-hidden="true"><span></span><span></span><span></span></span></button>
+      <a class="hd__logo" href="#" data-href="index.php"><img src="img/b2bt-v2-h56.png" srcset="img/b2bt-v2-h56.png 1x, img/b2bt-v2-h112.png 2x, img/b2bt-v2-h168.png 3x" width="199" height="56" alt="비투비티"></a>
+      <nav class="hd__nav" aria-label="사업 메뉴">
+        <div class="bz">
+          <a class="bz__link" href="#" data-href="category.php" aria-expanded="false" aria-controls="drop-uniform"><span>단체복</span></a>
+          <div class="bz__drop" id="drop-uniform" role="region" aria-label="단체복 메뉴"><div class="fm"><div class="fm__side"><p class="fm__title">단체복</p><a class="fm__all" href="#" data-href="category.php">단체복 전체보기</a><a class="fm__img" href="#" data-href="category.php"><img src="img/v9/mega-uniform.webp" width="480" height="600" alt="" loading="lazy" decoding="async" data-slot="mega-uniform" data-temp="ai"><span class="fm__cap"><b>단체복</b><span>단체복 전체보기 <i aria-hidden="true">→</i></span></span></a></div><div class="fm__cols fm__cols--5"><div class="fm__col"><a class="fm__h" href="#" data-href="category.php?cat=%EB%9D%BC%EC%9A%B4%EB%93%9C%20%ED%8B%B0%EC%85%94%EC%B8%A0">라운드 티셔츠</a><ul><li><a href="#" data-href="category.php?cat=%EB%9D%BC%EC%9A%B4%EB%93%9C%20%ED%8B%B0%EC%85%94%EC%B8%A0&amp;sub=%EB%B0%98%ED%8C%94%ED%8B%B0">반팔티<span class="fm__n">47</span></a></li><li><a href="#" data-href="category.php?cat=%EB%9D%BC%EC%9A%B4%EB%93%9C%20%ED%8B%B0%EC%85%94%EC%B8%A0&amp;sub=%EA%B8%B4%ED%8C%94%ED%8B%B0">긴팔티<span class="fm__n">8</span></a></li><li><a href="#" data-href="category.php?cat=%EB%9D%BC%EC%9A%B4%EB%93%9C%20%ED%8B%B0%EC%85%94%EC%B8%A0&amp;sub=%EB%B0%98%ED%8C%94%2C%20%EA%B8%B4%ED%8C%94%ED%8B%B0">반팔, 긴팔티<span class="fm__n">5</span></a></li><li><a href="#" data-href="category.php?cat=%EB%9D%BC%EC%9A%B4%EB%93%9C%20%ED%8B%B0%EC%85%94%EC%B8%A0&amp;sub=%EC%95%84%EB%8F%99%EC%9A%A9%ED%8B%B0">아동용티<span class="fm__n">4</span></a></li></ul></div><div class="fm__col"><a class="fm__h" href="#" data-href="category.php?cat=%EC%B9%B4%EB%9D%BC%20%ED%8B%B0%EC%85%94%EC%B8%A0">카라 티셔츠</a><ul><li><a href="#" data-href="category.php?cat=%EC%B9%B4%EB%9D%BC%20%ED%8B%B0%EC%85%94%EC%B8%A0&amp;sub=%EB%B0%98%ED%8C%94%20%EC%B9%B4%EB%9D%BC%ED%8B%B0">반팔 카라티<span class="fm__n">50</span></a></li><li><a href="#" data-href="category.php?cat=%EC%B9%B4%EB%9D%BC%20%ED%8B%B0%EC%85%94%EC%B8%A0&amp;sub=%EA%B8%B4%ED%8C%94%20%EC%B9%B4%EB%9D%BC%ED%8B%B0">긴팔 카라티<span class="fm__n">4</span></a></li><li><a href="#" data-href="category.php?cat=%EC%B9%B4%EB%9D%BC%20%ED%8B%B0%EC%85%94%EC%B8%A0&amp;sub=%EB%B0%98%ED%8C%94%2C%20%EA%B8%B4%ED%8C%94%20%EC%B9%B4%EB%9D%BC%ED%8B%B0">반팔, 긴팔 카라티<span class="fm__n">9</span></a></li><li><a href="#" data-href="category.php?cat=%EC%B9%B4%EB%9D%BC%20%ED%8B%B0%EC%85%94%EC%B8%A0&amp;sub=%EC%95%84%EB%8F%99%EC%9A%A9%20%EC%B9%B4%EB%9D%BC%ED%8B%B0">아동용 카라티<span class="fm__n">1</span></a></li></ul></div><div class="fm__col"><a class="fm__h" href="#" data-href="category.php?cat=%EB%A7%A8%ED%88%AC%EB%A7%A8%20%ED%8B%B0%EC%85%94%EC%B8%A0">맨투맨 티셔츠</a><ul><li><a href="#" data-href="category.php?cat=%EB%A7%A8%ED%88%AC%EB%A7%A8%20%ED%8B%B0%EC%85%94%EC%B8%A0&amp;sub=%EB%A7%A8%ED%88%AC%EB%A7%A8">맨투맨<span class="fm__n">11</span></a></li><li><a href="#" data-href="category.php?cat=%EB%A7%A8%ED%88%AC%EB%A7%A8%20%ED%8B%B0%EC%85%94%EC%B8%A0&amp;sub=%EC%95%84%EB%8F%99%EC%9A%A9%20%EB%A7%A8%ED%88%AC%EB%A7%A8">아동용 맨투맨<span class="fm__n">1</span></a></li></ul></div><div class="fm__col"><a class="fm__h" href="#" data-href="category.php?cat=%ED%9B%84%EB%93%9C%20%ED%8B%B0%EC%85%94%EC%B8%A0">후드 티셔츠</a><ul><li><a href="#" data-href="category.php?cat=%ED%9B%84%EB%93%9C%20%ED%8B%B0%EC%85%94%EC%B8%A0&amp;sub=%ED%9B%84%EB%93%9C%ED%8B%B0">후드티<span class="fm__n">10</span></a></li><li><a href="#" data-href="category.php?cat=%ED%9B%84%EB%93%9C%20%ED%8B%B0%EC%85%94%EC%B8%A0&amp;sub=%ED%9B%84%EB%93%9C%EC%A7%91%EC%97%85">후드집업<span class="fm__n">14</span></a></li><li><a href="#" data-href="category.php?cat=%ED%9B%84%EB%93%9C%20%ED%8B%B0%EC%85%94%EC%B8%A0&amp;sub=%EC%95%84%EB%8F%99%EC%9A%A9%20%ED%9B%84%EB%93%9C">아동용 후드<span class="fm__n">1</span></a></li></ul></div><div class="fm__col"><a class="fm__h" href="#" data-href="category.php?cat=%EB%AF%BC%EC%86%8C%EB%A7%A4%2C%20%EB%AA%A9%ED%8F%B4%EB%9D%BC">민소매, 목폴라</a><ul><li><a href="#" data-href="category.php?cat=%EB%AF%BC%EC%86%8C%EB%A7%A4%2C%20%EB%AA%A9%ED%8F%B4%EB%9D%BC&amp;sub=%EB%AF%BC%EC%86%8C%EB%A7%A4">민소매<span class="fm__n">10</span></a></li><li><a href="#" data-href="category.php?cat=%EB%AF%BC%EC%86%8C%EB%A7%A4%2C%20%EB%AA%A9%ED%8F%B4%EB%9D%BC&amp;sub=%EB%AA%A9%ED%8F%B4%EB%9D%BC">목폴라<span class="fm__n">3</span></a></li></ul></div><div class="fm__col"><a class="fm__h" href="#" data-href="category.php?cat=%EC%A1%B0%EB%81%BC">조끼</a><ul><li><a href="#" data-href="category.php?cat=%EC%A1%B0%EB%81%BC&amp;sub=%EC%9E%91%EC%97%85%EC%A1%B0%EB%81%BC">작업조끼<span class="fm__n">34</span></a></li><li><a href="#" data-href="category.php?cat=%EC%A1%B0%EB%81%BC&amp;sub=%EC%B9%B4%EB%9D%BC%EC%A1%B0%EB%81%BC">카라조끼<span class="fm__n">17</span></a></li><li><a href="#" data-href="category.php?cat=%EC%A1%B0%EB%81%BC&amp;sub=%EA%B2%A8%EC%9A%B8%EC%A1%B0%EB%81%BC">겨울조끼<span class="fm__n">15</span></a></li><li><a href="#" data-href="category.php?cat=%EC%A1%B0%EB%81%BC&amp;sub=V%EB%84%A5%EC%A1%B0%EB%81%BC">V넥조끼<span class="fm__n">11</span></a></li></ul></div><div class="fm__col"><a class="fm__h" href="#" data-href="category.php?cat=%EC%9E%90%EC%BC%93">자켓</a><ul><li><a href="#" data-href="category.php?cat=%EC%9E%90%EC%BC%93&amp;sub=%EB%B0%94%EB%9E%8C%EB%A7%89%EC%9D%B4%20%EC%9E%90%EC%BC%93">바람막이 자켓<span class="fm__n">40</span></a></li><li><a href="#" data-href="category.php?cat=%EC%9E%90%EC%BC%93&amp;sub=%ED%94%8C%EB%A6%AC%EC%8A%A4%20%EC%9E%90%EC%BC%93">플리스 자켓<span class="fm__n">25</span></a></li><li><a href="#" data-href="category.php?cat=%EC%9E%90%EC%BC%93&amp;sub=%EC%95%84%EB%8F%99%EC%9A%A9%20%EC%9E%90%EC%BC%93">아동용 자켓<span class="fm__n">1</span></a></li><li><a href="#" data-href="category.php?cat=%EC%9E%90%EC%BC%93&amp;sub=%ED%95%AD%EA%B3%B5%EC%A0%90%ED%8D%BC">항공점퍼<span class="fm__n">11</span></a></li></ul></div><div class="fm__col"><a class="fm__h" href="#" data-href="category.php?cat=%ED%8C%A8%EB%94%A9">패딩</a><ul><li><a href="#" data-href="category.php?cat=%ED%8C%A8%EB%94%A9&amp;sub=%ED%8C%A8%EB%94%A9%EC%A0%90%ED%8D%BC">패딩점퍼<span class="fm__n">20</span></a></li><li><a href="#" data-href="category.php?cat=%ED%8C%A8%EB%94%A9&amp;sub=%EB%A1%B1%ED%8C%A8%EB%94%A9">롱패딩<span class="fm__n">3</span></a></li></ul></div><div class="fm__col"><a class="fm__h" href="#" data-href="category.php?cat=%EB%B0%94%EC%A7%80">바지</a><ul><li><a href="#" data-href="category.php?cat=%EB%B0%94%EC%A7%80&amp;sub=%EB%B0%98%EB%B0%94%EC%A7%80">반바지<span class="fm__n">4</span></a></li><li><a href="#" data-href="category.php?cat=%EB%B0%94%EC%A7%80&amp;sub=%EA%B8%B4%EB%B0%94%EC%A7%80">긴바지<span class="fm__n">16</span></a></li></ul></div><div class="fm__col"><a class="fm__h" href="#" data-href="category.php?cat=%EB%AA%A8%EC%9E%90">모자</a><ul><li><a href="#" data-href="category.php?cat=%EB%AA%A8%EC%9E%90&amp;sub=%EC%BA%A1%20%EB%AA%A8%EC%9E%90">캡 모자<span class="fm__n">11</span></a></li><li><a href="#" data-href="category.php?cat=%EB%AA%A8%EC%9E%90&amp;sub=%EB%B2%84%ED%82%B7%ED%96%87">버킷햇<span class="fm__n">3</span></a></li><li><a href="#" data-href="category.php?cat=%EB%AA%A8%EC%9E%90&amp;sub=%EB%B9%84%EB%8B%88">비니<span class="fm__n">4</span></a></li></ul></div></div></div></div>
+        </div>
+        <div class="bz">
+          <a class="bz__link" href="#" data-href="category.php?cat=%EC%9E%91%EC%97%85%EB%B3%B5" aria-expanded="false" aria-controls="drop-work"><span>작업복</span></a>
+          <div class="bz__drop" id="drop-work" role="region" aria-label="작업복 메뉴"><div class="fm"><div class="fm__side"><p class="fm__title">작업복</p><a class="fm__all" href="#" data-href="category.php?cat=%EC%9E%91%EC%97%85%EB%B3%B5">작업복 전체보기</a><a class="fm__img" href="#" data-href="category.php?cat=%EC%9E%91%EC%97%85%EB%B3%B5"><img src="img/v9/mega-work.webp" width="480" height="600" alt="" loading="lazy" decoding="async" data-slot="mega-work" data-temp="ai"><span class="fm__cap"><b>작업복</b><span>작업복 전체보기 <i aria-hidden="true">→</i></span></span></a></div><ul class="fm__list"><li><a href="#" data-href="category.php?cat=%EC%9E%91%EC%97%85%EB%B3%B5&amp;sub=%EB%B4%84%20%EC%9E%91%EC%97%85%EB%B3%B5">봄 작업복</a></li><li><a href="#" data-href="category.php?cat=%EC%9E%91%EC%97%85%EB%B3%B5&amp;sub=%EC%97%AC%EB%A6%84%20%EC%9E%91%EC%97%85%EB%B3%B5">여름 작업복</a></li><li><a href="#" data-href="category.php?cat=%EC%9E%91%EC%97%85%EB%B3%B5&amp;sub=%EA%B0%80%EC%9D%84%20%EC%9E%91%EC%97%85%EB%B3%B5">가을 작업복</a></li><li><a href="#" data-href="category.php?cat=%EC%9E%91%EC%97%85%EB%B3%B5&amp;sub=%EA%B2%A8%EC%9A%B8%20%EC%9E%91%EC%97%85%EB%B3%B5">겨울 작업복</a></li></ul></div></div>
+        </div>
+        <div class="bz">
+          <a class="bz__link" href="#" data-href="brand.php" aria-expanded="false" aria-controls="drop-brands"><span>협력브랜드</span></a>
+          <div class="bz__drop" id="drop-brands" role="region" aria-label="협력브랜드 메뉴"><div class="fm"><div class="fm__side"><p class="fm__title">협력브랜드</p><a class="fm__all" href="#" data-href="brand.php">협력브랜드 전체보기</a><a class="fm__img" href="#" data-href="brand.php"><img src="img/v9/mega-brand.webp" width="480" height="600" alt="" loading="lazy" decoding="async" data-slot="mega-brand" data-temp="ai"><span class="fm__cap"><b>협력브랜드</b><span>협력브랜드 전체보기 <i aria-hidden="true">→</i></span></span></a></div><ul class="fm__brands"><li><a class="fm__brand" href="#" data-href="brand.php?cat=MENTIS%20%EB%A9%98%ED%8B%B0%EC%8A%A4"><span class="fm__logo"><img src="img/brands/mentis.webp" width="394" height="97" alt="" loading="lazy" decoding="async"></span><span class="fm__bn">MENTIS 멘티스<span class="fm__n">192</span></span></a></li><li><a class="fm__brand" href="#" data-href="brand.php?cat=SSEDA%20%EC%8E%84%EB%8B%A4"><span class="fm__logo"><img src="img/brands/sseda.webp" width="451" height="233" alt="" loading="lazy" decoding="async"></span><span class="fm__bn">SSEDA 쎄다<span class="fm__n">114</span></span></a></li><li><a class="fm__brand" href="#" data-href="brand.php?cat=EIDER%20%EC%95%84%EC%9D%B4%EB%8D%94"><span class="fm__logo"><img src="img/brands/eider.webp" width="428" height="224" alt="" loading="lazy" decoding="async"></span><span class="fm__bn">EIDER 아이더<span class="fm__n">296</span></span></a></li><li><a class="fm__brand" href="#" data-href="brand.php?cat=IPAVV%20%EC%95%84%EC%9D%B4%ED%8C%8C%EB%B8%8C"><span class="fm__logo"><img src="img/brands/ipavv.webp" width="453" height="117" alt="" loading="lazy" decoding="async"></span><span class="fm__bn">IPAVV 아이파브<span class="fm__n">266</span></span></a></li><li><a class="fm__brand" href="#" data-href="brand.php?cat=ARTWIN%20%EC%95%84%ED%8A%B8%EC%9C%88"><span class="fm__logo"><img src="img/brands/artwin.webp" width="446" height="67" alt="" loading="lazy" decoding="async"></span><span class="fm__bn">ARTWIN 아트윈<span class="fm__n">187</span></span></a></li><li><a class="fm__brand" href="#" data-href="brand.php?cat=ACE%20%EC%97%90%EC%9D%B4%EC%8A%A4"><span class="fm__logo"><img src="img/brands/ace.webp" width="368" height="130" alt="" loading="lazy" decoding="async"></span><span class="fm__bn">ACE 에이스<span class="fm__n">403</span></span></a></li><li><a class="fm__brand" href="#" data-href="brand.php?cat=ZIBEN%20%EC%A7%80%EB%B2%A4"><span class="fm__logo"><img src="img/brands/ziben.webp" width="370" height="350" alt="" loading="lazy" decoding="async"></span><span class="fm__bn">ZIBEN 지벤<span class="fm__n">357</span></span></a></li><li><a class="fm__brand" href="#" data-href="brand.php?cat=K2%20%EC%BC%80%EC%9D%B4%ED%88%AC"><span class="fm__logo"><img src="img/brands/k2.webp" width="393" height="160" alt="" loading="lazy" decoding="async"></span><span class="fm__bn">K2 케이투<span class="fm__n">462</span></span></a></li><li><a class="fm__brand" href="#" data-href="brand.php?cat=T-BUC%20%ED%8B%B0%EB%B7%B0%ED%81%AC"><span class="fm__logo"><img src="img/brands/tbuc.webp" width="442" height="150" alt="" loading="lazy" decoding="async"></span><span class="fm__bn">T-BUC 티뷰크<span class="fm__n">605</span></span></a></li></ul></div></div>
+        </div>
+        <div class="bz">
+          <a class="bz__link" href="#" data-href="custom-intro.php" aria-expanded="false" aria-controls="drop-custom"><span>맞춤작업복</span></a>
+          <div class="bz__drop" id="drop-custom" role="region" aria-label="맞춤작업복 메뉴"><div class="fm"><div class="fm__side"><p class="fm__title">맞춤작업복</p><a class="fm__img" href="#" data-href="custom-intro.php"><img src="img/v9/mega-custom.webp" width="480" height="600" alt="" loading="lazy" decoding="async" data-slot="mega-custom" data-temp="ai"><span class="fm__cap"><b>맞춤작업복</b><span>자세히 보기 <i aria-hidden="true">→</i></span></span></a></div><ul class="fm__list"><li><a href="#" data-href="custom-intro.php">맞춤작업복 견적문의</a></li></ul></div></div>
+        </div>
+      </nav>
+      <div class="hd__right">
+        <a class="hq" href="#" data-href="quote-intro.php">견적문의</a>
+        <div class="hd__icons">
+          <button type="button" class="hd__icon" id="searchBtn" aria-label="검색" aria-expanded="false" aria-controls="searchLayer"><svg class="ic" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="10.8" cy="10.8" r="6.3"/><path d="m15.4 15.4 5 5"/></svg></button>
+          <a class="hd__icon" href="#" data-href="login.php" aria-label="로그인"><svg class="ic" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="8.2" r="3.9"/><path d="M4.5 20.2c.9-3.7 3.9-5.7 7.5-5.7s6.6 2 7.5 5.7"/></svg></a>
+          <a class="hd__icon" href="#" data-href="cart.php" aria-label="장바구니"><svg class="ic" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5.5 8h13l-1 12.5h-11L5.5 8z"/><path d="M9 8V6.6a3 3 0 0 1 6 0V8"/></svg></a>
+        </div>
+      </div>
+    </div>
+    <div class="hd-search" id="searchLayer">
+      <div class="hd-search__inner">
+        <form class="hd-search__form" role="search" action="#">
+          <input type="search" name="q" class="hd-search__input" maxlength="100" placeholder="상품을 검색하세요" aria-label="상품 검색" autocomplete="off">
+          <button type="submit" class="hd-search__btn" aria-label="검색"><svg class="ic" viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="10.75" cy="10.75" r="6.75"/><path d="M15.75 15.75 20.5 20.5"/></svg></button>
+        </form>
+        <div class="hd-sx">
+          <p class="hd-sx__title">최근 검색어</p>
+          <p class="hd-sx__empty">최근 검색어가 없습니다.</p>
+        </div>
+      </div>
+    </div>
+    <div class="acp" id="allMenu" data-lenis-prevent role="region" aria-label="전체 메뉴">
+      <div class="am">
+        <div class="am__grid"><div class="am__col"><a class="am__h" href="#" data-href="category.php?cat=%EB%9D%BC%EC%9A%B4%EB%93%9C%20%ED%8B%B0%EC%85%94%EC%B8%A0">라운드 티셔츠</a><ul><li><a href="#" data-href="category.php?cat=%EB%9D%BC%EC%9A%B4%EB%93%9C%20%ED%8B%B0%EC%85%94%EC%B8%A0&amp;sub=%EB%B0%98%ED%8C%94%ED%8B%B0">반팔티</a></li><li><a href="#" data-href="category.php?cat=%EB%9D%BC%EC%9A%B4%EB%93%9C%20%ED%8B%B0%EC%85%94%EC%B8%A0&amp;sub=%EA%B8%B4%ED%8C%94%ED%8B%B0">긴팔티</a></li><li><a href="#" data-href="category.php?cat=%EB%9D%BC%EC%9A%B4%EB%93%9C%20%ED%8B%B0%EC%85%94%EC%B8%A0&amp;sub=%EB%B0%98%ED%8C%94%2C%20%EA%B8%B4%ED%8C%94%ED%8B%B0">반팔, 긴팔티</a></li><li><a href="#" data-href="category.php?cat=%EB%9D%BC%EC%9A%B4%EB%93%9C%20%ED%8B%B0%EC%85%94%EC%B8%A0&amp;sub=%EC%95%84%EB%8F%99%EC%9A%A9%ED%8B%B0">아동용티</a></li></ul></div><div class="am__col"><a class="am__h" href="#" data-href="category.php?cat=%EC%B9%B4%EB%9D%BC%20%ED%8B%B0%EC%85%94%EC%B8%A0">카라 티셔츠</a><ul><li><a href="#" data-href="category.php?cat=%EC%B9%B4%EB%9D%BC%20%ED%8B%B0%EC%85%94%EC%B8%A0&amp;sub=%EB%B0%98%ED%8C%94%20%EC%B9%B4%EB%9D%BC%ED%8B%B0">반팔 카라티</a></li><li><a href="#" data-href="category.php?cat=%EC%B9%B4%EB%9D%BC%20%ED%8B%B0%EC%85%94%EC%B8%A0&amp;sub=%EA%B8%B4%ED%8C%94%20%EC%B9%B4%EB%9D%BC%ED%8B%B0">긴팔 카라티</a></li><li><a href="#" data-href="category.php?cat=%EC%B9%B4%EB%9D%BC%20%ED%8B%B0%EC%85%94%EC%B8%A0&amp;sub=%EB%B0%98%ED%8C%94%2C%20%EA%B8%B4%ED%8C%94%20%EC%B9%B4%EB%9D%BC%ED%8B%B0">반팔, 긴팔 카라티</a></li><li><a href="#" data-href="category.php?cat=%EC%B9%B4%EB%9D%BC%20%ED%8B%B0%EC%85%94%EC%B8%A0&amp;sub=%EC%95%84%EB%8F%99%EC%9A%A9%20%EC%B9%B4%EB%9D%BC%ED%8B%B0">아동용 카라티</a></li></ul></div><div class="am__col"><a class="am__h" href="#" data-href="category.php?cat=%EB%A7%A8%ED%88%AC%EB%A7%A8%20%ED%8B%B0%EC%85%94%EC%B8%A0">맨투맨 티셔츠</a><ul><li><a href="#" data-href="category.php?cat=%EB%A7%A8%ED%88%AC%EB%A7%A8%20%ED%8B%B0%EC%85%94%EC%B8%A0&amp;sub=%EB%A7%A8%ED%88%AC%EB%A7%A8">맨투맨</a></li><li><a href="#" data-href="category.php?cat=%EB%A7%A8%ED%88%AC%EB%A7%A8%20%ED%8B%B0%EC%85%94%EC%B8%A0&amp;sub=%EC%95%84%EB%8F%99%EC%9A%A9%20%EB%A7%A8%ED%88%AC%EB%A7%A8">아동용 맨투맨</a></li></ul></div><div class="am__col"><a class="am__h" href="#" data-href="category.php?cat=%ED%9B%84%EB%93%9C%20%ED%8B%B0%EC%85%94%EC%B8%A0">후드 티셔츠</a><ul><li><a href="#" data-href="category.php?cat=%ED%9B%84%EB%93%9C%20%ED%8B%B0%EC%85%94%EC%B8%A0&amp;sub=%ED%9B%84%EB%93%9C%ED%8B%B0">후드티</a></li><li><a href="#" data-href="category.php?cat=%ED%9B%84%EB%93%9C%20%ED%8B%B0%EC%85%94%EC%B8%A0&amp;sub=%ED%9B%84%EB%93%9C%EC%A7%91%EC%97%85">후드집업</a></li><li><a href="#" data-href="category.php?cat=%ED%9B%84%EB%93%9C%20%ED%8B%B0%EC%85%94%EC%B8%A0&amp;sub=%EC%95%84%EB%8F%99%EC%9A%A9%20%ED%9B%84%EB%93%9C">아동용 후드</a></li></ul></div><div class="am__col"><a class="am__h" href="#" data-href="category.php?cat=%EB%AF%BC%EC%86%8C%EB%A7%A4%2C%20%EB%AA%A9%ED%8F%B4%EB%9D%BC">민소매, 목폴라</a><ul><li><a href="#" data-href="category.php?cat=%EB%AF%BC%EC%86%8C%EB%A7%A4%2C%20%EB%AA%A9%ED%8F%B4%EB%9D%BC&amp;sub=%EB%AF%BC%EC%86%8C%EB%A7%A4">민소매</a></li><li><a href="#" data-href="category.php?cat=%EB%AF%BC%EC%86%8C%EB%A7%A4%2C%20%EB%AA%A9%ED%8F%B4%EB%9D%BC&amp;sub=%EB%AA%A9%ED%8F%B4%EB%9D%BC">목폴라</a></li></ul></div><div class="am__col"><a class="am__h" href="#" data-href="category.php?cat=%EC%A1%B0%EB%81%BC">조끼</a><ul><li><a href="#" data-href="category.php?cat=%EC%A1%B0%EB%81%BC&amp;sub=%EC%9E%91%EC%97%85%EC%A1%B0%EB%81%BC">작업조끼</a></li><li><a href="#" data-href="category.php?cat=%EC%A1%B0%EB%81%BC&amp;sub=%EC%B9%B4%EB%9D%BC%EC%A1%B0%EB%81%BC">카라조끼</a></li><li><a href="#" data-href="category.php?cat=%EC%A1%B0%EB%81%BC&amp;sub=%EA%B2%A8%EC%9A%B8%EC%A1%B0%EB%81%BC">겨울조끼</a></li><li><a href="#" data-href="category.php?cat=%EC%A1%B0%EB%81%BC&amp;sub=V%EB%84%A5%EC%A1%B0%EB%81%BC">V넥조끼</a></li></ul></div><div class="am__col"><a class="am__h" href="#" data-href="category.php?cat=%EC%9E%90%EC%BC%93">자켓</a><ul><li><a href="#" data-href="category.php?cat=%EC%9E%90%EC%BC%93&amp;sub=%EB%B0%94%EB%9E%8C%EB%A7%89%EC%9D%B4%20%EC%9E%90%EC%BC%93">바람막이 자켓</a></li><li><a href="#" data-href="category.php?cat=%EC%9E%90%EC%BC%93&amp;sub=%ED%94%8C%EB%A6%AC%EC%8A%A4%20%EC%9E%90%EC%BC%93">플리스 자켓</a></li><li><a href="#" data-href="category.php?cat=%EC%9E%90%EC%BC%93&amp;sub=%EC%95%84%EB%8F%99%EC%9A%A9%20%EC%9E%90%EC%BC%93">아동용 자켓</a></li><li><a href="#" data-href="category.php?cat=%EC%9E%90%EC%BC%93&amp;sub=%ED%95%AD%EA%B3%B5%EC%A0%90%ED%8D%BC">항공점퍼</a></li></ul></div><div class="am__col"><a class="am__h" href="#" data-href="category.php?cat=%ED%8C%A8%EB%94%A9">패딩</a><ul><li><a href="#" data-href="category.php?cat=%ED%8C%A8%EB%94%A9&amp;sub=%ED%8C%A8%EB%94%A9%EC%A0%90%ED%8D%BC">패딩점퍼</a></li><li><a href="#" data-href="category.php?cat=%ED%8C%A8%EB%94%A9&amp;sub=%EB%A1%B1%ED%8C%A8%EB%94%A9">롱패딩</a></li></ul></div><div class="am__col"><a class="am__h" href="#" data-href="category.php?cat=%EB%B0%94%EC%A7%80">바지</a><ul><li><a href="#" data-href="category.php?cat=%EB%B0%94%EC%A7%80&amp;sub=%EB%B0%98%EB%B0%94%EC%A7%80">반바지</a></li><li><a href="#" data-href="category.php?cat=%EB%B0%94%EC%A7%80&amp;sub=%EA%B8%B4%EB%B0%94%EC%A7%80">긴바지</a></li></ul></div><div class="am__col"><a class="am__h" href="#" data-href="category.php?cat=%EB%AA%A8%EC%9E%90">모자</a><ul><li><a href="#" data-href="category.php?cat=%EB%AA%A8%EC%9E%90&amp;sub=%EC%BA%A1%20%EB%AA%A8%EC%9E%90">캡 모자</a></li><li><a href="#" data-href="category.php?cat=%EB%AA%A8%EC%9E%90&amp;sub=%EB%B2%84%ED%82%B7%ED%96%87">버킷햇</a></li><li><a href="#" data-href="category.php?cat=%EB%AA%A8%EC%9E%90&amp;sub=%EB%B9%84%EB%8B%88">비니</a></li></ul></div><div class="am__col"><a class="am__h" href="#" data-href="category.php?cat=%EC%9E%91%EC%97%85%EB%B3%B5">작업복</a><ul><li><a href="#" data-href="category.php?cat=%EC%9E%91%EC%97%85%EB%B3%B5&amp;sub=%EB%B4%84%20%EC%9E%91%EC%97%85%EB%B3%B5">봄 작업복</a></li><li><a href="#" data-href="category.php?cat=%EC%9E%91%EC%97%85%EB%B3%B5&amp;sub=%EC%97%AC%EB%A6%84%20%EC%9E%91%EC%97%85%EB%B3%B5">여름 작업복</a></li><li><a href="#" data-href="category.php?cat=%EC%9E%91%EC%97%85%EB%B3%B5&amp;sub=%EA%B0%80%EC%9D%84%20%EC%9E%91%EC%97%85%EB%B3%B5">가을 작업복</a></li><li><a href="#" data-href="category.php?cat=%EC%9E%91%EC%97%85%EB%B3%B5&amp;sub=%EA%B2%A8%EC%9A%B8%20%EC%9E%91%EC%97%85%EB%B3%B5">겨울 작업복</a></li></ul></div><div class="am__col"><a class="am__h" href="#" data-href="brand.php">협력브랜드</a><ul><li><a href="#" data-href="brand.php?cat=MENTIS%20%EB%A9%98%ED%8B%B0%EC%8A%A4">MENTIS 멘티스</a></li><li><a href="#" data-href="brand.php?cat=SSEDA%20%EC%8E%84%EB%8B%A4">SSEDA 쎄다</a></li><li><a href="#" data-href="brand.php?cat=EIDER%20%EC%95%84%EC%9D%B4%EB%8D%94">EIDER 아이더</a></li><li><a href="#" data-href="brand.php?cat=IPAVV%20%EC%95%84%EC%9D%B4%ED%8C%8C%EB%B8%8C">IPAVV 아이파브</a></li><li><a href="#" data-href="brand.php?cat=ARTWIN%20%EC%95%84%ED%8A%B8%EC%9C%88">ARTWIN 아트윈</a></li><li><a href="#" data-href="brand.php?cat=ACE%20%EC%97%90%EC%9D%B4%EC%8A%A4">ACE 에이스</a></li><li><a href="#" data-href="brand.php?cat=ZIBEN%20%EC%A7%80%EB%B2%A4">ZIBEN 지벤</a></li><li><a href="#" data-href="brand.php?cat=K2%20%EC%BC%80%EC%9D%B4%ED%88%AC">K2 케이투</a></li><li><a href="#" data-href="brand.php?cat=T-BUC%20%ED%8B%B0%EB%B7%B0%ED%81%AC">T-BUC 티뷰크</a></li></ul></div><div class="am__col"><a class="am__h" href="#" data-href="custom-intro.php">맞춤작업복</a><ul><li><a href="#" data-href="custom-intro.php">맞춤작업복 견적문의</a></li></ul></div></div>
+    <div class="am__foot">
+      <div><p class="am__t">서비스</p><ul class="am__row"><li><a href="#" data-href="category.php">단체복 전체보기</a></li><li><a href="#" data-href="customer-center.php?tab=order-guide">주문방법</a></li><li><a href="#" data-href="index.php?modal=printing">인쇄방법</a></li><li><a href="#" data-href="delivery-cases.php">납품사례</a></li><li><a href="#" data-href="reviews.php">구매후기</a></li><li><a href="#" data-href="event.php">이벤트</a></li><li><a href="#" data-href="partnership.php">파트너십</a></li></ul></div>
+      <div><p class="am__t">빠른 메뉴</p><ul class="am__row"><li><a href="#" data-href="quote-intro.php">견적문의</a></li><li><a href="#" data-href="mypage.php?section=draft">시안확인</a></li><li><a href="https://noeul.ai.kr" target="_blank" rel="noopener">회사소개</a></li><li><a href="#" data-href="customer-center.php">고객센터</a></li><li><a href="#" data-href="mypage.php?section=orders">주문내역</a></li><li><a href="#" data-href="customer-center.php?tab=notice">공지사항</a></li><li><a href="#" data-href="customer-center.php?tab=qna">1:1 문의</a></li></ul></div>
+    </div>
+      </div>
+    </div>
+    <div class="acp-dim" id="allDim" data-lenis-prevent hidden></div>
+  </div>
+  <div class="mh" id="mh">
+    <div class="mh__inner">
+      <div class="mh__side">
+        <button type="button" class="mh__btn mh__burger" id="drawerBtn" aria-label="메뉴 열기" aria-expanded="false" aria-controls="drawer"><span class="burger" aria-hidden="true"><span></span><span></span><span></span></span></button>
+        <a class="mh__logo" href="#" data-href="index.php"><img src="img/b2bt-v2-h36.png" srcset="img/b2bt-v2-h36.png 1x, img/b2bt-v2-h72.png 2x, img/b2bt-v2-h112.png 3x" width="127" height="36" alt="비투비티"></a>
+      </div>
+      <div class="mh__side mh__side--right">
+        <button type="button" class="mh__btn" id="mSearchBtn" aria-label="검색" aria-expanded="false" aria-controls="mSearch"><svg class="ic" viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="10.75" cy="10.75" r="6.75"/><path d="M15.75 15.75 20.5 20.5"/></svg></button>
+        <a class="mh__btn" href="#" data-href="login.php" aria-label="로그인"><svg class="ic" viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="4"/><path d="M4.5 20.5c.9-3.6 3.9-6 7.5-6s6.6 2.4 7.5 6"/></svg></a>
+        <a class="mh__btn" href="#" data-href="cart.php" aria-label="장바구니"><svg class="ic" viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4.75 7.75h14.5l-1.1 12.5H5.85L4.75 7.75Z"/><path d="M8.75 10V6.5a3.25 3.25 0 0 1 6.5 0V10"/></svg></a>
+      </div>
+    </div>
+    <div class="mh-search" id="mSearch">
+      <form role="search" action="#">
+        <input type="search" name="q" maxlength="100" placeholder="상품을 검색하세요" aria-label="상품 검색">
+        <button type="submit" class="mh-search__btn" aria-label="검색"><svg class="ic" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="10.75" cy="10.75" r="6.75"/><path d="M15.75 15.75 20.5 20.5"/></svg></button>
+      </form>
+    </div>
+  </div>
+</header>
+<div class="drawer-dim" id="drawerDim" hidden></div>
+<div class="drawer" id="drawer" data-lenis-prevent role="dialog" aria-modal="true" aria-label="전체 메뉴">
+  <div class="dr-top">
+    <button type="button" class="dr-close" id="drawerClose" aria-label="메뉴 닫기"><svg class="ic" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    <ul class="dr-login"><li><a href="#" data-href="login.php">로그인</a></li><li><a href="#" data-href="signup.php">회원가입</a></li></ul>
+  </div>
+  <div class="dr-cat">
+    <div class="dr-tabs" role="tablist" aria-label="메뉴 분류" aria-orientation="vertical"><button type="button" role="tab" class="dr-tab is-on" id="drTab-uniform" aria-controls="drPane-uniform" aria-selected="true" tabindex="0">단체복</button><button type="button" role="tab" class="dr-tab" id="drTab-work" aria-controls="drPane-work" aria-selected="false" tabindex="-1">작업복</button><button type="button" role="tab" class="dr-tab" id="drTab-brands" aria-controls="drPane-brands" aria-selected="false" tabindex="-1">협력브랜드</button><button type="button" role="tab" class="dr-tab" id="drTab-custom" aria-controls="drPane-custom" aria-selected="false" tabindex="-1">맞춤작업복</button><button type="button" role="tab" class="dr-tab" id="drTab-service" aria-controls="drPane-service" aria-selected="false" tabindex="-1">서비스</button></div>
+    <div class="dr-panes"><div class="dr-pane" role="tabpanel" id="drPane-uniform" aria-labelledby="drTab-uniform"><ul><li><a href="#" data-href="category.php">단체복 전체보기</a></li><li><a href="#" data-href="category.php?cat=%EB%9D%BC%EC%9A%B4%EB%93%9C%20%ED%8B%B0%EC%85%94%EC%B8%A0">라운드 티셔츠</a></li><li><a href="#" data-href="category.php?cat=%EC%B9%B4%EB%9D%BC%20%ED%8B%B0%EC%85%94%EC%B8%A0">카라 티셔츠</a></li><li><a href="#" data-href="category.php?cat=%EB%A7%A8%ED%88%AC%EB%A7%A8%20%ED%8B%B0%EC%85%94%EC%B8%A0">맨투맨 티셔츠</a></li><li><a href="#" data-href="category.php?cat=%ED%9B%84%EB%93%9C%20%ED%8B%B0%EC%85%94%EC%B8%A0">후드 티셔츠</a></li><li><a href="#" data-href="category.php?cat=%EB%AF%BC%EC%86%8C%EB%A7%A4%2C%20%EB%AA%A9%ED%8F%B4%EB%9D%BC">민소매, 목폴라</a></li><li><a href="#" data-href="category.php?cat=%EC%A1%B0%EB%81%BC">조끼</a></li><li><a href="#" data-href="category.php?cat=%EC%9E%90%EC%BC%93">자켓</a></li><li><a href="#" data-href="category.php?cat=%ED%8C%A8%EB%94%A9">패딩</a></li><li><a href="#" data-href="category.php?cat=%EB%B0%94%EC%A7%80">바지</a></li><li><a href="#" data-href="category.php?cat=%EB%AA%A8%EC%9E%90">모자</a></li></ul></div><div class="dr-pane" role="tabpanel" id="drPane-work" aria-labelledby="drTab-work" hidden><ul><li><a href="#" data-href="category.php?cat=%EC%9E%91%EC%97%85%EB%B3%B5&amp;sub=%EB%B4%84%20%EC%9E%91%EC%97%85%EB%B3%B5">봄 작업복</a></li><li><a href="#" data-href="category.php?cat=%EC%9E%91%EC%97%85%EB%B3%B5&amp;sub=%EC%97%AC%EB%A6%84%20%EC%9E%91%EC%97%85%EB%B3%B5">여름 작업복</a></li><li><a href="#" data-href="category.php?cat=%EC%9E%91%EC%97%85%EB%B3%B5&amp;sub=%EA%B0%80%EC%9D%84%20%EC%9E%91%EC%97%85%EB%B3%B5">가을 작업복</a></li><li><a href="#" data-href="category.php?cat=%EC%9E%91%EC%97%85%EB%B3%B5&amp;sub=%EA%B2%A8%EC%9A%B8%20%EC%9E%91%EC%97%85%EB%B3%B5">겨울 작업복</a></li></ul></div><div class="dr-pane" role="tabpanel" id="drPane-brands" aria-labelledby="drTab-brands" hidden><ul><li><a href="#" data-href="brand.php?cat=MENTIS%20%EB%A9%98%ED%8B%B0%EC%8A%A4">MENTIS 멘티스</a></li><li><a href="#" data-href="brand.php?cat=SSEDA%20%EC%8E%84%EB%8B%A4">SSEDA 쎄다</a></li><li><a href="#" data-href="brand.php?cat=EIDER%20%EC%95%84%EC%9D%B4%EB%8D%94">EIDER 아이더</a></li><li><a href="#" data-href="brand.php?cat=IPAVV%20%EC%95%84%EC%9D%B4%ED%8C%8C%EB%B8%8C">IPAVV 아이파브</a></li><li><a href="#" data-href="brand.php?cat=ARTWIN%20%EC%95%84%ED%8A%B8%EC%9C%88">ARTWIN 아트윈</a></li><li><a href="#" data-href="brand.php?cat=ACE%20%EC%97%90%EC%9D%B4%EC%8A%A4">ACE 에이스</a></li><li><a href="#" data-href="brand.php?cat=ZIBEN%20%EC%A7%80%EB%B2%A4">ZIBEN 지벤</a></li><li><a href="#" data-href="brand.php?cat=K2%20%EC%BC%80%EC%9D%B4%ED%88%AC">K2 케이투</a></li><li><a href="#" data-href="brand.php?cat=T-BUC%20%ED%8B%B0%EB%B7%B0%ED%81%AC">T-BUC 티뷰크</a></li></ul></div><div class="dr-pane" role="tabpanel" id="drPane-custom" aria-labelledby="drTab-custom" hidden><ul><li><a href="#" data-href="custom-intro.php">맞춤작업복 견적문의</a></li><li><a href="#" data-href="guide-logo.php">로고 넣기 안내</a></li></ul></div><div class="dr-pane" role="tabpanel" id="drPane-service" aria-labelledby="drTab-service" hidden><ul><li><a href="#" data-href="customer-center.php?tab=order-guide">주문방법</a></li><li><a href="#" data-href="printing.php">인쇄방법</a></li><li><a href="#" data-href="delivery-cases.php">납품사례</a></li><li><a href="#" data-href="reviews.php">구매후기</a></li><li><a href="#" data-href="event.php">이벤트</a></li><li><a href="#" data-href="partnership.php">파트너십</a></li></ul></div></div>
+  </div>
+</div>
+<main id="main" class="v4 v5 v6 v7 v8 v9 v10 subp">
+<section class="sub-head sub-head--row co-head">
+  <div class="wrap">
+    <div>
+      <nav class="crumb" aria-label="현재 위치"><a href="#" data-href="index.php">홈</a><span aria-hidden="true">/</span><a href="#" data-href="mypage.php?section=orders">주문내역</a><span aria-hidden="true">/</span><span aria-current="page">주문서 작성</span></nav>
+      <h1 class="sub-head__t">주문서 작성 <small data-st-not="invalid guest">요청번호 <span class="num" data-sample>R-20261112-0031</span></small></h1>
+    </div>
+    <ol class="stp co-stp" aria-label="주문 진행 순서" data-st-not="invalid guest"><li class="is-done"><b>1</b><span>장바구니</span></li><li class="is-done"><b>2</b><span>견적·시안 요청</span></li><li class="is-on" aria-current="step"><b>3</b><span>견적 확인·결제</span></li></ol>
+  </div>
+</section>
+<div class="wrap sub-body">
+<form class="co" id="coForm" data-check="입력을 확인해 주세요." novalidate data-st-not="invalid guest">
+  <div class="co__main">
+    <div class="msg msg--err co-errs" id="coErrs" role="alert" tabindex="-1" hidden data-el="L448">
+      <p class="co-errs__t"><i class="i i-alert" aria-hidden="true"></i>입력을 확인해 주세요 <span class="num" id="coErrN"></span></p>
+      <ul id="coErrList"></ul>
+    </div>
+    <div class="co-srv" id="coSrv">
+      <p class="msg msg--err" role="alert" data-st="changed" data-el="L457"><i class="i i-alert" aria-hidden="true"></i><span>견적 금액이 바뀌었습니다. 새로고침한 뒤 바뀐 금액을 확인하고 다시 결제해 주세요.</span><button type="button" class="co-msg__btn" data-co-reload>새로고침</button></p>
+      <p class="msg msg--err" role="alert" data-st="noquote" data-el="L456"><i class="i i-alert" aria-hidden="true"></i><span>지금은 결제할 수 없는 견적입니다. 견적서 유효기간이 지났거나 담당자가 견적을 고치는 중일 수 있습니다. 담당자에게 문의해 주세요.</span></p>
+      <p class="msg msg--err" role="alert" data-st="saved" data-el="L458"><i class="i i-alert" aria-hidden="true"></i><span>이미 접수된 주문입니다. 같은 견적으로 다시 결제할 수 없습니다. 주문내역에서 진행 상태를 확인해 주세요.</span></p>
+      <p class="msg msg--err" role="alert" data-st="check" data-el="L455"><i class="i i-alert" aria-hidden="true"></i><span>고른 결제수단이나 배송방법으로는 이 주문을 진행할 수 없습니다. 결제수단과 배송방법을 다시 확인해 주세요.</span></p>
+      <p class="msg msg--err" role="alert" data-st="fail" data-el="L461"><i class="i i-alert" aria-hidden="true"></i><span>카드 결제창을 불러오지 못했습니다. 브라우저의 팝업 차단을 풀거나 잠시 후 다시 결제해 주세요.</span></p>
+      <p class="msg msg--err" role="alert" data-st="payfail" data-el="L462"><i class="i i-alert" aria-hidden="true"></i><span>카드 결제가 끝나지 않았습니다. 다시 결제하거나 다른 결제수단을 골라 주세요.</span></p>
+      <p class="msg msg--err" role="alert" data-st="savefail" data-el="L463"><i class="i i-alert" aria-hidden="true"></i><span>주문을 저장하지 못했습니다. 잠시 후 다시 결제해 주세요. 계속되면 고객센터(<a class="num" href="tel:050713786094">0507-1378-6094</a>)로 연락해 주세요.</span></p>
+    </div>
+    <p class="msg co-lock" data-st="balance" data-el="L401"><i class="i i-lock" aria-hidden="true"></i><span><b>잔금 결제</b>입니다. 주문정보와 배송정보는 원 주문 <span class="num" data-sample>O-20261115-0007</span>의 값이며 수정할 수 없습니다. 바꿔야 하면 고객센터(<a class="num" href="tel:050713786094">0507-1378-6094</a>)로 연락해 주세요.</span></p>
+
+    <section class="co-sec" aria-labelledby="coItemsT">
+      <details class="co-fold" id="coFold" open>
+        <summary class="co-sec__h"><h2 class="st" id="coItemsT">주문 상품 <small><span class="num">3</span>개 · <span class="num">112</span>벌</small></h2><i class="i i-chev-d co-fold__ic" aria-hidden="true"></i><span class="co-fold__sum">방한 후드 패딩 외 2건 · <span class="num">6,760,600원</span></span></summary>
+        <ul class="co-olist" data-el="L381">
+          <li class="co-oi">
+            <span class="co-oi__ph" data-el="L382"><img src="img/catalog/460-f.webp" alt="" width="600" height="600" decoding="async"></span>
+            <div class="co-oi__b">
+              <p class="co-item__cat">패딩</p>
+              <p class="co-oi__n" data-el="L383">방한 후드 패딩</p>
+              <p class="co-item__o" data-el="L384"><span><em>색상</em><i class="co-sw" style="--c:#111111" aria-hidden="true"></i>블랙</span><span><em>포장</em>개별 폴리백</span><span class="stag stag--acc">인쇄 있음</span></p>
+              <p class="co-oi__sz num" data-el="L385"><span>90 5벌</span><span>95 20벌</span><span>100 30벌</span><span>105 15벌</span></p>
+            </div>
+            <div class="co-oi__r"><p class="co-oi__q" data-el="L386"><b class="num">70</b>벌</p><p class="co-oi__u num">59,000원</p><p class="co-oi__a num" data-el="L387" data-sample>4,130,000원</p></div>
+          </li>
+          <li class="co-oi">
+            <span class="co-oi__ph"><img src="img/catalog/195-f.webp" alt="" width="600" height="600" decoding="async"></span>
+            <div class="co-oi__b">
+              <p class="co-item__cat">조끼</p>
+              <p class="co-oi__n">웰론 보온 겨울조끼</p>
+              <p class="co-item__o"><span><em>색상</em><i class="co-sw" style="--c:#1F3864" aria-hidden="true"></i>네이비</span><span><em>포장</em>기본 포장</span><span class="stag">인쇄 없음</span></p>
+              <p class="co-oi__sz num"><span>M 10벌</span><span>L 12벌</span><span>XL 8벌</span></p>
+            </div>
+            <div class="co-oi__r"><p class="co-oi__q"><b class="num">30</b>벌</p><p class="co-oi__u num">28,000원</p><p class="co-oi__a num" data-sample>840,000원</p></div>
+          </li>
+          <li class="co-oi">
+            <span class="co-oi__ph"><img src="img/brandp/3026.webp" alt="" width="900" height="600" loading="lazy" decoding="async"></span>
+            <div class="co-oi__b">
+              <p class="co-item__cat">협력브랜드 · 케이투</p>
+              <p class="co-oi__n">케이투 JK-F6101</p>
+              <p class="co-item__o"><span><em>색상</em>선택 없음</span><span><em>포장</em>선택 없음</span><span class="stag">인쇄 없음</span></p>
+              <p class="co-oi__sz num"><span>수량 12벌</span></p>
+            </div>
+            <div class="co-oi__r"><p class="co-oi__q"><b class="num">12</b>벌</p><p class="co-oi__u num" data-sample>98,000원(견적 단가)</p><p class="co-oi__a num" data-sample>1,176,000원</p></div>
+          </li>
+        </ul>
+      </details>
+    </section>
+
+    <section class="co-sec" aria-labelledby="coQuoteT" data-el="L388">
+      <div class="co-sec__h"><h2 class="st" id="coQuoteT">견적정보</h2><a class="lnk" href="#" data-href="quote-request-document.php?no=R-20261112-0031" target="_blank" rel="noopener" data-el="L431">견적서 보기 <i aria-hidden="true">→</i></a></div>
+      <dl class="dl co-qdl">
+        <div data-el="L389"><dt>요청번호</dt><dd><span class="num" data-sample>R-20261112-0031</span><span class="stag">시안 요청</span></dd></div>
+        <div data-st="balance"><dt>원 주문번호</dt><dd class="num" data-sample>O-20261115-0007</dd></div>
+        <div><dt>견적일</dt><dd><span class="num" data-sample>2026-11-14</span><span class="co-muted">유효기간 <span class="num">2026-11-29</span>까지</span></dd></div>
+        <div data-el="L390"><dt>최종 견적금액</dt><dd><b class="num co-qamt" data-sample>6,760,600원</b><span class="co-muted">부가세 포함</span></dd></div>
+        <div class="co-qdl__file" data-el="L432"><dt>견적서 파일</dt><dd>
+          <ul class="files co-files" data-st-not="nofile"><li><span class="files__ext">PDF</span><span class="files__n" data-sample>견적서_R-20261112-0031.pdf</span><span class="files__s">1.2MB</span><button type="button" class="co-files__dl" data-toast="견적서 파일을 새 창에서 엽니다." aria-label="견적서 파일 보기"><i class="i i-eye" aria-hidden="true"></i></button></li></ul>
+          <p data-st="nofile">등록된 견적서 파일이 없습니다. <span class="co-muted" style="margin-left:0">견적 내용은 견적서 보기에서 확인할 수 있습니다.</span></p>
+        </dd></div>
+      </dl>
+    </section>
+
+    <section class="co-sec" aria-labelledby="coBuyerT" data-el="L404">
+      <div class="co-sec__h"><h2 class="st" id="coBuyerT">주문정보</h2><span class="co-sec__r" data-st-not="balance"><em>*</em> 필수 항목</span><span class="stag" data-st="balance"><i class="i i-lock i--14" aria-hidden="true"></i>수정 불가</span></div>
+      <div class="fgrid" data-st-not="balance">
+        <div class="fld" data-el="L405" data-err-st="err" data-err="주문하시는 분 이름을 입력해 주세요."><label class="fld__l" for="coBName">주문하시는 분 <em>*</em></label><input class="inp" id="coBName" required maxlength="20" value="김민준" autocomplete="name" data-msg="주문하시는 분 이름을 입력해 주세요." data-sample></div>
+        <div class="fld" data-el="L407"><label class="fld__l" for="coBTel">휴대전화 <em>*</em></label><input class="inp num" id="coBTel" type="tel" required data-fmt="phone" data-rule="mobile" value="010-1234-5678" inputmode="numeric" autocomplete="tel" data-sample><p class="fld__help">주문·결제·배송처럼 중요한 알림을 문자로 보냅니다.</p></div>
+        <div class="fld" data-el="L408"><label class="fld__l" for="coBTel2">연락처 2 <small>선택</small></label><input class="inp num" id="coBTel2" type="tel" data-fmt="phone" data-rule="phone" inputmode="numeric" placeholder="051-000-0000"></div>
+        <div class="fld" data-el="L409 L449" data-err-st="err" data-err="이메일 주소 형식을 확인해 주세요."><label class="fld__l" for="coBMail">이메일 <em>*</em></label><input class="inp" id="coBMail" type="email" required data-rule="email" value="mj.kim@example.com" maxlength="100" autocomplete="email" data-sample><p class="fld__help">주문 처리 과정을 메일로 보냅니다.</p></div>
+        <div class="fld full" data-el="L406"><span class="fld__l">주소 <em>*</em></span>
+          <div class="addr"><div class="inrow"><input class="inp num" id="coBZip" aria-label="주문자 우편번호" value="48058" readonly required data-rule="zip" data-sample><button type="button" class="sb sb--gray" data-zip="coB">우편번호 검색</button></div><input class="inp" id="coBAddr" aria-label="주문자 주소" value="부산광역시 해운대구 센텀중앙로 97" readonly required data-sample><input class="inp" id="coBAddr2" aria-label="주문자 상세주소" value="5층" maxlength="100" required data-msg="상세주소를 입력해 주세요." data-sample></div>
+        </div>
+      </div>
+      <dl class="dl co-lockdl" data-st="balance">
+        <div><dt>주문하시는 분</dt><dd>김민준</dd></div>
+        <div><dt>주소</dt><dd>(48058) 부산광역시 해운대구 센텀중앙로 97, 5층</dd></div>
+        <div><dt>휴대전화</dt><dd class="num">010-1234-5678</dd></div>
+        <div><dt>연락처 2</dt><dd>입력하지 않음</dd></div>
+        <div><dt>이메일</dt><dd>mj.kim@example.com</dd></div>
+      </dl>
+    </section>
+
+    <section class="co-sec" aria-labelledby="coShipT" data-el="L410">
+      <div class="co-sec__h"><h2 class="st" id="coShipT">배송정보</h2><span class="co-sec__r" data-st-not="balance"><em>*</em> 필수 항목</span><span class="stag" data-st="balance"><i class="i i-lock i--14" aria-hidden="true"></i>수정 불가</span></div>
+      <div class="fstack" data-st-not="balance">
+        <div class="fld" data-el="L411"><span class="fld__l">배송지 지정 방식</span>
+          <div class="seg seg--fill" role="radiogroup" aria-label="배송지 지정 방식">
+            <label><input type="radio" name="coShipBy" value="same" checked><span>주문자와 동일</span></label>
+            <label><input type="radio" name="coShipBy" value="base"><span>기본배송지</span></label>
+            <label><input type="radio" name="coShipBy" value="new"><span>새로운 배송지</span></label>
+          </div>
+          <p class="fld__help" id="coShipHelp">주문정보의 이름·주소·휴대전화를 그대로 씁니다.</p>
+          <p class="msg msg--err" role="alert" id="coNoBase" hidden data-el="L446"><i class="i i-alert" aria-hidden="true"></i><span>등록된 기본배송지가 없습니다. <a class="tl" href="#" data-href="mypage.php?section=addresses">배송지 관리</a>에서 기본배송지를 등록해 주세요.</span></p>
+          <button type="button" class="sb sb--gray sb--m co-more" id="coAddrBtn" data-pop="coAddr" hidden style="justify-self:start"><i class="i i-pin i--16" aria-hidden="true"></i>저장된 배송지에서 고르기</button>
+        </div>
+        <div class="fgrid" id="coShipFlds">
+          <div class="fld" data-el="L412"><label class="fld__l" for="coSName">받으시는 분 <em>*</em></label><input class="inp" id="coSName" required maxlength="20" autocomplete="shipping name" data-msg="받으시는 분 이름을 입력해 주세요."></div>
+          <div class="fld" data-el="L414"><label class="fld__l" for="coSTel">연락처 1 <em>*</em></label><input class="inp num" id="coSTel" type="tel" required data-fmt="phone" data-rule="phone" inputmode="numeric" data-msg="받으시는 분 연락처를 입력해 주세요."></div>
+          <div class="fld" data-el="L415"><label class="fld__l" for="coSTel2">연락처 2 <small>선택</small></label><input class="inp num" id="coSTel2" type="tel" data-fmt="phone" data-rule="phone" inputmode="numeric" placeholder="051-000-0000"></div>
+          <div class="fld" data-el="L416"><label class="fld__l" for="coSDate">희망배송일 <small>선택</small></label><span class="co-date"><input class="inp num" id="coSDate" type="date" min="2026-11-18"><span class="co-date__ph" aria-hidden="true">날짜를 고르세요</span></span><p class="fld__help">참고용입니다. 제작 기간은 아래 유의사항을 확인해 주세요.</p></div>
+          <div class="fld full" data-el="L413 L453" data-err-st="err" data-err="우편번호 5자리를 확인해 주세요."><span class="fld__l">배송지 <em>*</em></span>
+            <div class="addr"><div class="inrow"><input class="inp num" id="coSZip" aria-label="배송지 우편번호" placeholder="우편번호" readonly required data-rule="zip" data-msg="배송지 주소를 입력해 주세요."><button type="button" class="sb sb--gray" data-zip="coS">우편번호 검색</button></div><input class="inp" id="coSAddr" aria-label="배송지 주소" placeholder="주소" readonly required data-msg="배송지 주소를 입력해 주세요."><input class="inp" id="coSAddr2" aria-label="배송지 상세주소" placeholder="상세주소를 입력해 주세요" maxlength="100" required data-msg="배송지 상세주소를 입력해 주세요."></div>
+          </div>
+          <div class="fld full" data-el="L417"><span class="fld__l">배송방법</span>
+            <div class="opts opts--4 co-ship" role="radiogroup" aria-label="배송방법">
+              <label class="opt"><input type="radio" name="coShipWay" value="parcel" checked><span class="opt__b"><b>기본배송/택배</b><small>전국</small></span></label>
+              <label class="opt"><input type="radio" name="coShipWay" value="quick"><span class="opt__b"><b>퀵서비스</b><small>서울·경기</small></span></label>
+              <label class="opt"><input type="radio" name="coShipWay" value="bus"><span class="opt__b"><b>고속버스화물</b><small>지방</small></span></label>
+              <label class="opt"><input type="radio" name="coShipWay" value="pickup"><span class="opt__b"><b>방문수령</b><small>픽업장소 협의</small></span></label>
+            </div>
+            <p class="fld__help">배송비는 견적서에 포함되어 있습니다.</p>
+          </div>
+          <div class="fld full" data-el="L418 L454" data-err-st="err" data-err="입력할 수 있는 길이(50자)를 넘었습니다."><label class="fld__l" for="coSMsg">배송메세지 <small>선택</small></label><input class="inp" id="coSMsg" maxlength="50" placeholder="예: 경비실에 맡겨 주세요."></div>
+        </div>
+      </div>
+      <dl class="dl co-lockdl" data-st="balance">
+        <div><dt>받으시는 분</dt><dd>김민준</dd></div>
+        <div><dt>배송지</dt><dd>(48058) 부산광역시 해운대구 센텀중앙로 97, 5층</dd></div>
+        <div><dt>연락처 1</dt><dd class="num">010-1234-5678</dd></div>
+        <div><dt>연락처 2</dt><dd>입력하지 않음</dd></div>
+        <div><dt>희망배송일</dt><dd class="num">2026-11-25</dd></div>
+        <div><dt>배송방법</dt><dd>기본배송/택배</dd></div>
+        <div><dt>배송메세지</dt><dd>1층 안내데스크에 맡겨 주세요.</dd></div>
+      </dl>
+    </section>
+
+    <section class="co-sec" aria-labelledby="coPtT" data-el="L419">
+      <div class="co-sec__h"><h2 class="st" id="coPtT">포인트</h2><p class="co-sec__r" data-el="L391">보유 포인트 <b class="num" data-sample>12,450P</b></p></div>
+      <div class="fld co-pt" data-el="L420 L422">
+        <label class="fld__l" for="coPt">사용 포인트</label>
+        <div class="inrow"><span class="co-unit"><input class="inp inp--num" id="coPt" inputmode="numeric" value="0" autocomplete="off" aria-describedby="coPtHelp"><span aria-hidden="true">P</span></span><button type="button" class="sb sb--gray" id="coPtAll" data-el="L421">모두 사용</button></div>
+        <p class="fld__help" id="coPtHelp">보유 포인트 안에서 쓸 수 있습니다. 결제금액을 넘으면 결제금액만큼만 씁니다.</p>
+        <p class="msg" id="coPtOver" hidden data-el="L460"><i class="i i-info" aria-hidden="true"></i><span>보유 포인트(<span class="num">12,450P</span>)를 넘어 <span class="num">12,450P</span>로 바꿨습니다.</span></p>
+        <p class="msg" id="coPtLater" hidden data-el="L459"><i class="i i-info" aria-hidden="true"></i><span>후불결제 요청은 포인트를 쓸 수 없어 0P로 처리합니다.</span></p>
+      </div>
+    </section>
+
+    <section class="co-sec" aria-labelledby="coPayT" data-el="L423">
+      <div class="co-sec__h"><h2 class="st" id="coPayT">결제수단</h2></div>
+      <div class="opts opts--3 co-pay" role="radiogroup" aria-label="결제수단">
+        <label class="opt"><input type="radio" name="coPay" value="card" checked><span class="opt__b"><b>신용·체크카드</b><small>카드 결제창에서 결제</small></span></label>
+        <label class="opt"><input type="radio" name="coPay" value="bank"><span class="opt__b"><b>무통장입금</b><small>세금계산서 발행 가능</small></span></label>
+        <label class="opt" id="coPayLater"><input type="radio" name="coPay" value="later"><span class="opt__b"><b>후불결제 요청</b><small>관공서·공공기관·학교</small></span></label>
+      </div>
+      <p class="co-paynote" data-pay="card" data-el="L440"><i class="i i-info i--18" aria-hidden="true"></i><span>결제하기를 누르면 카드 결제창이 열립니다. 결제를 마치면 결제 확인을 거쳐 주문 완료 화면으로 이동합니다.</span></p>
+      <p class="co-paynote" data-pay="bank" hidden><i class="i i-info i--18" aria-hidden="true"></i><span>결제하기를 누르면 주문을 접수하고 주문번호를 알려 드립니다. 입금 계좌는 주문 완료 화면에서 안내합니다.</span></p>
+      <p class="co-paynote" data-pay="later" hidden><i class="i i-info i--18" aria-hidden="true"></i><span>관공서·공공기관·학교만 이용할 수 있습니다. 요청을 접수하면 주문번호를 알려 드립니다.</span></p>
+      <div class="co-box" id="coLaterBox" hidden>
+        <div class="fld" data-el="L424 L451" data-err-st="err" data-err="결제 희망일을 선택해 주세요."><label class="fld__l" for="coPayDate">결제 희망일 <em>*</em></label><span class="co-date" style="max-width:280px"><input class="inp num" id="coPayDate" type="date" required min="2026-11-17" data-msg="결제 희망일을 선택해 주세요."><span class="co-date__ph" aria-hidden="true">날짜를 고르세요</span></span></div>
+      </div>
+      <div class="co-box" id="coProof" hidden data-el="L425">
+        <div class="fld"><span class="fld__l">증빙서류</span>
+          <div class="seg seg--fill" role="radiogroup" aria-label="증빙서류" data-st-not="balance">
+            <label><input type="radio" name="coProof" value="tax"><span>세금계산서 발행</span></label>
+            <label><input type="radio" name="coProof" value="cash"><span>현금영수증 발행</span></label>
+            <label><input type="radio" name="coProof" value="none" checked><span>미발행</span></label>
+          </div>
+          <p data-st="balance"><b>세금계산서 발행</b> <span class="num">123-45-67890</span> <span class="co-muted">원 주문 값이며 바꿀 수 없습니다.</span></p>
+        </div>
+        <div class="fgrid" data-proof="tax" hidden data-el="L426 L452">
+          <div class="fld" data-err-st="err" data-err="사업자등록번호 10자리를 확인해 주세요."><label class="fld__l" for="coTaxNo">사업자등록번호 <em>*</em></label><input class="inp num" id="coTaxNo" required data-fmt="biz" data-rule="biz" value="123-45-67890" inputmode="numeric" data-msg="사업자등록번호를 입력해 주세요." data-sample></div>
+          <div class="fld"><label class="fld__l" for="coTaxMail">계산서 이메일 <small>선택</small></label><input class="inp" id="coTaxMail" type="email" data-rule="email" value="mj.kim@example.com" maxlength="100" data-sample><p class="fld__help">비우면 주문자 이메일로 보냅니다.</p></div>
+        </div>
+        <div data-proof="cash" hidden data-el="L427">
+          <div class="fld"><span class="fld__l">발행 용도</span><div class="choice" role="radiogroup" aria-label="현금영수증 발행 용도"><label class="rdo"><input type="radio" name="coCashUse" value="p"><i></i>개인(소득공제)</label><label class="rdo"><input type="radio" name="coCashUse" value="b" checked><i></i>사업자(지출증빙)</label></div></div>
+          <div class="fgrid">
+            <div class="fld" data-cash="p" hidden><label class="fld__l" for="coCashTel">휴대폰 번호 <em>*</em></label><input class="inp num" id="coCashTel" type="tel" required data-fmt="phone" data-rule="mobile" value="010-1234-5678" inputmode="numeric" data-msg="휴대폰 번호를 입력해 주세요." data-sample></div>
+            <div class="fld" data-cash="b"><label class="fld__l" for="coCashNo">사업자등록번호 <em>*</em></label><input class="inp num" id="coCashNo" required data-fmt="biz" data-rule="biz" value="123-45-67890" inputmode="numeric" data-msg="사업자등록번호를 입력해 주세요." data-sample></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="co-sec" aria-labelledby="coNoteT" data-el="L392">
+      <div class="co-sec__h"><h2 class="st" id="coNoteT">주문 시 유의사항</h2></div>
+      <div class="qlist">
+        <details open data-el="L393"><summary><span>후불결제 안내</span></summary><div class="qlist__a"><p>후불결제는 관공서·공공기관·학교만 이용할 수 있습니다. 단, 인쇄 없는 할인 견적으로 요청한 주문은 예외입니다.</p></div></details>
+        <details data-el="L394"><summary><span>세금계산서 안내</span></summary><div class="qlist__a"><p>세금계산서는 무통장입금으로 결제할 때만 발행합니다. 결제를 확인한 뒤 영업일 1~3일 안에 계산서 이메일(적지 않으면 주문자 이메일)로 보내 드립니다.</p><p>먼저 발행하거나 날짜를 정해 발행하려면 전화(<a class="num" href="tel:050713786094">0507-1378-6094</a>)로 요청해 주세요. 신청을 빠뜨렸다면 입금일 기준 다음 달 10일까지 추가로 신청할 수 있습니다.</p></div></details>
+        <details data-el="L395"><summary><span>희망배송일 안내</span></summary><div class="qlist__a"><p>희망배송일은 참고용입니다. 제작 기간은 인쇄 없는 상품 3~4일, 인쇄 상품 4~7일입니다(주말 제외).</p><p>정해진 날짜까지 꼭 받아야 하면 결제 전에 담당자와 납품 일정을 확인해 주세요.</p></div></details>
+      </div>
+    </section>
+  </div>
+
+  <aside class="co-side" aria-labelledby="coSumT">
+    <div class="co-sum" data-el="L396">
+      <h2 class="co-sum__t" id="coSumT">결제 금액</h2>
+      <dl class="co-sum__dl">
+        <div data-el="L397"><dt>총 상품금액<small>견적 금액</small></dt><dd class="num" data-sample>6,760,600원</dd></div>
+        <div data-el="L398"><dt>배송비</dt><dd>견적서에 포함</dd></div>
+        <div data-el="L399"><dt>포인트 사용</dt><dd class="num" id="coSumPt">0P</dd></div>
+        <div class="co-sum__tot" data-el="L400"><dt>총 결제금액</dt><dd><b class="num" id="coSumTot">6,760,600</b>원</dd></div>
+      </dl>
+      <p class="co-sum__meta">결제수단 <b id="coSumPay">신용·체크카드</b></p>
+      <div class="fld co-agree" data-st-not="noquote saved" data-el="L428 L450" data-err-st="err" data-err="취소/환불 정책에 동의해 주세요.">
+        <div class="agree" data-st-not="balance"><label class="chk"><input type="checkbox" id="coAgree" name="coAgree" required data-msg="취소/환불 정책에 동의해 주세요."><i></i><span>취소/환불 정책에 동의합니다 <b>(필수)</b></span><a class="agree__more" href="#" data-pop="coPolicy" data-el="L433">보기</a></label></div>
+        <div class="agree" data-st="balance"><label class="chk"><input type="checkbox" checked disabled><i></i><span>취소/환불 정책에 동의했습니다 <small>원 주문에서 동의</small></span><a class="agree__more" href="#" data-pop="coPolicy">보기</a></label></div>
+      </div>
+      <p class="msg" data-st="paying"><i class="i i-info" aria-hidden="true"></i><span>카드 결제창을 여는 중입니다. 결제창에서 결제를 마치면 주문 완료 화면으로 이동합니다.</span></p>
+      <div class="co-sum__msg" id="coSumMsg"></div>
+      <button type="submit" class="bt bt--acc bt--full co-go" id="coPayBtn" data-busy-st="paying" data-st-not="noquote saved" data-el="L439"><span>6,760,600원 결제하기</span><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></button>
+      <a class="bt bt--line bt--full co-go" href="#" data-href="customer-center.php?tab=qna" data-st="noquote"><span>담당자에게 문의</span><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></a>
+      <a class="bt bt--line bt--full co-go" href="#" data-href="mypage.php?section=orders" data-st="saved"><span>주문내역 보기</span><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></a>
+    </div>
+  </aside>
+</form>
+<div class="gate co-gate" data-st="invalid" data-el="L445">
+  <span class="smark smark--red"><i class="i i-alert" aria-hidden="true"></i></span>
+  <p class="gate__t">결제할 수 없는 주문서입니다</p>
+  <p class="gate__d">본인 견적이 아니거나 지금은 결제할 수 없는 상태입니다. 이용이 정지된 회원도 결제할 수 없습니다. 주문내역에서 진행 상태를 확인해 주세요.</p>
+  <div class="acts"><a class="sb sb--gray" href="#" data-href="customer-center.php?tab=qna">1:1 문의</a><a class="sb sb--ink" href="#" data-href="mypage.php?section=orders">주문내역으로 돌아가기</a></div>
+</div>
+<div class="gate co-gate" data-st="guest" data-el="L444">
+  <span class="smark smark--gray"><i class="i i-lock" aria-hidden="true"></i></span>
+  <p class="gate__t">로그인이 필요합니다</p>
+  <p class="gate__d">주문서는 로그인한 회원만 쓸 수 있습니다. 로그인하면 이 주문서로 돌아옵니다.</p>
+  <div class="acts"><a class="sb sb--gray" href="#" data-href="signup.php">회원가입</a><a class="sb sb--ink" href="login.html?return=order.html">로그인</a></div>
+</div>
+</div>
+<div class="co-dock" id="coDock" data-st-not="invalid guest">
+  <p class="co-dock__t"><span>총 결제금액</span><b class="num" id="coDockTot">6,760,600원</b></p>
+  <button type="submit" form="coForm" class="sb sb--acc sb--l co-dock__go" id="coDockGo" data-busy-st="paying" data-st-not="noquote saved">결제하기</button>
+  <a class="sb sb--line sb--l co-dock__go" href="#" data-href="customer-center.php?tab=qna" data-st="noquote">담당자에게 문의</a>
+  <a class="sb sb--line sb--l co-dock__go" href="#" data-href="mypage.php?section=orders" data-st="saved">주문내역 보기</a>
+</div>
+<div class="pop" id="coAddr" role="dialog" aria-modal="true" aria-labelledby="coAddrT" hidden data-open-st="addr" data-el="L434">
+  <div class="pop__dim" data-pop-close></div>
+  <div class="pop__box pop__box--m">
+    <div class="pop__head"><h2 class="pop__t" id="coAddrT">저장된 배송지</h2><button type="button" class="pop__x" data-pop-close aria-label="닫기"><i class="i i-x" aria-hidden="true"></i></button></div>
+    <div class="pop__body">
+      <ul class="co-addr" data-st-not="noaddr" data-el="L435" data-sample>
+        <li><div class="co-addr__b"><p class="co-addr__n">녹산 공장 <span class="stag stag--ink">기본배송지</span></p><p>김민준</p><p class="num">(46744) 부산광역시 강서구 녹산산업중로 333, 2동 자재창고</p><p class="num">010-1234-5678</p></div><button type="button" class="sb sb--line sb--m" data-el="L436" data-addr='{"name":"김민준","tel":"010-1234-5678","zip":"46744","addr":"부산광역시 강서구 녹산산업중로 333","addr2":"2동 자재창고"}'>선택</button></li>
+        <li><div class="co-addr__b"><p class="co-addr__n">본사</p><p>김민준</p><p class="num">(48058) 부산광역시 해운대구 센텀중앙로 97, 5층</p><p class="num">010-1234-5678</p></div><button type="button" class="sb sb--line sb--m" data-addr='{"name":"김민준","tel":"010-1234-5678","zip":"48058","addr":"부산광역시 해운대구 센텀중앙로 97","addr2":"5층"}'>선택</button></li>
+      </ul>
+      <div class="empty co-addr__empty" data-st="noaddr" data-el="L447">
+        <span class="empty__ic"><i class="i i-pin" aria-hidden="true"></i></span>
+        <p class="empty__t">저장된 배송지가 없습니다.</p>
+        <p class="empty__d">배송지 관리에서 자주 쓰는 배송지를 등록해 두면 여기서 고를 수 있습니다. 이번 주문은 배송지를 직접 입력해 주세요.</p>
+      </div>
+    </div>
+    <div class="pop__foot"><a class="sb sb--gray" href="#" data-href="mypage.php?section=addresses" data-el="L437">배송지 관리</a><button type="button" class="sb sb--ink" data-pop-close data-el="L438">닫기</button></div>
+  </div>
+</div>
+<div class="pop" id="coPolicy" role="dialog" aria-modal="true" aria-labelledby="coPolicyT" hidden data-open-st="policy">
+  <div class="pop__dim" data-pop-close></div>
+  <div class="pop__box pop__box--m">
+    <div class="pop__head"><h2 class="pop__t" id="coPolicyT">취소/환불 정책</h2><button type="button" class="pop__x" data-pop-close aria-label="닫기"><i class="i i-x" aria-hidden="true"></i></button></div>
+    <div class="pop__body co-pol" data-sample>
+      <h3>주문 취소</h3>
+      <ul><li>결제 전에는 주문내역에서 주문을 취소할 수 있습니다.</li><li>인쇄 상품은 시안을 확정하고 제작에 들어간 뒤에는 취소할 수 없습니다.</li></ul>
+      <h3>교환·반품</h3>
+      <ul><li>인쇄 없는 상품은 받은 날부터 7일 안에 교환·반품을 신청할 수 있습니다.</li><li>인쇄·자수를 넣은 상품은 주문에 맞춰 만든 상품이라 단순 변심으로는 교환·반품할 수 없습니다.</li><li>상품에 문제가 있으면 받은 날부터 7일 안에 고객센터로 알려 주세요.</li></ul>
+      <h3>환불</h3>
+      <ul><li>카드 결제는 카드 승인을 취소하고, 무통장입금은 주문자 명의 계좌로 돌려 드립니다.</li><li>사용한 포인트는 환불할 때 다시 넣어 드립니다.</li></ul>
+    </div>
+    <div class="pop__foot"><a class="sb sb--gray" href="#" data-href="refund-policy.php">전체 정책 보기</a><button type="button" class="sb sb--ink" data-pop-close>확인</button></div>
+  </div>
+</div>
+<div class="pop pop--c co-done" id="coDone" role="alertdialog" aria-modal="true" aria-labelledby="coDoneT" hidden data-el="L441">
+  <div class="pop__dim"></div>
+  <div class="pop__box">
+    <div class="pop__body">
+      <span class="smark"><i class="i i-check" aria-hidden="true"></i></span>
+      <h2 class="pop__t" id="coDoneT">주문을 접수했습니다</h2>
+      <p class="pop__d" data-co-done="bank">입금 계좌는 주문 완료 화면에서 확인할 수 있습니다.</p>
+      <p class="pop__d" data-co-done="later" hidden>결제 희망일에 맞춰 결제를 진행해 주세요.</p>
+      <dl class="dl dl--sm"><div><dt>주문번호</dt><dd class="num" data-sample>O-20261115-0007</dd></div><div><dt>결제 금액</dt><dd class="num" data-sample>6,760,600원</dd></div></dl>
+    </div>
+    <div class="pop__foot"><a class="sb sb--ink" id="coDoneGo" href="order-complete.html?state=bank">주문 완료 화면으로</a></div>
+  </div>
+</div>
+</main>
+<footer class="ft">
+  <div class="site-wrap">
+    <div class="ft__top">
+      <a class="ft__logo" href="#" data-href="index.php"><img src="img/b2bt-v2-h56.png" srcset="img/b2bt-v2-h56.png 1x, img/b2bt-v2-h112.png 2x, img/b2bt-v2-h168.png 3x" width="114" height="32" alt="비투비티" loading="lazy" decoding="async"></a>
+      <nav class="ft__links" aria-label="정책 및 안내">
+        <a href="#" data-href="terms.php">이용약관</a>
+        <a href="#" data-href="privacy.php" class="is-strong">개인정보처리방침</a>
+        <a href="#" data-href="privacy.php#pp-cookies">방문 기록 설정</a>
+        <a href="#" data-href="customer-center.php?tab=faq">FAQ</a>
+        <a href="#" data-href="refund-policy.php">취소/환불 정책</a>
+        <a href="#" data-href="customer-center.php?tab=notice">공지사항</a>
+      </nav>
+    </div>
+    <ul class="ft__branches">
+      <li><b>부산사업부</b><span>부산광역시 해운대구 반여로 96</span><a class="num" href="#" data-href="tel:050713786094">0507-1378-6094</a></li>
+      <li><b>경남사업부</b><span>창원시 진해구 충장로657번길 28</span><a class="num" href="#" data-href="tel:050713786094">0507-1378-6094</a></li>
+      <li><b>온라인사업부</b><span>창원시 진해구 남문동1275-2</span><a class="num" href="#" data-href="tel:050713736094">0507-1373-6094</a></li>
+      <li><b>물류사업부</b><span>창원시 진해구 두동 1366</span><a class="num" href="#" data-href="tel:050713786094">0507-1378-6094</a></li>
+    </ul>
+    <div class="ft__info">
+      <p class="ft__lines">
+        <span>상호 : 주식회사 노을상사</span>
+        <span>대표이사 : 고도혁</span>
+        <span>개인정보담당자 : 고도혁</span>
+        <span>사업자등록번호 : <span class="num">885-87-03544</span></span>
+        <span>통신판매번호 : <span class="num">2026-부산 해운대-0131호</span></span>
+        <span>대표전화 : <span class="num">0507-1378-6094</span></span>
+        <span>이메일 : noeul@noeul.co</span>
+      </p>
+      <div class="ft__cs">
+        <p class="ft__cs-label">고객센터</p>
+        <a class="ft__cs-phone num" href="#" data-href="tel:050713786094">0507-1378-6094</a>
+        <p class="ft__cs-hours">주중 10시~18시 (점심시간 12시~13시 / 주말 및 공휴일 제외)</p>
+      </div>
+    </div>
+    <div class="ft__certs">
+      <img src="img/footer/ftc-h52.png" width="110" height="26" style="aspect-ratio:220/52" alt="공정거래위원회" loading="lazy" decoding="async">
+      <img src="img/footer/d2b-h52.png" width="165" height="26" style="aspect-ratio:330/52" alt="국방전자조달시스템" loading="lazy" decoding="async">
+      <img src="img/footer/narabill-h52.png" width="106" height="26" style="aspect-ratio:212/52" alt="나라빌" loading="lazy" decoding="async">
+      <img src="img/footer/schoolmarket-h52.png" width="46" height="26" style="aspect-ratio:92/52" alt="학교장터" loading="lazy" decoding="async">
+      <img src="img/footer/pps-h52.png" width="72" height="26" style="aspect-ratio:144/52" alt="조달청" loading="lazy" decoding="async">
+      <img src="img/footer/seoulguarantee-h52.png" width="129" height="26" style="aspect-ratio:258/52" alt="서울보증" loading="lazy" decoding="async">
+    </div>
+    <div class="ft__bottom">
+      <p class="ft__about">비투비티는 주식회사 노을상사의 B2B 쇼핑몰입니다.</p>
+      <p class="ft__copy">© 2026 비투비티</p>
+    </div>
+  </div>
+</footer>
+<nav class="mbar" aria-label="빠른 상담">
+  <a class="mbar__item" href="#" data-href="https://pf.kakao.com/_uxjxmxjn"><svg class="ic" viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 4.5c-4.7 0-8.25 3.05-8.25 6.9 0 2.3 1.3 4.33 3.3 5.6l-.8 3.25 3.7-2.05c.66.13 1.34.2 2.05.2 4.7 0 8.25-3.05 8.25-6.9S16.7 4.5 12 4.5Z"/><path d="M8.5 11.5h.01M12 11.5h.01M15.5 11.5h.01" stroke-width="2"/></svg><span>채팅상담</span></a>
+  <a class="mbar__item" href="#" data-href="tel:050713786094"><svg class="ic" viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M8.6 4.25H6.1a1.6 1.6 0 0 0-1.6 1.75c.75 7.25 6.25 12.75 13.5 13.5a1.6 1.6 0 0 0 1.75-1.6v-2.5a1 1 0 0 0-.75-.97l-3-.8a1 1 0 0 0-.98.27l-1.5 1.5a11 11 0 0 1-4.9-4.9l1.5-1.5a1 1 0 0 0 .27-.98l-.8-3a1 1 0 0 0-.97-.75Z"/></svg><span>전화상담</span><small class="mbar__sub">주중 10시~18시</small></a>
+  <a class="mbar__quote" href="#" data-href="quote-intro.php"><svg class="ic" viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4.75 19.25h14.5"/><path d="M14.5 5.25l3.25 3.25L9.25 17H6v-3.25z"/></svg><span>견적문의</span></a>
+</nav>
+<div class="side-cs" aria-label="상담 바로가기" role="group">
+  <a class="side-cs__btn side-cs__btn--kakao" href="#" data-href="https://pf.kakao.com/_uxjxmxjn" aria-label="카카오톡 상담"><svg class="ic" viewBox="0 0 256 256" width="26" height="26" fill="currentColor" aria-hidden="true" focusable="false"><path d="M128 36C70.562 36 24 72.713 24 118c0 29.279 19.466 54.97 48.748 69.477-1.593 5.494-10.237 35.344-10.581 37.689 0 0-.207 1.762.934 2.434s2.483.15 2.483.15c3.272-.457 37.943-24.811 43.944-29.04 5.995.849 12.168 1.29 18.472 1.29 57.438 0 104-36.712 104-82 0-45.287-46.562-82-104-82z"/></svg></a>
+  <button type="button" class="side-cs__btn side-cs__btn--top" id="toTop" aria-label="맨 위로"><svg class="ic" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 14.5l6-6 6 6"/></svg></button>
+</div>
+</body>
+</html>

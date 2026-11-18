@@ -1,0 +1,18 @@
+/* v8: same square split-label/arrow language in hero and header. */
+.hero-quote{height:58px;border-radius:0;background:var(--accent);color:#fff;backdrop-filter:none;box-shadow:none}
+.hero-quote>i{width:58px}
+.hero-quote:focus-visible{outline:2px solid #fff;outline-offset:4px}
+.hd__pills .pill{position:relative;isolation:isolate;overflow:hidden;align-items:stretch;justify-content:flex-start;min-width:0;padding:0;border:0;border-radius:0;font-weight:700;transition:color .35s}
+.hd__pills .pill>span{display:flex;align-items:center;justify-content:center;padding:0 12px}
+.hd__pills .pill>i{display:grid;place-items:center;width:30px;flex:none;border-left:1px solid rgba(255,255,255,.22);font-style:normal}
+.hd__pills .pill>i svg{width:14px;height:14px;transition:transform .5s var(--ease)}
+.hd__pills .pill:before{content:"";position:absolute;inset:0;z-index:-1;background:rgba(0,0,0,.2);transform:translateY(101%);transition:transform .5s var(--ease)}
+.hd__pills .pill:hover:before{transform:none}
+.hd__pills .pill:hover>i svg{transform:translateX(3px)}
+.hd__pills .pill--quote,.hd__pills .pill--quote:hover{background:#3182f6}
+.hd__pills .pill--draft,.hd__pills .pill--draft:hover{background:#1f2f57}
+.hd__pills .pill--about,.hd__pills .pill--about:hover{background:#626872}
+.hd__pills .pill:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+@media(max-width:1450px){.hd__pills .pill>span{padding-inline:10px}.hd__pills .pill>i{width:26px}}
+@media(max-width:768px){.hero-quote{height:50px;font-size:15px}.hero-quote>span{padding:0 22px}.hero-quote>i{width:50px}}
+@media(prefers-reduced-motion:reduce){.hd__pills .pill:before,.hd__pills .pill>i svg{transition:none}}

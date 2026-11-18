@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ko" data-accent="blue" data-claim="on">
+<head>
+<script>
+(function(){var d=document.documentElement,s=d.dataset,g=null,c=null,ok=/^(grad|dot|grid|ring|off)$/;s.accent='blue';s.cta='solid';s.claim='on';s.pop='both';s.version='10';
+try{var q=new URLSearchParams(location.search).get('bg')||'';if(ok.test(q))localStorage.setItem('b2bt-v10-bg',q);g=localStorage.getItem('b2bt-v10-bg')||'';c=localStorage.getItem('b2bt-v9-cols');}catch(e){}
+s.band='f';s.bg=ok.test(g||'')?g:'grad';s.cols=c==='1'?'1':'2';d.classList.add('js');
+if(!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('v4-motion');setTimeout(function(){if(!window.B2BT_READY)d.classList.remove('v4-motion');},4000);}})();
+</script>
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>견적서 미리보기 | 비투비티</title>
+<meta name="description" content="견적문의에 입력한 내용을 견적서 모양으로 미리 보고, 이 화면에서 바로 견적을 요청합니다.">
+<link rel="icon" type="image/png" href="img/b2bt-v2-h56.png">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="css/ds-blue.css?v=20261116">
+<link rel="stylesheet" href="css/site.css?v=20261116">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="css/v4.css?v=20261116">
+<link rel="stylesheet" href="css/v8-base.css?v=20261116">
+<link rel="stylesheet" href="css/v8.css?v=20261116">
+<link rel="stylesheet" href="css/ui-v8.css?v=20261116">
+<link rel="stylesheet" href="css/v9.css?v=20261116">
+<link rel="stylesheet" href="css/v10.css?v=20261116">
+<link rel="stylesheet" href="css/sub.css?v=20261117">
+<script src="js/sub.js?v=20261117" defer></script>
+<script src="js/sub-quotedoc.js?v=20261117" defer></script>
+</head>
+<body data-page="quote-preview" data-shell="bare" data-auth="member" data-win>
+<main id="main" class="v4 v5 v6 v7 v8 v9 v10 subp">
+<header class="win__bar">
+  <a class="win__logo" href="#" data-href="index.php"><img src="img/b2bt-v2-h56.png" srcset="img/b2bt-v2-h56.png 1x, img/b2bt-v2-h112.png 2x" width="107" height="30" alt="비투비티"></a>
+  <h1 class="win__name">견적서 미리보기</h1>
+  <div class="win__acts">
+    <button type="button" class="sb sb--gray sb--m" data-win-close data-el="L725">닫기</button>
+    <button type="button" class="sb sb--acc sb--m" data-qd-req data-busy-st="busy" data-st-not="readonly" data-el="L726"><span class="qd-bl">견적 요청</span><span class="qd-bb">접수 중</span></button>
+  </div>
+</header>
+<div class="win__body">
+  <div class="wrap">
+    <div class="qd-wrap">
+      <!-- 종이 위 한 줄 안내 -->
+      <p class="qd-flag" data-st-not="loading closed busy fail"><i class="i i-info" aria-hidden="true"></i><span>입력한 내용으로 만든 <b>미리보기</b>이며 저장되지 않습니다. 금액은 견적문의를 접수한 뒤 담당자가 정해 견적서로 보내 드립니다. <span data-el="L722">입력한 요청사항은 견적서에 나오지 않습니다.</span></span></p>
+      <p class="qd-flag" id="qdBusy" data-st="busy" role="status" data-el="L731"><span class="qd-spin" aria-hidden="true"></span><span>견적문의를 접수하는 중입니다. 창을 닫지 말고 잠시 기다려 주세요.</span></p>
+      <p class="msg msg--err" id="qdFail" data-st="fail" role="alert" data-el="L732"><i class="i i-alert" aria-hidden="true"></i><span>견적문의를 접수하지 못했습니다. 입력한 내용은 견적문의 화면에 그대로 있으니 잠시 후 <b>견적 요청</b>을 다시 눌러 주세요.</span></p>
+      <i hidden data-toast-st="fail" data-toast="견적문의를 접수하지 못했습니다. 잠시 후 다시 눌러 주세요." data-toast-err></i>
+
+      <!-- 견적서 종이 -->
+      <article class="qd" aria-labelledby="qdT" data-st-not="loading closed">
+        <header class="qd__top" data-el="L717">
+          <h2 class="qd__t" id="qdT"><span>견적서</span><span class="stag stag--acc stag--l">미리보기</span></h2>
+          <p class="qd__no">문의번호는 견적을 요청한 뒤 정해집니다.</p>
+        </header>
+
+        <div class="qd__head">
+          <section class="qd-to" aria-label="수신" data-el="L718">
+            <p class="qd__k">수신</p>
+            <p class="qd-to__n" data-sample>한결산업 주식회사 <small>귀중</small></p>
+            <dl class="qd-dl" data-sample>
+              <div><dt>담당자</dt><dd>김민준</dd></div>
+              <div><dt>연락처</dt><dd class="num">010-1234-5678</dd></div>
+              <div><dt>견적일자</dt><dd class="num">2026-11-17</dd></div>
+              <div><dt>유효기간</dt><dd><span class="num">2026-12-02</span>까지<small>견적일로부터 15일</small></dd></div>
+            </dl>
+          </section>
+          <div class="qd-amt" data-el="L718">
+            <p class="qd-amt__k">견적금액<small>부가세 포함</small></p>
+            <p class="qd-amt__v num">0원</p>
+          </div>
+          <section class="qd-from" aria-label="공급자" data-el="L719">
+            <div class="qd-from__top"><p class="qd__k">공급자</p><img class="qd-from__logo" src="img/b2bt-v2-h56.png" srcset="img/b2bt-v2-h56.png 1x, img/b2bt-v2-h112.png 2x" width="107" height="30" alt="비투비티"></div>
+            <dl class="qd-dl">
+              <div><dt>상호</dt><dd>주식회사 노을상사</dd></div>
+              <div class="qd-from__ceo"><dt>대표이사</dt><dd>고도혁<span class="qd-seal" data-slot="company-seal" role="img" aria-label="대표 직인">직인</span></dd></div>
+              <div><dt>사업자등록번호</dt><dd class="num">885-87-03544</dd></div>
+              <div><dt>주소</dt><dd>부산광역시 해운대구 반여로 96</dd></div>
+              <div><dt>전화</dt><dd class="num"><a href="tel:050713786094">0507-1378-6094</a></dd></div>
+              <div><dt>사이트</dt><dd data-sample>noeul.shop</dd></div>
+            </dl>
+          </section>
+        </div>
+
+        <section class="qd-sec" aria-labelledby="qdItemsT">
+          <div class="qd-sec__h"><h3 class="qd-sec__t" id="qdItemsT">견적 품목 <small>3건</small></h3><p class="qd-sec__u">단가와 금액은 담당자가 정한 뒤 견적서로 안내합니다.</p></div>
+          <table class="qd-items" data-el="L720">
+            <thead><tr><th class="qd-items__no" scope="col">번호</th><th scope="col">상품 정보</th><th class="qd-items__qty r" scope="col">수량</th><th class="qd-items__unit r" scope="col">단가</th><th class="qd-items__amt r" scope="col">금액</th><th class="qd-items__memo" scope="col">비고</th></tr></thead>
+            <tbody data-sample>
+              <tr>
+                <td class="qd-items__no num">1</td>
+                <td class="qd-items__info">
+                  <p class="qd-it__n">방한 후드 패딩</p>
+                  <dl class="qd-spec">
+                    <div><dt>옵션</dt><dd>블랙</dd></div>
+                    <div><dt>포장</dt><dd>개별 폴리백</dd></div>
+                    <div><dt>인쇄방법</dt><dd>자수 인쇄</dd></div>
+                    <div><dt>인쇄내용</dt><dd>왼쪽 가슴·등 회사 로고</dd></div>
+                  </dl>
+                  <ul class="qd-files" aria-label="첨부파일"><li><i class="i i-clip i--14" aria-hidden="true"></i><span>로고_시안.ai</span></li><li><i class="i i-clip i--14" aria-hidden="true"></i><span>가슴_인쇄_위치.png</span></li></ul>
+                </td>
+                <td class="qd-items__qty r num" data-th="수량">70벌</td>
+                <td class="qd-items__unit r num" data-th="단가">0원</td>
+                <td class="qd-items__amt r num" data-th="금액">0원</td>
+                <td class="qd-items__memo" data-th="비고">납기 <span class="num">2026-11-28</span> 희망<br>자수 실 색상은 흰색</td>
+              </tr>
+              <tr>
+                <td class="qd-items__no num">2</td>
+                <td class="qd-items__info">
+                  <p class="qd-it__n">웰론 보온 겨울조끼</p>
+                  <dl class="qd-spec">
+                    <div><dt>옵션</dt><dd>네이비</dd></div>
+                    <div><dt>포장</dt><dd>기본 포장</dd></div>
+                    <div><dt>인쇄방법</dt><dd>인쇄 없음</dd></div>
+                    <div><dt>인쇄내용</dt><dd><span class="qd-none">없음</span></dd></div>
+                  </dl>
+                </td>
+                <td class="qd-items__qty r num" data-th="수량">30벌</td>
+                <td class="qd-items__unit r num" data-th="단가">0원</td>
+                <td class="qd-items__amt r num" data-th="금액">0원</td>
+                <td class="qd-items__memo" data-th="비고"><span class="qd-none">비어 있음</span></td>
+              </tr>
+              <tr>
+                <td class="qd-items__no num">3</td>
+                <td class="qd-items__info">
+                  <p class="qd-it__n">케이투 JK-F6101</p>
+                  <dl class="qd-spec">
+                    <div><dt>옵션</dt><dd><span class="qd-none">없음</span></dd></div>
+                    <div><dt>포장</dt><dd>기본 포장</dd></div>
+                    <div><dt>인쇄방법</dt><dd>인쇄 없음</dd></div>
+                    <div><dt>인쇄내용</dt><dd><span class="qd-none">없음</span></dd></div>
+                  </dl>
+                </td>
+                <td class="qd-items__qty r num" data-th="수량">12벌</td>
+                <td class="qd-items__unit r num" data-th="단가">0원</td>
+                <td class="qd-items__amt r num" data-th="금액">0원</td>
+                <td class="qd-items__memo" data-th="비고">납기 <span class="num">2026-11-28</span> 희망</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <div class="qd__foot">
+          <div class="qd-sumbox" data-el="L721">
+            <dl class="qd-sum">
+              <div class="qd-sum__total"><dt>총 합계<small>부가세 포함</small></dt><dd class="num">0원</dd></div>
+            </dl>
+            <p class="qd-sum__note">미리보기에는 금액을 넣지 않습니다.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- 불러오는 중 -->
+      <div class="qd qd--load" data-st="loading" data-el="L729"><p class="busy" role="status">견적서를 불러오는 중입니다.</p></div>
+
+      <!-- 견적문의 화면이 없거나 닫힘: 견적 요청 불가 -->
+      <div class="qd qd--gate" data-st="closed" data-el="L730">
+        <div class="gate">
+          <span class="smark smark--gray"><i class="i i-doc" aria-hidden="true"></i></span>
+          <h2 class="gate__t">견적문의 화면에서 다시 열어 주세요</h2>
+          <p class="gate__d">미리보기를 연 견적문의 화면이 닫혔거나 찾을 수 없어 견적을 요청할 수 없습니다. 견적문의 화면에서 <b>견적서 미리보기</b>를 다시 눌러 주세요.</p>
+          <div class="gate__box"><p class="note">미리보기는 저장하지 않는 화면입니다. 견적문의 화면을 닫았다면 처음부터 다시 입력해야 합니다.</p></div>
+          <div class="acts"><a class="sb sb--ink" href="#" data-href="quote.php">견적문의 화면 열기</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="win__foot">
+  <button type="button" class="sb sb--gray" data-win-close>닫기</button>
+  <button type="button" class="sb sb--acc qd-main" data-qd-req data-busy-st="busy" data-st-not="readonly"><span class="qd-bl">견적 요청</span><span class="qd-bb">접수 중</span></button>
+</div>
+<div class="pop pop--c" id="qdDone" data-qd-done data-open-st="done" role="alertdialog" aria-modal="true" aria-labelledby="qdDoneT" aria-describedby="qdDoneD" hidden>
+  <div class="pop__dim"></div>
+  <div class="pop__box">
+    <div class="pop__body">
+      <span class="smark"><i class="i i-check" aria-hidden="true"></i></span>
+      <h2 class="pop__t" id="qdDoneT">견적문의를 접수했습니다</h2>
+      <p class="pop__d" id="qdDoneD">문의번호 <b class="num" data-sample>Q-20261110-0012</b><br>담당자가 확인한 뒤 견적서를 보내 드립니다. 확인을 누르면 이 창이 닫히고, 견적문의 화면은 마이페이지 견적문의 내역으로 바뀝니다.</p>
+    </div>
+    <div class="pop__foot"><button type="button" class="sb sb--ink" data-qd-finish="mypage.html?section=inquiries">확인</button></div>
+  </div>
+</div>
+</main>
+</body>
+</html>

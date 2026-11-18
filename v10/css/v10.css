@@ -1,0 +1,395 @@
+/* ============================================================
+   비투비티 홈 시안 v10 · v10.css (2026-11-15)
+   v9.css 뒤에 불러온다. 집사님 수정사항 0~8번.
+   순서: 0 본문 폭 · 섹션 간격 · 1 모서리(버튼 알약 / 사진 16px) · 2 메가메뉴 사진 · 3 히어로 + 전체 영상 팝업 · 4 섹션 제목(D시안)
+        · 5 겨울 시즌 · 6 파트너 배너 · 7 바텀 헤더 · 8 협력브랜드 로고 탭 · 9 1개/2개 보기 · 10 후드 아래 여백 · 11 구매 후기
+   ============================================================ */
+
+/* ---------- 0. 본문 폭: 헤더(1400)는 그대로, 본문은 시안 A~F처럼 최대 1280(양옆 최소 80px). 섹션 간격은 D시안(120 / 96 / 72) ---------- */
+#main{--cw:1280px;--gut:max(clamp(20px,5.5vw,80px),(100vw - var(--cw)) / 2);--sec:120px}
+@media (max-width:1023px){ #main{--sec:96px} }
+@media (max-width:768px){ #main{--sec:72px} }
+
+/* ---------- 1. 모서리: 버튼·화살표·조작 버튼은 헤더 견적문의처럼 알약/원형, 배너·사진·상자는 상품 카드와 같은 16px ---------- */
+.bt{border-radius:999px}
+.bt>span{padding:0 22px 0 28px}
+.bt>i{padding-right:4px}
+.arw{border-radius:50%}
+.arw+.arw{margin-left:8px}
+.qv__box{border-radius:16px;clip-path:inset(0 round 16px)}
+.rc__box,.mg{border-radius:16px}
+.mg__av{border-radius:12px}
+.fm__brand{border-radius:12px}
+.v10 .ss__hero{border-radius:16px}
+@media (max-width:768px){ .v10 .ss__hero{border-radius:0} } /* 폰은 화면 끝까지 붙는 사진 */
+/* 겨울 시즌 배너 카피: 800 한 덩어리가 너무 굵어 다른 섹션 제목과 같은 굵기로(앞말 400 + 이름 700, 자간 -0.02em). 크기는 배너 글자 그대로. 색은 사진 위라 흰색 */
+.v10.v5 .ss__t{font-weight:600;letter-spacing:-.02em;line-height:1.22}
+.v10 .ss__t .tt__pre,.v10 .ss__t .tt__key{display:block;font-size:inherit;letter-spacing:inherit;line-height:inherit;color:inherit}
+.v10 .ss__t .tt__pre{font-weight:400}
+.v10 .ss__t .tt__key{font-weight:700}
+
+/* ---------- 2. 메가메뉴: 왼쪽 사진을 키우고, 제목·전체보기를 사진 안 흰 글자로(사진은 살짝 어둡게). 1100px 이하는 v9처럼 사진 없이 글자 줄 ---------- */
+.fm__cap{display:none}
+@media (min-width:1101px){
+  .fm{grid-template-columns:280px minmax(0,1fr);gap:8px 48px;padding:28px 0 32px}
+  .fm__side > .fm__title,.fm__side > .fm__all{display:none}
+  .fm__img{position:relative;margin-top:0;border-radius:16px;isolation:isolate}
+  .fm__img::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(8,9,12,.18) 0%,rgba(8,9,12,.3) 45%,rgba(8,9,12,.66) 100%);transition:opacity .3s}
+  .fm__cap{position:absolute;left:24px;right:24px;bottom:22px;z-index:2;display:flex;flex-direction:column;align-items:flex-start;gap:8px;color:#fff}
+  .fm__cap b{font-size:28px;font-weight:700;letter-spacing:-.02em;line-height:1.25;color:#fff}
+  .fm__cap span{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600;line-height:20px;opacity:.92}
+  .fm__cap i{font-style:normal;transition:transform .3s var(--ease)}
+  .fm__img:hover::after{opacity:.82}
+  .fm__img:hover .fm__cap i{transform:translateX(4px)}
+  .fm__img:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+}
+@media (min-width:1101px) and (max-width:1280px){ .fm{grid-template-columns:232px minmax(0,1fr);gap:8px 32px} .fm__cap b{font-size:24px} }
+
+/* ---------- 3. 히어로: 글자 없이 영상만. 오른쪽 아래(멈춤 버튼 자리)에 "전체 영상 보기" → 팝업 ---------- */
+.v10 .hv .bn__slide--film::after{background:linear-gradient(0deg,rgba(8,9,12,.42) 0%,transparent 28%)}
+.hv__full{display:inline-flex;align-items:center;gap:10px;height:50px;margin-left:auto;padding:0 22px 0 8px;border-radius:999px;background:rgba(12,13,16,.38);box-shadow:inset 0 0 0 1px rgba(255,255,255,.42);color:#fff;font-size:15px;font-weight:600;letter-spacing:-.01em;white-space:nowrap;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);transition:background-color .25s,color .25s,box-shadow .25s}
+.hv__full-ic{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:#fff;color:#111;transition:background-color .25s,color .25s}
+.hv__full-ic svg{width:15px;height:15px;margin-left:2px}
+.hv__full:hover{background:#fff;box-shadow:none;color:var(--ink)}
+.hv__full:hover .hv__full-ic{background:var(--ink);color:#fff}
+.hv__full:focus-visible{outline:2px solid #fff;outline-offset:3px}
+@media (max-width:768px){
+  .v10 .hv .bn__slide--film::after{background:linear-gradient(0deg,rgba(8,9,12,.5) 0%,transparent 30%)}
+  .hv__full{height:44px;padding:0 18px 0 6px;font-size:14px}
+  .hv__full-ic{width:32px;height:32px}
+}
+/* 팝업 */
+.vm{position:fixed;inset:0;z-index:600;display:grid;place-items:center;padding:clamp(16px,4vw,56px)}
+.vm[hidden]{display:none}
+.vm__dim{position:absolute;inset:0;background:rgba(6,7,10,.86);opacity:0;transition:opacity .35s}
+.vm.is-on .vm__dim{opacity:1}
+.vm__box{position:relative;width:min(1200px,100%,calc((100svh - 112px) * 1.7778));aspect-ratio:16/9;border-radius:16px;overflow:hidden;background:#000;box-shadow:0 40px 90px -30px rgba(0,0,0,.8);opacity:0;transform:translateY(18px) scale(.98);transition:opacity .4s var(--ease),transform .5s var(--ease)}
+.vm.is-on .vm__box{opacity:1;transform:none}
+.vm__video{display:block;width:100%;height:100%;object-fit:contain;background:#000}
+.vm__x{position:absolute;right:14px;top:14px;z-index:2;display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.92);color:#111;transition:background-color .2s,transform .3s var(--ease)}
+.vm__x svg{width:20px;height:20px}
+.vm__x:hover{background:#fff;transform:rotate(90deg)}
+.vm__x:focus-visible{outline:2px solid #fff;outline-offset:3px}
+html.is-vm .mbar,html.is-vm .rvw{visibility:hidden}
+@media (prefers-reduced-motion:reduce){ .vm__dim,.vm__box,.vm__x{transition:none} }
+
+/* ---------- 4. 섹션 제목: 영문 줄을 빼고 D시안 글자(24px · 600 · -0.02em · 1.35, 폰 20px · 1.4). 제목 → 내용 28px(폰 16px) ---------- */
+.v10 .sh__t,.v10.v5 .rk .sh__t,.v10 .vh__t{margin-top:0;font-size:24px;font-weight:600;letter-spacing:-.02em;line-height:1.35}
+.v10 .sh__d{max-width:none;margin-top:6px;font-size:15px;line-height:1.75;color:#474747}
+.v10 .rk{padding-top:72px} /* D시안: 히어로 바로 다음 섹션은 72px */
+.v10 .rk__bar{margin-top:28px}
+.v10 .vh--row{align-items:center;flex-wrap:nowrap}
+.vh__r{display:flex;align-items:center;gap:16px;margin-left:auto}
+@media (max-width:768px){
+  .v10 .sh__t,.v10.v5 .rk .sh__t,.v10 .vh__t{font-size:20px;line-height:1.4}
+  .v10 .sh__d{font-size:14px;line-height:1.7}
+  .v10 .rk{padding-top:56px}
+  .v10 .rk__bar{margin-top:16px}
+  .vh__r{gap:10px}
+  .vh__r .lnk{font-size:13px}
+}
+
+/* ---------- 5. 겨울 시즌: 상품 아래 조작 줄 = 진행 막대만 ---------- */
+.v10 .ss__ctl{display:block;margin-top:28px}
+.v10 .ss__ctl .md__prog{margin:0}
+@media (max-width:768px){ .v10 .ss__ctl{margin-top:14px} }
+
+/* ---------- 6. 파트너 배너 ---------- */
+/* PC: 본문 폭 안의 둥근 틀, 높이를 줄임(1440에서 810 → 약 600px). 폰은 v9처럼 화면 가득 */
+@media (min-width:769px){
+  .v10 .pb__frame{height:clamp(440px,41.5vw,600px);margin-inline:var(--gut);border-radius:16px}
+  .v10 .pbs__copy{left:clamp(28px,4.4vw,64px);width:min(440px,36%)}
+  .v10 .pbs--r .pbs__copy{left:auto;right:clamp(28px,4.4vw,64px)}
+  .v10.v5 .pbs__t{margin-top:0;font-size:clamp(28px,3.2vw,48px)}
+  .v10 .pbs__tags{right:clamp(20px,3vw,40px)}
+  .v10 .pbs--r .pbs__tags{right:auto;left:clamp(20px,3vw,40px)}
+  .v10 .pbs__tags--top{padding-top:clamp(24px,3.2vw,48px)}
+  .v10 .pbs__tags--bot{padding-bottom:clamp(64px,6vw,88px)}
+  .v10 .pb__ui{left:clamp(20px,4.4vw,64px);right:auto;bottom:clamp(14px,2vw,24px)}
+  .v10 .pb__note{right:clamp(20px,3vw,40px)}
+}
+/* 조작 줄: 점 + 멈춤(noeul.shop 메인 배너와 같은 모양). 고른 점은 둘레에 원 */
+.v10 .pb__ui{gap:6px}
+.pb__dots{display:flex;gap:2px}
+.pb__dot,.pb__pause{position:relative;flex:none;width:32px;height:32px;border-radius:50%;color:#fff;-webkit-tap-highlight-color:transparent}
+.pb__dot::before{content:"";position:absolute;left:50%;top:50%;width:6px;height:6px;margin:-3px 0 0 -3px;border-radius:50%;background:currentColor;opacity:.6;transition:opacity .3s}
+.pb__dot::after{content:"";position:absolute;left:50%;top:50%;width:18px;height:18px;margin:-9px 0 0 -9px;box-sizing:border-box;border:1px solid transparent;border-radius:50%;transition:border-color .3s}
+.pb__dot:hover::before,.pb__dot.is-active::before{opacity:1}
+.pb__dot.is-active::after{border-color:currentColor}
+.pb__pause::before,.pb__pause::after{content:"";position:absolute;top:50%;width:2px;height:12px;margin-top:-6px;background:currentColor}
+.pb__pause::before{left:calc(50% - 4px)}
+.pb__pause::after{left:calc(50% + 2px)}
+.pb__pause.is-stopped::before{left:calc(50% - 3px);width:0;height:0;margin-top:-6px;background:none;border-left:9px solid currentColor;border-top:6px solid transparent;border-bottom:6px solid transparent}
+.pb__pause.is-stopped::after{display:none}
+.pb__dot:focus-visible,.pb__pause:focus-visible{outline:2px solid #fff;outline-offset:-2px}
+@media (max-width:768px){
+  .v10 .pb__ui{left:10px;right:auto;bottom:8px;gap:0}
+  .pb__dot,.pb__pause{width:40px;height:40px}
+}
+
+/* ---------- 7. 바텀 헤더: PC도 폰처럼 떠 있는 알약 줄(가운데). 폰은 화면 폭에 맞춘 같은 길이 ---------- */
+.v10 .bh{top:calc(var(--bh-top) + 10px);margin-top:28px;padding:0 var(--gut);background:none;border-bottom:0;pointer-events:none}
+.v10 .bh.is-stuck{box-shadow:none}
+.v10.v9 .psec--tint .bh{background:none}
+.v10 .bh__in{width:max-content;max-width:100%;height:56px;margin-inline:auto;padding:5px;border-radius:999px;background:#fff;box-shadow:0 0 0 1px rgba(14,14,16,.08),0 14px 34px -14px rgba(14,14,16,.36);pointer-events:auto;transition:box-shadow .25s}
+.v10 .bh.is-stuck .bh__in{box-shadow:0 0 0 1px rgba(14,14,16,.08),0 16px 36px -12px rgba(14,14,16,.42)}
+.v10 .bh__scroll{border-radius:999px}
+.v10 .bh__list{gap:2px;margin-left:0}
+.v10 .bh__tab{min-width:0;padding:0 22px;border-radius:999px;font-size:15px;font-weight:500;color:#8B8B90;transition:background-color .2s,color .2s}
+.v10 .bh__tab::after{display:none}
+.v10 .bh__tab:hover{color:var(--v9-ink)}
+.v10 .bh__tab[aria-selected="true"]{background:var(--v9-ink);color:#fff;font-weight:700}
+.v10 .bh__tab:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+@media (max-width:768px){
+  .v10 .bh{top:calc(var(--bh-top) + 8px);margin-top:16px}
+  .v10 .bh__in{width:100%;height:var(--bh-h);padding:4px}
+  .v10 .bh__list{min-width:100%;width:max-content}
+  .v10 .bh__tab{flex:1 0 auto;padding:0 15px;font-size:14px}
+}
+
+/* ---------- 8. 협력브랜드 바텀 헤더: 글자 대신 로고. 평소에는 흑백, 고른 브랜드만 원래 색 + 검은 테두리 ----------
+   보정(2026-11-15): 로고 파일의 흰 배경을 실제로 지웠다(img/brandlogo). 전에는 흰 배경을 섞기(mix-blend-mode)로 가렸는데 사파리에서 흰 상자가 그대로 보였다.
+   크기: 로고마다 가로세로 비가 달라(1 : 1 ~ 8 : 1) 높이를 똑같이 주면 제각각으로 보인다 → 보이는 면적이 비슷하도록 높이 = 22px × (3 ÷ 가로세로비)^0.4 로 정함 */
+.bh__logo{display:block;flex:none;width:auto;max-width:none;height:calc(var(--lh,22px) * var(--ls,1));filter:grayscale(1);opacity:.5;transition:opacity .2s,filter .2s}
+.bh__logo--ace{--lh:21px}
+.bh__logo--artwin{--lh:15px}
+.bh__logo--eider{--lh:26px}
+.bh__logo--ipavv{--lh:20px}
+.bh__logo--k2{--lh:20px}
+.bh__logo--mentis{--lh:21px}
+.bh__logo--sseda{--lh:26px}
+.bh__logo--tbuc{--lh:25px}
+.bh__logo--ziben{--lh:32px}
+.v10 .bh--logo .bh__tab{padding:0 16px}
+.v10 .bh--logo .bh__tab:hover .bh__logo{opacity:.85}
+.v10 .bh--logo .bh__tab[aria-selected="true"]{background:#fff;box-shadow:inset 0 0 0 1.5px var(--v9-ink)}
+.v10 .bh--logo .bh__tab[aria-selected="true"] .bh__logo{filter:none;opacity:1}
+@media (max-width:768px){
+  .bh__logo{--ls:.86}
+  .v10 .bh--logo .bh__tab{padding:0 13px}
+}
+
+/* ---------- 9. 1개/2개 보기: 섹션 제목 줄 오른쪽 위의 작은 버튼(폰에서만). 아이콘 = 큰 네모 하나 / 작은 네모 넷 ---------- */
+.vtog{display:none}
+@media (max-width:768px){
+  .vtog{display:flex;align-items:center;gap:2px;margin:0 -6px 0 auto}
+  .vh__r .vtog{margin-left:0}
+  .vtog__b{position:relative;display:grid;place-items:center;width:32px;height:32px;border-radius:50%;color:#C2C2C7;-webkit-tap-highlight-color:transparent;transition:color .2s}
+  .vtog__b::after{content:"";position:absolute;inset:-6px -2px}
+  .vtog__b svg{width:18px;height:18px}
+  .vtog__b[aria-pressed="true"]{color:var(--v9-ink)}
+  .vtog__b:focus-visible{outline:2px solid var(--accent);outline-offset:0}
+}
+
+/* ---------- 10. 후드·맨투맨: 전체보기 버튼 아래 여백(다음 구매 후기 회색 면과 띄움) ---------- */
+.v10 .psec--end{padding-bottom:var(--sec)}
+
+/* ---------- 11. 구매 후기(프로세스 자리). 실제 후기(js/reviews.js). 카드 = 사진(위) → 업체 · 품목 → 고객 글 ---------- */
+.rv{padding-block:var(--sec);background:#F5F5F6}
+.rv__list,.rva__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.rv__list{margin-top:28px}
+.rv__card{display:flex;flex-direction:column;min-width:0;border-radius:16px;overflow:hidden;background:#fff;box-shadow:0 1px 2px rgba(14,14,16,.04)}
+/* 사진: 1장 = 한 칸, 2장 = 나란히, 3장부터 = 큰 사진 하나 + 작은 사진 둘(더 있으면 마지막 칸에 +N). 누르면 크게 보기 */
+.rv__gal{display:grid;gap:3px;aspect-ratio:3/2;background:#fff}
+.rv__gal--2{grid-template-columns:1fr 1fr}
+.rv__gal--3{grid-template-columns:2fr 1fr;grid-template-rows:1fr 1fr}
+.rv__gal--3 .rv__ph:first-child{grid-row:1 / 3}
+.rv__ph{position:relative;display:block;min-width:0;min-height:0;overflow:hidden;background:#ECECEE;cursor:zoom-in;-webkit-tap-highlight-color:transparent}
+.rv__ph img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
+.rv__ph:hover img{transform:scale(1.045)}
+.rv__ph:focus-visible{z-index:1;outline:2px solid var(--accent);outline-offset:-2px}
+.rv__ph--v::after{content:"";position:absolute;inset:0;background:rgba(8,9,12,.26)}
+.rv__play{position:absolute;left:50%;top:50%;z-index:1;display:grid;place-items:center;width:34px;height:34px;margin:-17px 0 0 -17px;border-radius:50%;background:rgba(255,255,255,.95);color:#111}
+.rv__play svg{width:15px;height:15px;margin-left:1px}
+.rv__rest{position:absolute;inset:0;z-index:1;display:grid;place-items:center;background:rgba(8,9,12,.5);color:#fff;font-size:18px;font-weight:700;letter-spacing:.01em}
+/* 글 */
+.rv__body{display:flex;flex:1 1 auto;flex-direction:column;padding:20px 24px 24px}
+.rv__stars{display:flex;gap:2px;margin-bottom:10px;color:#1B1B1F}
+.rv__stars svg{width:15px;height:15px}
+.rv__meta{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;min-height:24px}
+.rv__co{font-size:16px;font-weight:700;letter-spacing:-.02em;line-height:24px;color:var(--v9-ink)}
+.rv__item{font-size:13px;font-weight:500;line-height:20px;color:var(--v9-sub)}
+.rv__item::before{content:"";display:inline-block;width:1px;height:10px;margin-right:8px;background:#D5D5DA}
+.rv__tag{margin-left:auto;height:24px;padding:0 10px;border-radius:999px;background:#F1F1F3;font-size:12px;font-weight:600;line-height:24px;color:#6B6B70;white-space:nowrap}
+.rv__text{margin-top:10px;font-size:15px;line-height:1.75;letter-spacing:-.01em;color:#2A2A2E;white-space:pre-line;word-break:keep-all;overflow-wrap:anywhere;text-wrap:pretty}
+.rv__more{margin-top:40px}
+.rv__cnt{margin-left:6px;color:var(--accent-text,var(--accent))}
+.pbtn:hover .rv__cnt{color:inherit}
+
+/* 후기 전체 보기 팝업 */
+.rva{position:fixed;inset:0;z-index:600;display:grid;place-items:center;padding:clamp(16px,3vw,40px)}
+.rva[hidden]{display:none}
+.rva__dim{position:absolute;inset:0;background:rgba(6,7,10,.62);opacity:0;transition:opacity .3s}
+.rva.is-on .rva__dim{opacity:1}
+.rva__panel{position:relative;display:flex;flex-direction:column;width:min(1240px,100%);height:min(920px,100%);border-radius:20px;overflow:hidden;background:#F5F5F6;box-shadow:0 40px 90px -30px rgba(0,0,0,.6);opacity:0;transform:translateY(22px);transition:opacity .35s var(--ease),transform .5s var(--ease)}
+.rva.is-on .rva__panel{opacity:1;transform:none}
+.rva__head{display:flex;flex:none;align-items:center;gap:12px 20px;padding:18px 20px 18px 28px;border-bottom:1px solid #E9E9EC;background:#fff}
+.rva__t{font-size:20px;font-weight:700;letter-spacing:-.02em;line-height:28px;color:var(--v9-ink);white-space:nowrap}
+.rva__t .num{margin-left:4px;color:var(--accent-text,var(--accent))}
+.rva__tabs{display:flex;gap:6px;margin-left:auto}
+.rva__tab{height:36px;padding:0 14px;border:1px solid #DDDDE1;border-radius:999px;background:#fff;font-size:13.5px;font-weight:600;color:#55545A;white-space:nowrap;transition:background-color .15s,border-color .15s,color .15s}
+.rva__tab .num{margin-left:2px;font-weight:500;opacity:.7}
+.rva__tab:hover{border-color:#1B1B1F;color:#1B1B1F}
+.rva__tab[aria-pressed="true"]{border-color:#1B1B1F;background:#1B1B1F;color:#fff}
+.rva__tab[hidden]{display:none}
+.rva__tab:focus-visible,.rva__x:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.rva__x{display:grid;flex:none;place-items:center;width:40px;height:40px;border-radius:50%;background:#F1F1F3;color:#111;transition:background-color .2s,transform .3s var(--ease)}
+.rva__x svg{width:18px;height:18px}
+.rva__x:hover{background:#E6E6EA;transform:rotate(90deg)}
+.rva__scroll{flex:1 1 auto;min-height:0;padding:24px 28px 32px;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+@media (prefers-reduced-motion:reduce){ .rva__dim,.rva__panel,.rva__x,.rv__ph img{transition:none} }
+
+/* 사진 크게 보기 */
+.rvm__box{position:relative;display:grid;place-items:center;width:min(1100px,100%);height:min(78vh,760px);height:min(78svh,760px);opacity:0;transform:translateY(18px) scale(.98);transition:opacity .4s var(--ease),transform .5s var(--ease)}
+.vm.is-on .rvm__box{opacity:1;transform:none}
+.rvm__stage{display:grid;place-items:center;width:100%;height:100%;min-height:0}
+.rvm__m{display:block;width:auto;height:auto;max-width:100%;max-height:min(78vh,760px);max-height:min(78svh,760px);border-radius:14px;background:#000;box-shadow:0 40px 90px -30px rgba(0,0,0,.8)}
+video.rvm__m{width:min(100%,calc(min(78svh,760px) * 1.7778));aspect-ratio:16/9}
+.rvm__nav{position:absolute;top:50%;z-index:2;display:grid;place-items:center;width:44px;height:44px;margin-top:-22px;border-radius:50%;background:rgba(255,255,255,.92);color:#111;transition:background-color .2s}
+.rvm__nav svg{width:20px;height:20px}
+.rvm__nav:hover{background:#fff}
+.rvm__nav--p{left:0}
+.rvm__nav--n{right:0}
+.rvm__nav[hidden],.rvm__cnt[hidden]{display:none}
+.rvm__nav:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.rvm__cnt{position:absolute;left:50%;bottom:-6px;transform:translate(-50%,100%);color:rgba(255,255,255,.86);font-size:13px;font-weight:600;letter-spacing:.04em}
+.rvm .vm__x{right:0;top:0}
+@media (prefers-reduced-motion:reduce){ .rvm__box{transition:none} }
+@media (max-width:1024px){ .rv__list,.rva__grid{grid-template-columns:repeat(2,minmax(0,1fr))} }
+@media (max-width:768px){
+  .rv__list{display:flex;gap:12px;margin:16px calc(var(--gut) * -1) 0;padding:0 var(--gut) 4px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:var(--gut);scrollbar-width:none}
+  .rv__list::-webkit-scrollbar{display:none}
+  .rv__list .rv__card{flex:0 0 84%;scroll-snap-align:start}
+  .rv__body{padding:16px 18px 20px}
+  .rv__co{font-size:15.5px}
+  .rv__text{margin-top:8px;font-size:14.5px}
+  .rv__more{margin-top:24px}
+  .rvm__nav{width:40px;height:40px;margin-top:-20px}
+  .rvm__nav--p{left:-6px}
+  .rvm__nav--n{right:-6px}
+  /* 전체 보기: 폰에서는 화면 가득. 제목 · 닫기 한 줄, 고르기 단추는 그 아래 줄 */
+  .rva{padding:0}
+  .rva__panel{width:100%;height:100%;border-radius:0}
+  .rva__head{flex-wrap:wrap;padding:12px 12px 12px 20px}
+  .rva__t{font-size:18px}
+  .rva__x{order:2;margin-left:auto}
+  .rva__tabs{order:3;flex:1 0 100%;margin-left:0;overflow-x:auto;scrollbar-width:none}
+  .rva__tabs::-webkit-scrollbar{display:none}
+  .rva__tab{height:34px;padding:0 12px;font-size:13px}
+  .rva__scroll{padding:16px 16px calc(24px + env(safe-area-inset-bottom))}
+  .rva__grid{gap:12px}
+}
+@media (max-width:600px){ .rva__grid{grid-template-columns:minmax(0,1fr)} }
+
+/* ============================================================
+   보정 (2026-11-15 저녁, 집사님 수정사항 11개). 번호 = 위 차례를 이어 감
+   ============================================================ */
+
+/* ---------- 12. 섹션 제목: "겨울을 책임지는 겨울 아우터"처럼 앞말(가늘게) + 이름(굵게). PC는 한 줄, 폰은 두 줄. 정렬은 왼쪽(랭킹 · 구매 후기만 PC에서 가운데) ---------- */
+.tt__pre{font-weight:400;color:#55545A}
+.tt__key{font-weight:700;color:var(--v9-ink)}
+@media (min-width:769px){
+  .v10 .sh__t,.v10.v5 .rk .sh__t,.v10 .vh__t{font-size:26px}
+  /* 제목 줄 가운데 정렬은 구매 후기만(랭킹은 .sh--c로 가운데). 겨울 아우터 · 협력브랜드 · 후드·맨투맨은 왼쪽 정렬로 되돌림(2026-11-15 밤, 집사님 지시).
+     바텀 헤더는 그대로 가운데 */
+  .v10 .rv .vh--row{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:0 24px;align-items:center}
+  .v10 .rv .vh--row > :first-child{grid-column:2;text-align:center}
+  .v10 .rv .vh--row > :nth-child(2){grid-column:3;justify-self:end;margin-left:0}
+}
+@media (max-width:768px){
+  .v10 .vh--row{align-items:flex-end}
+  .tt__pre{display:block;font-size:14.5px;font-weight:500;letter-spacing:-.01em;line-height:22px;color:#6B6B70}
+  .tt__key{display:block;font-size:22px;line-height:30px}
+}
+
+/* ---------- 13. 랭킹: 제목 위 왕관 표식(2026-11-15 막대 셋 → 옅은 파란 동그라미 안 왕관), 아래는 "○○ 전체 보기" 버튼 하나 ---------- */
+.rkh__mark{display:inline-grid;place-items:center;width:52px;height:52px;margin-bottom:14px;border-radius:50%;background:var(--accent-soft,#E8F3FF);box-shadow:0 0 0 7px rgba(49,130,246,.06);color:var(--accent);transition:transform .7s var(--ease),opacity .5s}
+.rkh__mark svg{display:block;width:30px;height:30px;fill:currentColor;transition:transform .8s var(--ease) .12s}
+html.v4-motion .rkh:not(.is-in) .rkh__mark{opacity:0;transform:scale(.6)}
+html.v4-motion .rkh:not(.is-in) .rkh__mark svg{transform:translateY(6px) rotate(-14deg)}
+.v10 .rk__more{margin-top:clamp(28px,3vw,40px)}
+@media (max-width:768px){
+  .rkh__mark{width:44px;height:44px;margin-bottom:12px;box-shadow:0 0 0 6px rgba(49,130,246,.06)}
+  .rkh__mark svg{width:25px;height:25px}
+  .v10 .rk__more{margin-top:22px}
+}
+@media (prefers-reduced-motion:reduce){ .rkh__mark,.rkh__mark svg{transition:none} }
+
+/* ---------- 14. 상품 카드 ---------- */
+/* 올렸을 때 사진 위 구간 막대: 왼쪽으로 치우쳐 있던 것을 가운데로(순위 번호 자리만큼 양쪽을 똑같이 비움) */
+.v10 .pc__bars,.v10 .pc:hover .pc__bars,.v10 .pc:focus-within .pc__bars{left:54px;right:54px}
+/* 겨울 아우터 · 후드·맨투맨: 색상 n종 줄을 빼고(색은 사진 위 색상 점으로 보인다) 가격 위 여백을 줄여 카드를 낮춤 */
+.v10 .pc--slim .pc__ms{min-height:0}
+.v10 .pc--slim .pc__price{margin-top:6px}
+@media (max-width:768px){ .v10 .pc--slim .pc__price{margin-top:4px} }
+
+/* ---------- 15. 파트너 배너(폰): 화면 한 장 가득이던 것을 폰 사진 비율(4 : 5, 1000 × 1250) 그대로. 사진이 잘리지 않고 세로가 짧아진다 ----------
+   새 폰 사진을 다른 비율로 뽑으면 aspect-ratio 값만 바꾼다(js/v10.js의 폰 사진 크기 1000 × 1250도 같이). 사각형 · 선 · 착용 상품 칸은 그대로 */
+@media (max-width:768px){
+  .v10 .pb__frame{width:100%;height:auto;min-height:0;aspect-ratio:4/5;max-height:min(calc(100vh - 60px),640px);clip-path:none !important} /* 폰은 늘 화면 폭 가득: 열리는 장치(js의 clip-path)가 남아 있어도 양옆이 잘리지 않게(폰을 돌렸다 되돌린 경우) */ /* width를 적어 두지 않으면 최대 높이에 걸릴 때 폭이 같이 줄어든다(600~768 폭) */
+}
+
+/* ---------- 16. 흰 바탕 배경 4종(js/bgfx.js). 섹션마다 한 장(.bgx)을 내용 뒤에 깐다. 위아래는 흐려져 섹션 경계가 안 보인다 ---------- */
+.has-bgx{position:relative;isolation:isolate}
+.bgx{position:absolute;inset:0;z-index:-1;overflow:hidden;pointer-events:none;
+  -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 140px,#000 calc(100% - 140px),transparent 100%);
+          mask-image:linear-gradient(180deg,transparent 0,#000 140px,#000 calc(100% - 140px),transparent 100%);
+  animation:bgxIn .9s ease both}
+@keyframes bgxIn{from{opacity:0}}
+.bgx > *{position:absolute;display:block}
+.bgx:not(.is-live) > *,.bgx:not(.is-live) .bgx__rp b{animation-play-state:paused !important}
+.bgx--grad.bgx--n1,.bgx--ring.bgx--n1{transform:scaleX(-1)} /* 섹션마다 좌우를 바꿔 같은 그림이 되풀이되지 않게 */
+
+/* (1) 그라데이션: 공용에셋 "그라데이션_flowlab_pastel" 구조(모서리 색 덩어리 + 연한 바탕 + 양옆 흰 점 격자). 색 = 밝은 하늘색 · 밝은 파랑
+       2026-11-15 더 연하게: 바탕 · 색 덩어리 진하기를 절반 남짓으로 낮춤 */
+.bgx--grad{background:linear-gradient(120deg,rgba(226,244,255,.3),rgba(238,243,255,.2) 55%,rgba(230,248,252,.3))}
+.bgx--grad .bgx__b{width:clamp(300px,50vw,860px);aspect-ratio:1/1.05;border-radius:50%;will-change:transform;animation:bgxDrift 24s ease-in-out infinite alternate}
+.bgx--grad .bgx__b--1{left:-14%;top:-30px;background:radial-gradient(closest-side,rgba(120,208,255,.22),rgba(120,208,255,0))}
+.bgx--grad .bgx__b--2{right:-12%;top:16%;background:radial-gradient(closest-side,rgba(128,168,255,.2),rgba(128,168,255,0));animation-duration:29s;animation-delay:-9s}
+.bgx--grad .bgx__b--3{left:-8%;top:54%;background:radial-gradient(closest-side,rgba(140,226,244,.19),rgba(140,226,244,0));animation-duration:33s;animation-delay:-15s;animation-direction:alternate-reverse}
+.bgx--grad .bgx__b--4{right:-16%;top:72%;background:radial-gradient(closest-side,rgba(150,180,255,.2),rgba(150,180,255,0));animation-duration:27s;animation-delay:-5s}
+@keyframes bgxDrift{0%{transform:translate3d(-5%,-4%,0) scale(1)}50%{transform:translate3d(8%,5%,0) scale(1.14)}100%{transform:translate3d(2%,11%,0) scale(.94)}}
+.bgx__dots{inset:0;background-image:radial-gradient(rgba(255,255,255,.9) 1px,transparent 1.3px);background-size:14px 14px;opacity:.7;
+  -webkit-mask-image:linear-gradient(90deg,#000,transparent 25%,transparent 75%,#000);mask-image:linear-gradient(90deg,#000,transparent 25%,transparent 75%,#000)}
+
+/* (2) 도트: 옅은 점 격자 + 군데군데 파란 점이 밝아졌다 사라짐(자리는 js가 격자에 맞춰 잡고, 사라질 때마다 옮긴다) */
+.bgx--dot{--dg:18px}
+.bgx--dot .bgx__pat{inset:0;background-image:radial-gradient(rgba(30,64,140,.17) 1px,transparent 1.4px);background-size:var(--dg) var(--dg)}
+.bgx--dot .bgx__hi{left:0;top:0;width:clamp(306px,36vw,576px);aspect-ratio:1;background-image:radial-gradient(rgba(38,120,255,.78) 1.15px,transparent 1.55px);background-size:var(--dg) var(--dg);opacity:0;animation:bgxGlow 11s ease-in-out infinite;
+  -webkit-mask-image:radial-gradient(closest-side,#000 0,rgba(0,0,0,.5) 45%,transparent 100%);mask-image:radial-gradient(closest-side,#000 0,rgba(0,0,0,.5) 45%,transparent 100%)}
+.bgx--dot .bgx__hi--2{animation-duration:13s;animation-delay:-4.5s}
+.bgx--dot .bgx__hi--3{animation-duration:15s;animation-delay:-9s}
+@keyframes bgxGlow{0%,100%{opacity:0}45%,58%{opacity:1}}
+
+/* (3) 격자: 공용에셋 "그리드펄스_21dev"(Grid Pulse). 옅은 격자선 + 캔버스에 물드는 칸(저절로만 물든다. 마우스를 따라 그려지던 것은 2026-11-15 뺌) */
+.bgx--grid .bgx__lines{inset:0;background-image:linear-gradient(to right,rgba(30,70,160,.06) 1px,transparent 1px),linear-gradient(to bottom,rgba(30,70,160,.06) 1px,transparent 1px);background-size:var(--gc,32px) var(--gc,32px)}
+.bgx--grid canvas{left:0;top:0;width:100%;height:100%;opacity:.5}
+
+/* (4) 동그라미(2026-11-15 방향을 바꿈): 떠다니는 색 원 → 한 점에서 퍼지는 얇은 동심원 물결(SaaS 사이트의 ripple 배경).
+       묶음(.bgx__rp) 하나 = 가운데가 같은 원 여러 겹. 안쪽부터 차례로 살짝 줄었다 돌아와 물결처럼 보인다. 바깥으로 갈수록 옅다.
+       --1 = 섹션 제목 뒤 가운데(큰 것), --2 = 아래쪽 옆(작은 것, 섹션마다 좌우가 바뀐다). --k = 크기 배율(폰은 작게) */
+.bgx--ring{--k:1}
+.bgx__rp{width:0;height:0}
+.bgx__rp--1{left:50%;top:calc(150px * var(--k) + 30px);--r0:210px;--step:190px}
+.bgx__rp--2{left:88%;top:74%;--r0:120px;--step:130px}
+.bgx__rp b{position:absolute;left:0;top:0;width:calc((var(--r0) + var(--i) * var(--step)) * var(--k));aspect-ratio:1;border:1px solid rgba(56,128,246,.27);border-radius:50%;background:rgba(84,156,255,.03);
+  opacity:calc(1 - var(--i) * .125);transform:translate(-50%,-50%);will-change:transform;animation:bgxRipple 4.6s ease-in-out infinite;animation-delay:calc(var(--i) * .2s)}
+.bgx__rp b:nth-child(1){--i:0} .bgx__rp b:nth-child(2){--i:1} .bgx__rp b:nth-child(3){--i:2} .bgx__rp b:nth-child(4){--i:3}
+.bgx__rp b:nth-child(5){--i:4} .bgx__rp b:nth-child(6){--i:5} .bgx__rp b:nth-child(7){--i:6} .bgx__rp b:nth-child(8){--i:7}
+.bgx__rp--2 b{border-color:rgba(56,150,246,.26);opacity:calc(.8 - var(--i) * .15)}
+@keyframes bgxRipple{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(.94)}}
+@media (max-width:768px){
+  .bgx{-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 90px,#000 calc(100% - 90px),transparent 100%);mask-image:linear-gradient(180deg,transparent 0,#000 90px,#000 calc(100% - 90px),transparent 100%)}
+  .bgx--ring{--k:.56}
+  .bgx__rp--1{top:104px}
+  .bgx--dot{--dg:16px}
+  .bgx--dot .bgx__hi{width:288px}
+}
+@media (prefers-reduced-motion:reduce){ .bgx,.bgx > *,.bgx__rp b{animation:none !important} .bgx--dot .bgx__hi{opacity:.7} }
+
+/* ---------- 17. 왼쪽 손잡이: 위 띠 고르기 → 배경 고르기(단추 5개). 폰에서는 단추를 조금 줄인다 ---------- */
+@media (max-width:768px){
+  .rvw__seg{gap:1px}
+  .rvw__b{padding:0 9px;font-size:12px}
+}
+
